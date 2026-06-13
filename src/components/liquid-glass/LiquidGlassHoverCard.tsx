@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, type ReactNode } from "react";
+import { useGlassSurface } from "./useGlassSurface";
 
 interface LiquidGlassHoverCardProps {
   children: ReactNode;
@@ -18,6 +19,8 @@ export function LiquidGlassHoverCard({
   width = "280px",
 }: LiquidGlassHoverCardProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const topHighlight = useGlassSurface({ variant: "highlight", opacity: 0.20 });
+  const arrowFill = useGlassSurface({ variant: "fill", opacity: 0.12 });
   let timeoutId: ReturnType<typeof setTimeout>;
 
   const show = () => {
@@ -52,9 +55,12 @@ export function LiquidGlassHoverCard({
             style={{ width }}
           >
             {/* Top highlight */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            <div className={topHighlight.className} style={topHighlight.style} />
             {/* Arrow */}
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-[var(--lg-border)] border-l border-t border-[var(--lg-border-subtle)]" />
+            <div
+              className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border-l border-t border-[var(--lg-border-subtle)]"
+              style={{ background: arrowFill.style.background }}
+            />
             <div className="relative p-4">{content}</div>
           </motion.div>
         )}

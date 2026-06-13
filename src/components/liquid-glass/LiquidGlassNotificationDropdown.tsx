@@ -1,7 +1,8 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bell, Check, Trash2, MessageSquare, Heart, UserPlus, AlertCircle } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, type CSSProperties } from "react";
+import { useGlassSurface } from "./useGlassSurface";
 
 interface Notification {
   id: string;
@@ -43,6 +44,9 @@ export function LiquidGlassNotificationDropdown({
 }: LiquidGlassNotificationDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const topHighlight = useGlassSurface({ variant: "highlight", opacity: 0.25 });
+  const unreadFill = useGlassSurface({ variant: "fill", opacity: 0.06 });
+  const hoverFill = useGlassSurface({ variant: "fill", opacity: 0.05 });
   useEffect(() => {
     const handle = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setIsOpen(false);
@@ -72,7 +76,7 @@ export function LiquidGlassNotificationDropdown({
             className="absolute right-0 top-full mt-2 w-80 rounded-2xl overflow-hidden glass-blur-xl glass-surface glass-border glass-highlight-strong z-[100]"
           >
             {/* Top highlight */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+            <div className={topHighlight.className} style={topHighlight.style} />
 
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--lg-border-subtle)]">
@@ -119,8 +123,12 @@ export function LiquidGlassNotificationDropdown({
                       }}
                       className={cn(
                         "flex w-full items-start gap-3 px-4 py-3 text-left transition-colors",
-                        !n.read ? "bg-[var(--lg-border-subtle)]" : "hover:bg-[var(--lg-border-subtle)]"
+                        !n.read ? "bg-[var(--item-fill)]" : "hover:bg-[var(--item-hover-fill)]"
                       )}
+                      style={{
+                        "--item-fill": unreadFill.style.background,
+                        "--item-hover-fill": hoverFill.style.background,
+                      } as CSSProperties}
                     >
                       <div className={cn("flex h-8 w-8 items-center justify-center rounded-lg flex-shrink-0", config.bg)}>
                         <Icon size={14} className={config.color} />

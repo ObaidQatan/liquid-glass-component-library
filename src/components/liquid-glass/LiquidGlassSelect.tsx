@@ -1,7 +1,8 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, type CSSProperties } from "react";
 import { ChevronDown, Check } from "lucide-react";
+import { useGlassSurface } from "./useGlassSurface";
 
 interface SelectOption {
   value: string;
@@ -32,6 +33,12 @@ export function LiquidGlassSelect({
   const ref = useRef<HTMLDivElement>(null);
   const selected = options.find((o) => o.value === value);
 
+  const sheen = useGlassSurface({ variant: "sheen", opacity: 0.12 });
+  const topHighlight = useGlassSurface({ variant: "highlight", opacity: 0.30 });
+  const dropdownHighlight = useGlassSurface({ variant: "highlight", opacity: 0.20 });
+  const selectedFill = useGlassSurface({ variant: "fill", opacity: 0.10 });
+  const hoverFill = useGlassSurface({ variant: "fill", opacity: 0.06 });
+
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -61,17 +68,11 @@ export function LiquidGlassSelect({
         )}
       >
         {/* Top highlight */}
-        <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full" />
+        <div className={cn(topHighlight.className, "inset-x-4")} style={topHighlight.style} />
         {/* Reflection blob */}
         <div className="pointer-events-none absolute -top-6 -right-6 h-16 w-16 rounded-full glass-reflection blur-2xl" />
         {/* Sheen */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.12]"
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 45%, transparent 55%)",
-          }}
-        />
+        <div className={sheen.className} style={sheen.style} />
 
         <div className="relative z-10 flex items-center gap-2 min-w-0">
           {selected?.icon}
@@ -102,7 +103,7 @@ export function LiquidGlassSelect({
             )}
           >
             {/* Top highlight */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            <div className={dropdownHighlight.className} style={dropdownHighlight.style} />
             {options.map((option) => (
               <motion.button
                 key={option.value}
@@ -114,9 +115,13 @@ export function LiquidGlassSelect({
                 className={cn(
                   "flex w-full items-center gap-2 px-4 py-2.5 text-sm transition-colors",
                   value === option.value
-                    ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
-                    : "text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border-subtle)] hover:text-[var(--lg-text)]"
+                    ? "text-[var(--lg-text)] bg-[var(--selected-fill)]"
+                    : "text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--hover-fill)]"
                 )}
+                style={{
+                  "--selected-fill": selectedFill.style.background,
+                  "--hover-fill": hoverFill.style.background,
+                } as CSSProperties}
               >
                 {option.icon}
                 <span className="flex-1 text-left">{option.label}</span>

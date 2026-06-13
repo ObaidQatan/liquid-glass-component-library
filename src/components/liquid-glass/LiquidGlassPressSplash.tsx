@@ -5,6 +5,7 @@ interface LiquidGlassPressSplashProps {
   size?: number;
   tint?: "light" | "dark";
   className?: string;
+  duration?: number;
 }
 
 export function LiquidGlassPressSplash({
@@ -12,6 +13,7 @@ export function LiquidGlassPressSplash({
   size = 140,
   tint = "light",
   className,
+  duration = 0.55,
 }: LiquidGlassPressSplashProps) {
   const splashBackground =
     tint === "light"
@@ -33,7 +35,7 @@ export function LiquidGlassPressSplash({
             ]
           : "50%",
       }}
-      transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration, ease: [0.25, 0.46, 0.45, 0.94] }}
       style={{
         left: `${press.x}%`,
         top: `${press.y}%`,

@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback, useEffect, useMemo, type MouseEvent } from "react";
+import { useGlassSurface } from "./useGlassSurface";
 
 interface LiquidGlassToggleProps {
   checked?: boolean;
@@ -62,6 +63,10 @@ export function LiquidGlassToggle({
   const [isPressed, setIsPressed] = useState(false);
   const [isMoving, setIsMoving] = useState(false);
   const fluidity = useGlassFluidity();
+
+  const thumbSurface = useGlassSurface({ variant: "thumb" });
+  const trackSurface = useGlassSurface({ variant: "track" });
+  const trackActiveSurface = useGlassSurface({ variant: "track-active", tint, activeTint: tint });
 
   // Snappy spring so the shape snaps back immediately when the state change finishes.
   const spring = useMemo(() => {
@@ -140,14 +145,11 @@ export function LiquidGlassToggle({
           className={cn(
             "absolute inset-0 rounded-full -z-10",
             "glass-blur-xl",
-            "border",
-            checked ? "border-[var(--lg-border)]" : "bg-white/[0.08] border-[var(--lg-border)]"
+            "border border-[var(--lg-border)]"
           )}
           style={{
-            background: checked
-              ? `linear-gradient(135deg, ${tint}30 0%, ${tint}14 100%)`
-              : undefined,
-            boxShadow: "inset 0 3px 8px rgba(0,0,0,0.28), inset 0 -1px 2px rgba(255,255,255,0.10)",
+            background: checked ? trackActiveSurface.style.background : trackSurface.style.background,
+            boxShadow: trackSurface.style.boxShadow,
           }}
         >
           {/* Lensing backdrop layer */}
@@ -185,16 +187,12 @@ export function LiquidGlassToggle({
           }}
           className={cn(
             "absolute top-1/2 -translate-y-1/2 rounded-full z-10 pointer-events-none",
-            "glass-blur-lg"
+            thumbSurface.className
           )}
           style={{
             left: s.padding + idleWidth / 2,
             height: s.thumb,
-            background:
-              "radial-gradient(circle at 30% 25%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.75%), transparent) 0%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.48%), transparent) 45%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.22%), transparent) 100%)",
-            border: "1px solid rgba(255,255,255,0.24)",
-            boxShadow:
-              "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
+            ...thumbSurface.style,
           }}
         >
           {/* Reflection response */}

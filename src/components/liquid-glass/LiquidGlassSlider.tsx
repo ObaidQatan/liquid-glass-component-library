@@ -8,6 +8,7 @@ import {
   useMemo,
 } from "react";
 import { useTheme } from "./ThemeProvider";
+import { useGlassSurface } from "./useGlassSurface";
 
 interface LiquidGlassSliderProps {
   value?: number;
@@ -66,6 +67,8 @@ export function LiquidGlassSlider({
   const trackRef = useRef<HTMLDivElement>(null);
   const { isDark } = useTheme();
   const fluidity = useGlassFluidity();
+  const thumbSurface = useGlassSurface({ variant: "thumb" });
+  const trackFillSurface = useGlassSurface({ variant: "track-active", tint: "#3b82f6", activeTint: "#8b5cf6" });
 
   const percentage = ((value - min) / (max - min)) * 100;
 
@@ -164,8 +167,8 @@ export function LiquidGlassSlider({
       >
         {/* Filled track */}
         <motion.div
-          className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-liquid-blue/60 to-liquid-purple/60"
-          style={{ width: `${percentage}%` }}
+          className="absolute inset-y-0 left-0 rounded-full"
+          style={{ width: `${percentage}%`, background: trackFillSurface.style.background }}
           animate={{ width: `${percentage}%` }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         />
@@ -200,16 +203,12 @@ export function LiquidGlassSlider({
           }}
           className={cn(
             "absolute top-1/2 -translate-y-1/2 -translate-x-1/2 rounded-full z-10 pointer-events-none",
-            "glass-blur-lg"
+            thumbSurface.className
           )}
           style={{
             left: `${percentage}%`,
             height: thumb,
-            background:
-              "radial-gradient(circle at 30% 25%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.75%), transparent) 0%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.48%), transparent) 45%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.22%), transparent) 100%)",
-            border: "1px solid rgba(255,255,255,0.24)",
-            boxShadow:
-              "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
+            ...thumbSurface.style,
           }}
         >
           {/* Reflection response */}

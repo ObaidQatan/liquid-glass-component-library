@@ -91,6 +91,7 @@ export function MobileFloatingActionButton({
 
       <motion.button
         whileTap={{ scale: 0.92 }}
+        transition={{ type: "spring", stiffness: 600, damping: 22 }}
         onClick={toggle}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
@@ -121,7 +122,7 @@ export function MobileFloatingActionButton({
           </>
         )}
 
-        <LiquidGlassPressSplash press={press} size={160} />
+        <LiquidGlassPressSplash press={press} size={160} duration={0.35} />
         <span className="relative z-10">{isOpen ? expandedIcon : icon}</span>
       </motion.button>
     </div>
@@ -145,7 +146,7 @@ function ActionButton({
       initial={{ opacity: 0, scale: 0.5, y: 10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.5, y: 10 }}
-      transition={{ delay: index * 0.05 }}
+      transition={{ type: "spring", stiffness: 500, damping: 25, delay: index * 0.03 }}
       className="flex items-center gap-2"
     >
       <span className="px-2 py-1 rounded-lg glass-blur-sm glass-surface glass-border text-xs text-[var(--lg-text-secondary)] whitespace-nowrap">
@@ -165,7 +166,7 @@ function ActionButton({
       >
         <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-full" />
         <div className="pointer-events-none absolute -top-2 -right-2 h-6 w-6 rounded-full bg-white/10 blur-md" />
-        <LiquidGlassPressSplash press={press} size={90} />
+        <LiquidGlassPressSplash press={press} size={90} duration={0.3} />
         {action.icon}
       </motion.button>
     </motion.div>
