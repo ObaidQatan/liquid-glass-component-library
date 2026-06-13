@@ -50,16 +50,26 @@ export function MobileSearchBar({
   return (
     <div
       className={cn(
-        "relative flex items-center gap-2 mx-4 my-2 px-3 py-2 rounded-xl transition-all duration-200",
-        "glass-blur-sm glass-surface glass-border",
+        "relative flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-200 overflow-hidden",
+        "glass-blur glass-surface-strong glass-border glass-highlight",
         isActive && "ring-2 ring-white/10",
         className
       )}
     >
       {/* Top highlight */}
-      <div className="absolute inset-x-2 top-0 h-px bg-[var(--lg-border)] rounded-full" />
+      <div className="pointer-events-none absolute inset-x-3 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full" />
+      {/* Reflection blob */}
+      <div className="pointer-events-none absolute -top-5 -right-5 h-14 w-14 rounded-full glass-reflection blur-2xl" />
+      {/* Sheen */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.12]"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 45%, transparent 55%)",
+        }}
+      />
 
-      <Search size={16} className="text-[var(--lg-text-muted)] flex-shrink-0" />
+      <Search size={16} className="relative z-10 text-[var(--lg-text-muted)] flex-shrink-0" />
 
       <input
         ref={inputRef}
@@ -71,7 +81,7 @@ export function MobileSearchBar({
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         placeholder={placeholder}
-        className="flex-1 bg-transparent text-sm text-[var(--lg-text)] placeholder-[var(--lg-text-muted)] outline-none"
+        className="relative z-10 flex-1 bg-transparent text-sm text-[var(--lg-text)] placeholder-[var(--lg-text-muted)] outline-none"
       />
 
       <AnimatePresence>
@@ -81,7 +91,7 @@ export function MobileSearchBar({
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             onClick={handleClear}
-            className="flex-shrink-0 text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
+            className="relative z-10 flex-shrink-0 text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
           >
             <X size={16} />
           </motion.button>
@@ -90,7 +100,7 @@ export function MobileSearchBar({
 
       {(showCancelButton || isActive) && (
         <button
-          className="flex-shrink-0 text-sm font-medium text-liquid-blue"
+          className="relative z-10 flex-shrink-0 text-sm font-medium text-liquid-blue"
           onClick={() => {
             handleClear();
             onCancel?.();

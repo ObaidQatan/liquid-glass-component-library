@@ -76,10 +76,7 @@ export function MobileSlideMenu({
                       )}>
                       <span className={item.destructive ? "text-liquid-rose" : "text-[var(--lg-text-muted)]"}>{item.icon}</span>
                       <span className="flex-1 text-sm">{item.label}</span>
-                      {item.badge !== undefined && item.badge > 0 && (
-                        <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-liquid-rose/80 px-1 text-[10px] font-bold text-white">{item.badge}</span>
-                      )}
-                      {!item.badge && !item.destructive && <ChevronRight size={14} className="text-[var(--lg-text-muted)]" />}
+                      {!item.destructive && <ChevronRight size={14} className="text-[var(--lg-text-muted)]" />}
                     </motion.button>
                   ))}
                   {si < sections.length - 1 && <div className="mx-5 my-1 h-px bg-[var(--lg-border)]" />}

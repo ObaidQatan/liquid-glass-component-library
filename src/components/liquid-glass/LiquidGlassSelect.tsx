@@ -53,14 +53,27 @@ export function LiquidGlassSelect({
         whileTap={{ scale: disabled ? 1 : 0.98 }}
         onClick={() => !disabled && setIsOpen(!isOpen)}
         className={cn(
-          "relative flex w-full items-center justify-between gap-3",
-          "glass-blur-sm glass-surface glass-border glass-inner-glow",
+          "relative flex w-full items-center justify-between gap-3 overflow-hidden",
+          "glass-blur glass-surface-strong glass-border glass-highlight",
           "px-4 py-3 rounded-2xl text-left transition-all duration-200",
           "focus:ring-2 focus:ring-white/20 focus:border-[var(--lg-border)]",
           disabled && "opacity-50 cursor-not-allowed"
         )}
       >
-        <div className="flex items-center gap-2 min-w-0">
+        {/* Top highlight */}
+        <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full" />
+        {/* Reflection blob */}
+        <div className="pointer-events-none absolute -top-6 -right-6 h-16 w-16 rounded-full glass-reflection blur-2xl" />
+        {/* Sheen */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.12]"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 45%, transparent 55%)",
+          }}
+        />
+
+        <div className="relative z-10 flex items-center gap-2 min-w-0">
           {selected?.icon}
           <span className={cn("truncate", !selected && "text-[var(--lg-text-muted)]")}>
             {selected?.label || placeholder}
@@ -69,12 +82,10 @@ export function LiquidGlassSelect({
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="flex-shrink-0 text-[var(--lg-text-muted)]"
+          className="relative z-10 flex-shrink-0 text-[var(--lg-text-muted)]"
         >
           <ChevronDown size={16} />
         </motion.div>
-        {/* Top highlight */}
-        <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-[var(--lg-border)] rounded-full" />
       </motion.button>
 
       <AnimatePresence>

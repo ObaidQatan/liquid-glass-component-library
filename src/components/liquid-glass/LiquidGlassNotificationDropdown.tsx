@@ -43,8 +43,6 @@ export function LiquidGlassNotificationDropdown({
 }: LiquidGlassNotificationDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const unreadCount = notifications.filter((n) => !n.read).length;
-
   useEffect(() => {
     const handle = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setIsOpen(false);
@@ -62,11 +60,6 @@ export function LiquidGlassNotificationDropdown({
         className="relative flex h-10 w-10 items-center justify-center rounded-xl glass-blur-sm glass-surface glass-border text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors"
       >
         <Bell size={18} />
-        {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-liquid-rose px-1 text-[9px] font-bold text-white">
-            {unreadCount}
-          </span>
-        )}
       </motion.button>
 
       <AnimatePresence>

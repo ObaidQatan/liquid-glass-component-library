@@ -132,8 +132,7 @@ export default function App() {
   const [stepperCurrent, setStepperCurrent] = useState(1);
   const [searchValue, setSearchValue] = useState("");
   const [showCenterTabBar, setShowCenterTabBar] = useState(false);
-  const [pressSplashActive, setPressSplashActive] = useState(false);
-  const [pressSplashPos, setPressSplashPos] = useState({ x: 50, y: 50 });
+
 
   const addToast = useCallback((msg: string, v: ToastItem["variant"] = "info") => {
     setToasts((p) => [...p, { id: Math.random().toString(36).slice(2), message: msg, variant: v }]);
@@ -141,7 +140,7 @@ export default function App() {
   const removeToast = useCallback((id: string) => setToasts((p) => p.filter((t) => t.id !== id)), []);
   const toggleChip = (id: string) => setChipActive((p) => p.includes(id) ? p.filter((c) => c !== id) : [...p, id]);
 
-  const tabs = [{ label: "General", icon: <Settings size={14} /> }, { label: "Appearance", icon: <Palette size={14} />, badge: 3 }, { label: "Security", icon: <Shield size={14} /> }];
+  const tabs = [{ label: "General", icon: <Settings size={14} /> }, { label: "Appearance", icon: <Palette size={14} /> }, { label: "Security", icon: <Shield size={14} /> }];
   const pillTabs = [{ label: "All", icon: <LayoutGrid size={14} /> }, { label: "Active", icon: <Zap size={14} /> }, { label: "Archived", icon: <Layers size={14} /> }];
   const selectOptions = [
     { value: "option1", label: "System Default", icon: <Command size={14} className="text-[var(--lg-text-muted)]" /> },
@@ -174,8 +173,8 @@ export default function App() {
   ];
   const mobileTabs = [
     { id: "home", icon: <Home size={22} />, activeIcon: <Home size={22} />, label: "Home" },
-    { id: "search", icon: <Search size={22} />, activeIcon: <Search size={22} />, label: "Search", badge: 3 },
-    { id: "notifications", icon: <Bell size={22} />, activeIcon: <Bell size={22} />, label: "Alerts", badge: 12 },
+    { id: "search", icon: <Search size={22} />, activeIcon: <Search size={22} />, label: "Search" },
+    { id: "notifications", icon: <Bell size={22} />, activeIcon: <Bell size={22} />, label: "Alerts" },
     { id: "profile", icon: <User size={22} />, activeIcon: <User size={22} />, label: "Profile" },
   ];
   const mobileTabVariants: MobileBottomTabVariant[] = ["default", "pill", "floating", "ios26-fluid", "ios26-chrome", "ios26-glow", "ios26-dock", "ios26-super-pill"];
@@ -187,8 +186,8 @@ export default function App() {
   const slideMenuSections = [
     { title: "Navigation", items: [
       { id: "1", label: "Home", icon: <Home size={18} /> },
-      { id: "2", label: "Search", icon: <Search size={18} />, badge: 3 },
-      { id: "3", label: "Notifications", icon: <Bell size={18} />, badge: 12 },
+      { id: "2", label: "Search", icon: <Search size={18} /> },
+      { id: "3", label: "Notifications", icon: <Bell size={18} /> },
     ]},
     { title: "Settings", items: [
       { id: "4", label: "Profile", icon: <User size={18} /> },
@@ -618,23 +617,19 @@ export default function App() {
 
           {/* Interactive Lists */}
           <section>
-            <SectionHeader icon={<List size={18} />} title="Interactive Lists" description="Swipeable items and pull-to-refresh" />
+            <SectionHeader icon={<List size={18} />} title="Interactive Lists" description="Swipeable items and glass scroll area" />
             <ComponentGrid cols={2}>
               <LG.LiquidGlassCard><DemoLabel>Swipeable</DemoLabel><LG.MobileSwipeableList items={swipeableItems} /></LG.LiquidGlassCard>
               <LG.LiquidGlassCard>
-                <DemoLabel>Pull to Refresh</DemoLabel>
-                <div className="h-48 overflow-y-auto rounded-xl">
-                  <LG.MobilePullToRefresh onRefresh={async () => { await new Promise(r => setTimeout(r, 1500)); addToast("Refreshed!", "success"); }}>
-                    <div className="space-y-2 p-1">
-                      {Array.from({ length: 8 }).map((_, i) => (
-                        <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-[var(--lg-border)]">
-                          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-liquid-blue/20 to-liquid-purple/20 flex items-center justify-center text-xs font-bold text-[var(--lg-text-muted)]">{i + 1}</div>
-                          <p className="text-sm text-[var(--lg-text)]">Item {i + 1}</p>
-                        </div>
-                      ))}
+                <DemoLabel>Scroll Area</DemoLabel>
+                <LG.LiquidGlassScrollArea maxHeight="180px" className="pr-3">
+                  {Array.from({ length: 12 }).map((_, i) => (
+                    <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-[var(--lg-border)] mb-2 last:mb-0">
+                      <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-liquid-blue/20 to-liquid-purple/20 flex items-center justify-center text-xs font-bold text-[var(--lg-text-muted)]">{i + 1}</div>
+                      <p className="text-sm text-[var(--lg-text)]">Item {i + 1}</p>
                     </div>
-                  </LG.MobilePullToRefresh>
-                </div>
+                  ))}
+                </LG.LiquidGlassScrollArea>
               </LG.LiquidGlassCard>
             </ComponentGrid>
           </section>
@@ -763,7 +758,7 @@ export default function App() {
                   </LG.LiquidGlassTooltip>
                 </div>
               </LG.LiquidGlassCard>
-              <LG.LiquidGlassCard>
+              <LG.LiquidGlassCard className="overflow-visible">
                 <DemoLabel>Hover Card</DemoLabel>
                 <div className="flex justify-center py-2">
                   <LG.LiquidGlassHoverCard
@@ -778,7 +773,7 @@ export default function App() {
                   </LG.LiquidGlassHoverCard>
                 </div>
               </LG.LiquidGlassCard>
-              <LG.LiquidGlassCard>
+              <LG.LiquidGlassCard className="overflow-visible">
                 <DemoLabel>Notification Dropdown</DemoLabel>
                 <div className="flex justify-center py-2">
                   <LG.LiquidGlassNotificationDropdown
@@ -807,7 +802,7 @@ export default function App() {
             {/* Loading & Empty States */}
             <div className="mt-10 space-y-6">
               <DemoLabel>Loading & Empty States</DemoLabel>
-              <ComponentGrid cols={3}>
+              <ComponentGrid cols={2}>
                 <LG.LiquidGlassCard>
                   <DemoLabel>Skeleton</DemoLabel>
                   <LG.LiquidGlassSkeleton lines={3} width="100%" height={12} />
@@ -820,14 +815,6 @@ export default function App() {
                     description="Try a different search term."
                     action={<LG.LiquidGlassButton size="sm">Clear search</LG.LiquidGlassButton>}
                   />
-                </LG.LiquidGlassCard>
-                <LG.LiquidGlassCard>
-                  <DemoLabel>Scroll Area</DemoLabel>
-                  <LG.LiquidGlassScrollArea maxHeight="120px" className="pr-3">
-                    {Array.from({ length: 12 }).map((_, i) => (
-                      <p key={i} className="text-xs text-[var(--lg-text-secondary)] py-1">Scrollable item {i + 1}</p>
-                    ))}
-                  </LG.LiquidGlassScrollArea>
                 </LG.LiquidGlassCard>
               </ComponentGrid>
             </div>
@@ -862,7 +849,7 @@ export default function App() {
             {/* Inputs & Mobile Extras */}
             <div className="mt-10 space-y-6">
               <DemoLabel>Inputs & Mobile Extras</DemoLabel>
-              <ComponentGrid cols={3}>
+              <ComponentGrid cols={2}>
                 <LG.LiquidGlassCard>
                   <DemoLabel>File Upload</DemoLabel>
                   <LG.LiquidGlassFileUpload onFilesSelected={(files) => addToast(`Selected ${files.length} file(s)`, "success")} />
@@ -871,33 +858,16 @@ export default function App() {
                   <DemoLabel>Mobile Search Bar</DemoLabel>
                   <LG.MobileSearchBar value={searchValue} onChange={setSearchValue} showCancelButton />
                 </LG.LiquidGlassCard>
-                <LG.LiquidGlassCard>
-                  <DemoLabel>Press Splash</DemoLabel>
-                  <div
-                    className="flex justify-center py-6 relative overflow-hidden rounded-xl bg-[var(--lg-border)]"
-                    onPointerDown={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      setPressSplashPos({
-                        x: ((e.clientX - rect.left) / rect.width) * 100,
-                        y: ((e.clientY - rect.top) / rect.height) * 100,
-                      });
-                      setPressSplashActive(true);
-                    }}
-                    onPointerUp={() => setPressSplashActive(false)}
-                    onPointerLeave={() => setPressSplashActive(false)}
-                  >
-                    <LG.LiquidGlassPressSplash press={{ isPressed: pressSplashActive, x: pressSplashPos.x, y: pressSplashPos.y }} size={140} />
-                    <span className="relative z-10 text-sm font-medium text-[var(--lg-text-secondary)] pointer-events-none">Press & hold</span>
-                  </div>
-                </LG.LiquidGlassCard>
               </ComponentGrid>
             </div>
 
             {/* Floating Action Button */}
             <div className="mt-10">
               <DemoLabel>Floating Action Button</DemoLabel>
-              <div className="relative h-32 flex items-end justify-center rounded-2xl bg-[var(--lg-border-subtle)] overflow-visible">
-                <LG.MobileFloatingActionButton actions={fabActions} className="!relative !bottom-auto !right-auto" />
+              <div className="relative h-32 flex items-center justify-center gap-8 rounded-2xl bg-[var(--lg-border-subtle)] overflow-visible">
+                <LG.MobileFloatingActionButton variant="chrome" actions={fabActions} className="!relative !bottom-auto !right-auto" />
+                <LG.MobileFloatingActionButton variant="colored" actions={fabActions} className="!relative !bottom-auto !right-auto" />
+                <LG.MobileFloatingActionButton variant="ghost" actions={fabActions} className="!relative !bottom-auto !right-auto" />
               </div>
             </div>
           </section>

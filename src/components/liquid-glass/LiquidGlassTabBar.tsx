@@ -67,11 +67,6 @@ export function LiquidGlassTabBar({
             <span className="relative flex items-center gap-2">
               {tab.icon}
               {tab.label}
-              {tab.badge !== undefined && tab.badge > 0 && (
-                <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-liquid-rose/80 px-1 text-[10px] font-bold text-white">
-                  {tab.badge}
-                </span>
-              )}
             </span>
           </motion.button>
         ))}
@@ -93,11 +88,6 @@ export function LiquidGlassTabBar({
           >
             {tab.icon}
             {tab.label}
-            {tab.badge !== undefined && tab.badge > 0 && (
-              <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-liquid-rose/80 px-1 text-[10px] font-bold text-white">
-                {tab.badge}
-              </span>
-            )}
             {activeIndex === i && (
               <motion.div
                 layoutId="tab-underline"
@@ -170,11 +160,6 @@ export function LiquidGlassTabBar({
           <span className="relative flex items-center gap-2">
             {tab.icon}
             {tab.label}
-            {tab.badge !== undefined && tab.badge > 0 && (
-              <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-liquid-rose/80 px-1 text-[10px] font-bold text-white">
-                {tab.badge}
-              </span>
-            )}
           </span>
         </motion.button>
       ))}

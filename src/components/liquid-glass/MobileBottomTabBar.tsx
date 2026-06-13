@@ -286,29 +286,69 @@ function ActiveIndicator({
   variant: MobileBottomTabVariant;
   fluidity: number;
 }) {
-  const isSuperPill = variant === "ios26-super-pill";
-  const isPillLike =
+  const hasBackground =
     variant === "pill" ||
-    variant === "floating" ||
     variant === "ios26-fluid" ||
     variant === "ios26-glow" ||
     variant === "ios26-dock" ||
     variant === "ios26-super-pill";
-  const radius = isSuperPill ? "1.6rem" : isPillLike ? "1rem" : "0.75rem";
 
+  const isSuperPill = variant === "ios26-super-pill";
+  const radius = isSuperPill ? "1.6rem" : "1rem";
+
+  if (hasBackground) {
+    return (
+      <motion.div
+        layoutId="mobile-tab-bg"
+        initial={false}
+        animate={{
+          left: layout.left,
+          top: layout.top,
+          width: layout.width,
+          height: layout.height,
+        }}
+        transition={{ type: "spring", stiffness: 300 + fluidity * 3, damping: 30 }}
+        className="absolute z-0 pointer-events-none glass-blur-lg overflow-hidden"
+        style={{
+          borderRadius: radius,
+          background:
+            "radial-gradient(circle at 30% 25%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.75%), transparent) 0%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.48%), transparent) 45%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.22%), transparent) 100%)",
+          border: "1px solid rgba(255,255,255,0.24)",
+          boxShadow:
+            "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
+        }}
+      >
+        <div
+          className="absolute inset-0 glass-reflection mix-blend-soft-light pointer-events-none"
+          style={{ borderRadius: radius }}
+        />
+        <div
+          className="absolute inset-0 opacity-[0.18] pointer-events-none"
+          style={{
+            borderRadius: radius,
+            background:
+              "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 45%, transparent 55%)",
+          }}
+        />
+        <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-[var(--lg-border)] rounded-full" />
+      </motion.div>
+    );
+  }
+
+  // default / floating / ios26-chrome: a glowing top-line indicator
   return (
     <motion.div
+      layoutId="mobile-tab-line"
       initial={false}
       animate={{
-        left: layout.left,
-        top: layout.top,
-        width: layout.width,
-        height: layout.height,
+        left: layout.left + 8,
+        top: layout.top + 4,
+        width: Math.max(20, layout.width - 16),
+        height: 6,
       }}
       transition={{ type: "spring", stiffness: 300 + fluidity * 3, damping: 30 }}
-      className="absolute z-0 pointer-events-none glass-blur-lg overflow-hidden"
+      className="absolute z-0 pointer-events-none glass-blur-lg overflow-hidden rounded-full"
       style={{
-        borderRadius: radius,
         background:
           "radial-gradient(circle at 30% 25%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.75%), transparent) 0%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.48%), transparent) 45%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.22%), transparent) 100%)",
         border: "1px solid rgba(255,255,255,0.24)",
@@ -316,19 +356,14 @@ function ActiveIndicator({
           "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
       }}
     >
+      <div className="absolute inset-0 rounded-full glass-reflection mix-blend-soft-light pointer-events-none" />
       <div
-        className="absolute inset-0 glass-reflection mix-blend-soft-light pointer-events-none"
-        style={{ borderRadius: radius }}
-      />
-      <div
-        className="absolute inset-0 opacity-[0.18] pointer-events-none"
+        className="absolute inset-0 rounded-full opacity-[0.18] pointer-events-none"
         style={{
-          borderRadius: radius,
           background:
             "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 45%, transparent 55%)",
         }}
       />
-      <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-[var(--lg-border)] rounded-full" />
     </motion.div>
   );
 }
@@ -397,12 +432,6 @@ function TabButton({
         >
           {isActive && tab.activeIcon ? tab.activeIcon : tab.icon}
         </motion.div>
-
-        {tab.badge !== undefined && tab.badge > 0 && (
-          <span className="absolute -top-1.5 -right-2.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-liquid-rose px-1 text-[8px] font-bold text-white shadow-lg shadow-liquid-rose/20">
-            {tab.badge > 99 ? "99+" : tab.badge}
-          </span>
-        )}
       </div>
 
       {showLabel && !hideActiveLabel && (

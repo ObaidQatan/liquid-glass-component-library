@@ -20,6 +20,7 @@ interface MobileFloatingActionButtonProps {
   onClick?: () => void;
   position?: "bottom-right" | "bottom-left";
   color?: string;
+  variant?: "chrome" | "colored" | "ghost" | "glow";
 }
 
 export function MobileFloatingActionButton({
@@ -30,6 +31,7 @@ export function MobileFloatingActionButton({
   onClick,
   position = "bottom-right",
   color = "from-liquid-blue to-liquid-purple",
+  variant = "chrome",
 }: MobileFloatingActionButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { state: press, onPointerDown, onPointerUp, onPointerLeave, onPointerCancel } =
@@ -41,9 +43,23 @@ export function MobileFloatingActionButton({
   };
 
   const positionClass =
-    position === "bottom-right"
-      ? "bottom-20 right-4"
-      : "bottom-20 left-4";
+    position === "bottom-right" ? "bottom-20 right-4" : "bottom-20 left-4";
+
+  const isColored = variant === "colored" || variant === "glow";
+  const isGlow = variant === "glow";
+  const isGhost = variant === "ghost";
+
+  const mainClasses = cn(
+    "relative flex h-14 w-14 items-center justify-center rounded-2xl overflow-hidden isolate",
+    "transition-all duration-200",
+    isGhost
+      ? "glass-blur-sm glass-surface glass-border text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)]"
+      : isColored
+        ? cn("bg-gradient-to-br", color, "text-white")
+        : "glass-blur-xl glass-surface-strong glass-border glass-highlight-strong text-[var(--lg-text)]",
+    isGlow && "shadow-[0_0_30px_rgba(59,130,246,0.35)]",
+    !isGhost && !isColored && "shadow-lg shadow-black/20"
+  );
 
   return (
     <div
@@ -76,16 +92,32 @@ export function MobileFloatingActionButton({
         onPointerLeave={onPointerLeave}
         onPointerCancel={onPointerCancel}
         animate={{ rotate: isOpen ? 45 : 0 }}
-        className={cn(
-          "relative flex h-14 w-14 items-center justify-center rounded-2xl",
-          "bg-gradient-to-br",
-          color,
-          "text-white glass-highlight-strong shadow-lg shadow-liquid-blue/30 overflow-hidden isolate"
-        )}
+        className={mainClasses}
       >
+        {/* Chrome liquid-glass overlays */}
+        {!isGhost && !isColored && (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-3 top-0.5 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent rounded-full z-10" />
+            <div className="pointer-events-none absolute -top-4 -right-4 h-12 w-12 rounded-full bg-white/15 blur-xl" />
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.15]"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 45%, transparent 55%)",
+              }}
+            />
+          </>
+        )}
+        {isColored && (
+          <>
+            <div className="pointer-events-none absolute inset-x-3 top-0.5 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full z-10" />
+            <div className="pointer-events-none absolute -top-3 -right-3 h-10 w-10 rounded-full bg-white/20 blur-lg" />
+          </>
+        )}
+
         <LiquidGlassPressSplash press={press} size={160} />
-        <div className="pointer-events-none absolute inset-x-3 top-0.5 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full z-10" />
-        {isOpen ? expandedIcon : icon}
+        <span className="relative z-10">{isOpen ? expandedIcon : icon}</span>
       </motion.button>
     </div>
   );
@@ -124,8 +156,10 @@ function ActionButton({
           action.onClick();
           onClose();
         }}
-        className="relative flex h-10 w-10 items-center justify-center rounded-full glass-blur-sm glass-surface glass-border text-[var(--lg-text-secondary)] overflow-hidden isolate"
+        className="relative flex h-10 w-10 items-center justify-center rounded-full overflow-hidden glass-blur glass-surface-strong glass-border glass-highlight text-[var(--lg-text-secondary)]"
       >
+        <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-full" />
+        <div className="pointer-events-none absolute -top-2 -right-2 h-6 w-6 rounded-full bg-white/10 blur-md" />
         <LiquidGlassPressSplash press={press} size={90} />
         {action.icon}
       </motion.button>

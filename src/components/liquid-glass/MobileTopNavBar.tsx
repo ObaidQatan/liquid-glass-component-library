@@ -1,7 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
-import { ChevronLeft, MoreVertical } from "lucide-react";
-import type { ReactNode } from "react";
+import { ChevronLeft, MoreVertical, Search } from "lucide-react";
+import { useState, type ReactNode } from "react";
 
 interface MobileTopNavBarProps {
   title?: string;
@@ -15,6 +15,18 @@ interface MobileTopNavBarProps {
   translucent?: boolean;
 }
 
+function BackButton({ onBack }: { onBack?: () => void }) {
+  return (
+    <motion.button
+      whileTap={{ scale: 0.9 }}
+      onClick={onBack}
+      className="flex h-8 w-8 items-center justify-center rounded-xl glass-blur-sm glass-surface glass-border glass-highlight text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)]"
+    >
+      <ChevronLeft size={20} strokeWidth={2.5} />
+    </motion.button>
+  );
+}
+
 export function MobileTopNavBar({
   title,
   subtitle,
@@ -26,6 +38,8 @@ export function MobileTopNavBar({
   variant = "standard",
   translucent = true,
 }: MobileTopNavBarProps) {
+  const [searchValue, setSearchValue] = useState("");
+
   if (variant === "large") {
     return (
       <div className={cn(
@@ -38,12 +52,7 @@ export function MobileTopNavBar({
         <div className="pointer-events-none absolute -top-10 -right-10 h-24 w-24 rounded-full bg-[var(--lg-reflection)] blur-2xl" />
         <div className="flex items-center justify-between px-4 h-11">
           <div className="flex items-center min-w-12">
-            {leftAction || (showBack && (
-              <motion.button whileTap={{ scale: 0.9 }} onClick={onBack} className="flex items-center gap-0.5 text-liquid-blue">
-                <ChevronLeft size={22} strokeWidth={2.5} />
-                <span className="text-sm font-medium">Back</span>
-              </motion.button>
-            ))}
+            {leftAction || (showBack && <BackButton onBack={onBack} />)}
           </div>
           <div className="flex items-center gap-1 min-w-12 justify-end">
             {rightActions?.map((action, i) => <span key={i}>{action}</span>)}
@@ -69,11 +78,7 @@ export function MobileTopNavBar({
         <div className="pointer-events-none absolute -top-10 -right-10 h-24 w-24 rounded-full bg-[var(--lg-reflection)] blur-2xl" />
         <div className="flex items-center justify-between px-4 h-11">
           <div className="flex items-center min-w-12">
-            {leftAction || (showBack && (
-              <motion.button whileTap={{ scale: 0.9 }} onClick={onBack} className="flex items-center gap-0.5 text-liquid-blue">
-                <ChevronLeft size={22} strokeWidth={2.5} /><span className="text-sm font-medium">Back</span>
-              </motion.button>
-            ))}
+            {leftAction || (showBack && <BackButton onBack={onBack} />)}
           </div>
           <div className="flex items-center gap-1 min-w-12 justify-end">
             {rightActions?.map((action, i) => <span key={i}>{action}</span>)}
@@ -96,11 +101,7 @@ export function MobileTopNavBar({
         className
       )}>
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px glass-top-highlight" />
-        {leftAction || (showBack && (
-          <motion.button whileTap={{ scale: 0.9 }} onClick={onBack} className="text-liquid-blue">
-            <ChevronLeft size={22} strokeWidth={2.5} />
-          </motion.button>
-        ))}
+        {leftAction || (showBack && <BackButton onBack={onBack} />)}
         <div className="flex-1 min-w-0">
           <h1 className="text-sm font-semibold text-[var(--lg-text)] truncate">{title}</h1>
         </div>
@@ -120,15 +121,29 @@ export function MobileTopNavBar({
         className
       )}>
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px glass-top-highlight" />
-        <div className="flex items-center gap-3 px-4 h-11">
-          {leftAction || (showBack && (
-            <motion.button whileTap={{ scale: 0.9 }} onClick={onBack} className="text-liquid-blue flex-shrink-0">
-              <ChevronLeft size={22} strokeWidth={2.5} />
-            </motion.button>
-          ))}
-          <div className="flex-1 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--lg-border)]">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--lg-text-muted)]"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            <span className="text-sm text-[var(--lg-text-muted)]">Search...</span>
+        <div className="flex items-center gap-3 px-4 h-12">
+          {leftAction || (showBack && <BackButton onBack={onBack} />)}
+          <div className="relative flex-1 flex items-center gap-2 px-3 py-1.5 rounded-xl overflow-hidden glass-blur glass-surface-strong glass-border glass-highlight">
+            {/* Top highlight */}
+            <div className="pointer-events-none absolute inset-x-3 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-full" />
+            {/* Reflection blob */}
+            <div className="pointer-events-none absolute -top-4 -right-4 h-12 w-12 rounded-full glass-reflection blur-xl" />
+            {/* Sheen */}
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.12]"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 45%, transparent 55%)",
+              }}
+            />
+            <Search size={14} className="relative z-10 text-[var(--lg-text-muted)] flex-shrink-0" />
+            <input
+              type="text"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              placeholder="Search..."
+              className="relative z-10 flex-1 bg-transparent text-sm text-[var(--lg-text)] placeholder-[var(--lg-text-muted)] outline-none"
+            />
           </div>
           <div className="flex items-center gap-1">
             {rightActions?.map((action, i) => <span key={i}>{action}</span>)}
@@ -149,11 +164,7 @@ export function MobileTopNavBar({
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px glass-top-highlight" />
       <div className="pointer-events-none absolute -top-10 -right-10 h-20 w-20 rounded-full bg-[var(--lg-reflection)] blur-2xl" />
       <div className="flex items-center min-w-12">
-        {leftAction || (showBack && (
-          <motion.button whileTap={{ scale: 0.9 }} onClick={onBack} className="flex items-center gap-0.5 text-liquid-blue">
-            <ChevronLeft size={22} strokeWidth={2.5} /><span className="text-sm font-medium">Back</span>
-          </motion.button>
-        ))}
+        {leftAction || (showBack && <BackButton onBack={onBack} />)}
       </div>
       <div className="flex flex-col items-center absolute left-1/2 -translate-x-1/2">
         {title && <h1 className="text-sm font-medium text-[var(--lg-text)]">{title}</h1>}

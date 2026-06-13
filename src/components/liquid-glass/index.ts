@@ -63,7 +63,6 @@ export { MobileAppRating } from "./MobileAppRating";
 export { MobileSplashScreen } from "./MobileSplashScreen";
 export { MobileSlideMenu } from "./MobileSlideMenu";
 export { MobilePageIndicator } from "./MobilePageIndicator";
-export { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";
 export { MobileFloatingActionButton } from "./MobileFloatingAction";
 export { MobileContextPreview } from "./MobileContextPreview";
 
