@@ -1,0 +1,64 @@
+import { cn } from "../../utils/cn";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, type ReactNode } from "react";
+
+interface LiquidGlassHoverCardProps {
+  children: ReactNode;
+  content: ReactNode;
+  className?: string;
+  delay?: number;
+  width?: string;
+}
+
+export function LiquidGlassHoverCard({
+  children,
+  content,
+  className,
+  delay = 0.3,
+  width = "280px",
+}: LiquidGlassHoverCardProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  let timeoutId: ReturnType<typeof setTimeout>;
+
+  const show = () => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => setIsVisible(true), delay * 1000);
+  };
+
+  const hide = () => {
+    clearTimeout(timeoutId);
+    setIsVisible(false);
+  };
+
+  return (
+    <div
+      className={cn("relative inline-flex", className)}
+      onMouseEnter={show}
+      onMouseLeave={hide}
+    >
+      {children}
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            initial={{ opacity: 0, y: 8, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.96 }}
+            transition={{ duration: 0.15 }}
+            className={cn(
+              "absolute z-50 left-1/2 -translate-x-1/2 top-full mt-2",
+              "glass-blur-xl glass-surface glass-border glass-highlight",
+              "rounded-2xl overflow-hidden"
+            )}
+            style={{ width }}
+          >
+            {/* Top highlight */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            {/* Arrow */}
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-white/10 border-l border-t border-white/10" />
+            <div className="relative p-4">{content}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}

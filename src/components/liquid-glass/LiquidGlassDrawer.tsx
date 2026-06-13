@@ -1,0 +1,70 @@
+import { cn } from "../../utils/cn";
+import { motion, AnimatePresence } from "framer-motion";
+import type { ReactNode } from "react";
+
+interface LiquidGlassDrawerProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
+  className?: string;
+  position?: "left" | "right";
+  width?: string;
+  title?: string;
+}
+
+export function LiquidGlassDrawer({
+  isOpen,
+  onClose,
+  children,
+  className,
+  position = "right",
+  width = "400px",
+  title,
+}: LiquidGlassDrawerProps) {
+  const isLeft = position === "left";
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/40 glass-blur-sm"
+          />
+          {/* Drawer */}
+          <motion.div
+            initial={{ x: isLeft ? "-100%" : "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: isLeft ? "-100%" : "100%" }}
+            transition={{ type: "spring", stiffness: 350, damping: 35 }}
+            className={cn(
+              "absolute top-0 bottom-0",
+              isLeft ? "left-0" : "right-0",
+              "glass-blur-xl glass-surface glass-border",
+              "flex flex-col overflow-hidden",
+              className
+            )}
+            style={{ width, maxWidth: "90vw" }}
+          >
+            {/* Top highlight */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent z-10" />
+            {/* Reflection */}
+            <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-white/5 blur-2xl" />
+
+            {title && (
+              <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
+                <h3 className="text-lg font-semibold text-white/90">{title}</h3>
+              </div>
+            )}
+            <div className="flex-1 overflow-y-auto p-6">{children}</div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+}

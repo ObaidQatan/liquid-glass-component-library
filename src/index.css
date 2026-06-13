@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+@theme {
+  --color-glass-50: rgba(255, 255, 255, 0.05);
+  --color-glass-100: rgba(255, 255, 255, 0.08);
+  --color-glass-200: rgba(255, 255, 255, 0.12);
+  --color-glass-300: rgba(255, 255, 255, 0.18);
+  --color-glass-400: rgba(255, 255, 255, 0.25);
+  --color-glass-500: rgba(255, 255, 255, 0.35);
+  --color-glass-600: rgba(255, 255, 255, 0.50);
+  --color-glass-700: rgba(255, 255, 255, 0.65);
+  --color-glass-800: rgba(255, 255, 255, 0.80);
+  --color-glass-900: rgba(255, 255, 255, 0.95);
+  --color-glass-dark-50: rgba(0, 0, 0, 0.05);
+  --color-glass-dark-100: rgba(0, 0, 0, 0.08);
+  --color-glass-dark-200: rgba(0, 0, 0, 0.12);
+  --color-glass-dark-300: rgba(0, 0, 0, 0.18);
+  --color-glass-dark-400: rgba(0, 0, 0, 0.25);
+  --color-glass-dark-500: rgba(0, 0, 0, 0.35);
+  --color-glass-dark-600: rgba(0, 0, 0, 0.50);
+  --color-glass-dark-700: rgba(0, 0, 0, 0.65);
+  --color-glass-dark-800: rgba(0, 0, 0, 0.80);
+  --color-glass-dark-900: rgba(0, 0, 0, 0.95);
+  --color-liquid-blue: #3b82f6;
+  --color-liquid-purple: #8b5cf6;
+  --color-liquid-pink: #ec4899;
+  --color-liquid-cyan: #06b6d4;
+  --color-liquid-emerald: #10b981;
+  --color-liquid-amber: #f59e0b;
+  --color-liquid-rose: #f43f5e;
+}
+
+/* ───────── Base Styles ───────── */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  :root {
+    --lg-blur: 50;
+    --lg-transparency: 50;
+    --lg-reflection: 50;
+    --lg-fluidity: 50;
+  }
+
+  /* DARK (default) */
+  :root, .dark {
+    --lg-bg: #0a0a0f;
+    --lg-text: #f8fafc;
+    --lg-text-secondary: rgba(255,255,255,0.55);
+    --lg-text-muted: rgba(255,255,255,0.35);
+    --lg-surface: linear-gradient(135deg,rgba(255,255,255,0.12) 0%,rgba(255,255,255,0.06) 50%,rgba(255,255,255,0.02) 100%);
+    --lg-surface-strong: linear-gradient(135deg,rgba(255,255,255,0.18) 0%,rgba(255,255,255,0.10) 50%,rgba(255,255,255,0.04) 100%);
+    --lg-surface-chrome: linear-gradient(135deg,rgba(0,0,0,0.30) 0%,rgba(0,0,0,0.18) 50%,rgba(0,0,0,0.08) 100%);
+    --lg-border: rgba(255,255,255,0.12);
+    --lg-border-subtle: rgba(255,255,255,0.06);
+    --lg-highlight-top: rgba(255,255,255,0.18);
+    --lg-highlight-bottom: rgba(0,0,0,0.12);
+    --lg-shadow: rgba(0,0,0,0.20);
+    --lg-shadow-strong: rgba(0,0,0,0.30);
+    --lg-reflection-base: rgba(255,255,255,0.05);
+    --lg-surface-stop-1: 0.24%;
+    --lg-surface-stop-2: 0.12%;
+    --lg-surface-stop-3: 0.04%;
+    --lg-surface-strong-stop-1: 0.36%;
+    --lg-surface-strong-stop-2: 0.20%;
+    --lg-surface-strong-stop-3: 0.08%;
+    --lg-surface-dark-stop-1: 0.12%;
+    --lg-surface-dark-stop-2: 0.06%;
+    --lg-surface-dark-stop-3: 0.02%;
+    --lg-ripple: rgba(255,255,255,0.25);
+    --lg-overlay: rgba(0,0,0,0.50);
+    color-scheme: dark;
+    background: var(--lg-bg);
+    color: var(--lg-text);
+  }
+
+  /* LIGHT */
+  .light {
+    --lg-bg: #f2f1f6;
+    --lg-text: #1c1c1e;
+    --lg-text-secondary: rgba(0,0,0,0.55);
+    --lg-text-muted: rgba(0,0,0,0.32);
+    --lg-surface: linear-gradient(135deg,rgba(255,255,255,0.72) 0%,rgba(255,255,255,0.52) 50%,rgba(255,255,255,0.38) 100%);
+    --lg-surface-strong: linear-gradient(135deg,rgba(255,255,255,0.82) 0%,rgba(255,255,255,0.62) 50%,rgba(255,255,255,0.48) 100%);
+    --lg-surface-chrome: linear-gradient(135deg,rgba(245,245,247,0.80) 0%,rgba(245,245,247,0.60) 50%,rgba(245,245,247,0.44) 100%);
+    --lg-border: rgba(0,0,0,0.08);
+    --lg-border-subtle: rgba(0,0,0,0.04);
+    --lg-highlight-top: rgba(255,255,255,0.70);
+    --lg-highlight-bottom: rgba(0,0,0,0.04);
+    --lg-shadow: rgba(0,0,0,0.06);
+    --lg-shadow-strong: rgba(0,0,0,0.12);
+    --lg-reflection-base: rgba(255,255,255,0.40);
+    --lg-surface-stop-1: 1.44%;
+    --lg-surface-stop-2: 1.04%;
+    --lg-surface-stop-3: 0.76%;
+    --lg-surface-strong-stop-1: 1.80%;
+    --lg-surface-strong-stop-2: 1.32%;
+    --lg-surface-strong-stop-3: 1.00%;
+    --lg-surface-dark-stop-1: 1.00%;
+    --lg-surface-dark-stop-2: 0.72%;
+    --lg-surface-dark-stop-3: 0.52%;
+    --lg-ripple: rgba(0,0,0,0.10);
+    --lg-overlay: rgba(0,0,0,0.30);
+    color-scheme: light;
+    background: var(--lg-bg);
+    color: var(--lg-text);
+  }
+}
+
+/* ───────── Glass Utilities ───────── */
+@layer utilities {
+  /* Blurs — base values, dynamically adjustable via --lg-blur */
+  .glass-blur {
+    backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(180%);
+    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(180%);
+  }
+  .glass-blur-sm {
+    backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%);
+    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%);
+  }
+  .glass-blur-lg {
+    backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(200%);
+    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(200%);
+  }
+  .glass-blur-xl {
+    backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(220%);
+    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(220%);
+  }
+
+  /* Surfaces — theme-aware, dynamically adjustable via --lg-transparency */
+  .glass-surface {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, white calc(var(--lg-transparency) * var(--lg-surface-stop-1)), transparent) 0%,
+      color-mix(in srgb, white calc(var(--lg-transparency) * var(--lg-surface-stop-2)), transparent) 50%,
+      color-mix(in srgb, white calc(var(--lg-transparency) * var(--lg-surface-stop-3)), transparent) 100%
+    );
+  }
+  .glass-surface-strong {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, white calc(var(--lg-transparency) * var(--lg-surface-strong-stop-1)), transparent) 0%,
+      color-mix(in srgb, white calc(var(--lg-transparency) * var(--lg-surface-strong-stop-2)), transparent) 50%,
+      color-mix(in srgb, white calc(var(--lg-transparency) * var(--lg-surface-strong-stop-3)), transparent) 100%
+    );
+  }
+  .glass-surface-dark {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, white calc(var(--lg-transparency) * var(--lg-surface-dark-stop-1)), transparent) 0%,
+      color-mix(in srgb, white calc(var(--lg-transparency) * var(--lg-surface-dark-stop-2)), transparent) 50%,
+      color-mix(in srgb, white calc(var(--lg-transparency) * var(--lg-surface-dark-stop-3)), transparent) 100%
+    );
+  }
+
+  /* Dynamic surface opacity multiplier */
+  .glass-surface-dynamic {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--lg-reflection-base) calc(var(--lg-transparency) * 0.9%), transparent) 0%,
+      color-mix(in srgb, var(--lg-reflection-base) calc(var(--lg-transparency) * 0.5%), transparent) 50%,
+      color-mix(in srgb, var(--lg-reflection-base) calc(var(--lg-transparency) * 0.2%), transparent) 100%
+    );
+  }
+
+  /* Borders */
+  .glass-border {
+    border: 1px solid var(--lg-border);
+  }
+  .glass-border-subtle {
+    border: 1px solid var(--lg-border-subtle);
+  }
+
+  /* Highlights & shadows */
+  .glass-highlight {
+    box-shadow:
+      inset 0 1px 0 var(--lg-highlight-top),
+      inset 0 -1px 0 var(--lg-highlight-bottom),
+      0 4px 24px var(--lg-shadow);
+  }
+  .glass-highlight-strong {
+    box-shadow:
+      inset 0 1px 0 var(--lg-highlight-top),
+      inset 0 -1px 0 var(--lg-highlight-bottom),
+      0 8px 32px var(--lg-shadow-strong);
+  }
+  .glass-inner-glow {
+    box-shadow: inset 0 1px 1px var(--lg-highlight-top);
+  }
+
+  /* Reflection blob intensity */
+  .glass-reflection {
+    background: color-mix(in srgb, var(--lg-reflection-base) calc(var(--lg-reflection) * 1%), transparent);
+  }
+
+  /* Text */
+  .text-glass {
+    color: var(--lg-text);
+  }
+  .text-glass-muted {
+    color: var(--lg-text-secondary);
+  }
+  .text-glass-dim {
+    color: var(--lg-text-muted);
+  }
+
+  /* Animations */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  .animate-float-delayed {
+    animation: float 6s ease-in-out 2s infinite;
+  }
+  .animate-float-slow {
+    animation: float 8s ease-in-out 1s infinite;
+  }
+  .animate-pulse-glow {
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+  }
+}
+
+/* ───────── Keyframes ───────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes morphBlob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 60% / 30% 40% 70% 60%; }
+  75% { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; }
+}
+.animate-morph {
+  animation: morphBlob 12s ease-in-out infinite;
+}
+
+/* ───────── Liquid Ripple Effect ───────── */
+@keyframes liquidRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.6;
+    border-radius: 45% 55% 50% 50% / 55% 45% 50% 50%;
+  }
+  25% {
+    border-radius: 55% 45% 52% 48% / 45% 55% 48% 52%;
+  }
+  50% {
+    border-radius: 48% 52% 45% 55% / 52% 48% 55% 45%;
+    opacity: 0.3;
+  }
+  75% {
+    border-radius: 50% 50% 55% 45% / 48% 52% 45% 55%;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.5);
+    opacity: 0;
+    border-radius: 50%;
+  }
+}
+.liquid-ripple {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, var(--lg-ripple) 0%, transparent 70%);
+  animation: liquidRipple calc(0.7s + var(--lg-fluidity) * 0.004s) cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ───────── Light-mode Top/Inner Highlights ───────── */
+.light .glass-top-highlight {
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.60), transparent);
+}
+.dark .glass-top-highlight,
+:root .glass-top-highlight {
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.20), transparent);
+}
