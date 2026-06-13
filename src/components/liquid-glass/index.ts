@@ -45,6 +45,7 @@ export { LiquidGlassFluidCard } from "./LiquidGlassFluidCard";
 export { LiquidGlassResizable } from "./LiquidGlassResizable";
 export { LiquidGlassScrollArea } from "./LiquidGlassScrollArea";
 export { LiquidGlassKanban } from "./LiquidGlassKanban";
+export { LiquidGlassDock } from "./LiquidGlassDock";
 
 // Mobile-specific components
 export { MobileBottomTabBar } from "./MobileBottomTabBar";
@@ -62,6 +63,7 @@ export { MobileAppRating } from "./MobileAppRating";
 export { MobileSplashScreen } from "./MobileSplashScreen";
 export { MobileSlideMenu } from "./MobileSlideMenu";
 export { MobilePageIndicator } from "./MobilePageIndicator";
+export { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";
 export { MobileFloatingActionButton } from "./MobileFloatingAction";
 export { MobileContextPreview } from "./MobileContextPreview";
 

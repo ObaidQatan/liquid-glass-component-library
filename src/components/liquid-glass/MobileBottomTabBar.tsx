@@ -1,6 +1,14 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useCallback, type ReactNode, type MouseEvent } from "react";
+import {
+  useState,
+  useCallback,
+  useRef,
+  useLayoutEffect,
+  useEffect,
+  type ReactNode,
+  type MouseEvent,
+} from "react";
 import { useTheme } from "./ThemeProvider";
 
 interface TabItem {
@@ -54,6 +62,9 @@ export function MobileBottomTabBar({
   trailingButton,
 }: MobileBottomTabBarProps) {
   const [ripples, setRipples] = useState<Record<string, { id: number; x: number; y: number }[]>>({});
+  const [indicator, setIndicator] = useState({ left: 0, top: 0, width: 0, height: 0 });
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const { glass } = useTheme();
 
   const createRipple = useCallback((tabId: string, e: MouseEvent<HTMLButtonElement>) => {
@@ -72,6 +83,29 @@ export function MobileBottomTabBar({
       }));
     }, 900);
   }, []);
+
+  const measureIndicator = useCallback(() => {
+    const container = tabsContainerRef.current;
+    const activeButton = tabRefs.current[activeTab] || Object.values(tabRefs.current)[0];
+    if (!container || !activeButton) return;
+    const containerRect = container.getBoundingClientRect();
+    const buttonRect = activeButton.getBoundingClientRect();
+    setIndicator({
+      left: buttonRect.left - containerRect.left,
+      top: buttonRect.top - containerRect.top,
+      width: buttonRect.width,
+      height: buttonRect.height,
+    });
+  }, [activeTab, variant]);
+
+  useLayoutEffect(() => {
+    measureIndicator();
+  }, [measureIndicator]);
+
+  useEffect(() => {
+    window.addEventListener("resize", measureIndicator);
+    return () => window.removeEventListener("resize", measureIndicator);
+  }, [measureIndicator]);
 
   const containerClasses: Record<MobileBottomTabVariant, string> = {
     default:
@@ -102,13 +136,14 @@ export function MobileBottomTabBar({
 
   const isSuperPill = variant === "ios26-super-pill";
 
-  const widthClass = variant === "ios26-dock"
-    ? "max-w-xs"
-    : isSuperPill
-      ? "max-w-md"
-      : isPillLike
-        ? "max-w-sm"
-        : "max-w-lg";
+  const widthClass =
+    variant === "ios26-dock"
+      ? "max-w-xs"
+      : isSuperPill
+        ? "max-w-md"
+        : isPillLike
+          ? "max-w-sm"
+          : "max-w-lg";
 
   const renderTabs = (tabList: TabItem[]) =>
     tabList.map((tab) => (
@@ -123,6 +158,9 @@ export function MobileBottomTabBar({
         onRipple={(e) => createRipple(tab.id, e)}
         onClick={() => onChange?.(tab.id)}
         fluidity={glass.fluidity}
+        buttonRef={(el) => {
+          tabRefs.current[tab.id] = el;
+        }}
       />
     ));
 
@@ -158,7 +196,8 @@ export function MobileBottomTabBar({
     return (
       <div className={cn(containerClasses[variant], className)}>
         <TopHighlight variant={variant} />
-        <div className={cn("flex items-center justify-around", widthClass, "mx-auto")}>
+        <div ref={tabsContainerRef} className={cn("relative flex items-center justify-around", widthClass, "mx-auto")}>
+          <ActiveIndicator layout={indicator} variant={variant} fluidity={glass.fluidity} />
           {renderTabs(leftTabs)}
 
           <motion.button
@@ -198,7 +237,8 @@ export function MobileBottomTabBar({
             }}
           >
             <TopHighlight variant={variant} />
-            <div className={cn("flex items-center justify-around", widthClass)}>
+            <div ref={tabsContainerRef} className={cn("relative flex items-center justify-around", widthClass)}>
+              <ActiveIndicator layout={indicator} variant={variant} fluidity={glass.fluidity} />
               {renderTabs(tabs)}
             </div>
           </div>
@@ -211,7 +251,8 @@ export function MobileBottomTabBar({
   return (
     <div className={cn(containerClasses[variant], className)}>
       <TopHighlight variant={variant} />
-      <div className={cn("flex items-center justify-around", widthClass, "mx-auto")}>
+      <div ref={tabsContainerRef} className={cn("relative flex items-center justify-around", widthClass, "mx-auto")}>
+        <ActiveIndicator layout={indicator} variant={variant} fluidity={glass.fluidity} />
         {renderTabs(tabs)}
       </div>
     </div>
@@ -219,13 +260,76 @@ export function MobileBottomTabBar({
 }
 
 function TopHighlight({ variant }: { variant: MobileBottomTabVariant }) {
-  if (variant === "pill" || variant === "floating" || variant === "ios26-fluid" || variant === "ios26-glow" || variant === "ios26-dock" || variant === "ios26-super-pill") {
+  if (
+    variant === "pill" ||
+    variant === "floating" ||
+    variant === "ios26-fluid" ||
+    variant === "ios26-glow" ||
+    variant === "ios26-dock" ||
+    variant === "ios26-super-pill"
+  ) {
     return (
       <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
     );
   }
   return (
     <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+  );
+}
+
+function ActiveIndicator({
+  layout,
+  variant,
+  fluidity,
+}: {
+  layout: { left: number; top: number; width: number; height: number };
+  variant: MobileBottomTabVariant;
+  fluidity: number;
+}) {
+  const isSuperPill = variant === "ios26-super-pill";
+  const isPillLike =
+    variant === "pill" ||
+    variant === "floating" ||
+    variant === "ios26-fluid" ||
+    variant === "ios26-glow" ||
+    variant === "ios26-dock" ||
+    variant === "ios26-super-pill";
+  const radius = isSuperPill ? "1.6rem" : isPillLike ? "1rem" : "0.75rem";
+
+  return (
+    <motion.div
+      initial={false}
+      animate={{
+        left: layout.left,
+        top: layout.top,
+        width: layout.width,
+        height: layout.height,
+      }}
+      transition={{ type: "spring", stiffness: 300 + fluidity * 3, damping: 30 }}
+      className="absolute z-0 pointer-events-none glass-blur-lg overflow-hidden"
+      style={{
+        borderRadius: radius,
+        background:
+          "radial-gradient(circle at 30% 25%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.75%), transparent) 0%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.48%), transparent) 45%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.22%), transparent) 100%)",
+        border: "1px solid rgba(255,255,255,0.24)",
+        boxShadow:
+          "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
+      }}
+    >
+      <div
+        className="absolute inset-0 glass-reflection mix-blend-soft-light pointer-events-none"
+        style={{ borderRadius: radius }}
+      />
+      <div
+        className="absolute inset-0 opacity-[0.18] pointer-events-none"
+        style={{
+          borderRadius: radius,
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 45%, transparent 55%)",
+        }}
+      />
+      <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-[var(--lg-border)] rounded-full" />
+    </motion.div>
   );
 }
 
@@ -239,6 +343,7 @@ function TabButton({
   onRipple,
   onClick,
   fluidity,
+  buttonRef,
 }: {
   tab: TabItem;
   isActive: boolean;
@@ -249,6 +354,7 @@ function TabButton({
   onRipple: (e: MouseEvent<HTMLButtonElement>) => void;
   onClick?: () => void;
   fluidity: number;
+  buttonRef?: React.Ref<HTMLButtonElement>;
 }) {
   const isFluid = variant === "ios26-fluid" || variant === "ios26-glow" || variant === "ios26-dock";
   const isPill = variant === "pill" || variant === "ios26-dock";
@@ -257,6 +363,7 @@ function TabButton({
 
   return (
     <motion.button
+      ref={buttonRef}
       whileTap={{ scale: isFluid || isSuperPill ? 0.92 : 0.85 }}
       onClick={(e) => {
         onRipple(e);
@@ -270,68 +377,6 @@ function TabButton({
         isSuperPill && "rounded-[1.6rem] py-2 px-5"
       )}
     >
-      {/* Active fluid background */}
-      {isActive && (isFluid || isPill || isSuperPill) && (
-        <motion.div
-          layoutId={`tab-bg-${variant}`}
-          className={cn(
-            "absolute inset-0 glass-blur-lg pointer-events-none overflow-hidden",
-            isSuperPill ? "rounded-[1.6rem]" : "rounded-2xl"
-          )}
-          transition={{ type: "spring", stiffness: 300 + fluidity * 3, damping: 30 }}
-          style={{
-            background:
-              "radial-gradient(circle at 30% 25%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.75%), transparent) 0%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.48%), transparent) 45%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.22%), transparent) 100%)",
-            border: "1px solid rgba(255,255,255,0.24)",
-            boxShadow:
-              "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
-          }}
-        >
-          <div
-            className={cn(
-              "absolute inset-0 glass-reflection mix-blend-soft-light pointer-events-none",
-              isSuperPill ? "rounded-[1.6rem]" : "rounded-2xl"
-            )}
-          />
-          <div
-            className={cn(
-              "absolute inset-0 opacity-[0.18] pointer-events-none",
-              isSuperPill ? "rounded-[1.6rem]" : "rounded-2xl"
-            )}
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 45%, transparent 55%)",
-            }}
-          />
-          <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-[var(--lg-border)] rounded-full" />
-        </motion.div>
-      )}
-
-      {/* Default indicator line */}
-      {isActive && !isFluid && !isPill && !isSuperPill && (
-        <motion.div
-          layoutId={`tab-indicator-${variant}`}
-          className="absolute -top-1 left-2 right-2 h-1.5 rounded-full glass-blur-lg pointer-events-none overflow-hidden"
-          transition={{ type: "spring", stiffness: 300 + fluidity * 3, damping: 30 }}
-          style={{
-            background:
-              "radial-gradient(circle at 30% 25%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.75%), transparent) 0%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.48%), transparent) 45%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.22%), transparent) 100%)",
-            border: "1px solid rgba(255,255,255,0.24)",
-            boxShadow:
-              "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
-          }}
-        >
-          <div className="absolute inset-0 rounded-full glass-reflection mix-blend-soft-light pointer-events-none" />
-          <div
-            className="absolute inset-0 rounded-full opacity-[0.18] pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 45%, transparent 55%)",
-            }}
-          />
-        </motion.div>
-      )}
-
       <div className="relative z-10">
         <motion.div
           animate={{
