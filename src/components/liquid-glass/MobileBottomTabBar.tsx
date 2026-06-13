@@ -275,15 +275,34 @@ function TabButton({
         <motion.div
           layoutId={`tab-bg-${variant}`}
           className={cn(
-            "absolute inset-0",
-            isSuperPill
-              ? "rounded-[1.6rem] bg-white/[0.08] border border-[var(--lg-border-subtle)] shadow-inner"
-              : isFluid
-                ? "rounded-2xl bg-gradient-to-b from-white/15 to-white/5 border border-[var(--lg-border-subtle)]"
-                : "rounded-2xl bg-[var(--lg-border)] border border-[var(--lg-border-subtle)]"
+            "absolute inset-0 glass-blur-lg pointer-events-none overflow-hidden",
+            isSuperPill ? "rounded-[1.6rem]" : "rounded-2xl"
           )}
           transition={{ type: "spring", stiffness: 300 + fluidity * 3, damping: 30 }}
+          style={{
+            background:
+              "radial-gradient(circle at 30% 25%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.75%), transparent) 0%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.48%), transparent) 45%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.22%), transparent) 100%)",
+            border: "1px solid rgba(255,255,255,0.24)",
+            boxShadow:
+              "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
+          }}
         >
+          <div
+            className={cn(
+              "absolute inset-0 glass-reflection mix-blend-soft-light pointer-events-none",
+              isSuperPill ? "rounded-[1.6rem]" : "rounded-2xl"
+            )}
+          />
+          <div
+            className={cn(
+              "absolute inset-0 opacity-[0.18] pointer-events-none",
+              isSuperPill ? "rounded-[1.6rem]" : "rounded-2xl"
+            )}
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 45%, transparent 55%)",
+            }}
+          />
           <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-[var(--lg-border)] rounded-full" />
         </motion.div>
       )}
@@ -292,9 +311,25 @@ function TabButton({
       {isActive && !isFluid && !isPill && !isSuperPill && (
         <motion.div
           layoutId={`tab-indicator-${variant}`}
-          className="absolute -top-1 left-2 right-2 h-0.5 rounded-full bg-liquid-blue"
+          className="absolute -top-1 left-2 right-2 h-1.5 rounded-full glass-blur-lg pointer-events-none overflow-hidden"
           transition={{ type: "spring", stiffness: 300 + fluidity * 3, damping: 30 }}
-        />
+          style={{
+            background:
+              "radial-gradient(circle at 30% 25%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.75%), transparent) 0%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.48%), transparent) 45%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.22%), transparent) 100%)",
+            border: "1px solid rgba(255,255,255,0.24)",
+            boxShadow:
+              "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
+          }}
+        >
+          <div className="absolute inset-0 rounded-full glass-reflection mix-blend-soft-light pointer-events-none" />
+          <div
+            className="absolute inset-0 rounded-full opacity-[0.18] pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 45%, transparent 55%)",
+            }}
+          />
+        </motion.div>
       )}
 
       <div className="relative z-10">
