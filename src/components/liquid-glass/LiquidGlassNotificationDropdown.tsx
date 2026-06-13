@@ -69,7 +69,7 @@ export function LiquidGlassNotificationDropdown({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.96 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 top-full mt-2 w-80 rounded-2xl overflow-hidden glass-blur-xl glass-surface glass-border glass-highlight-strong z-50"
+            className="absolute right-0 top-full mt-2 w-80 rounded-2xl overflow-hidden glass-blur-xl glass-surface glass-border glass-highlight-strong z-[100]"
           >
             {/* Top highlight */}
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />

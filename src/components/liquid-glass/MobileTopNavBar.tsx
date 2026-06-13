@@ -2,6 +2,8 @@ import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import { ChevronLeft, MoreVertical, Search } from "lucide-react";
 import { useState, type ReactNode } from "react";
+import { useLiquidPress } from "./useLiquidPress";
+import { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";
 
 interface MobileTopNavBarProps {
   title?: string;
@@ -16,13 +18,21 @@ interface MobileTopNavBarProps {
 }
 
 function BackButton({ onBack }: { onBack?: () => void }) {
+  const { state: press, onPointerDown, onPointerUp, onPointerLeave, onPointerCancel } =
+    useLiquidPress<HTMLButtonElement>();
+
   return (
     <motion.button
-      whileTap={{ scale: 0.9 }}
+      whileTap={{ scale: 0.88 }}
       onClick={onBack}
-      className="flex h-8 w-8 items-center justify-center rounded-xl glass-blur-sm glass-surface glass-border glass-highlight text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)]"
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+      onPointerLeave={onPointerLeave}
+      onPointerCancel={onPointerCancel}
+      className="relative flex h-8 w-8 items-center justify-center rounded-xl glass-blur-sm glass-surface glass-border glass-highlight text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] overflow-hidden"
     >
-      <ChevronLeft size={20} strokeWidth={2.5} />
+      <LiquidGlassPressSplash press={press} size={80} />
+      <ChevronLeft size={20} strokeWidth={2.5} className="relative z-10" />
     </motion.button>
   );
 }
@@ -39,6 +49,7 @@ export function MobileTopNavBar({
   translucent = true,
 }: MobileTopNavBarProps) {
   const [searchValue, setSearchValue] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
 
   if (variant === "large") {
     return (
@@ -123,7 +134,21 @@ export function MobileTopNavBar({
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px glass-top-highlight" />
         <div className="flex items-center gap-3 px-4 h-12">
           {leftAction || (showBack && <BackButton onBack={onBack} />)}
-          <div className="relative flex-1 flex items-center gap-2 px-3 py-1.5 rounded-xl overflow-hidden glass-blur glass-surface-strong glass-border glass-highlight">
+          <motion.div
+            animate={{
+              scale: searchFocused ? 1.01 : 1,
+              ...(searchFocused && {
+                boxShadow:
+                  "inset 0 1px 0 var(--lg-highlight-top), inset 0 -1px 0 var(--lg-highlight-bottom), 0 0 24px rgba(255,255,255,0.12)",
+              }),
+            }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className={cn(
+              "relative flex-1 flex items-center gap-2 px-3 py-1.5 rounded-xl overflow-hidden",
+              "glass-blur glass-surface-strong glass-border glass-highlight",
+              searchFocused && "ring-2 ring-white/20"
+            )}
+          >
             {/* Top highlight */}
             <div className="pointer-events-none absolute inset-x-3 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-full" />
             {/* Reflection blob */}
@@ -141,10 +166,12 @@ export function MobileTopNavBar({
               type="text"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
+              onFocus={() => setSearchFocused(true)}
+              onBlur={() => setSearchFocused(false)}
               placeholder="Search..."
               className="relative z-10 flex-1 bg-transparent text-sm text-[var(--lg-text)] placeholder-[var(--lg-text-muted)] outline-none"
             />
-          </div>
+          </motion.div>
           <div className="flex items-center gap-1">
             {rightActions?.map((action, i) => <span key={i}>{action}</span>)}
           </div>

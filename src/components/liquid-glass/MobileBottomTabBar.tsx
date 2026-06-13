@@ -409,7 +409,8 @@ function TabButton({
         "relative flex flex-col items-center gap-0.5 overflow-hidden",
         isPill && "rounded-xl py-1.5 px-3",
         isFluid && "rounded-2xl py-1.5 px-4",
-        isSuperPill && "rounded-[1.6rem] py-2 px-5"
+        isSuperPill && "rounded-[1.6rem] py-2 px-5",
+        !isPill && !isFluid && !isSuperPill && "rounded-xl px-5 py-2"
       )}
     >
       <div className="relative z-10">

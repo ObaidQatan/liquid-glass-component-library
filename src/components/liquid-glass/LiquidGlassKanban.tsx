@@ -28,15 +28,62 @@ interface LiquidGlassKanbanProps {
 export function LiquidGlassKanban({
   columns: initialColumns,
   className,
+  onTaskMove,
 }: LiquidGlassKanbanProps) {
-  const [columns] = useState(initialColumns);
+  const [columns, setColumns] = useState(initialColumns);
+  const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
+  const [dragOverColumnId, setDragOverColumnId] = useState<string | null>(null);
+
+  const handleTaskDragStart = (e: React.DragEvent<HTMLDivElement>, taskId: string) => {
+    setDraggedTaskId(taskId);
+    e.dataTransfer.setData("text/plain", taskId);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleColumnDragOver = (e: React.DragEvent<HTMLDivElement>, columnId: string) => {
+    e.preventDefault();
+    setDragOverColumnId(columnId);
+  };
+
+  const handleColumnDrop = (e: React.DragEvent<HTMLDivElement>, targetColumnId: string) => {
+    e.preventDefault();
+    const taskId = e.dataTransfer.getData("text/plain");
+    if (!taskId) return;
+
+    setDragOverColumnId(null);
+    setDraggedTaskId(null);
+
+    setColumns((prev) => {
+      const sourceColumn = prev.find((c) => c.tasks.some((t) => t.id === taskId));
+      if (!sourceColumn || sourceColumn.id === targetColumnId) return prev;
+
+      const task = sourceColumn.tasks.find((t) => t.id === taskId)!;
+      const next = prev.map((c) => {
+        if (c.id === sourceColumn.id) {
+          return { ...c, tasks: c.tasks.filter((t) => t.id !== taskId) };
+        }
+        if (c.id === targetColumnId) {
+          return { ...c, tasks: [...c.tasks, task] };
+        }
+        return c;
+      });
+      onTaskMove?.(taskId, sourceColumn.id, targetColumnId);
+      return next;
+    });
+  };
 
   return (
     <div className={cn("flex gap-4 overflow-x-auto pb-2", className)}>
       {columns.map((column) => (
         <div
           key={column.id}
-          className="flex-shrink-0 w-72 rounded-2xl glass-blur-sm glass-surface-dark glass-border p-3"
+          onDragOver={(e) => handleColumnDragOver(e, column.id)}
+          onDrop={(e) => handleColumnDrop(e, column.id)}
+          onDragLeave={() => setDragOverColumnId(null)}
+          className={cn(
+            "flex-shrink-0 w-72 rounded-2xl glass-blur-sm glass-surface-dark glass-border p-3 transition-all duration-200",
+            dragOverColumnId === column.id && "ring-2 ring-liquid-blue/30"
+          )}
         >
           {/* Column header */}
           <div className="flex items-center justify-between mb-3 px-1">
@@ -60,13 +107,20 @@ export function LiquidGlassKanban({
             {column.tasks.map((task, i) => (
               <motion.div
                 key={task.id}
+                draggable
+                onDragStart={(e) => handleTaskDragStart(e as unknown as React.DragEvent<HTMLDivElement>, task.id)}
+                onDragEnd={() => {
+                  setDraggedTaskId(null);
+                  setDragOverColumnId(null);
+                }}
                 initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={{ opacity: draggedTaskId === task.id ? 0.4 : 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
                 whileHover={{ y: -2 }}
                 className={cn(
-                  "relative overflow-hidden rounded-xl cursor-pointer",
-                  "glass-blur glass-surface-strong glass-border glass-highlight"
+                  "relative overflow-hidden rounded-xl cursor-grab active:cursor-grabbing",
+                  "glass-blur glass-surface-strong glass-border glass-highlight",
+                  draggedTaskId === task.id && "opacity-40"
                 )}
               >
                 {/* Top highlight */}

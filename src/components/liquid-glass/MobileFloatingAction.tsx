@@ -71,16 +71,21 @@ export function MobileFloatingActionButton({
     >
       <AnimatePresence>
         {isOpen && actions && (
-          <>
+          <div
+            className={cn(
+              "absolute bottom-full mb-3 flex flex-col gap-3 z-50 pointer-events-auto",
+              position === "bottom-right" ? "right-0 items-end" : "left-0 items-start"
+            )}
+          >
             {actions.map((action, i) => (
               <ActionButton
                 key={action.id}
                 action={action}
-                index={actions.length - 1 - i}
+                index={i}
                 onClose={() => setIsOpen(false)}
               />
             ))}
-          </>
+          </div>
         )}
       </AnimatePresence>
 

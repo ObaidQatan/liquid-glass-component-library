@@ -553,7 +553,10 @@ export default function App() {
             </div>
             <div className="flex justify-center">
               <div className={cn(
-                "relative w-fit h-[110px] mx-auto flex items-end justify-center overflow-visible",
+                "relative h-[110px] mx-auto flex items-end justify-center overflow-visible",
+                mobileTabVariant === "default" || mobileTabVariant === "ios26-chrome"
+                  ? "w-full max-w-lg"
+                  : "w-fit",
                 mobileTabVariant === "ios26-super-pill" ? "rounded-3xl" : "rounded-t-3xl"
               )}>
                 <div className={cn(
@@ -758,7 +761,7 @@ export default function App() {
                   </LG.LiquidGlassTooltip>
                 </div>
               </LG.LiquidGlassCard>
-              <LG.LiquidGlassCard className="overflow-visible">
+              <LG.LiquidGlassCard className="overflow-visible relative z-30">
                 <DemoLabel>Hover Card</DemoLabel>
                 <div className="flex justify-center py-2">
                   <LG.LiquidGlassHoverCard
@@ -773,7 +776,7 @@ export default function App() {
                   </LG.LiquidGlassHoverCard>
                 </div>
               </LG.LiquidGlassCard>
-              <LG.LiquidGlassCard className="overflow-visible">
+              <LG.LiquidGlassCard className="overflow-visible relative z-30">
                 <DemoLabel>Notification Dropdown</DemoLabel>
                 <div className="flex justify-center py-2">
                   <LG.LiquidGlassNotificationDropdown
