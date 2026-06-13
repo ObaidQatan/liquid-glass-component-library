@@ -10,7 +10,7 @@ interface LiquidGlassBadgeProps {
 }
 
 const variantStyles = {
-  default: "bg-white/10 text-white/80 border-white/10",
+  default: "bg-[var(--lg-border)] text-[var(--lg-text-secondary)] border-[var(--lg-border-subtle)]",
   primary: "bg-liquid-blue/15 text-liquid-blue border-liquid-blue/20",
   success: "bg-liquid-emerald/15 text-liquid-emerald border-liquid-emerald/20",
   warning: "bg-liquid-amber/15 text-liquid-amber border-liquid-amber/20",
@@ -24,7 +24,7 @@ const sizeStyles = {
 };
 
 const dotColors = {
-  default: "bg-white/60",
+  default: "bg-[var(--lg-text-muted)]",
   primary: "bg-liquid-blue",
   success: "bg-liquid-emerald",
   warning: "bg-liquid-amber",

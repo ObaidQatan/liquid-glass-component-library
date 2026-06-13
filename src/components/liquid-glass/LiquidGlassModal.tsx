@@ -59,16 +59,16 @@ export function LiquidGlassModal({
             {/* Top highlight */}
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             {/* Reflection */}
-            <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-white/5 blur-2xl" />
+            <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[var(--lg-border-subtle)] blur-2xl" />
 
             {title && (
               <div className="flex items-center justify-between px-6 pt-6 pb-2">
-                <h3 className="text-lg font-semibold text-white/90">{title}</h3>
+                <h3 className="text-lg font-semibold text-[var(--lg-text)]">{title}</h3>
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={onClose}
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-white/50 hover:bg-white/10 hover:text-white/80 transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--lg-border-subtle)] text-[var(--lg-text-muted)] hover:bg-[var(--lg-border)] hover:text-[var(--lg-text-secondary)] transition-colors"
                 >
                   <X size={16} />
                 </motion.button>

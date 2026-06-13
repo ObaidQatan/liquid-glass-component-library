@@ -89,14 +89,14 @@ export function LiquidGlassFileUpload({
           onChange={(e) => handleFiles(e.target.files)}
           className="absolute inset-0 opacity-0 cursor-pointer"
         />
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5">
-          <Upload size={20} className="text-white/40" />
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--lg-border-subtle)]">
+          <Upload size={20} className="text-[var(--lg-text-muted)]" />
         </div>
         <div className="text-center">
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-[var(--lg-text-secondary)]">
             <span className="text-liquid-blue">Click to upload</span> or drag and drop
           </p>
-          <p className="text-xs text-white/30 mt-1">
+          <p className="text-xs text-[var(--lg-text-muted)] mt-1">
             Max file size: {maxSize}MB
           </p>
         </div>
@@ -125,18 +125,18 @@ export function LiquidGlassFileUpload({
                   "glass-blur-sm glass-surface glass-border"
                 )}
               >
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--lg-border-subtle)]">
                   {getFileIcon(file.type)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-medium text-white/70 truncate">{file.name}</p>
-                  <p className="text-[10px] text-white/30">{formatSize(file.size)}</p>
+                  <p className="text-xs font-medium text-[var(--lg-text-secondary)] truncate">{file.name}</p>
+                  <p className="text-[10px] text-[var(--lg-text-muted)]">{formatSize(file.size)}</p>
                 </div>
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => removeFile(i)}
-                  className="text-white/30 hover:text-white/60 transition-colors"
+                  className="text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors"
                 >
                   <X size={14} />
                 </motion.button>

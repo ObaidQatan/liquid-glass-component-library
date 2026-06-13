@@ -60,7 +60,7 @@ export function LiquidGlassRadioGroup({
                 s.outer,
                 isSelected
                   ? "bg-liquid-blue/20 border-liquid-blue/50"
-                  : "bg-white/5 border-white/10 hover:border-white/25"
+                  : "bg-[var(--lg-border-subtle)] border-[var(--lg-border-subtle)] hover:border-[var(--lg-border)]"
               )}
             >
               {/* Top highlight */}
@@ -81,13 +81,13 @@ export function LiquidGlassRadioGroup({
               <span
                 className={cn(
                   "text-sm font-medium",
-                  option.disabled ? "text-white/30" : "text-white/80"
+                  option.disabled ? "text-[var(--lg-text-muted)]" : "text-[var(--lg-text-secondary)]"
                 )}
               >
                 {option.label}
               </span>
               {option.description && (
-                <p className="text-xs text-white/40 mt-0.5">{option.description}</p>
+                <p className="text-xs text-[var(--lg-text-muted)] mt-0.5">{option.description}</p>
               )}
             </div>
           </label>

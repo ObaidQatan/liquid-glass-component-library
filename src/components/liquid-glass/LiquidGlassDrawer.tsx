@@ -54,11 +54,11 @@ export function LiquidGlassDrawer({
             {/* Top highlight */}
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent z-10" />
             {/* Reflection */}
-            <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-white/5 blur-2xl" />
+            <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[var(--lg-border-subtle)] blur-2xl" />
 
             {title && (
-              <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
-                <h3 className="text-lg font-semibold text-white/90">{title}</h3>
+              <div className="flex items-center justify-between px-6 py-5 border-b border-[var(--lg-border-subtle)]">
+                <h3 className="text-lg font-semibold text-[var(--lg-text)]">{title}</h3>
               </div>
             )}
             <div className="flex-1 overflow-y-auto p-6">{children}</div>

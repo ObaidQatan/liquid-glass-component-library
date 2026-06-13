@@ -87,7 +87,7 @@ export function MobileContextPreview({
               >
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
                 {previewContent || (
-                  <div className="flex h-full items-center justify-center text-white/30 text-sm">
+                  <div className="flex h-full items-center justify-center text-[var(--lg-text-muted)] text-sm">
                     Preview
                   </div>
                 )}
@@ -113,13 +113,13 @@ export function MobileContextPreview({
                       setIsOpen(false);
                     }}
                     className={cn(
-                      "flex w-full items-center gap-3 px-5 py-3 text-left transition-colors hover:bg-white/5",
-                      i < actions.length - 1 && "border-b border-white/5",
-                      action.destructive ? "text-liquid-rose" : "text-white/70"
+                      "flex w-full items-center gap-3 px-5 py-3 text-left transition-colors hover:bg-[var(--lg-border-subtle)]",
+                      i < actions.length - 1 && "border-b border-[var(--lg-border-subtle)]",
+                      action.destructive ? "text-liquid-rose" : "text-[var(--lg-text-secondary)]"
                     )}
                   >
                     <span className={cn(
-                      action.destructive ? "text-liquid-rose" : "text-white/40"
+                      action.destructive ? "text-liquid-rose" : "text-[var(--lg-text-muted)]"
                     )}>
                       {action.icon}
                     </span>

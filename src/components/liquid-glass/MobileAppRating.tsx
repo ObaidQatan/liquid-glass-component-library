@@ -55,8 +55,8 @@ export function MobileAppRating({
             <Star size={28} className="text-white" />
           </div>
 
-          <h3 className="text-lg font-semibold text-white/90 mb-2">{title} — {appName}</h3>
-          <p className="text-sm text-white/50 leading-relaxed mb-6">{message}</p>
+          <h3 className="text-lg font-semibold text-[var(--lg-text)] mb-2">{title} — {appName}</h3>
+          <p className="text-sm text-[var(--lg-text-muted)] leading-relaxed mb-6">{message}</p>
 
           {/* Stars */}
           <div className="flex items-center justify-center gap-1 mb-6">
@@ -75,7 +75,7 @@ export function MobileAppRating({
                     "transition-colors",
                     star <= displayRating
                       ? "text-liquid-amber fill-liquid-amber"
-                      : "text-white/10"
+                      : "text-[var(--lg-text-muted)]"
                   )}
                 />
               </motion.button>
@@ -87,7 +87,7 @@ export function MobileAppRating({
             <motion.button
               whileTap={{ scale: 0.98 }}
               onClick={onClose}
-              className="flex-1 py-3 rounded-xl text-sm font-semibold text-white/50 hover:bg-white/5 transition-colors"
+              className="flex-1 py-3 rounded-xl text-sm font-semibold text-[var(--lg-text-muted)] hover:bg-[var(--lg-border-subtle)] transition-colors"
             >
               Remind Later
             </motion.button>

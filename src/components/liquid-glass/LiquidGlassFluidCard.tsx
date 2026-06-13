@@ -71,7 +71,7 @@ export function LiquidGlassFluidCard({
 
       {/* Subtle border glow */}
       {isIos26 && (
-        <div className="pointer-events-none absolute inset-0 rounded-3xl border border-white/10 z-10" />
+        <div className="pointer-events-none absolute inset-0 rounded-3xl border border-[var(--lg-border-subtle)] z-10" />
       )}
 
       <div className="relative z-10">{children}</div>

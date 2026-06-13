@@ -50,7 +50,7 @@ export function LiquidGlassMusicPlayer({
           <img src={coverUrl} alt={title} className="w-full h-full object-cover" />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-liquid-purple/40 via-liquid-blue/30 to-liquid-pink/40 flex items-center justify-center">
-            <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center">
+            <div className="w-20 h-20 rounded-full bg-[var(--lg-border)] flex items-center justify-center">
               <div className="w-8 h-8 rounded-full bg-white/20" />
             </div>
           </div>
@@ -62,8 +62,8 @@ export function LiquidGlassMusicPlayer({
       {/* Track info */}
       <div className="flex items-start justify-between mb-4">
         <div className="min-w-0">
-          <h3 className="text-base font-semibold text-white/90 truncate">{title}</h3>
-          <p className="text-sm text-white/40 truncate">{artist}</p>
+          <h3 className="text-base font-semibold text-[var(--lg-text)] truncate">{title}</h3>
+          <p className="text-sm text-[var(--lg-text-muted)] truncate">{artist}</p>
         </div>
         <motion.button
           whileHover={{ scale: 1.15 }}
@@ -71,7 +71,7 @@ export function LiquidGlassMusicPlayer({
           onClick={() => setLiked(!liked)}
           className={cn(
             "flex-shrink-0 mt-1 transition-colors",
-            liked ? "text-liquid-rose" : "text-white/30 hover:text-white/60"
+            liked ? "text-liquid-rose" : "text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
           )}
         >
           <Heart size={20} className={liked ? "fill-liquid-rose" : ""} />
@@ -81,7 +81,7 @@ export function LiquidGlassMusicPlayer({
       {/* Progress */}
       <div className="mb-4">
         <div
-          className="relative h-1 rounded-full bg-white/10 cursor-pointer"
+          className="relative h-1 rounded-full bg-[var(--lg-border)] cursor-pointer"
           onClick={(e) => {
             const rect = e.currentTarget.getBoundingClientRect();
             const pct = (e.clientX - rect.left) / rect.width;
@@ -98,44 +98,44 @@ export function LiquidGlassMusicPlayer({
           />
         </div>
         <div className="flex justify-between mt-1.5">
-          <span className="text-[10px] text-white/30 tabular-nums">{formatTime(currentTime)}</span>
-          <span className="text-[10px] text-white/30 tabular-nums">{formatTime(duration)}</span>
+          <span className="text-[10px] text-[var(--lg-text-muted)] tabular-nums">{formatTime(currentTime)}</span>
+          <span className="text-[10px] text-[var(--lg-text-muted)] tabular-nums">{formatTime(duration)}</span>
         </div>
       </div>
 
       {/* Controls */}
       <div className="flex items-center justify-center gap-4 mb-4">
-        <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="text-white/30 hover:text-white/60 transition-colors">
+        <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors">
           <Shuffle size={16} />
         </motion.button>
-        <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="text-white/50 hover:text-white/80 transition-colors">
+        <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors">
           <SkipBack size={22} />
         </motion.button>
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => setIsPlaying(!isPlaying)}
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 glass-border"
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--lg-border)] glass-border"
         >
           {isPlaying ? (
-            <Pause size={20} className="text-white" />
+            <Pause size={20} className="text-[var(--lg-text)]" />
           ) : (
-            <Play size={20} className="text-white ml-0.5" />
+            <Play size={20} className="text-[var(--lg-text)] ml-0.5" />
           )}
         </motion.button>
-        <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="text-white/50 hover:text-white/80 transition-colors">
+        <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors">
           <SkipForward size={22} />
         </motion.button>
-        <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="text-white/30 hover:text-white/60 transition-colors">
+        <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors">
           <Repeat size={16} />
         </motion.button>
       </div>
 
       {/* Volume */}
       <div className="flex items-center gap-2">
-        <Volume2 size={14} className="text-white/30 flex-shrink-0" />
+        <Volume2 size={14} className="text-[var(--lg-text-muted)] flex-shrink-0" />
         <div
-          className="relative flex-1 h-1 rounded-full bg-white/10 cursor-pointer"
+          className="relative flex-1 h-1 rounded-full bg-[var(--lg-border)] cursor-pointer"
           onClick={(e) => {
             const rect = e.currentTarget.getBoundingClientRect();
             const pct = (e.clientX - rect.left) / rect.width;
@@ -143,7 +143,7 @@ export function LiquidGlassMusicPlayer({
           }}
         >
           <div
-            className="absolute inset-y-0 left-0 rounded-full bg-white/30"
+            className="absolute inset-y-0 left-0 rounded-full bg-[var(--lg-border)]"
             style={{ width: `${volume}%` }}
           />
         </div>

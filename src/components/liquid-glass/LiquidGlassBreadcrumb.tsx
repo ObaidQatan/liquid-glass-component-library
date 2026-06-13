@@ -17,7 +17,7 @@ interface LiquidGlassBreadcrumbProps {
 export function LiquidGlassBreadcrumb({
   items,
   className,
-  separator = <ChevronRight size={14} className="text-white/20" />,
+  separator = <ChevronRight size={14} className="text-[var(--lg-text-muted)]" />,
 }: LiquidGlassBreadcrumbProps) {
   return (
     <nav
@@ -36,7 +36,7 @@ export function LiquidGlassBreadcrumb({
               <motion.a
                 href={item.href}
                 whileHover={{ scale: 1.03 }}
-                className="flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors"
+                className="flex items-center gap-1.5 text-sm text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors"
               >
                 {item.icon || (i === 0 && <Home size={14} />)}
                 {item.label}
@@ -45,7 +45,7 @@ export function LiquidGlassBreadcrumb({
               <span
                 className={cn(
                   "flex items-center gap-1.5 text-sm",
-                  isLast ? "text-white/80 font-medium" : "text-white/50"
+                  isLast ? "text-[var(--lg-text-secondary)] font-medium" : "text-[var(--lg-text-muted)]"
                 )}
               >
                 {item.icon || (i === 0 && <Home size={14} />)}

@@ -30,7 +30,7 @@ export function LiquidGlassControls({ className }: LiquidGlassControlsProps) {
         <motion.button
           whileTap={{ scale: 0.9 }}
           onClick={resetGlass}
-          className="p-1.5 rounded-lg hover:bg-white/5 text-[var(--lg-text-muted)]"
+          className="p-1.5 rounded-lg hover:bg-[var(--lg-border-subtle)] text-[var(--lg-text-muted)]"
         >
           <RotateCcw size={14} />
         </motion.button>

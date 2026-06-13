@@ -56,17 +56,17 @@ export function LiquidGlassAccordion({
               onClick={() => toggle(item.id)}
               className={cn(
                 "flex w-full items-center gap-3 px-5 py-4 text-left transition-colors",
-                isOpen ? "text-white" : "text-white/70 hover:text-white/90"
+                isOpen ? "text-[var(--lg-text)]" : "text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)]"
               )}
             >
               {item.icon && (
-                <span className="flex-shrink-0 text-white/50">{item.icon}</span>
+                <span className="flex-shrink-0 text-[var(--lg-text-muted)]">{item.icon}</span>
               )}
               <span className="flex-1 text-sm font-medium">{item.title}</span>
               <motion.div
                 animate={{ rotate: isOpen ? 180 : 0 }}
                 transition={{ duration: 0.2 }}
-                className="flex-shrink-0 text-white/40"
+                className="flex-shrink-0 text-[var(--lg-text-muted)]"
               >
                 <ChevronDown size={16} />
               </motion.div>
@@ -79,7 +79,7 @@ export function LiquidGlassAccordion({
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
                 >
-                  <div className="px-5 pb-4 text-sm text-white/60 leading-relaxed">
+                  <div className="px-5 pb-4 text-sm text-[var(--lg-text-secondary)] leading-relaxed">
                     {item.content}
                   </div>
                 </motion.div>

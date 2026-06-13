@@ -70,7 +70,7 @@ export function LiquidGlassCheckbox({
         </AnimatePresence>
       </motion.div>
       {label && (
-        <span className={cn("text-sm", disabled ? "text-white/30" : "text-white/70")}>
+        <span className={cn("text-sm", disabled ? "text-[var(--lg-text-muted)]" : "text-[var(--lg-text-secondary)]")}>
           {label}
         </span>
       )}

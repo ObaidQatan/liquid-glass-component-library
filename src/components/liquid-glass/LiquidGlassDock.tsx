@@ -55,14 +55,14 @@ export function LiquidGlassDock({
               "relative flex items-center justify-center rounded-xl transition-colors",
               isVertical ? "w-11 h-11" : "w-12 h-12",
               item.active
-                ? "bg-white/10"
-                : "hover:bg-white/5"
+                ? "bg-[var(--lg-border)]"
+                : "hover:bg-[var(--lg-border-subtle)]"
             )}
           >
             <span
               className={cn(
                 "transition-colors",
-                item.active ? "text-white" : "text-white/50 hover:text-white/80"
+                item.active ? "text-[var(--lg-text)]" : "text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
               )}
             >
               {item.icon}
@@ -77,7 +77,7 @@ export function LiquidGlassDock({
               className={cn(
                 "absolute opacity-0 group-hover:opacity-100 pointer-events-none",
                 "px-2 py-1 rounded-lg glass-blur-sm glass-surface glass-border",
-                "text-[10px] font-medium text-white/80 whitespace-nowrap",
+                "text-[10px] font-medium text-[var(--lg-text-secondary)] whitespace-nowrap",
                 "transition-opacity",
                 position === "bottom" && "bottom-full mb-2",
                 position === "top" && "top-full mt-2",

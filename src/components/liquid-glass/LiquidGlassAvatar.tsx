@@ -23,7 +23,7 @@ const sizeStyles = {
 
 const statusColors = {
   online: "bg-liquid-emerald",
-  offline: "bg-white/30",
+  offline: "bg-[var(--lg-text-muted)]",
   away: "bg-liquid-amber",
   busy: "bg-liquid-rose",
 };
@@ -77,7 +77,7 @@ export function LiquidGlassAvatar({
             className="h-full w-full object-cover"
           />
         ) : (
-          <span className="font-semibold text-white/70">{fallbackText}</span>
+          <span className="font-semibold text-[var(--lg-text-secondary)]">{fallbackText}</span>
         )}
         
         {/* Glass overlay */}

@@ -40,7 +40,7 @@ export function LiquidGlassStatCard({
           ? "text-liquid-emerald"
           : isNegative
           ? "text-liquid-rose"
-          : "text-white/30";
+          : "text-[var(--lg-text-muted)]";
 
         return (
           <motion.div
@@ -61,10 +61,10 @@ export function LiquidGlassStatCard({
                 <div
                   className={cn(
                     "flex h-9 w-9 items-center justify-center rounded-xl",
-                    stat.iconBg || "bg-white/5"
+                    stat.iconBg || "bg-[var(--lg-border-subtle)]"
                   )}
                 >
-                  <span className={stat.iconColor || "text-white/50"}>{stat.icon}</span>
+                  <span className={stat.iconColor || "text-[var(--lg-text-muted)]"}>{stat.icon}</span>
                 </div>
               )}
               {stat.change !== undefined && (
@@ -75,10 +75,10 @@ export function LiquidGlassStatCard({
               )}
             </div>
 
-            <p className="text-2xl font-bold text-white/90">{stat.value}</p>
-            <p className="text-xs text-white/40 mt-1">{stat.label}</p>
+            <p className="text-2xl font-bold text-[var(--lg-text)]">{stat.value}</p>
+            <p className="text-xs text-[var(--lg-text-muted)] mt-1">{stat.label}</p>
             {stat.changeLabel && (
-              <p className="text-[10px] text-white/25 mt-0.5">{stat.changeLabel}</p>
+              <p className="text-[10px] text-[var(--lg-text-muted)] mt-0.5">{stat.changeLabel}</p>
             )}
           </motion.div>
         );

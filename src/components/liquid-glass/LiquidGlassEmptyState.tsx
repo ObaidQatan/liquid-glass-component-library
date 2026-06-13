@@ -12,10 +12,10 @@ interface LiquidGlassEmptyStateProps {
 }
 
 const variantIcons = {
-  search: <Search size={40} className="text-white/20" />,
-  folder: <FolderOpen size={40} className="text-white/20" />,
-  inbox: <Inbox size={40} className="text-white/20" />,
-  error: <FileX size={40} className="text-white/20" />,
+  search: <Search size={40} className="text-[var(--lg-text-muted)]" />,
+  folder: <FolderOpen size={40} className="text-[var(--lg-text-muted)]" />,
+  inbox: <Inbox size={40} className="text-[var(--lg-text-muted)]" />,
+  error: <FileX size={40} className="text-[var(--lg-text-muted)]" />,
   custom: null,
 };
 
@@ -36,11 +36,11 @@ export function LiquidGlassEmptyState({
         className
       )}
     >
-      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5 mb-4">
+      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--lg-border-subtle)] mb-4">
         {icon || variantIcons[variant]}
       </div>
-      <h3 className="text-base font-semibold text-white/70 mb-1">{title}</h3>
-      <p className="text-sm text-white/35 max-w-xs leading-relaxed mb-5">{description}</p>
+      <h3 className="text-base font-semibold text-[var(--lg-text-secondary)] mb-1">{title}</h3>
+      <p className="text-sm text-[var(--lg-text-muted)] max-w-xs leading-relaxed mb-5">{description}</p>
       {action}
     </motion.div>
   );

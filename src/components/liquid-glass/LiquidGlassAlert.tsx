@@ -68,16 +68,16 @@ export function LiquidGlassAlert({
       <div className="relative flex-shrink-0 mt-0.5">{icon || v.icon}</div>
       <div className="relative flex-1 min-w-0">
         {title && (
-          <h4 className="text-sm font-semibold text-white/90 mb-1">{title}</h4>
+          <h4 className="text-sm font-semibold text-[var(--lg-text)] mb-1">{title}</h4>
         )}
-        <div className="text-sm text-white/70 leading-relaxed">{children}</div>
+        <div className="text-sm text-[var(--lg-text-secondary)] leading-relaxed">{children}</div>
       </div>
       {onClose && (
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={onClose}
-          className="flex-shrink-0 text-white/40 hover:text-white/70 transition-colors"
+          className="flex-shrink-0 text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors"
         >
           <X size={16} />
         </motion.button>

@@ -101,12 +101,12 @@ function ToastItemComponent({
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       
       <div className="flex-shrink-0">{variantIcons[toast.variant || "info"]}</div>
-      <p className="flex-1 text-sm text-white/80 leading-relaxed">{toast.message}</p>
+      <p className="flex-1 text-sm text-[var(--lg-text-secondary)] leading-relaxed">{toast.message}</p>
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => onRemove(toast.id)}
-        className="flex-shrink-0 text-white/40 hover:text-white/70 transition-colors"
+        className="flex-shrink-0 text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors"
       >
         <X size={14} />
       </motion.button>

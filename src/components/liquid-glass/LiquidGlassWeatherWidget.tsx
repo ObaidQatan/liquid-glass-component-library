@@ -22,9 +22,9 @@ interface LiquidGlassWeatherWidgetProps {
 
 const conditionConfig = {
   sunny: { icon: Sun, color: "text-liquid-amber", bg: "from-liquid-amber/10 to-transparent" },
-  cloudy: { icon: Cloud, color: "text-white/60", bg: "from-white/5 to-transparent" },
+  cloudy: { icon: Cloud, color: "text-[var(--lg-text-secondary)]", bg: "from-white/5 to-transparent" },
   rainy: { icon: CloudRain, color: "text-liquid-blue", bg: "from-liquid-blue/10 to-transparent" },
-  snowy: { icon: CloudSnow, color: "text-white/80", bg: "from-white/10 to-transparent" },
+  snowy: { icon: CloudSnow, color: "text-[var(--lg-text-secondary)]", bg: "from-white/10 to-transparent" },
 };
 
 const hourlyIconMap = {
@@ -76,14 +76,14 @@ export function LiquidGlassWeatherWidget({
       {/* Main weather */}
       <div className="relative flex items-start justify-between mb-5">
         <div>
-          <p className="text-xs text-white/40 mb-1">{data.location}</p>
+          <p className="text-xs text-[var(--lg-text-muted)] mb-1">{data.location}</p>
           <div className="flex items-baseline gap-1">
-            <span className="text-5xl font-light text-white/90">{data.temp}°</span>
+            <span className="text-5xl font-light text-[var(--lg-text)]">{data.temp}°</span>
           </div>
           <p className={cn("text-sm font-medium mt-1", config.color)}>
             {data.condition.charAt(0).toUpperCase() + data.condition.slice(1)}
           </p>
-          <p className="text-xs text-white/30 mt-0.5">
+          <p className="text-xs text-[var(--lg-text-muted)] mt-0.5">
             H:{data.high}°  L:{data.low}°
           </p>
         </div>
@@ -101,9 +101,9 @@ export function LiquidGlassWeatherWidget({
           const Icon = hourlyIconMap[h.icon];
           return (
             <div key={i} className="flex flex-col items-center gap-1.5">
-              <span className="text-[10px] text-white/30">{h.time}</span>
-              <Icon size={14} className="text-white/50" />
-              <span className="text-xs font-medium text-white/70">{h.temp}°</span>
+              <span className="text-[10px] text-[var(--lg-text-muted)]">{h.time}</span>
+              <Icon size={14} className="text-[var(--lg-text-muted)]" />
+              <span className="text-xs font-medium text-[var(--lg-text-secondary)]">{h.temp}°</span>
             </div>
           );
         })}
@@ -122,11 +122,11 @@ export function LiquidGlassWeatherWidget({
 
 function DetailItem({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/5">
-      <span className="text-white/30">{icon}</span>
+    <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[var(--lg-border-subtle)]">
+      <span className="text-[var(--lg-text-muted)]">{icon}</span>
       <div>
-        <p className="text-[10px] text-white/30">{label}</p>
-        <p className="text-xs font-medium text-white/70">{value}</p>
+        <p className="text-[10px] text-[var(--lg-text-muted)]">{label}</p>
+        <p className="text-xs font-medium text-[var(--lg-text-secondary)]">{value}</p>
       </div>
     </div>
   );

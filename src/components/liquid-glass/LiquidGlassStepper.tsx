@@ -46,7 +46,7 @@ export function LiquidGlassStepper({
             {i < steps.length - 1 && (
               <div
                 className={cn(
-                  "absolute bg-white/10",
+                  "absolute bg-[var(--lg-border)]",
                   isHorizontal
                     ? "top-4 left-1/2 right-0 h-px"
                     : "top-10 left-5 w-px bottom-0"
@@ -78,8 +78,8 @@ export function LiquidGlassStepper({
                 isCompleted
                   ? "bg-liquid-blue/20 border-liquid-blue/40 text-liquid-blue"
                   : isCurrent
-                  ? "bg-white/10 border-white/30 text-white"
-                  : "bg-white/5 border-white/10 text-white/30",
+                  ? "bg-[var(--lg-border)] border-[var(--lg-border)] text-[var(--lg-text)]"
+                  : "bg-[var(--lg-border-subtle)] border-[var(--lg-border-subtle)] text-[var(--lg-text-muted)]",
                 isHorizontal ? "w-8 h-8" : "w-10 h-10 flex-shrink-0"
               )}
             >
@@ -102,13 +102,13 @@ export function LiquidGlassStepper({
               <p
                 className={cn(
                   "text-sm font-medium",
-                  isCompleted || isCurrent ? "text-white/80" : "text-white/30"
+                  isCompleted || isCurrent ? "text-[var(--lg-text-secondary)]" : "text-[var(--lg-text-muted)]"
                 )}
               >
                 {step.label}
               </p>
               {step.description && (
-                <p className="text-xs text-white/30 mt-0.5">{step.description}</p>
+                <p className="text-xs text-[var(--lg-text-muted)] mt-0.5">{step.description}</p>
               )}
             </div>
           </div>

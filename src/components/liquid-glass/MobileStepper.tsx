@@ -46,7 +46,7 @@ export function MobileStepper({
 
   return (
     <div className={cn("inline-flex items-center", className)}>
-      {label && <span className="text-sm text-white/50 mr-3">{label}</span>}
+      {label && <span className="text-sm text-[var(--lg-text-muted)] mr-3">{label}</span>}
       <div
         className={cn(
           "inline-flex items-center rounded-xl",
@@ -55,7 +55,7 @@ export function MobileStepper({
         )}
       >
         {/* Top highlight */}
-        <div className="absolute inset-x-1 top-0 h-px bg-white/10 rounded-full" />
+        <div className="absolute inset-x-1 top-0 h-px bg-[var(--lg-border)] rounded-full" />
 
         <motion.button
           whileTap={{ scale: 0.85 }}
@@ -63,7 +63,7 @@ export function MobileStepper({
           disabled={value <= min}
           className={cn(
             "flex items-center justify-center rounded-lg transition-all",
-            "text-white/50 hover:text-white/80",
+            "text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]",
             value <= min && "opacity-30 cursor-not-allowed"
           )}
           style={{ width: buttonSizes[size], height: buttonSizes[size] }}
@@ -76,7 +76,7 @@ export function MobileStepper({
           initial={{ scale: 1.15 }}
           animate={{ scale: 1 }}
           className={cn(
-            "min-w-[2ch] text-center tabular-nums font-semibold text-white/90",
+            "min-w-[2ch] text-center tabular-nums font-semibold text-[var(--lg-text)]",
             textSizes[size]
           )}
         >
@@ -89,7 +89,7 @@ export function MobileStepper({
           disabled={value >= max}
           className={cn(
             "flex items-center justify-center rounded-lg transition-all",
-            "text-white/50 hover:text-white/80",
+            "text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]",
             value >= max && "opacity-30 cursor-not-allowed"
           )}
           style={{ width: buttonSizes[size], height: buttonSizes[size] }}

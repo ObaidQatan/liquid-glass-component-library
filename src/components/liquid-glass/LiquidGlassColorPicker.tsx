@@ -60,7 +60,7 @@ export function LiquidGlassColorPicker({
             style={{ backgroundColor: customColor }}
           />
           <div className="flex-1 flex items-center gap-2 glass-blur-sm glass-surface glass-border rounded-xl px-3 py-2">
-            <span className="text-white/30 text-xs">#</span>
+            <span className="text-[var(--lg-text-muted)] text-xs">#</span>
             <input
               type="text"
               value={customColor.replace("#", "")}
@@ -70,7 +70,7 @@ export function LiquidGlassColorPicker({
                 setCustomColor(full);
                 if (hex.length === 6) onChange?.(full);
               }}
-              className="flex-1 bg-transparent text-sm text-white/70 outline-none uppercase"
+              className="flex-1 bg-transparent text-sm text-[var(--lg-text-secondary)] outline-none uppercase"
               maxLength={6}
             />
             <input

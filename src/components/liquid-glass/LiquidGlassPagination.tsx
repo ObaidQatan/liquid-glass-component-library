@@ -44,7 +44,7 @@ export function LiquidGlassPagination({
         className={cn(
           "flex h-9 w-9 items-center justify-center rounded-xl",
           "glass-blur-sm glass-surface glass-border",
-          "text-white/50 hover:text-white/80 transition-colors",
+          "text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors",
           currentPage === 1 && "opacity-30 cursor-not-allowed"
         )}
       >
@@ -53,7 +53,7 @@ export function LiquidGlassPagination({
 
       {pages.map((page, i) =>
         page === "ellipsis" ? (
-          <span key={`ellipsis-${i}`} className="flex h-9 w-9 items-center justify-center text-white/20">
+          <span key={`ellipsis-${i}`} className="flex h-9 w-9 items-center justify-center text-[var(--lg-text-muted)]">
             <MoreHorizontal size={16} />
           </span>
         ) : (
@@ -65,8 +65,8 @@ export function LiquidGlassPagination({
             className={cn(
               "flex h-9 w-9 items-center justify-center rounded-xl text-sm font-medium transition-all",
               page === currentPage
-                ? "bg-white/15 text-white glass-border"
-                : "glass-blur-sm glass-surface glass-border text-white/50 hover:text-white/80"
+                ? "bg-[var(--lg-border)] text-[var(--lg-text)] glass-border"
+                : "glass-blur-sm glass-surface glass-border text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
             )}
           >
             {page}
@@ -82,7 +82,7 @@ export function LiquidGlassPagination({
         className={cn(
           "flex h-9 w-9 items-center justify-center rounded-xl",
           "glass-blur-sm glass-surface glass-border",
-          "text-white/50 hover:text-white/80 transition-colors",
+          "text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors",
           currentPage === totalPages && "opacity-30 cursor-not-allowed"
         )}
       >

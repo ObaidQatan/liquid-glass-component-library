@@ -49,8 +49,8 @@ export function LiquidGlassMenubar({ menus, className }: LiquidGlassMenubarProps
             className={cn(
               "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
               activeIndex === i
-                ? "bg-white/10 text-white"
-                : "text-white/60 hover:text-white/90 hover:bg-white/5"
+                ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
+                : "text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--lg-border-subtle)]"
             )}
           >
             {menu.label}
@@ -70,7 +70,7 @@ export function LiquidGlassMenubar({ menus, className }: LiquidGlassMenubarProps
                 <div className="py-1">
                   {menu.items.map((item, j) =>
                     item.separator ? (
-                      <div key={`sep-${j}`} className="my-1 h-px bg-white/5 mx-2" />
+                      <div key={`sep-${j}`} className="my-1 h-px bg-[var(--lg-border-subtle)] mx-2" />
                     ) : (
                       <button
                         key={j}
@@ -83,13 +83,13 @@ export function LiquidGlassMenubar({ menus, className }: LiquidGlassMenubarProps
                         className={cn(
                           "flex w-full items-center justify-between px-3 py-2 text-left text-sm transition-colors",
                           item.disabled
-                            ? "text-white/20 cursor-not-allowed"
-                            : "text-white/70 hover:bg-white/10 hover:text-white"
+                            ? "text-[var(--lg-text-muted)] cursor-not-allowed"
+                            : "text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border)] hover:text-[var(--lg-text)]"
                         )}
                       >
                         <span>{item.label}</span>
                         {item.shortcut && (
-                          <span className="text-[10px] text-white/25 ml-4">
+                          <span className="text-[10px] text-[var(--lg-text-muted)] ml-4">
                             {item.shortcut}
                           </span>
                         )}

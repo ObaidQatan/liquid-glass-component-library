@@ -67,8 +67,8 @@ export function MobilePermissionDialog({
             </div>
 
             <div className="px-6 py-4">
-              <h3 className="text-lg font-semibold text-white/90 mb-2">{title}</h3>
-              <p className="text-sm text-white/50 leading-relaxed mb-6">{message}</p>
+              <h3 className="text-lg font-semibold text-[var(--lg-text)] mb-2">{title}</h3>
+              <p className="text-sm text-[var(--lg-text-muted)] leading-relaxed mb-6">{message}</p>
 
               <div className="space-y-2 mb-6">
                 {permissions.map((perm) => (
@@ -78,15 +78,15 @@ export function MobilePermissionDialog({
                     onClick={() => togglePerm(perm.id)}
                     className={cn(
                       "flex w-full items-center gap-3 p-3 rounded-xl transition-colors",
-                      permMap[perm.id] ? "bg-white/5" : "bg-white/3 hover:bg-white/5"
+                      permMap[perm.id] ? "bg-[var(--lg-border-subtle)]" : "bg-[var(--lg-border-subtle)] hover:bg-[var(--lg-border-subtle)]"
                     )}
                   >
                     <div className={cn(
                       "flex h-10 w-10 items-center justify-center rounded-xl flex-shrink-0",
-                      permMap[perm.id] ? "bg-liquid-blue/15" : "bg-white/5"
+                      permMap[perm.id] ? "bg-liquid-blue/15" : "bg-[var(--lg-border-subtle)]"
                     )}>
                       <span className={cn(
-                        permMap[perm.id] ? "text-liquid-blue" : "text-white/30"
+                        permMap[perm.id] ? "text-liquid-blue" : "text-[var(--lg-text-muted)]"
                       )}>
                         {perm.icon}
                       </span>
@@ -94,11 +94,11 @@ export function MobilePermissionDialog({
                     <div className="flex-1 text-left">
                       <p className={cn(
                         "text-sm font-medium",
-                        permMap[perm.id] ? "text-white/80" : "text-white/50"
+                        permMap[perm.id] ? "text-[var(--lg-text-secondary)]" : "text-[var(--lg-text-muted)]"
                       )}>
                         {perm.title}
                       </p>
-                      <p className="text-xs text-white/30">{perm.description}</p>
+                      <p className="text-xs text-[var(--lg-text-muted)]">{perm.description}</p>
                     </div>
                     <LiquidGlassToggle
                       checked={permMap[perm.id] ?? false}
@@ -114,7 +114,7 @@ export function MobilePermissionDialog({
                 <motion.button
                   whileTap={{ scale: 0.98 }}
                   onClick={onClose}
-                  className="flex-1 py-3 rounded-xl text-sm font-semibold text-white/50 hover:bg-white/5 transition-colors"
+                  className="flex-1 py-3 rounded-xl text-sm font-semibold text-[var(--lg-text-muted)] hover:bg-[var(--lg-border-subtle)] transition-colors"
                 >
                   Not Now
                 </motion.button>

@@ -18,8 +18,8 @@ interface LiquidGlassChipProps {
 
 const variantStyles = {
   default: {
-    base: "bg-white/5 text-white/70 border-white/10 hover:bg-white/10",
-    active: "bg-white/15 text-white border-white/20",
+    base: "bg-[var(--lg-border-subtle)] text-[var(--lg-text-secondary)] border-[var(--lg-border-subtle)] hover:bg-[var(--lg-border)]",
+    active: "bg-[var(--lg-border)] text-[var(--lg-text)] border-[var(--lg-border)]",
   },
   primary: {
     base: "bg-liquid-blue/8 text-liquid-blue/70 border-liquid-blue/15 hover:bg-liquid-blue/15",
@@ -93,7 +93,7 @@ export function LiquidGlassChip({
             e.stopPropagation();
             onRemove();
           }}
-          className="relative z-10 ml-0.5 flex h-4 w-4 items-center justify-center rounded-full hover:bg-white/10 cursor-pointer"
+          className="relative z-10 ml-0.5 flex h-4 w-4 items-center justify-center rounded-full hover:bg-[var(--lg-border)] cursor-pointer"
         >
           <X size={12} />
         </motion.span>

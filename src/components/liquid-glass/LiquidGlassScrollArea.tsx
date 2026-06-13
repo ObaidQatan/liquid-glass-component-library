@@ -47,9 +47,9 @@ export function LiquidGlassScrollArea({
         {children}
       </div>
       {showScrollbar && (
-        <div className="absolute right-1 top-2 bottom-2 w-1 rounded-full bg-white/5">
+        <div className="absolute right-1 top-2 bottom-2 w-1 rounded-full bg-[var(--lg-border-subtle)]">
           <motion.div
-            className="w-full rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+            className="w-full rounded-full bg-[var(--lg-border)] hover:bg-[var(--lg-text-muted)] transition-colors"
             style={{
               height: thumbHeight,
               y: scrollProgress * (parseInt(maxHeight) - thumbHeight - 16),

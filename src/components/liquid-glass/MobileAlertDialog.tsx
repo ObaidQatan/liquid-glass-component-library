@@ -73,11 +73,11 @@ export function MobileAlertDialog({
             {/* Content */}
             <div className="px-6 py-5 text-center">
               <div className="flex justify-center mb-3">{alertIcon}</div>
-              <h3 className="text-base font-semibold text-white/90 mb-1.5">
+              <h3 className="text-base font-semibold text-[var(--lg-text)] mb-1.5">
                 {title}
               </h3>
               {message && (
-                <p className="text-sm text-white/50 leading-relaxed">{message}</p>
+                <p className="text-sm text-[var(--lg-text-muted)] leading-relaxed">{message}</p>
               )}
             </div>
 
@@ -96,12 +96,12 @@ export function MobileAlertDialog({
                   }}
                   className={cn(
                     "w-full py-3 rounded-xl text-sm font-semibold transition-colors",
-                    i < defaultOptions.length - 1 && "border-b border-white/5",
+                    i < defaultOptions.length - 1 && "border-b border-[var(--lg-border-subtle)]",
                     option.style === "destructive"
                       ? "text-liquid-rose hover:bg-liquid-rose/5"
                       : option.style === "cancel"
-                      ? "text-white/50 hover:bg-white/5"
-                      : "text-liquid-blue hover:bg-white/5"
+                      ? "text-[var(--lg-text-muted)] hover:bg-[var(--lg-border-subtle)]"
+                      : "text-liquid-blue hover:bg-[var(--lg-border-subtle)]"
                   )}
                 >
                   {option.text}

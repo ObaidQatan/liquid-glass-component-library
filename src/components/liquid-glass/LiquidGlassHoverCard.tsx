@@ -54,7 +54,7 @@ export function LiquidGlassHoverCard({
             {/* Top highlight */}
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
             {/* Arrow */}
-            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-white/10 border-l border-t border-white/10" />
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-[var(--lg-border)] border-l border-t border-[var(--lg-border-subtle)]" />
             <div className="relative p-4">{content}</div>
           </motion.div>
         )}

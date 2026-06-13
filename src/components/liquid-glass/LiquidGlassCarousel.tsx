@@ -76,7 +76,7 @@ export function LiquidGlassCarousel({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={prev}
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full glass-blur-sm glass-surface glass-border text-white/60 hover:text-white transition-colors"
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full glass-blur-sm glass-surface glass-border text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] transition-colors"
           >
             <ChevronLeft size={18} />
           </motion.button>
@@ -84,7 +84,7 @@ export function LiquidGlassCarousel({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={next}
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full glass-blur-sm glass-surface glass-border text-white/60 hover:text-white transition-colors"
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full glass-blur-sm glass-surface glass-border text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] transition-colors"
           >
             <ChevronRight size={18} />
           </motion.button>
@@ -100,8 +100,8 @@ export function LiquidGlassCarousel({
               className={cn(
                 "h-1.5 rounded-full transition-all duration-300",
                 i === current
-                  ? "w-6 bg-white/80"
-                  : "w-1.5 bg-white/30 hover:bg-white/50"
+                  ? "w-6 bg-[var(--lg-text-muted)]"
+                  : "w-1.5 bg-[var(--lg-text-muted)] hover:bg-[var(--lg-text-muted)]"
               )}
             />
           ))}

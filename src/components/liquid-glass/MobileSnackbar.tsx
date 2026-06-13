@@ -40,7 +40,7 @@ export function MobileSnackbar({
   }, [duration, message]);
 
   const variantConfig = {
-    info: { bg: "bg-white/10", icon: "info" },
+    info: { bg: "bg-[var(--lg-border)]", icon: "info" },
     success: { bg: "bg-liquid-emerald/15", icon: "success" },
     error: { bg: "bg-liquid-rose/15", icon: "error" },
     warning: { bg: "bg-liquid-amber/15", icon: "warning" },
@@ -72,11 +72,11 @@ export function MobileSnackbar({
                 "flex h-7 w-7 items-center justify-center rounded-full flex-shrink-0",
                 config.bg
               )}>
-                <span className="text-xs font-bold text-white/70">
+                <span className="text-xs font-bold text-[var(--lg-text-secondary)]">
                   {variant[0].toUpperCase()}
                 </span>
               </span>
-              <p className="text-sm text-white/80">{message}</p>
+              <p className="text-sm text-[var(--lg-text-secondary)]">{message}</p>
             </div>
 
             {action && (
@@ -89,7 +89,7 @@ export function MobileSnackbar({
             )}
 
             <button
-              className="flex-shrink-0 text-white/30 hover:text-white/60"
+              className="flex-shrink-0 text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
               onClick={() => setVisible(false)}
             >
               <X size={16} />
@@ -97,7 +97,7 @@ export function MobileSnackbar({
           </div>
 
           {/* Progress bar */}
-          <div className="h-0.5 bg-white/5">
+          <div className="h-0.5 bg-[var(--lg-border-subtle)]">
             <motion.div
               className="h-full bg-white/20"
               style={{ width: `${progress}%` }}

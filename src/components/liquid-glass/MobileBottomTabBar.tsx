@@ -141,7 +141,7 @@ export function MobileBottomTabBar({
       >
         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
         <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent rounded-full" />
-        <div className="pointer-events-none absolute -top-3 -right-3 h-8 w-8 rounded-full bg-white/15 blur-lg" />
+        <div className="pointer-events-none absolute -top-3 -right-3 h-8 w-8 rounded-full bg-[var(--lg-border)] blur-lg" />
         <span className="relative z-10 text-[var(--lg-text)]">{trailingButton.icon}</span>
       </div>
       {showLabels && trailingButton.label && (
@@ -277,14 +277,14 @@ function TabButton({
           className={cn(
             "absolute inset-0",
             isSuperPill
-              ? "rounded-[1.6rem] bg-white/[0.08] border border-white/10 shadow-inner"
+              ? "rounded-[1.6rem] bg-white/[0.08] border border-[var(--lg-border-subtle)] shadow-inner"
               : isFluid
-                ? "rounded-2xl bg-gradient-to-b from-white/15 to-white/5 border border-white/10"
-                : "rounded-2xl bg-white/10 border border-white/10"
+                ? "rounded-2xl bg-gradient-to-b from-white/15 to-white/5 border border-[var(--lg-border-subtle)]"
+                : "rounded-2xl bg-[var(--lg-border)] border border-[var(--lg-border-subtle)]"
           )}
           transition={{ type: "spring", stiffness: 300 + fluidity * 3, damping: 30 }}
         >
-          <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-white/30 rounded-full" />
+          <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-[var(--lg-border)] rounded-full" />
         </motion.div>
       )}
 

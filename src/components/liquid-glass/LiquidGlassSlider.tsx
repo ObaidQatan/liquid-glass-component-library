@@ -130,7 +130,7 @@ export function LiquidGlassSlider({
               <span
                 className={cn(
                   "text-xs font-medium",
-                  isDark ? "text-white/50" : "text-black/40"
+                  isDark ? "text-[var(--lg-text-muted)]" : "text-black/40"
                 )}
               >
                 {min}
@@ -143,7 +143,7 @@ export function LiquidGlassSlider({
                 animate={{ scale: 1 }}
                 className={cn(
                   "text-xs font-semibold tabular-nums",
-                  isDark ? "text-white/80" : "text-black/70"
+                  isDark ? "text-[var(--lg-text-secondary)]" : "text-black/70"
                 )}
               >
                 {value}
@@ -158,7 +158,7 @@ export function LiquidGlassSlider({
         className={cn(
           "relative h-2 rounded-full cursor-pointer overflow-visible",
           "glass-blur-sm glass-surface-dark border",
-          isDark ? "border-white/5" : "border-black/5",
+          isDark ? "border-[var(--lg-border-subtle)]" : "border-black/5",
           disabled && "cursor-not-allowed opacity-50"
         )}
       >
@@ -229,7 +229,7 @@ export function LiquidGlassSlider({
         <span
           className={cn(
             "block text-right text-xs font-medium mt-1",
-            isDark ? "text-white/50" : "text-black/40"
+            isDark ? "text-[var(--lg-text-muted)]" : "text-black/40"
           )}
         >
           {max}

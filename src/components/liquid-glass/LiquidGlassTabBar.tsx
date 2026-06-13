@@ -38,13 +38,13 @@ export function LiquidGlassTabBar({
             onClick={() => onChange(i)}
             className={cn(
               "relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-colors z-10",
-              activeIndex === i ? "text-white" : "text-white/40 hover:text-white/70"
+              activeIndex === i ? "text-[var(--lg-text)]" : "text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
             )}
           >
             {activeIndex === i && (
               <motion.div
                 layoutId="tab-pill"
-                className="absolute inset-0 rounded-xl bg-white/10 glass-border"
+                className="absolute inset-0 rounded-xl bg-[var(--lg-border)] glass-border"
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
               />
             )}
@@ -65,14 +65,14 @@ export function LiquidGlassTabBar({
 
   if (variant === "underline") {
     return (
-      <div className={cn("relative flex border-b border-white/10", className)}>
+      <div className={cn("relative flex border-b border-[var(--lg-border-subtle)]", className)}>
         {tabs.map((tab, i) => (
           <motion.button
             key={i}
             onClick={() => onChange(i)}
             className={cn(
               "relative flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors",
-              activeIndex === i ? "text-white" : "text-white/40 hover:text-white/70"
+              activeIndex === i ? "text-[var(--lg-text)]" : "text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
             )}
           >
             {tab.icon}
@@ -109,13 +109,13 @@ export function LiquidGlassTabBar({
           onClick={() => onChange(i)}
           className={cn(
             "relative flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors",
-            activeIndex === i ? "text-white" : "text-white/40 hover:text-white/70"
+            activeIndex === i ? "text-[var(--lg-text)]" : "text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
           )}
         >
           {activeIndex === i && (
             <motion.div
               layoutId="tab-default"
-              className="absolute inset-0 bg-white/5"
+              className="absolute inset-0 bg-[var(--lg-border-subtle)]"
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
             />
           )}

@@ -38,7 +38,7 @@ export function LiquidGlassInput({
   return (
     <div className={cn("w-full", className)}>
       {label && (
-        <label className="mb-1.5 block text-sm font-medium text-white/70">
+        <label className="mb-1.5 block text-sm font-medium text-[var(--lg-text-secondary)]">
           {label}
         </label>
       )}
@@ -48,14 +48,14 @@ export function LiquidGlassInput({
           "relative flex items-center gap-3",
           "glass-blur-sm glass-surface glass-border glass-inner-glow",
           "transition-all duration-200",
-          "focus-within:ring-2 focus-within:ring-white/20 focus-within:border-white/30",
+          "focus-within:ring-2 focus-within:ring-white/20 focus-within:border-[var(--lg-border)]",
           error && "border-liquid-rose/50 ring-1 ring-liquid-rose/30",
           sizeStyles[size],
           disabled && "opacity-50 cursor-not-allowed"
         )}
       >
         {icon && (
-          <span className="flex-shrink-0 text-white/40">{icon}</span>
+          <span className="flex-shrink-0 text-[var(--lg-text-muted)]">{icon}</span>
         )}
         <input
           type={type}
@@ -64,15 +64,15 @@ export function LiquidGlassInput({
           placeholder={placeholder}
           disabled={disabled}
           className={cn(
-            "w-full bg-transparent text-white placeholder-white/30 outline-none",
+            "w-full bg-transparent text-[var(--lg-text)] placeholder-[var(--lg-text-muted)] outline-none",
             disabled && "cursor-not-allowed"
           )}
         />
         {iconRight && (
-          <span className="flex-shrink-0 text-white/40">{iconRight}</span>
+          <span className="flex-shrink-0 text-[var(--lg-text-muted)]">{iconRight}</span>
         )}
         {/* Top highlight */}
-        <div className="pointer-events-none absolute inset-x-3 top-0 h-px bg-white/10 rounded-full" />
+        <div className="pointer-events-none absolute inset-x-3 top-0 h-px bg-[var(--lg-border)] rounded-full" />
       </motion.div>
       {error && (
         <p className="mt-1.5 text-xs text-liquid-rose">{error}</p>

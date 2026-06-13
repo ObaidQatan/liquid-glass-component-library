@@ -76,18 +76,18 @@ export function LiquidGlassCalendar({
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={prevMonth}
-          className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/5 text-white/50 hover:text-white/80 transition-colors"
+          className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--lg-border-subtle)] text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors"
         >
           <ChevronLeft size={14} />
         </motion.button>
-        <span className="text-sm font-semibold text-white/90">
+        <span className="text-sm font-semibold text-[var(--lg-text)]">
           {MONTHS[month]} {year}
         </span>
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={nextMonth}
-          className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/5 text-white/50 hover:text-white/80 transition-colors"
+          className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--lg-border-subtle)] text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors"
         >
           <ChevronRight size={14} />
         </motion.button>
@@ -96,7 +96,7 @@ export function LiquidGlassCalendar({
       {/* Day headers */}
       <div className="grid grid-cols-7 gap-1 mb-1">
         {DAYS.map((d) => (
-          <div key={d} className="text-center text-[10px] font-semibold uppercase tracking-wider text-white/30 py-1">
+          <div key={d} className="text-center text-[10px] font-semibold uppercase tracking-wider text-[var(--lg-text-muted)] py-1">
             {d}
           </div>
         ))}
@@ -128,8 +128,8 @@ export function LiquidGlassCalendar({
                   : todayMark
                   ? "text-liquid-blue font-bold"
                   : disabled
-                  ? "text-white/15 cursor-not-allowed"
-                  : "text-white/60 hover:bg-white/10 hover:text-white",
+                  ? "text-[var(--lg-text-muted)] cursor-not-allowed"
+                  : "text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border)] hover:text-[var(--lg-text)]",
                 highlighted && !selected && "ring-1 ring-liquid-amber/40"
               )}
             >

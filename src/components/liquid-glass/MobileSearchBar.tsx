@@ -57,9 +57,9 @@ export function MobileSearchBar({
       )}
     >
       {/* Top highlight */}
-      <div className="absolute inset-x-2 top-0 h-px bg-white/10 rounded-full" />
+      <div className="absolute inset-x-2 top-0 h-px bg-[var(--lg-border)] rounded-full" />
 
-      <Search size={16} className="text-white/40 flex-shrink-0" />
+      <Search size={16} className="text-[var(--lg-text-muted)] flex-shrink-0" />
 
       <input
         ref={inputRef}
@@ -71,7 +71,7 @@ export function MobileSearchBar({
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         placeholder={placeholder}
-        className="flex-1 bg-transparent text-sm text-white placeholder-white/30 outline-none"
+        className="flex-1 bg-transparent text-sm text-[var(--lg-text)] placeholder-[var(--lg-text-muted)] outline-none"
       />
 
       <AnimatePresence>
@@ -81,7 +81,7 @@ export function MobileSearchBar({
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             onClick={handleClear}
-            className="flex-shrink-0 text-white/40 hover:text-white/70"
+            className="flex-shrink-0 text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
           >
             <X size={16} />
           </motion.button>

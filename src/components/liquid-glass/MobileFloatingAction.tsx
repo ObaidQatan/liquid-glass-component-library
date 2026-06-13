@@ -111,7 +111,7 @@ function ActionButton({
       transition={{ delay: index * 0.05 }}
       className="flex items-center gap-2"
     >
-      <span className="px-2 py-1 rounded-lg glass-blur-sm glass-surface glass-border text-xs text-white/80 whitespace-nowrap">
+      <span className="px-2 py-1 rounded-lg glass-blur-sm glass-surface glass-border text-xs text-[var(--lg-text-secondary)] whitespace-nowrap">
         {action.label}
       </span>
       <motion.button
@@ -124,7 +124,7 @@ function ActionButton({
           action.onClick();
           onClose();
         }}
-        className="relative flex h-10 w-10 items-center justify-center rounded-full glass-blur-sm glass-surface glass-border text-white/70 overflow-hidden isolate"
+        className="relative flex h-10 w-10 items-center justify-center rounded-full glass-blur-sm glass-surface glass-border text-[var(--lg-text-secondary)] overflow-hidden isolate"
       >
         <LiquidGlassPressSplash press={press} size={90} />
         {action.icon}

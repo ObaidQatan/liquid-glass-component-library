@@ -46,14 +46,14 @@ export function LiquidGlassNavigation({
             className={cn(
               "relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-colors",
               item.active
-                ? "text-white"
-                : "text-white/50 hover:text-white/80"
+                ? "text-[var(--lg-text)]"
+                : "text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
             )}
           >
             {item.active && (
               <motion.div
                 layoutId="nav-active"
-                className="absolute inset-0 rounded-xl bg-white/10 glass-border"
+                className="absolute inset-0 rounded-xl bg-[var(--lg-border)] glass-border"
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
               />
             )}

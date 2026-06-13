@@ -107,8 +107,8 @@ export function LiquidGlassCommandPalette({
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
             {/* Search input */}
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-white/5">
-              <Search size={18} className="text-white/40 flex-shrink-0" />
+            <div className="flex items-center gap-3 px-5 py-4 border-b border-[var(--lg-border-subtle)]">
+              <Search size={18} className="text-[var(--lg-text-muted)] flex-shrink-0" />
               <input
                 ref={inputRef}
                 value={query}
@@ -117,9 +117,9 @@ export function LiquidGlassCommandPalette({
                   setSelectedIndex(0);
                 }}
                 placeholder={placeholder}
-                className="flex-1 bg-transparent text-white placeholder-white/30 outline-none text-sm"
+                className="flex-1 bg-transparent text-[var(--lg-text)] placeholder-[var(--lg-text-muted)] outline-none text-sm"
               />
-              <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-white/5 text-white/30 text-xs">
+              <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-[var(--lg-border-subtle)] text-[var(--lg-text-muted)] text-xs">
                 <Command size={10} />
                 <span>K</span>
               </div>
@@ -128,13 +128,13 @@ export function LiquidGlassCommandPalette({
             {/* Results */}
             <div className="max-h-[50vh] overflow-y-auto py-2">
               {filtered.length === 0 ? (
-                <div className="px-5 py-8 text-center text-sm text-white/30">
+                <div className="px-5 py-8 text-center text-sm text-[var(--lg-text-muted)]">
                   No results found
                 </div>
               ) : (
                 Array.from(grouped.entries()).map(([category, catItems]) => (
                   <div key={category}>
-                    <div className="px-5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-white/25">
+                    <div className="px-5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--lg-text-muted)]">
                       {category}
                     </div>
                     {catItems.map((item) => {
@@ -151,18 +151,18 @@ export function LiquidGlassCommandPalette({
                           className={cn(
                             "flex w-full items-center gap-3 px-5 py-2.5 text-left transition-colors",
                             isSelected
-                              ? "bg-white/10"
-                              : "hover:bg-white/5"
+                              ? "bg-[var(--lg-border)]"
+                              : "hover:bg-[var(--lg-border-subtle)]"
                           )}
                         >
                           {item.icon && (
-                            <span className="text-white/40">{item.icon}</span>
+                            <span className="text-[var(--lg-text-muted)]">{item.icon}</span>
                           )}
-                          <span className="flex-1 text-sm text-white/80">
+                          <span className="flex-1 text-sm text-[var(--lg-text-secondary)]">
                             {item.label}
                           </span>
                           {item.shortcut && (
-                            <span className="text-xs text-white/30 px-1.5 py-0.5 rounded bg-white/5">
+                            <span className="text-xs text-[var(--lg-text-muted)] px-1.5 py-0.5 rounded bg-[var(--lg-border-subtle)]">
                               {item.shortcut}
                             </span>
                           )}

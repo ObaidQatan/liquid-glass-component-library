@@ -78,7 +78,7 @@ export function LiquidGlassResizable({
             "flex items-end justify-end p-0.5"
           )}
         >
-          <svg width="8" height="8" viewBox="0 0 8 8" className="text-white/20">
+          <svg width="8" height="8" viewBox="0 0 8 8" className="text-[var(--lg-text-muted)]">
             <path d="M0 8L8 0M2 8L8 2M4 8L8 4" stroke="currentColor" strokeWidth="1" fill="none" />
           </svg>
         </div>

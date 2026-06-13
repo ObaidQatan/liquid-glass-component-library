@@ -61,7 +61,7 @@ export function LiquidGlassRating({
                     ? "text-liquid-amber fill-liquid-amber"
                     : halfFilled
                     ? "text-liquid-amber"
-                    : "text-white/10"
+                    : "text-[var(--lg-text-muted)]"
                 )}
               />
               {halfFilled && (
@@ -74,7 +74,7 @@ export function LiquidGlassRating({
         })}
       </div>
       {showValue && (
-        <span className="ml-1.5 text-sm font-medium text-white/50 tabular-nums">
+        <span className="ml-1.5 text-sm font-medium text-[var(--lg-text-muted)] tabular-nums">
           {value.toFixed(1)}
         </span>
       )}

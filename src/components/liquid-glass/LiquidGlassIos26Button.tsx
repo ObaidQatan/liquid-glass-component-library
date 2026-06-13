@@ -77,7 +77,7 @@ export function LiquidGlassIos26Button({
       <div className="pointer-events-none absolute inset-x-3 top-0.5 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full z-20" />
 
       {/* Side refraction highlights */}
-      <div className="pointer-events-none absolute -top-6 -left-4 h-16 w-16 rounded-full bg-white/15 blur-2xl" />
+      <div className="pointer-events-none absolute -top-6 -left-4 h-16 w-16 rounded-full bg-[var(--lg-border)] blur-2xl" />
       <div className="pointer-events-none absolute -bottom-6 -right-4 h-16 w-16 rounded-full bg-liquid-blue/15 blur-2xl" />
 
       {/* Liquid-glass press splash */}

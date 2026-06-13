@@ -63,7 +63,7 @@ export function LiquidGlassTooltip({
             className={cn(
               "absolute z-50 px-3 py-2 rounded-xl whitespace-nowrap",
               "glass-blur-lg glass-surface glass-border glass-highlight",
-              "text-xs font-medium text-white/90",
+              "text-xs font-medium text-[var(--lg-text)]",
               positionStyles[position]
             )}
           >
@@ -71,7 +71,7 @@ export function LiquidGlassTooltip({
             <div
               className={cn(
                 "absolute w-2 h-2 rotate-45",
-                "bg-white/10 border border-white/10",
+                "bg-[var(--lg-border)] border border-[var(--lg-border-subtle)]",
                 arrowStyles[position]
               )}
             />

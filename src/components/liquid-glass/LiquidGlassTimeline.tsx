@@ -31,7 +31,7 @@ export function LiquidGlassTimeline({
   return (
     <div className={cn("relative", className)}>
       {/* Vertical line */}
-      <div className="absolute left-4 top-2 bottom-2 w-px bg-white/10" />
+      <div className="absolute left-4 top-2 bottom-2 w-px bg-[var(--lg-border)]" />
 
       <div className="space-y-6">
         {items.map((item, i) => (
@@ -47,7 +47,7 @@ export function LiquidGlassTimeline({
               className={cn(
                 "relative z-10 flex h-8 w-8 items-center justify-center rounded-full flex-shrink-0",
                 "glass-blur-sm glass-border",
-                item.color ? colorMap[item.color] + "/20" : "bg-white/5"
+                item.color ? colorMap[item.color] + "/20" : "bg-[var(--lg-border-subtle)]"
               )}
             >
               <div
@@ -57,20 +57,20 @@ export function LiquidGlassTimeline({
                 )}
               />
               {item.icon && (
-                <span className="absolute text-white/60">{item.icon}</span>
+                <span className="absolute text-[var(--lg-text-secondary)]">{item.icon}</span>
               )}
             </div>
 
             {/* Content */}
             <div className="flex-1 min-w-0 pt-1">
               <div className="flex items-center justify-between gap-2">
-                <h4 className="text-sm font-medium text-white/80">{item.title}</h4>
+                <h4 className="text-sm font-medium text-[var(--lg-text-secondary)]">{item.title}</h4>
                 {item.timestamp && (
-                  <span className="text-xs text-white/30 flex-shrink-0">{item.timestamp}</span>
+                  <span className="text-xs text-[var(--lg-text-muted)] flex-shrink-0">{item.timestamp}</span>
                 )}
               </div>
               {item.description && (
-                <p className="text-xs text-white/40 mt-1 leading-relaxed">{item.description}</p>
+                <p className="text-xs text-[var(--lg-text-muted)] mt-1 leading-relaxed">{item.description}</p>
               )}
             </div>
           </motion.div>

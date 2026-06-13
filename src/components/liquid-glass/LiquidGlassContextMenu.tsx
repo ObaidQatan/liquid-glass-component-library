@@ -61,7 +61,7 @@ export function LiquidGlassContextMenu({
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
             {items.map((item, i) =>
               item.separator ? (
-                <div key={`sep-${i}`} className="my-1 h-px bg-white/5 mx-2" />
+                <div key={`sep-${i}`} className="my-1 h-px bg-[var(--lg-border-subtle)] mx-2" />
               ) : (
                 <motion.button
                   key={item.id}
@@ -75,14 +75,14 @@ export function LiquidGlassContextMenu({
                   className={cn(
                     "flex w-full items-center gap-2.5 px-3 py-2 text-left text-sm transition-colors",
                     item.disabled
-                      ? "text-white/20 cursor-not-allowed"
-                      : "text-white/70 hover:bg-white/10 hover:text-white"
+                      ? "text-[var(--lg-text-muted)] cursor-not-allowed"
+                      : "text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border)] hover:text-[var(--lg-text)]"
                   )}
                 >
-                  {item.icon && <span className="text-white/40">{item.icon}</span>}
+                  {item.icon && <span className="text-[var(--lg-text-muted)]">{item.icon}</span>}
                   <span className="flex-1">{item.label}</span>
                   {item.shortcut && (
-                    <span className="text-[10px] text-white/25 px-1.5 py-0.5 rounded bg-white/5">
+                    <span className="text-[10px] text-[var(--lg-text-muted)] px-1.5 py-0.5 rounded bg-[var(--lg-border-subtle)]">
                       {item.shortcut}
                     </span>
                   )}

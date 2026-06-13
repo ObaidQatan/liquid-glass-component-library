@@ -45,12 +45,12 @@ export function LiquidGlassKanban({
                 className="h-2 w-2 rounded-full"
                 style={{ backgroundColor: column.color || "rgba(255,255,255,0.3)" }}
               />
-              <h4 className="text-sm font-semibold text-white/80">{column.title}</h4>
-              <span className="text-xs text-white/30 bg-white/5 px-1.5 py-0.5 rounded-md">
+              <h4 className="text-sm font-semibold text-[var(--lg-text-secondary)]">{column.title}</h4>
+              <span className="text-xs text-[var(--lg-text-muted)] bg-[var(--lg-border-subtle)] px-1.5 py-0.5 rounded-md">
                 {column.tasks.length}
               </span>
             </div>
-            <button className="text-white/20 hover:text-white/50 transition-colors">
+            <button className="text-[var(--lg-text-muted)] hover:text-[var(--lg-text-muted)] transition-colors">
               <MoreHorizontal size={14} />
             </button>
           </div>
@@ -67,7 +67,7 @@ export function LiquidGlassKanban({
                 className={cn(
                   "p-3 rounded-xl cursor-pointer",
                   "glass-blur-sm glass-surface glass-border",
-                  "hover:bg-white/10 transition-colors"
+                  "hover:bg-[var(--lg-border)] transition-colors"
                 )}
               >
                 {task.tag && (
@@ -81,16 +81,16 @@ export function LiquidGlassKanban({
                     {task.tag}
                   </span>
                 )}
-                <p className="text-sm font-medium text-white/80 mb-1">{task.title}</p>
+                <p className="text-sm font-medium text-[var(--lg-text-secondary)] mb-1">{task.title}</p>
                 {task.description && (
-                  <p className="text-xs text-white/35 leading-relaxed">{task.description}</p>
+                  <p className="text-xs text-[var(--lg-text-muted)] leading-relaxed">{task.description}</p>
                 )}
                 {task.assignees && task.assignees.length > 0 && (
                   <div className="flex -space-x-1.5 mt-2">
                     {task.assignees.map((a, j) => (
                       <div
                         key={j}
-                        className="h-5 w-5 rounded-full bg-gradient-to-br from-white/15 to-white/5 ring-1 ring-[#0a0a0f] flex items-center justify-center text-[8px] font-bold text-white/60"
+                        className="h-5 w-5 rounded-full bg-gradient-to-br from-white/15 to-white/5 ring-1 ring-[#0a0a0f] flex items-center justify-center text-[8px] font-bold text-[var(--lg-text-secondary)]"
                       >
                         {a.slice(0, 2).toUpperCase()}
                       </div>
@@ -105,7 +105,7 @@ export function LiquidGlassKanban({
           <motion.button
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
-            className="flex w-full items-center justify-center gap-1.5 mt-2 py-2 rounded-xl text-xs text-white/30 hover:text-white/50 hover:bg-white/5 transition-colors"
+            className="flex w-full items-center justify-center gap-1.5 mt-2 py-2 rounded-xl text-xs text-[var(--lg-text-muted)] hover:text-[var(--lg-text-muted)] hover:bg-[var(--lg-border-subtle)] transition-colors"
           >
             <Plus size={12} />
             Add task

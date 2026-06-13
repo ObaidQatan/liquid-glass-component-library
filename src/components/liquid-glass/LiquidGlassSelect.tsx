@@ -45,7 +45,7 @@ export function LiquidGlassSelect({
   return (
     <div ref={ref} className={cn("relative w-full", className)}>
       {label && (
-        <label className="mb-1.5 block text-sm font-medium text-white/70">
+        <label className="mb-1.5 block text-sm font-medium text-[var(--lg-text-secondary)]">
           {label}
         </label>
       )}
@@ -56,25 +56,25 @@ export function LiquidGlassSelect({
           "relative flex w-full items-center justify-between gap-3",
           "glass-blur-sm glass-surface glass-border glass-inner-glow",
           "px-4 py-3 rounded-2xl text-left transition-all duration-200",
-          "focus:ring-2 focus:ring-white/20 focus:border-white/30",
+          "focus:ring-2 focus:ring-white/20 focus:border-[var(--lg-border)]",
           disabled && "opacity-50 cursor-not-allowed"
         )}
       >
         <div className="flex items-center gap-2 min-w-0">
           {selected?.icon}
-          <span className={cn("truncate", !selected && "text-white/30")}>
+          <span className={cn("truncate", !selected && "text-[var(--lg-text-muted)]")}>
             {selected?.label || placeholder}
           </span>
         </div>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="flex-shrink-0 text-white/40"
+          className="flex-shrink-0 text-[var(--lg-text-muted)]"
         >
           <ChevronDown size={16} />
         </motion.div>
         {/* Top highlight */}
-        <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-white/10 rounded-full" />
+        <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-[var(--lg-border)] rounded-full" />
       </motion.button>
 
       <AnimatePresence>
@@ -103,8 +103,8 @@ export function LiquidGlassSelect({
                 className={cn(
                   "flex w-full items-center gap-2 px-4 py-2.5 text-sm transition-colors",
                   value === option.value
-                    ? "bg-white/10 text-white"
-                    : "text-white/60 hover:bg-white/5 hover:text-white/90"
+                    ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
+                    : "text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border-subtle)] hover:text-[var(--lg-text)]"
                 )}
               >
                 {option.icon}

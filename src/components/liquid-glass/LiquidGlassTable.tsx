@@ -53,7 +53,7 @@ export function LiquidGlassTable<T extends Record<string, unknown>>({
   };
 
   const SortIcon = ({ colKey }: { colKey: string }) => {
-    if (!sortable || sort?.key !== colKey) return <ArrowUpDown size={12} className="text-white/20" />;
+    if (!sortable || sort?.key !== colKey) return <ArrowUpDown size={12} className="text-[var(--lg-text-muted)]" />;
     return sort.direction === "asc" ? (
       <ArrowUp size={12} className="text-liquid-blue" />
     ) : (
@@ -66,15 +66,15 @@ export function LiquidGlassTable<T extends Record<string, unknown>>({
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-white/5">
+            <tr className="border-b border-[var(--lg-border-subtle)]">
               {columns.map((col) => (
                 <th
                   key={col.key}
                   style={{ width: col.width }}
                   onClick={() => col.sortable && toggleSort(col.key)}
                   className={cn(
-                    "px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-white/40",
-                    col.sortable && sortable && "cursor-pointer hover:text-white/60 select-none"
+                    "px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[var(--lg-text-muted)]",
+                    col.sortable && sortable && "cursor-pointer hover:text-[var(--lg-text-secondary)] select-none"
                   )}
                 >
                   <div className="flex items-center gap-1.5">
@@ -94,13 +94,13 @@ export function LiquidGlassTable<T extends Record<string, unknown>>({
                 transition={{ delay: i * 0.03 }}
                 onClick={() => onRowClick?.(row)}
                 className={cn(
-                  "border-b border-white/5 transition-colors",
-                  onRowClick && "cursor-pointer hover:bg-white/5",
+                  "border-b border-[var(--lg-border-subtle)] transition-colors",
+                  onRowClick && "cursor-pointer hover:bg-[var(--lg-border-subtle)]",
                   i === sorted.length - 1 && "border-b-0"
                 )}
               >
                 {columns.map((col) => (
-                  <td key={col.key} className="px-4 py-3 text-sm text-white/70">
+                  <td key={col.key} className="px-4 py-3 text-sm text-[var(--lg-text-secondary)]">
                     {col.render ? col.render(row) : String(row[col.key] ?? "-")}
                   </td>
                 ))}

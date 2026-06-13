@@ -42,9 +42,9 @@ export function MobilePageIndicator({
         "text-sm font-medium tabular-nums",
         className
       )}>
-        <span className="text-white/80">{currentPage + 1}</span>
-        <span className="text-white/30 mx-1">/</span>
-        <span className="text-white/40">{totalPages}</span>
+        <span className="text-[var(--lg-text-secondary)]">{currentPage + 1}</span>
+        <span className="text-[var(--lg-text-muted)] mx-1">/</span>
+        <span className="text-[var(--lg-text-muted)]">{totalPages}</span>
       </span>
     );
   }

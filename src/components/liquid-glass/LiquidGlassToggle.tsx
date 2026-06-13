@@ -141,7 +141,7 @@ export function LiquidGlassToggle({
             "absolute inset-0 rounded-full -z-10",
             "glass-blur-xl",
             "border",
-            checked ? "border-white/20" : "bg-white/[0.08] border-white/15"
+            checked ? "border-[var(--lg-border)]" : "bg-white/[0.08] border-[var(--lg-border)]"
           )}
           style={{
             background: checked

@@ -34,7 +34,7 @@ export function MobileSegmentedControl({
     <div
       className={cn(
         "relative inline-flex rounded-xl overflow-hidden",
-        isIos26 ? "glass-blur-lg glass-surface-strong glass-border p-1" : "bg-white/5 border border-white/10 p-0.5",
+        isIos26 ? "glass-blur-lg glass-surface-strong glass-border p-1" : "bg-[var(--lg-border-subtle)] border border-[var(--lg-border-subtle)] p-0.5",
         size === "sm" ? "h-8" : "h-10",
         className
       )}
@@ -45,8 +45,8 @@ export function MobileSegmentedControl({
         className={cn(
           "absolute top-1 bottom-1 rounded-lg",
           isIos26
-            ? "glass-surface-strong border border-white/10 shadow-inner"
-            : "bg-white/12 border border-white/10"
+            ? "glass-surface-strong border border-[var(--lg-border-subtle)] shadow-inner"
+            : "bg-[var(--lg-border)] border border-[var(--lg-border-subtle)]"
         )}
         style={{
           left: `calc(${100 / segments.length * selectedIndex}% + 4px)`,
@@ -54,7 +54,7 @@ export function MobileSegmentedControl({
         }}
         transition={{ type: "spring", stiffness: 400, damping: 35 }}
       >
-        {isIos26 && <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-white/30 rounded-full" />}
+        {isIos26 && <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-[var(--lg-border)] rounded-full" />}
       </motion.div>
 
       {segments.map((segment) => (
@@ -66,7 +66,7 @@ export function MobileSegmentedControl({
             "transition-colors select-none",
             selected === segment.id
               ? isDark ? "text-white font-medium" : "text-black font-medium"
-              : isDark ? "text-white/40 hover:text-white/60" : "text-black/40 hover:text-black/60",
+              : isDark ? "text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]" : "text-black/40 hover:text-black/60",
             size === "sm" ? "text-xs" : "text-sm"
           )}
         >

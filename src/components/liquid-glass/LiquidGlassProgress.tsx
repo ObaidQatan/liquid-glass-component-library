@@ -49,13 +49,13 @@ export function LiquidGlassProgress({
                 sizeStyles[size],
                 i < filledSegments
                   ? "bg-gradient-to-r from-liquid-blue to-liquid-purple"
-                  : "bg-white/10"
+                  : "bg-[var(--lg-border)]"
               )}
             />
           ))}
         </div>
         {showValue && (
-          <div className="mt-1.5 text-right text-xs text-white/50">
+          <div className="mt-1.5 text-right text-xs text-[var(--lg-text-muted)]">
             {Math.round(percentage)}%
           </div>
         )}
@@ -69,7 +69,7 @@ export function LiquidGlassProgress({
         <div
           className={cn(
             "relative flex-1 overflow-hidden",
-            "glass-blur-sm glass-surface-dark border border-white/5",
+            "glass-blur-sm glass-surface-dark border border-[var(--lg-border-subtle)]",
             sizeStyles[size]
           )}
         >
@@ -99,7 +99,7 @@ export function LiquidGlassProgress({
           </motion.div>
         </div>
         {showValue && (
-          <span className="text-xs font-medium text-white/60 tabular-nums w-10 text-right">
+          <span className="text-xs font-medium text-[var(--lg-text-secondary)] tabular-nums w-10 text-right">
             {Math.round(percentage)}%
           </span>
         )}
