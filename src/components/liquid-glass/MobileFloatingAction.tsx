@@ -57,7 +57,6 @@ export function MobileFloatingActionButton({
 
   const mainClasses = cn(
     "relative flex h-14 w-14 items-center justify-center rounded-2xl overflow-hidden isolate",
-    "transition-all duration-200",
     isGhost
       ? "glass-blur-sm glass-surface glass-border text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)]"
       : isColored
@@ -97,7 +96,10 @@ export function MobileFloatingActionButton({
 
       <motion.button
         whileTap={{ scale: 0.92 }}
-        transition={{ type: "spring", stiffness: 600, damping: 22 }}
+        transition={{
+          scale: { type: "spring", stiffness: 700, damping: 24 },
+          rotate: { duration: 0.2, ease: "easeOut" },
+        }}
         onClick={toggle}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
@@ -122,7 +124,7 @@ export function MobileFloatingActionButton({
           </>
         )}
 
-        <LiquidGlassPressSplash press={press} size={160} duration={0.35} />
+        <LiquidGlassPressSplash press={press} size={160} duration={0.25} />
         <span className="relative z-10">{isOpen ? expandedIcon : icon}</span>
       </motion.button>
     </div>
