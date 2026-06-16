@@ -49,7 +49,7 @@ export function LiquidGlassHoverCard({
             transition={{ duration: 0.15 }}
             className={cn(
               "absolute z-[100] left-1/2 -translate-x-1/2 top-full mt-2",
-              "glass-blur-xl glass-surface glass-border glass-highlight",
+              "glass-blur-xl glass-surface-strong glass-border glass-highlight",
               "rounded-2xl overflow-hidden"
             )}
             style={{ width }}
