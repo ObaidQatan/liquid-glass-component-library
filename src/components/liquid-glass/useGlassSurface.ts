@@ -111,8 +111,10 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
 
       case "popover":
         return {
-          style: {},
-          className: "glass-blur-xl glass-surface glass-border glass-highlight",
+          style: {
+            background: `color-mix(in srgb, var(--lg-bg) calc(var(--lg-transparency) * 1.2%), transparent)`,
+          },
+          className: "glass-blur-xl glass-border glass-highlight",
         };
 
       case "surface-strong":

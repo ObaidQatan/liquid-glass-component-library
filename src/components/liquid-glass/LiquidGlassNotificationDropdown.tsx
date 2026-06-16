@@ -44,6 +44,7 @@ export function LiquidGlassNotificationDropdown({
 }: LiquidGlassNotificationDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const popover = useGlassSurface({ variant: "popover" });
   const topHighlight = useGlassSurface({ variant: "highlight", opacity: 0.25 });
   const unreadFill = useGlassSurface({ variant: "fill", opacity: 0.06 });
   const hoverFill = useGlassSurface({ variant: "fill", opacity: 0.05 });
@@ -73,7 +74,12 @@ export function LiquidGlassNotificationDropdown({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.96 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 top-full mt-2 w-80 rounded-2xl overflow-hidden glass-blur-xl glass-surface-strong glass-border glass-highlight-strong z-[100]"
+            className={cn(
+              "absolute right-0 top-full mt-2 w-80 rounded-2xl overflow-hidden z-[100]",
+              popover.className,
+              "glass-highlight-strong"
+            )}
+            style={popover.style}
           >
             {/* Top highlight */}
             <div className={topHighlight.className} style={topHighlight.style} />

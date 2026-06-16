@@ -19,6 +19,7 @@ export function LiquidGlassHoverCard({
   width = "280px",
 }: LiquidGlassHoverCardProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const popover = useGlassSurface({ variant: "popover" });
   const topHighlight = useGlassSurface({ variant: "highlight", opacity: 0.20 });
   const arrowFill = useGlassSurface({ variant: "fill", opacity: 0.12 });
   let timeoutId: ReturnType<typeof setTimeout>;
@@ -49,10 +50,10 @@ export function LiquidGlassHoverCard({
             transition={{ duration: 0.15 }}
             className={cn(
               "absolute z-[100] left-1/2 -translate-x-1/2 top-full mt-2",
-              "glass-blur-xl glass-surface-strong glass-border glass-highlight",
+              popover.className,
               "rounded-2xl overflow-hidden"
             )}
-            style={{ width }}
+            style={{ width, ...popover.style }}
           >
             {/* Top highlight */}
             <div className={topHighlight.className} style={topHighlight.style} />
