@@ -50,8 +50,8 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
     opacity = 1,
   } = options;
 
-  const { glass, isDark } = useTheme();
-  const { blur, transparency, reflection } = glass;
+  const { glass } = useTheme();
+  const { transparency, reflection } = glass;
 
   return useMemo(() => {
     const w = (base: number) => withAlpha("#ffffff", base, transparency, opacity);
@@ -110,20 +110,12 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
         };
 
       case "popover": {
-        // Use a translucent white tint in both modes so the backdrop blur is
-        // clearly visible (dark mode shows as dark grey, light as white).
-        const bgAlpha = isDark
-          ? Math.min(1, 0.08 + (transparency / 100) * 0.24)
-          : Math.min(1, 0.22 + (transparency / 100) * 0.42);
-        const reflectionAlpha = Math.min(1, 0.12 + (reflection / 100) * 0.42);
-        const blurPx = Math.max(4, (blur / 100) * 32);
+        // Use the same proven glass-surface-strong + blur utilities as
+        // Modal, CommandPalette, and Select so the panel visibly reacts to
+        // all glass sliders exactly like the rest of the library.
         return {
-          style: {
-            background: `radial-gradient(circle at 30% 25%, rgba(255,255,255,${reflectionAlpha}) 0%, transparent 60%), rgba(255,255,255,${bgAlpha})`,
-            backdropFilter: `blur(${blurPx}px) saturate(180%)`,
-            WebkitBackdropFilter: `blur(${blurPx}px) saturate(180%)`,
-          },
-          className: "glass-border glass-highlight",
+          style: {},
+          className: "glass-blur-xl glass-surface-strong glass-border glass-highlight",
         };
       }
 

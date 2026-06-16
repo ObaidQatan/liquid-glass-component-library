@@ -81,6 +81,8 @@ export function LiquidGlassNotificationDropdown({
             )}
             style={popover.style}
           >
+            {/* Reflection blob */}
+            <div className="pointer-events-none absolute -top-10 -right-10 h-24 w-24 rounded-full glass-reflection blur-2xl" />
             {/* Top highlight */}
             <div className={topHighlight.className} style={topHighlight.style} />
 
