@@ -50,7 +50,7 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
     opacity = 1,
   } = options;
 
-  const { glass } = useTheme();
+  const { glass, isDark } = useTheme();
   const { transparency, reflection } = glass;
 
   return useMemo(() => {
@@ -109,13 +109,16 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
           className: "",
         };
 
-      case "popover":
+      case "popover": {
+        const [r, g, b] = isDark ? [10, 10, 15] : [242, 241, 246];
+        const alpha = Math.min(1, 0.25 + (transparency / 100) * 0.75);
         return {
           style: {
-            background: `color-mix(in srgb, var(--lg-bg) calc(var(--lg-transparency) * 1.2%), transparent)`,
+            background: `rgba(${r},${g},${b},${alpha})`,
           },
           className: "glass-blur-xl glass-border glass-highlight",
         };
+      }
 
       case "surface-strong":
         return {
