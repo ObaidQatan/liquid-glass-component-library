@@ -2,7 +2,6 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, type ReactNode } from "react";
 import { useGlassSurface } from "./useGlassSurface";
-import { GlassSheen } from "./GlassSheen";
 
 interface LiquidGlassHoverCardProps {
   children: ReactNode;
@@ -56,12 +55,8 @@ export function LiquidGlassHoverCard({
             )}
             style={{ width, ...popover.style }}
           >
-            {/* Reflection blob */}
-            <div className="pointer-events-none absolute -top-10 -right-10 h-24 w-24 rounded-full glass-reflection blur-2xl" />
             {/* Top highlight */}
             <div className={topHighlight.className} style={topHighlight.style} />
-            {/* Sheen */}
-            <GlassSheen opacity={0.08} />
             {/* Arrow */}
             <div
               className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border-l border-t border-[var(--lg-border-subtle)]"
