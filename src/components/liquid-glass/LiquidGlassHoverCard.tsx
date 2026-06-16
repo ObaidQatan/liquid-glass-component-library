@@ -72,7 +72,7 @@ export function LiquidGlassHoverCard({
         >
           <div
             className={cn(
-              "pointer-events-auto",
+              "pointer-events-auto flex-shrink-0",
               popover.className,
               "rounded-2xl overflow-hidden"
             )}

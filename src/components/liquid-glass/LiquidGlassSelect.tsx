@@ -2,6 +2,7 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect, type CSSProperties } from "react";
 import { ChevronDown, Check } from "lucide-react";
+import { createPortal } from "react-dom";
 import { useGlassSurface } from "./useGlassSurface";
 
 interface SelectOption {
@@ -30,7 +31,9 @@ export function LiquidGlassSelect({
   disabled,
 }: LiquidGlassSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ left: 0, top: 0, width: 0 });
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
   const selected = options.find((o) => o.value === value);
 
   const sheen = useGlassSurface({ variant: "sheen", opacity: 0.12 });
@@ -39,18 +42,92 @@ export function LiquidGlassSelect({
   const selectedFill = useGlassSurface({ variant: "fill", opacity: 0.10 });
   const hoverFill = useGlassSurface({ variant: "fill", opacity: 0.06 });
 
+  const updatePosition = () => {
+    if (!triggerRef.current) return;
+    const rect = triggerRef.current.getBoundingClientRect();
+    setPosition({
+      left: rect.left,
+      top: rect.bottom + 8,
+      width: rect.width,
+    });
+  };
+
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setIsOpen(false);
+      if (
+        triggerRef.current?.contains(e.target as Node) ||
+        popoverRef.current?.contains(e.target as Node)
+      ) {
+        return;
       }
+      setIsOpen(false);
     };
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  const handleToggle = () => {
+    if (!isOpen) {
+      updatePosition();
+    }
+    setIsOpen((prev) => !prev);
+  };
+
+  const popoverNode = (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          ref={popoverRef}
+          initial={{ opacity: 0, y: -8, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -8, scale: 0.96 }}
+          transition={{ duration: 0.15 }}
+          className={cn(
+            "fixed z-[100] overflow-hidden",
+            "glass-blur-xl glass-surface glass-border glass-highlight-strong",
+            "rounded-2xl py-1"
+          )}
+          style={{
+            left: position.left,
+            top: position.top,
+            width: position.width,
+          }}
+        >
+          {/* Top highlight */}
+          <div className={dropdownHighlight.className} style={dropdownHighlight.style} />
+          {options.map((option) => (
+            <motion.button
+              key={option.value}
+              whileHover={{ x: 2 }}
+              onClick={() => {
+                onChange?.(option.value);
+                setIsOpen(false);
+              }}
+              className={cn(
+                "flex w-full items-center gap-2 px-4 py-2.5 text-sm transition-colors",
+                value === option.value
+                  ? "text-[var(--lg-text)] bg-[var(--selected-fill)]"
+                  : "text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--hover-fill)]"
+              )}
+              style={{
+                "--selected-fill": selectedFill.style.background,
+                "--hover-fill": hoverFill.style.background,
+              } as CSSProperties}
+            >
+              {option.icon}
+              <span className="flex-1 text-left">{option.label}</span>
+              {value === option.value && (
+                <Check size={14} className="text-liquid-blue" />
+              )}
+            </motion.button>
+          ))}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+
   return (
-    <div ref={ref} className={cn("relative w-full", className)}>
+    <div ref={triggerRef} className={cn("relative w-full", className)}>
       {label && (
         <label className="mb-1.5 block text-sm font-medium text-[var(--lg-text-secondary)]">
           {label}
@@ -58,7 +135,7 @@ export function LiquidGlassSelect({
       )}
       <motion.button
         whileTap={{ scale: disabled ? 1 : 0.98 }}
-        onClick={() => !disabled && setIsOpen(!isOpen)}
+        onClick={handleToggle}
         className={cn(
           "relative flex w-full items-center justify-between gap-3 overflow-hidden",
           "glass-blur glass-surface-strong glass-border glass-highlight",
@@ -88,51 +165,7 @@ export function LiquidGlassSelect({
           <ChevronDown size={16} />
         </motion.div>
       </motion.button>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.96 }}
-            transition={{ duration: 0.15 }}
-            className={cn(
-              "absolute z-50 mt-2 w-full overflow-hidden",
-              "glass-blur-xl glass-surface glass-border glass-highlight-strong",
-              "rounded-2xl py-1"
-            )}
-          >
-            {/* Top highlight */}
-            <div className={dropdownHighlight.className} style={dropdownHighlight.style} />
-            {options.map((option) => (
-              <motion.button
-                key={option.value}
-                whileHover={{ x: 2 }}
-                onClick={() => {
-                  onChange?.(option.value);
-                  setIsOpen(false);
-                }}
-                className={cn(
-                  "flex w-full items-center gap-2 px-4 py-2.5 text-sm transition-colors",
-                  value === option.value
-                    ? "text-[var(--lg-text)] bg-[var(--selected-fill)]"
-                    : "text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--hover-fill)]"
-                )}
-                style={{
-                  "--selected-fill": selectedFill.style.background,
-                  "--hover-fill": hoverFill.style.background,
-                } as CSSProperties}
-              >
-                {option.icon}
-                <span className="flex-1 text-left">{option.label}</span>
-                {value === option.value && (
-                  <Check size={14} className="text-liquid-blue" />
-                )}
-              </motion.button>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {createPortal(popoverNode, document.body)}
     </div>
   );
 }
