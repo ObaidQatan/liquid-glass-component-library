@@ -112,9 +112,10 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
       case "popover": {
         const [r, g, b] = isDark ? [10, 10, 15] : [242, 241, 246];
         const alpha = Math.min(1, 0.25 + (transparency / 100) * 0.75);
+        const reflectionAlpha = Math.min(1, 0.3 * (reflection / 100));
         return {
           style: {
-            background: `rgba(${r},${g},${b},${alpha})`,
+            background: `radial-gradient(circle at 30% 25%, rgba(255,255,255,${reflectionAlpha}) 0%, transparent 55%), rgba(${r},${g},${b},${alpha})`,
           },
           className: "glass-blur-xl glass-border glass-highlight",
         };
