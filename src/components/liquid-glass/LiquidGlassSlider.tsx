@@ -9,6 +9,7 @@ import {
 } from "react";
 import { useTheme } from "./ThemeProvider";
 import { useGlassSurface } from "./useGlassSurface";
+import { GlassSheen } from "./GlassSheen";
 
 interface LiquidGlassSliderProps {
   value?: number;
@@ -215,13 +216,7 @@ export function LiquidGlassSlider({
           <div className="absolute inset-0 rounded-full glass-reflection mix-blend-soft-light pointer-events-none" />
 
           {/* Subtle specular sheen */}
-          <div
-            className="absolute inset-0 rounded-full opacity-[0.18]"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 45%, transparent 55%)",
-            }}
-          />
+          <GlassSheen className="rounded-full" opacity={0.18} />
         </motion.div>
       </div>
       {!label && showValue && (

@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import { useState, type ReactNode, type MouseEvent } from "react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface LiquidGlassFluidCardProps {
   children: ReactNode;
@@ -67,7 +68,7 @@ export function LiquidGlassFluidCard({
       />
 
       {/* Top highlight */}
-      <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent z-10" />
+      <GlassTopHighlight className="inset-x-4 top-0 z-10" opacity={0.3} />
 
       {/* Subtle border glow */}
       {isIos26 && (

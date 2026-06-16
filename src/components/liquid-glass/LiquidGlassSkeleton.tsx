@@ -1,4 +1,5 @@
 import { cn } from "../../utils/cn";
+import { useGlassSurface } from "./useGlassSurface";
 
 interface LiquidGlassSkeletonProps {
   className?: string;
@@ -17,8 +18,10 @@ export function LiquidGlassSkeleton({
   lines = 1,
   animate = true,
 }: LiquidGlassSkeletonProps) {
+  const fill = useGlassSurface({ variant: "fill", opacity: 0.05 });
+  const shimmerFill = useGlassSurface({ variant: "fill", opacity: 0.05 });
   const baseClasses = cn(
-    "bg-white/5",
+    "",
     animate && "animate-pulse",
     variant === "circular" && "rounded-full",
     variant === "rectangular" && "rounded-none",
@@ -30,6 +33,7 @@ export function LiquidGlassSkeleton({
   const style: React.CSSProperties = {
     width: width,
     height: height,
+    background: fill.style.background,
   };
 
   if (lines > 1 && variant === "text") {
@@ -63,8 +67,7 @@ export function LiquidGlassSkeleton({
         <div
           className="absolute inset-0"
           style={{
-            background:
-              "linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent)",
+            background: `linear-gradient(90deg, transparent, ${shimmerFill.style.background}, transparent)`,
             backgroundSize: "200% 100%",
             animation: "shimmer 1.5s linear infinite",
           }}

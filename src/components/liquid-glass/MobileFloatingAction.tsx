@@ -4,6 +4,9 @@ import { useState, type ReactNode } from "react";
 import { Plus, X } from "lucide-react";
 import { useLiquidPress } from "./useLiquidPress";
 import { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";
+import { useGlassSurface } from "./useGlassSurface";
+import { GlassTopHighlight } from "./GlassTopHighlight";
+import { GlassSheen } from "./GlassSheen";
 
 interface FabAction {
   id: string;
@@ -33,6 +36,9 @@ export function MobileFloatingActionButton({
   color = "from-liquid-blue to-liquid-purple",
   variant = "chrome",
 }: MobileFloatingActionButtonProps) {
+  const chromeFill = useGlassSurface({ variant: "fill", opacity: 0.1 });
+  const chromeGlow = useGlassSurface({ variant: "fill", opacity: 0.15 });
+  const coloredGlow = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [isOpen, setIsOpen] = useState(false);
   const { state: press, onPointerDown, onPointerUp, onPointerLeave, onPointerCancel } =
     useLiquidPress<HTMLButtonElement>();
@@ -103,22 +109,16 @@ export function MobileFloatingActionButton({
         {/* Chrome liquid-glass overlays */}
         {!isGhost && !isColored && (
           <>
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-            <div className="pointer-events-none absolute inset-x-3 top-0.5 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent rounded-full z-10" />
-            <div className="pointer-events-none absolute -top-4 -right-4 h-12 w-12 rounded-full bg-white/15 blur-xl" />
-            <div
-              className="pointer-events-none absolute inset-0 opacity-[0.15]"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 45%, transparent 55%)",
-              }}
-            />
+            <div className="absolute inset-0" style={{ background: chromeFill.style.background }} />
+            <GlassTopHighlight className="inset-x-3 top-0.5 z-10" opacity={0.45} />
+            <div className="pointer-events-none absolute -top-4 -right-4 h-12 w-12 rounded-full blur-xl" style={{ background: chromeGlow.style.background }} />
+            <GlassSheen opacity={0.15} />
           </>
         )}
         {isColored && (
           <>
-            <div className="pointer-events-none absolute inset-x-3 top-0.5 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full z-10" />
-            <div className="pointer-events-none absolute -top-3 -right-3 h-10 w-10 rounded-full bg-white/20 blur-lg" />
+            <GlassTopHighlight className="inset-x-3 top-0.5 z-10" opacity={0.4} />
+            <div className="pointer-events-none absolute -top-3 -right-3 h-10 w-10 rounded-full blur-lg" style={{ background: coloredGlow.style.background }} />
           </>
         )}
 
@@ -138,6 +138,7 @@ function ActionButton({
   index: number;
   onClose: () => void;
 }) {
+  const actionGlow = useGlassSurface({ variant: "fill", opacity: 0.1 });
   const { state: press, onPointerDown, onPointerUp, onPointerLeave, onPointerCancel } =
     useLiquidPress<HTMLButtonElement>();
 
@@ -164,8 +165,8 @@ function ActionButton({
         }}
         className="relative flex h-10 w-10 items-center justify-center rounded-full overflow-hidden glass-blur glass-surface-strong glass-border glass-highlight text-[var(--lg-text-secondary)]"
       >
-        <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-full" />
-        <div className="pointer-events-none absolute -top-2 -right-2 h-6 w-6 rounded-full bg-white/10 blur-md" />
+        <GlassTopHighlight className="inset-x-2 top-0.5" opacity={0.25} />
+        <div className="pointer-events-none absolute -top-2 -right-2 h-6 w-6 rounded-full blur-md" style={{ background: actionGlow.style.background }} />
         <LiquidGlassPressSplash press={press} size={90} duration={0.3} />
         {action.icon}
       </motion.button>

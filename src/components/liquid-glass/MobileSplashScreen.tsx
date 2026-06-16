@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
+import { useGlassSurface } from "./useGlassSurface";
 
 interface SplashSlide {
   id: string;
@@ -27,6 +28,7 @@ export function MobileSplashScreen({
   getStartedText = "Get Started",
   skipText = "Skip",
 }: MobileSplashScreenProps) {
+  const buttonFill = useGlassSurface({ variant: "fill", opacity: 0.15 });
   const [currentSlide, setCurrentSlide] = useState(0);
   const isLastSlide = currentSlide === slides.length - 1;
 
@@ -116,14 +118,16 @@ export function MobileSplashScreen({
           {isLastSlide ? (
             <button
               onClick={onClose}
-              className="flex-1 py-3.5 rounded-2xl text-sm font-semibold text-white glass-blur-sm bg-white/15 glass-border glass-highlight"
+              className="flex-1 py-3.5 rounded-2xl text-sm font-semibold text-white glass-blur-sm glass-border glass-highlight"
+              style={{ background: buttonFill.style.background }}
             >
               {getStartedText}
             </button>
           ) : (
             <button
               onClick={() => setCurrentSlide(Math.min(slides.length - 1, currentSlide + 1))}
-              className="flex-1 py-3.5 rounded-2xl text-sm font-semibold text-white glass-blur-sm bg-white/15 glass-border glass-highlight"
+              className="flex-1 py-3.5 rounded-2xl text-sm font-semibold text-white glass-blur-sm glass-border glass-highlight"
+              style={{ background: buttonFill.style.background }}
             >
               Next
             </button>

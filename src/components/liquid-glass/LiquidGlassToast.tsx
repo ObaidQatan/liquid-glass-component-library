@@ -2,6 +2,8 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle, AlertTriangle, Info, AlertCircle } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useGlassSurface } from "./useGlassSurface";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 export interface ToastItem {
   id: string;
@@ -66,6 +68,7 @@ function ToastItemComponent({
   toast: ToastItem;
   onRemove: (id: string) => void;
 }) {
+  const progressFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [progress, setProgress] = useState(100);
   const duration = toast.duration || 4000;
 
@@ -98,7 +101,7 @@ function ToastItemComponent({
       )}
     >
       {/* Top highlight */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      <GlassTopHighlight className="inset-x-0 top-0" opacity={0.2} />
       
       <div className="flex-shrink-0">{variantIcons[toast.variant || "info"]}</div>
       <p className="flex-1 text-sm text-[var(--lg-text-secondary)] leading-relaxed">{toast.message}</p>
@@ -114,8 +117,8 @@ function ToastItemComponent({
       {/* Progress bar */}
       <div className="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-2xl overflow-hidden">
         <motion.div
-          className="h-full bg-white/20"
-          style={{ width: `${progress}%` }}
+          className="h-full"
+          style={{ width: `${progress}%`, background: progressFill.style.background }}
         />
       </div>
     </motion.div>

@@ -2,6 +2,7 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface MenuItem {
   id: string;
@@ -86,7 +87,7 @@ export function LiquidGlassContextMenu({
           onContextMenu={(e) => e.preventDefault()}
         >
           {/* Top highlight */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <GlassTopHighlight className="inset-x-0 top-0" opacity={0.2} />
           {items.map((item, i) =>
             item.separator ? (
               <div key={`sep-${i}`} className="my-1 h-px bg-[var(--lg-border-subtle)] mx-2" />

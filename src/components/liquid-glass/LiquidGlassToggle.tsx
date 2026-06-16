@@ -2,6 +2,8 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback, useEffect, useMemo, type MouseEvent } from "react";
 import { useGlassSurface } from "./useGlassSurface";
+import { GlassTopHighlight } from "./GlassTopHighlight";
+import { GlassSheen } from "./GlassSheen";
 
 interface LiquidGlassToggleProps {
   checked?: boolean;
@@ -67,6 +69,8 @@ export function LiquidGlassToggle({
   const thumbSurface = useGlassSurface({ variant: "thumb" });
   const trackSurface = useGlassSurface({ variant: "track" });
   const trackActiveSurface = useGlassSurface({ variant: "track-active", tint, activeTint: tint });
+  const trackLensingChecked = useGlassSurface({ variant: "fill", opacity: 0.24 });
+  const trackLensingUnchecked = useGlassSurface({ variant: "fill", opacity: 0.14 });
 
   // Snappy spring so the shape snaps back immediately when the state change finishes.
   const spring = useMemo(() => {
@@ -157,13 +161,13 @@ export function LiquidGlassToggle({
             className="absolute inset-[-1px] rounded-full opacity-70 pointer-events-none"
             style={{
               background: checked
-                ? `radial-gradient(circle at 25% 25%, rgba(255,255,255,0.24) 0%, transparent 45%), radial-gradient(circle at 75% 85%, ${tint}18 0%, transparent 45%)`
-                : "radial-gradient(circle at 25% 25%, rgba(255,255,255,0.14) 0%, transparent 45%)",
+                ? `${trackLensingChecked.style.background}, radial-gradient(circle at 75% 85%, ${tint}18 0%, transparent 45%)`
+                : trackLensingUnchecked.style.background,
             }}
           />
 
           {/* Top highlight line */}
-          <div className="pointer-events-none absolute inset-x-3 top-[1px] h-px bg-gradient-to-r from-transparent via-white/35 to-transparent rounded-full" />
+          <GlassTopHighlight className="inset-x-3 top-[1px]" opacity={0.35} />
         </div>
 
         {/* Thumb — lozenge at rest; expands into a wider, taller stadium shape when active. */}
@@ -199,13 +203,7 @@ export function LiquidGlassToggle({
           <div className="absolute inset-0 rounded-full glass-reflection mix-blend-soft-light pointer-events-none" />
 
           {/* Subtle specular sheen */}
-          <div
-            className="absolute inset-0 rounded-full opacity-18"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 45%, transparent 55%)",
-            }}
-          />
+          <GlassSheen className="rounded-full" opacity={0.18} />
 
           {/* Touch-point shimmer */}
           <AnimatePresence>

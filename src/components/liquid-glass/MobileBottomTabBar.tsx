@@ -10,6 +10,9 @@ import {
   type MouseEvent,
 } from "react";
 import { useTheme } from "./ThemeProvider";
+import { useGlassSurface } from "./useGlassSurface";
+import { GlassTopHighlight } from "./GlassTopHighlight";
+import { GlassSheen } from "./GlassSheen";
 
 interface TabItem {
   id: string;
@@ -164,6 +167,9 @@ export function MobileBottomTabBar({
       />
     ));
 
+  const trailingFill = useGlassSurface({ variant: "fill", opacity: 0.1 });
+  const trailingGlow = useGlassSurface({ variant: "fill", opacity: 0.2 });
+
   const TrailingButton = trailingButton ? (
     <motion.button
       whileTap={{ scale: 0.88 }}
@@ -177,9 +183,9 @@ export function MobileBottomTabBar({
             "inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.18)",
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent rounded-full" />
-        <div className="pointer-events-none absolute -top-3 -right-3 h-8 w-8 rounded-full bg-[var(--lg-border)] blur-lg" />
+        <div className="absolute inset-0" style={{ background: trailingFill.style.background }} />
+        <GlassTopHighlight className="inset-x-2 top-0.5" opacity={0.45} />
+        <div className="pointer-events-none absolute -top-3 -right-3 h-8 w-8 rounded-full blur-lg" style={{ background: trailingGlow.style.background }} />
         <span className="relative z-10 text-[var(--lg-text)]">{trailingButton.icon}</span>
       </div>
       {showLabels && trailingButton.label && (
@@ -205,14 +211,7 @@ export function MobileBottomTabBar({
             onClick={centerTabButton.onClick}
             className="flex flex-col items-center -mt-5 relative"
           >
-            <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl overflow-hidden glass-blur-lg glass-surface-strong glass-border glass-highlight-strong">
-              {/* Fluid chrome gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-liquid-blue/40 via-liquid-purple/30 to-liquid-pink/20" />
-              {/* Inner reflection */}
-              <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-white/40 rounded-full" />
-              <div className="pointer-events-none absolute -top-4 -right-4 h-10 w-10 rounded-full bg-white/20 blur-lg" />
-              <span className="relative z-10 text-white">{centerTabButton.icon}</span>
-            </div>
+            <CenterTabButton icon={centerTabButton.icon} />
             {showLabels && (
               <span className="text-[10px] font-medium text-liquid-blue mt-1">{centerTabButton.label}</span>
             )}
@@ -268,13 +267,9 @@ function TopHighlight({ variant }: { variant: MobileBottomTabVariant }) {
     variant === "ios26-dock" ||
     variant === "ios26-super-pill"
   ) {
-    return (
-      <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-    );
+    return <GlassTopHighlight className="inset-x-4 top-0" opacity={0.4} />;
   }
-  return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-  );
+  return <GlassTopHighlight className="inset-x-0 top-0" opacity={0.2} />;
 }
 
 function ActiveIndicator({
@@ -286,6 +281,7 @@ function ActiveIndicator({
   variant: MobileBottomTabVariant;
   fluidity: number;
 }) {
+  const thumbSurface = useGlassSurface({ variant: "thumb" });
   const hasBackground =
     variant === "pill" ||
     variant === "ios26-fluid" ||
@@ -311,25 +307,14 @@ function ActiveIndicator({
         className="absolute z-0 pointer-events-none glass-blur-lg overflow-hidden"
         style={{
           borderRadius: radius,
-          background:
-            "radial-gradient(circle at 30% 25%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.75%), transparent) 0%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.48%), transparent) 45%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.22%), transparent) 100%)",
-          border: "1px solid rgba(255,255,255,0.24)",
-          boxShadow:
-            "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
+          ...thumbSurface.style,
         }}
       >
         <div
           className="absolute inset-0 glass-reflection mix-blend-soft-light pointer-events-none"
           style={{ borderRadius: radius }}
         />
-        <div
-          className="absolute inset-0 opacity-[0.18] pointer-events-none"
-          style={{
-            borderRadius: radius,
-            background:
-              "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 45%, transparent 55%)",
-          }}
-        />
+        <GlassSheen opacity={0.18} />
         <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-[var(--lg-border)] rounded-full" />
       </motion.div>
     );
@@ -348,23 +333,28 @@ function ActiveIndicator({
       }}
       transition={{ type: "spring", stiffness: 300 + fluidity * 3, damping: 30 }}
       className="absolute z-0 pointer-events-none glass-blur-lg overflow-hidden rounded-full"
-      style={{
-        background:
-          "radial-gradient(circle at 30% 25%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.75%), transparent) 0%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.48%), transparent) 45%, color-mix(in srgb, white calc(var(--lg-transparency) * 0.22%), transparent) 100%)",
-        border: "1px solid rgba(255,255,255,0.24)",
-        boxShadow:
-          "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
-      }}
+      style={thumbSurface.style}
     >
       <div className="absolute inset-0 rounded-full glass-reflection mix-blend-soft-light pointer-events-none" />
-      <div
-        className="absolute inset-0 rounded-full opacity-[0.18] pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 45%, transparent 55%)",
-        }}
-      />
+      <GlassSheen opacity={0.18} />
     </motion.div>
+  );
+}
+
+function CenterTabButton({ icon }: { icon: ReactNode }) {
+  const centerFill = useGlassSurface({ variant: "fill", opacity: 0.1 });
+  const centerGlow = useGlassSurface({ variant: "fill", opacity: 0.2 });
+
+  return (
+    <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl overflow-hidden glass-blur-lg glass-surface-strong glass-border glass-highlight-strong">
+      {/* Fluid chrome gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-liquid-blue/40 via-liquid-purple/30 to-liquid-pink/20" />
+      <div className="absolute inset-0" style={{ background: centerFill.style.background }} />
+      {/* Inner reflection */}
+      <GlassTopHighlight className="inset-x-2 top-0.5" opacity={0.4} />
+      <div className="pointer-events-none absolute -top-4 -right-4 h-10 w-10 rounded-full blur-lg" style={{ background: centerGlow.style.background }} />
+      <span className="relative z-10 text-white">{icon}</span>
+    </div>
   );
 }
 

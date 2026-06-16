@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface Step {
   label: string;
@@ -84,7 +85,7 @@ export function LiquidGlassStepper({
               )}
             >
               {/* Top highlight */}
-              <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-white/20 rounded-full" />
+              <GlassTopHighlight className="inset-x-2 top-0.5" opacity={0.2} />
               {isCompleted ? (
                 <Check size={isHorizontal ? 14 : 16} strokeWidth={3} />
               ) : (

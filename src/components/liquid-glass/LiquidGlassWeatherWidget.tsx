@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import { Cloud, Sun, CloudRain, CloudSnow, Wind, Droplets, Eye, Gauge } from "lucide-react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface WeatherData {
   temp: number;
@@ -69,7 +70,7 @@ export function LiquidGlassWeatherWidget({
       )}
     >
       {/* Top highlight */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+      <GlassTopHighlight className="inset-x-0 top-0" opacity={0.25} />
       {/* Background glow */}
       <div className={cn("absolute -top-20 -right-20 h-40 w-40 rounded-full blur-3xl bg-gradient-to-br", config.bg)} />
 

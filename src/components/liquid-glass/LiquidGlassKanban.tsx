@@ -2,6 +2,9 @@ import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import { Plus, MoreHorizontal } from "lucide-react";
 import { useState } from "react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
+import { GlassSheen } from "./GlassSheen";
+import { useGlassSurface } from "./useGlassSurface";
 
 interface KanbanTask {
   id: string;
@@ -30,6 +33,7 @@ export function LiquidGlassKanban({
   className,
   onTaskMove,
 }: LiquidGlassKanbanProps) {
+  const tagFill = useGlassSurface({ variant: "fill", opacity: 0.08 });
   const [columns, setColumns] = useState(initialColumns);
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
   const [dragOverColumnId, setDragOverColumnId] = useState<string | null>(null);
@@ -124,24 +128,18 @@ export function LiquidGlassKanban({
                 )}
               >
                 {/* Top highlight */}
-                <div className="pointer-events-none absolute inset-x-3 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-full" />
+                <GlassTopHighlight className="inset-x-3 top-0" opacity={0.25} />
                 {/* Reflection blob */}
                 <div className="pointer-events-none absolute -top-6 -right-6 h-16 w-16 rounded-full glass-reflection blur-2xl" />
                 {/* Sheen */}
-                <div
-                  className="pointer-events-none absolute inset-0 opacity-[0.15]"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 45%, transparent 55%)",
-                  }}
-                />
+                <GlassSheen opacity={0.15} />
 
                 <div className="relative p-3">
                   {task.tag && (
                     <span
                       className="inline-block text-[10px] font-medium px-2 py-0.5 rounded-md mb-2"
                       style={{
-                        backgroundColor: task.tagColor ? `${task.tagColor}20` : "rgba(255,255,255,0.08)",
+                        backgroundColor: task.tagColor ? `${task.tagColor}20` : tagFill.style.background,
                         color: task.tagColor || "rgba(255,255,255,0.6)",
                       }}
                     >

@@ -2,6 +2,7 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
 import { X } from "lucide-react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface LiquidGlassModalProps {
   isOpen: boolean;
@@ -57,7 +58,7 @@ export function LiquidGlassModal({
             )}
           >
             {/* Top highlight */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            <GlassTopHighlight className="inset-x-0 top-0" opacity={0.3} />
             {/* Reflection */}
             <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[var(--lg-border-subtle)] blur-2xl" />
 

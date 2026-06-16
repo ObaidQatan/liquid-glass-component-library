@@ -2,6 +2,8 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
+import { GlassSheen } from "./GlassSheen";
 
 interface MobileSearchBarProps {
   placeholder?: string;
@@ -65,17 +67,11 @@ export function MobileSearchBar({
       )}
     >
       {/* Top highlight */}
-      <div className="pointer-events-none absolute inset-x-3 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full" />
+      <GlassTopHighlight className="inset-x-3 top-0" opacity={0.3} />
       {/* Reflection blob */}
       <div className="pointer-events-none absolute -top-5 -right-5 h-14 w-14 rounded-full glass-reflection blur-2xl" />
       {/* Sheen */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.12]"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 45%, transparent 55%)",
-        }}
-      />
+      <GlassSheen opacity={0.12} />
 
       <Search size={16} className="relative z-10 text-[var(--lg-text-muted)] flex-shrink-0" />
 

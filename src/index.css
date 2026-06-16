@@ -57,8 +57,8 @@
     --lg-surface: linear-gradient(135deg,rgba(255,255,255,0.12) 0%,rgba(255,255,255,0.06) 50%,rgba(255,255,255,0.02) 100%);
     --lg-surface-strong: linear-gradient(135deg,rgba(255,255,255,0.18) 0%,rgba(255,255,255,0.10) 50%,rgba(255,255,255,0.04) 100%);
     --lg-surface-chrome: linear-gradient(135deg,rgba(0,0,0,0.30) 0%,rgba(0,0,0,0.18) 50%,rgba(0,0,0,0.08) 100%);
-    --lg-border: rgba(255,255,255,0.12);
-    --lg-border-subtle: rgba(255,255,255,0.06);
+    --lg-border: color-mix(in srgb, white calc(var(--lg-transparency) * 0.24%), transparent);
+    --lg-border-subtle: color-mix(in srgb, white calc(var(--lg-transparency) * 0.12%), transparent);
     --lg-highlight-top: rgba(255,255,255,0.18);
     --lg-highlight-bottom: rgba(0,0,0,0.12);
     --lg-shadow: rgba(0,0,0,0.20);
@@ -89,8 +89,8 @@
     --lg-surface: linear-gradient(135deg,rgba(255,255,255,0.72) 0%,rgba(255,255,255,0.52) 50%,rgba(255,255,255,0.38) 100%);
     --lg-surface-strong: linear-gradient(135deg,rgba(255,255,255,0.82) 0%,rgba(255,255,255,0.62) 50%,rgba(255,255,255,0.48) 100%);
     --lg-surface-chrome: linear-gradient(135deg,rgba(245,245,247,0.80) 0%,rgba(245,245,247,0.60) 50%,rgba(245,245,247,0.44) 100%);
-    --lg-border: rgba(0,0,0,0.08);
-    --lg-border-subtle: rgba(0,0,0,0.04);
+    --lg-border: color-mix(in srgb, black calc(var(--lg-transparency) * 0.16%), transparent);
+    --lg-border-subtle: color-mix(in srgb, black calc(var(--lg-transparency) * 0.08%), transparent);
     --lg-highlight-top: rgba(255,255,255,0.70);
     --lg-highlight-bottom: rgba(0,0,0,0.04);
     --lg-shadow: rgba(0,0,0,0.06);

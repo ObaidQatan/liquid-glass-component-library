@@ -4,6 +4,8 @@ import { ChevronLeft, MoreVertical, Search } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { useLiquidPress } from "./useLiquidPress";
 import { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";
+import { GlassTopHighlight } from "./GlassTopHighlight";
+import { GlassSheen } from "./GlassSheen";
 
 interface MobileTopNavBarProps {
   title?: string;
@@ -150,17 +152,11 @@ export function MobileTopNavBar({
             )}
           >
             {/* Top highlight */}
-            <div className="pointer-events-none absolute inset-x-3 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-full" />
+            <GlassTopHighlight className="inset-x-3 top-0" opacity={0.25} />
             {/* Reflection blob */}
             <div className="pointer-events-none absolute -top-4 -right-4 h-12 w-12 rounded-full glass-reflection blur-xl" />
             {/* Sheen */}
-            <div
-              className="pointer-events-none absolute inset-0 opacity-[0.12]"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 45%, transparent 55%)",
-              }}
-            />
+            <GlassSheen opacity={0.12} />
             <Search size={14} className="relative z-10 text-[var(--lg-text-muted)] flex-shrink-0" />
             <input
               type="text"

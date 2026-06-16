@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, type ReactNode } from "react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface LiquidGlassTooltipProps {
   children: ReactNode;
@@ -77,7 +78,7 @@ export function LiquidGlassTooltip({
             />
             {content}
             {/* Top highlight */}
-            <div className="pointer-events-none absolute inset-x-2 top-0 h-px bg-white/20 rounded-full" />
+            <GlassTopHighlight className="inset-x-2 top-0" opacity={0.2} />
           </motion.div>
         )}
       </AnimatePresence>

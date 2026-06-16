@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
 import { LiquidGlassSlider } from "./LiquidGlassSlider";
 import { SlidersHorizontal, RotateCcw } from "lucide-react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface LiquidGlassControlsProps {
   className?: string;
@@ -21,7 +22,7 @@ export function LiquidGlassControls({ className }: LiquidGlassControlsProps) {
         className
       )}
     >
-      <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+      <GlassTopHighlight className="inset-x-4 top-0" opacity={0.3} />
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2">
           <SlidersHorizontal size={16} className="text-liquid-blue" />

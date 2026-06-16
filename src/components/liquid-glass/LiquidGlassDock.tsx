@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface DockItem {
   id: string;
@@ -43,7 +44,7 @@ export function LiquidGlassDock({
         )}
       >
         {/* Top highlight */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-t-2xl" />
+        <GlassTopHighlight className="inset-x-0 top-0 rounded-t-2xl" opacity={0.2} />
 
         {items.map((item) => (
           <motion.button

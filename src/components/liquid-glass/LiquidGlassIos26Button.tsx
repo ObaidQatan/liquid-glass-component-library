@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback, type ReactNode, type MouseEvent } from "react";
 import { useLiquidPress } from "./useLiquidPress";
 import { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface LiquidGlassIos26ButtonProps {
   children: ReactNode;
@@ -74,7 +75,7 @@ export function LiquidGlassIos26Button({
       <div className="absolute inset-0 bg-gradient-to-br from-liquid-blue/25 via-liquid-purple/15 to-liquid-pink/10 opacity-80" />
 
       {/* Top reflection line */}
-      <div className="pointer-events-none absolute inset-x-3 top-0.5 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full z-20" />
+      <GlassTopHighlight className="inset-x-3 top-0.5 z-20" opacity={0.4} />
 
       {/* Side refraction highlights */}
       <div className="pointer-events-none absolute -top-6 -left-4 h-16 w-16 rounded-full bg-[var(--lg-border)] blur-2xl" />

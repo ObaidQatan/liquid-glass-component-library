@@ -32,7 +32,9 @@ function hexToRgb(hex: string) {
 }
 
 function withAlpha(color: string, alphaBase: number, transparency: number, opacity = 1) {
-  const alpha = Math.min(1, Math.max(0, alphaBase * (transparency / 100) * opacity));
+  // Scale relative to the default 50% transparency so hardcoded base values
+  // look correct at the default setting and respond smoothly as the slider moves.
+  const alpha = Math.min(1, Math.max(0, alphaBase * (transparency / 50) * opacity));
   if (color.startsWith("#")) {
     const { r, g, b } = hexToRgb(color);
     return `rgba(${r},${g},${b},${alpha})`;

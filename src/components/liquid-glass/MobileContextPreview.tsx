@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect, type ReactNode } from "react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface ContextAction {
   id: string;
@@ -85,7 +86,7 @@ export function MobileContextPreview({
                   previewContent ? "p-4" : "h-32 bg-gradient-to-br from-liquid-blue/20 to-liquid-purple/20"
                 )}
               >
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+                <GlassTopHighlight className="inset-x-0 top-0" opacity={0.25} />
                 {previewContent || (
                   <div className="flex h-full items-center justify-center text-[var(--lg-text-muted)] text-sm">
                     Preview
@@ -103,7 +104,7 @@ export function MobileContextPreview({
                   "glass-blur-xl glass-surface glass-border glass-highlight"
                 )}
               >
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                <GlassTopHighlight className="inset-x-0 top-0" opacity={0.2} />
                 {actions.map((action, i) => (
                   <motion.button
                     key={action.id}

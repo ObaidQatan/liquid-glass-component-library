@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface MenuItem {
   label: string;
@@ -66,7 +67,7 @@ export function LiquidGlassMenubar({ menus, className }: LiquidGlassMenubarProps
                 className="absolute left-0 top-full mt-1 min-w-[180px] rounded-xl overflow-hidden glass-blur-xl glass-surface glass-border glass-highlight z-50"
               >
                 {/* Top highlight */}
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                <GlassTopHighlight className="inset-x-0 top-0" opacity={0.2} />
                 <div className="py-1">
                   {menu.items.map((item, j) =>
                     item.separator ? (

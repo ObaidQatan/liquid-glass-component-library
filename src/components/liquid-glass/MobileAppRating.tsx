@@ -1,6 +1,8 @@
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
+import { useGlassSurface } from "./useGlassSurface";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface MobileAppRatingProps {
   isOpen: boolean;
@@ -21,6 +23,7 @@ export function MobileAppRating({
   appName = "Liquid Glass",
   className,
 }: MobileAppRatingProps) {
+  const disabledFill = useGlassSurface({ variant: "fill", opacity: 0.05 });
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const displayRating = hoverRating || rating;
@@ -47,7 +50,7 @@ export function MobileAppRating({
           className
         )}
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+        <GlassTopHighlight className="inset-x-0 top-0" opacity={0.25} />
 
         <div className="px-6 py-8 text-center">
           {/* App icon */}
@@ -102,8 +105,9 @@ export function MobileAppRating({
                 "flex-1 py-3 rounded-xl text-sm font-semibold transition-all",
                 rating > 0
                   ? "text-white glass-blur-sm bg-liquid-blue/20 border border-liquid-blue/30"
-                  : "text-white/20 bg-white/5"
+                  : "text-white/20"
               )}
+              style={rating > 0 ? undefined : { background: disabledFill.style.background }}
             >
               Submit Rating
             </motion.button>

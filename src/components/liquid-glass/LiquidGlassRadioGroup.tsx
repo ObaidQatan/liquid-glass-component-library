@@ -1,5 +1,6 @@
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface RadioOption {
   value: string;
@@ -64,7 +65,7 @@ export function LiquidGlassRadioGroup({
               )}
             >
               {/* Top highlight */}
-              <div className="pointer-events-none absolute inset-x-1 top-0.5 h-px bg-white/20 rounded-full" />
+              <GlassTopHighlight className="inset-x-1 top-0.5" opacity={0.2} />
               {isSelected && (
                 <motion.div
                   initial={{ scale: 0 }}

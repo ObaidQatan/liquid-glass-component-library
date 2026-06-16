@@ -2,6 +2,7 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Check, AlertTriangle } from "lucide-react";
 import type { ReactNode } from "react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface AlertOption {
   text: string;
@@ -68,7 +69,7 @@ export function MobileAlertDialog({
             )}
           >
             {/* Top highlight */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+            <GlassTopHighlight className="inset-x-0 top-0" opacity={0.25} />
 
             {/* Content */}
             <div className="px-6 py-5 text-center">

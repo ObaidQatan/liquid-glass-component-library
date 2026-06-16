@@ -2,6 +2,7 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Search, Command } from "lucide-react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface CommandItem {
   id: string;
@@ -104,7 +105,7 @@ export function LiquidGlassCommandPalette({
             className="relative w-full max-w-xl overflow-hidden rounded-2xl glass-blur-xl glass-surface glass-border glass-highlight-strong"
           >
             {/* Top highlight */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            <GlassTopHighlight className="inset-x-0 top-0" opacity={0.3} />
 
             {/* Search input */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-[var(--lg-border-subtle)]">

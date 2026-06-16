@@ -2,6 +2,7 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { LiquidGlassToggle } from "./LiquidGlassToggle";
+import { useGlassSurface } from "./useGlassSurface";
 
 interface Permission {
   id: string;
@@ -30,6 +31,7 @@ export function MobilePermissionDialog({
   onGrantAll,
   className,
 }: MobilePermissionDialogProps) {
+  const handleFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [permMap, setPermMap] = useState<Record<string, boolean>>(
     Object.fromEntries(permissions.map((p) => [p.id, p.granted ?? false]))
   );
@@ -63,7 +65,7 @@ export function MobilePermissionDialog({
             )}
           >
             <div className="flex justify-center pt-3 pb-1">
-              <div className="w-10 h-1 rounded-full bg-white/20" />
+              <div className="w-10 h-1 rounded-full" style={{ background: handleFill.style.background }} />
             </div>
 
             <div className="px-6 py-4">

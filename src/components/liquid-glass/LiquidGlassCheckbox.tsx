@@ -1,6 +1,8 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Minus } from "lucide-react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
+import { useGlassSurface } from "./useGlassSurface";
 
 interface LiquidGlassCheckboxProps {
   checked?: boolean;
@@ -27,6 +29,7 @@ export function LiquidGlassCheckbox({
   disabled,
   size = "md",
 }: LiquidGlassCheckboxProps) {
+  const uncheckedFill = useGlassSurface({ variant: "fill", opacity: 0.05 });
   const s = sizeStyles[size];
   const isActive = checked || indeterminate;
 
@@ -47,11 +50,12 @@ export function LiquidGlassCheckbox({
           s.box,
           isActive
             ? "bg-liquid-blue/30 border-liquid-blue/50"
-            : "bg-white/5 border-white/10 hover:border-white/20"
+            : "border-white/10 hover:border-white/20"
         )}
+        style={isActive ? undefined : { background: uncheckedFill.style.background }}
       >
         {/* Top highlight */}
-        <div className="pointer-events-none absolute inset-x-1 top-0 h-px bg-white/20 rounded-full" />
+        <GlassTopHighlight className="inset-x-1 top-0" opacity={0.2} />
         <AnimatePresence>
           {isActive && (
             <motion.div

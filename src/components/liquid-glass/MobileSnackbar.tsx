@@ -1,6 +1,8 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import { useGlassSurface } from "./useGlassSurface";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 
 interface MobileSnackbarProps {
@@ -18,6 +20,7 @@ export function MobileSnackbar({
   duration = 4000,
   className,
 }: MobileSnackbarProps) {
+  const progressFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(100);
 
@@ -64,7 +67,7 @@ export function MobileSnackbar({
           )}
         >
           {/* Top highlight */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <GlassTopHighlight className="inset-x-0 top-0" opacity={0.2} />
 
           <div className="flex items-center gap-3 px-4 py-3">
             <div className={cn("flex-1 flex items-center gap-2.5 min-w-0")}>
@@ -99,8 +102,8 @@ export function MobileSnackbar({
           {/* Progress bar */}
           <div className="h-0.5 bg-[var(--lg-border-subtle)]">
             <motion.div
-              className="h-full bg-white/20"
-              style={{ width: `${progress}%` }}
+              className="h-full"
+              style={{ width: `${progress}%`, background: progressFill.style.background }}
               transition={{ ease: "linear", duration: 0.05 }}
             />
           </div>

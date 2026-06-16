@@ -1,5 +1,6 @@
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
+import { useGlassSurface } from "./useGlassSurface";
 
 interface TimelineItem {
   id: string;
@@ -28,6 +29,7 @@ export function LiquidGlassTimeline({
   items,
   className,
 }: LiquidGlassTimelineProps) {
+  const dotFill = useGlassSurface({ variant: "fill", opacity: 0.4 });
   return (
     <div className={cn("relative", className)}>
       {/* Vertical line */}
@@ -53,8 +55,9 @@ export function LiquidGlassTimeline({
               <div
                 className={cn(
                   "h-2.5 w-2.5 rounded-full",
-                  item.color ? colorMap[item.color] : "bg-white/40"
+                  item.color ? colorMap[item.color] : ""
                 )}
+                style={item.color ? undefined : { background: dotFill.style.background }}
               />
               {item.icon && (
                 <span className="absolute text-[var(--lg-text-secondary)]">{item.icon}</span>

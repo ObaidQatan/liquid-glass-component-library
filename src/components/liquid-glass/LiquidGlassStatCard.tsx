@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface StatData {
   label: string;
@@ -54,7 +55,7 @@ export function LiquidGlassStatCard({
             )}
           >
             {/* Top highlight */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+            <GlassTopHighlight className="inset-x-0 top-0" opacity={0.15} />
 
             <div className="flex items-start justify-between mb-3">
               {stat.icon && (

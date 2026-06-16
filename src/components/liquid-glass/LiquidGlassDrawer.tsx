@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface LiquidGlassDrawerProps {
   isOpen: boolean;
@@ -52,7 +53,7 @@ export function LiquidGlassDrawer({
             style={{ width, maxWidth: "90vw" }}
           >
             {/* Top highlight */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent z-10" />
+            <GlassTopHighlight className="inset-x-0 top-0 z-10" opacity={0.25} />
             {/* Reflection */}
             <div className="pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full bg-[var(--lg-border-subtle)] blur-2xl" />
 

@@ -66,5 +66,8 @@ export { MobilePageIndicator } from "./MobilePageIndicator";
 export { MobileFloatingActionButton } from "./MobileFloatingAction";
 export { MobileContextPreview } from "./MobileContextPreview";
 
-// Theme
+// Theme & glass surface system
 export { ThemeProvider, useTheme } from "./ThemeProvider";
+export { useGlassSurface } from "./useGlassSurface";
+export { GlassTopHighlight } from "./GlassTopHighlight";
+export { GlassSheen } from "./GlassSheen";

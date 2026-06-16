@@ -2,6 +2,8 @@ import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import { Play, Pause, SkipBack, SkipForward, Volume2, Repeat, Shuffle, Heart } from "lucide-react";
 import { useState } from "react";
+import { useGlassSurface } from "./useGlassSurface";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface LiquidGlassMusicPlayerProps {
   className?: string;
@@ -20,6 +22,7 @@ export function LiquidGlassMusicPlayer({
   duration = 243,
   currentTime: initialTime = 87,
 }: LiquidGlassMusicPlayerProps) {
+  const coverDotFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(initialTime);
   const [liked, setLiked] = useState(false);
@@ -42,7 +45,7 @@ export function LiquidGlassMusicPlayer({
       )}
     >
       {/* Top highlight */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+      <GlassTopHighlight className="inset-x-0 top-0" opacity={0.25} />
 
       {/* Cover */}
       <div className="relative mx-auto mb-5 w-48 h-48 rounded-2xl overflow-hidden shadow-2xl shadow-black/30">
@@ -51,7 +54,7 @@ export function LiquidGlassMusicPlayer({
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-liquid-purple/40 via-liquid-blue/30 to-liquid-pink/40 flex items-center justify-center">
             <div className="w-20 h-20 rounded-full bg-[var(--lg-border)] flex items-center justify-center">
-              <div className="w-8 h-8 rounded-full bg-white/20" />
+              <div className="w-8 h-8 rounded-full" style={{ background: coverDotFill.style.background }} />
             </div>
           </div>
         )}

@@ -2,6 +2,7 @@ import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { X, AlertTriangle, CheckCircle, Info, AlertCircle } from "lucide-react";
+import { GlassTopHighlight } from "./GlassTopHighlight";
 
 interface LiquidGlassAlertProps {
   children: ReactNode;
@@ -83,7 +84,7 @@ export function LiquidGlassAlert({
         </motion.button>
       )}
       {/* Top highlight */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+      <GlassTopHighlight className="inset-x-0 top-0" opacity={0.15} />
     </motion.div>
   );
 }
