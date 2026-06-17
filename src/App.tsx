@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Search, Home, User, Heart, Settings, Bell, Plus,
@@ -84,13 +84,23 @@ function ThemeToggle() {
   );
 }
 
+function usePathname() {
+  const [pathname, setPathname] = useState(window.location.pathname);
+  useEffect(() => {
+    const onChange = () => setPathname(window.location.pathname);
+    window.addEventListener("popstate", onChange);
+    return () => window.removeEventListener("popstate", onChange);
+  }, []);
+  return pathname;
+}
+
+function navigate(path: string) {
+  window.history.pushState({}, "", path);
+  window.dispatchEvent(new PopStateEvent("popstate"));
+}
+
 /* ───────── Main App ───────── */
 export default function App() {
-  const [showDocs, setShowDocs] = useState(false);
-  if (showDocs) {
-    return <Docs onBack={() => setShowDocs(false)} />;
-  }
-
   const [modalOpen, setModalOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -293,6 +303,12 @@ export default function App() {
     { id: "message", icon: <MessageSquare size={18} />, label: "Message", onClick: () => addToast("Message", "success") },
   ];
 
+  const pathname = usePathname();
+
+  if (pathname === "/docs") {
+    return <Docs onBack={() => navigate("/")} />;
+  }
+
   return (
     <div className="relative min-h-screen transition-colors duration-500">
       <AnimatedBackground />
@@ -336,7 +352,7 @@ export default function App() {
                 <LG.LiquidGlassButton onClick={() => setCmdOpen(true)} icon={<Command size={14} />}>Command Palette</LG.LiquidGlassButton>
                 <LG.LiquidGlassButton variant="secondary" onClick={() => setSplashOpen(true)} icon={<Sparkles size={14} />}>Splash Screen</LG.LiquidGlassButton>
                 <LG.LiquidGlassButton variant="ghost" onClick={() => addToast("Liquid ripple!", "success")}>Click Me</LG.LiquidGlassButton>
-                <LG.LiquidGlassButton variant="secondary" onClick={() => setShowDocs(true)} icon={<BookOpen size={14} />}>Docs</LG.LiquidGlassButton>
+                <LG.LiquidGlassButton variant="secondary" onClick={() => navigate("/docs")} icon={<BookOpen size={14} />}>Docs</LG.LiquidGlassButton>
               </div>
             </motion.div>
           </div>
