@@ -25,9 +25,10 @@ import {
   MessageSquare,
   LayoutGrid,
   X,
+  SlidersHorizontal,
 } from "lucide-react";
 import { cn } from "./utils/cn";
-import { useTheme } from "./components/liquid-glass";
+import { useTheme, LiquidGlassControls } from "./components/liquid-glass";
 import { docsComponents, docsCategories, type DocsComponentEntry } from "./docs-data";
 import { useRoute, navigate, type Route } from "./router";
 import componentDemos from "./docs-demos";
@@ -381,6 +382,7 @@ function Page() {
 export default function Docs() {
   const { route, topic, section, category, selectedComponent } = useDocsRoute();
   const [search, setSearch] = useState("");
+  const [showControls, setShowControls] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   useDocsScrollRestore(route);
@@ -458,7 +460,13 @@ export default function Docs() {
   return (
     <div className="min-h-screen bg-[var(--lg-bg)] text-[var(--lg-text)] selection:bg-liquid-blue/30">
       <DocsBackground />
-      <DocsHeader search={search} setSearch={setSearch} searchInputRef={searchInputRef} />
+      <DocsHeader
+        search={search}
+        setSearch={setSearch}
+        searchInputRef={searchInputRef}
+        showControls={showControls}
+        onToggleControls={() => setShowControls((v) => !v)}
+      />
 
       <div className="max-w-7xl mx-auto pt-16 flex">
         <DocsSidebar
@@ -500,6 +508,7 @@ export default function Docs() {
         </main>
 
         {selectedComponent && <DetailToc hasDemo={!!componentDemos[selectedComponent.id]} />}
+      <GlassControlsPanel open={showControls} onClose={() => setShowControls(false)} />
       </div>
     </div>
   );
@@ -533,10 +542,14 @@ function DocsHeader({
   search,
   setSearch,
   searchInputRef,
+  showControls,
+  onToggleControls,
 }: {
   search: string;
   setSearch: (q: string) => void;
   searchInputRef: React.RefObject<HTMLInputElement | null>;
+  showControls: boolean;
+  onToggleControls: () => void;
 }) {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 h-16 border-b border-[var(--lg-border)] glass-blur-xl glass-surface-strong">
@@ -580,10 +593,53 @@ function DocsHeader({
               </kbd>
             </div>
           </div>
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={onToggleControls}
+            className={cn(
+              "flex h-9 w-9 items-center justify-center rounded-xl glass-blur glass-surface glass-border glass-highlight transition-colors",
+              showControls && "bg-[var(--lg-border)] text-liquid-blue"
+            )}
+            aria-label="Glass controls"
+            title="Glass controls"
+          >
+            <SlidersHorizontal size={16} />
+          </motion.button>
           <ThemeToggle />
         </div>
       </div>
     </header>
+  );
+}
+
+function GlassControlsPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 20 }}
+          transition={{ duration: 0.2 }}
+          className="fixed bottom-4 right-4 z-[60] w-80 max-w-[calc(100vw-2rem)] rounded-2xl glass-blur-xl glass-surface-strong glass-border glass-highlight-strong p-5"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2 text-sm font-semibold text-[var(--lg-text)]">
+              <SlidersHorizontal size={16} className="text-liquid-blue" />
+              Glass Config
+            </div>
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-lg hover:bg-[var(--lg-border-subtle)] text-[var(--lg-text-muted)] transition-colors"
+              aria-label="Close controls"
+            >
+              <X size={16} />
+            </button>
+          </div>
+          <LiquidGlassControls />
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
