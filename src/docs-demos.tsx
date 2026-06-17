@@ -23,6 +23,7 @@ import {
   Activity,
   TrendingDown,
   Check,
+  SlidersHorizontal,
 } from "lucide-react";
 
 function DemoBox({
@@ -186,24 +187,62 @@ const componentDemos: Record<string, React.FC> = {
   ),
 
   card: () => (
-    <DemoBox>
-      <LG.LiquidGlassCard>
-        <h3 className="font-semibold text-[var(--lg-text)]">Card title</h3>
-        <p className="text-sm text-[var(--lg-text-secondary)] mt-1">
-          A basic glass card container.
-        </p>
-      </LG.LiquidGlassCard>
-    </DemoBox>
+    <>
+      <DemoBox label="Variants">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <LG.LiquidGlassCard variant="default">
+            <p className="text-sm text-[var(--lg-text-secondary)]">Default</p>
+          </LG.LiquidGlassCard>
+          <LG.LiquidGlassCard variant="thick">
+            <p className="text-sm text-[var(--lg-text-secondary)]">Thick</p>
+          </LG.LiquidGlassCard>
+          <LG.LiquidGlassCard variant="thin">
+            <p className="text-sm text-[var(--lg-text-secondary)]">Thin</p>
+          </LG.LiquidGlassCard>
+          <LG.LiquidGlassCard variant="chrome">
+            <p className="text-sm text-[var(--lg-text-secondary)]">Chrome</p>
+          </LG.LiquidGlassCard>
+        </div>
+      </DemoBox>
+      <DemoBox label="Padding / border / hover">
+        <div className="flex flex-wrap gap-2">
+          <LG.LiquidGlassCard padding="sm" hover={false}>
+            <span className="text-xs">sm, no hover</span>
+          </LG.LiquidGlassCard>
+          <LG.LiquidGlassCard padding="lg" border={false} highlight={false}>
+            <span className="text-xs">lg, no border</span>
+          </LG.LiquidGlassCard>
+        </div>
+      </DemoBox>
+    </>
   ),
 
   "fluid-card": () => (
-    <DemoBox>
-      <LG.LiquidGlassFluidCard variant="ios26">
-        <p className="text-sm text-[var(--lg-text-secondary)]">
-          Move your cursor over this card to see the liquid refraction glow follow you.
-        </p>
-      </LG.LiquidGlassFluidCard>
-    </DemoBox>
+    <>
+      <DemoBox label="Variants">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <LG.LiquidGlassFluidCard variant="default">
+            <p className="text-sm text-[var(--lg-text-secondary)]">Default</p>
+          </LG.LiquidGlassFluidCard>
+          <LG.LiquidGlassFluidCard variant="strong">
+            <p className="text-sm text-[var(--lg-text-secondary)]">Strong</p>
+          </LG.LiquidGlassFluidCard>
+          <LG.LiquidGlassFluidCard variant="ios26">
+            <p className="text-sm text-[var(--lg-text-secondary)]">iOS 26</p>
+          </LG.LiquidGlassFluidCard>
+        </div>
+      </DemoBox>
+      <DemoBox label="Padding">
+        <div className="flex flex-wrap gap-2">
+          <LG.LiquidGlassFluidCard padding="sm">
+            <span className="text-xs">sm padding</span>
+          </LG.LiquidGlassFluidCard>
+          <LG.LiquidGlassFluidCard padding="lg">
+            <span className="text-xs">lg padding</span>
+          </LG.LiquidGlassFluidCard>
+        </div>
+      </DemoBox>
+    </>
   ),
 
   "scroll-area": () => (
@@ -232,15 +271,27 @@ const componentDemos: Record<string, React.FC> = {
   ),
 
   button: () => (
-    <DemoBox label="Variants">
-      <div className="flex flex-wrap gap-2">
-        <LG.LiquidGlassButton variant="primary">Primary</LG.LiquidGlassButton>
-        <LG.LiquidGlassButton variant="secondary">Secondary</LG.LiquidGlassButton>
-        <LG.LiquidGlassButton variant="ghost">Ghost</LG.LiquidGlassButton>
-        <LG.LiquidGlassButton variant="danger">Danger</LG.LiquidGlassButton>
-        <LG.LiquidGlassButton loading>Loading</LG.LiquidGlassButton>
-      </div>
-    </DemoBox>
+    <>
+      <DemoBox label="Variants">
+        <div className="flex flex-wrap gap-2">
+          <LG.LiquidGlassButton variant="primary">Primary</LG.LiquidGlassButton>
+          <LG.LiquidGlassButton variant="secondary">Secondary</LG.LiquidGlassButton>
+          <LG.LiquidGlassButton variant="ghost">Ghost</LG.LiquidGlassButton>
+          <LG.LiquidGlassButton variant="danger">Danger</LG.LiquidGlassButton>
+          <LG.LiquidGlassButton variant="success">Success</LG.LiquidGlassButton>
+          <LG.LiquidGlassButton loading>Loading</LG.LiquidGlassButton>
+        </div>
+      </DemoBox>
+      <DemoBox label="Sizes & states">
+        <div className="flex flex-wrap items-end gap-2">
+          <LG.LiquidGlassButton size="sm">Small</LG.LiquidGlassButton>
+          <LG.LiquidGlassButton size="md">Medium</LG.LiquidGlassButton>
+          <LG.LiquidGlassButton size="lg">Large</LG.LiquidGlassButton>
+          <LG.LiquidGlassButton disabled>Disabled</LG.LiquidGlassButton>
+          <LG.LiquidGlassButton fullWidth>Full width</LG.LiquidGlassButton>
+        </div>
+      </DemoBox>
+    </>
   ),
 
   "ios26-button": () => (
@@ -378,23 +429,31 @@ const componentDemos: Record<string, React.FC> = {
   input: () => {
     const [val, setVal] = useState("");
     return (
-      <DemoBox>
-        <LG.LiquidGlassInput
-          value={val}
-          onChange={setVal}
-          placeholder="Enter your email"
-          label="Email"
-          icon={
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect width="20" height="16" x="2" y="4" rx="2" />
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-            </svg>
-          }
-        />
-        <div className="mt-3">
-          <LG.LiquidGlassInput type="password" placeholder="••••••••" error="Min 8 characters" />
-        </div>
-      </DemoBox>
+      <>
+        <DemoBox label="Default">
+          <LG.LiquidGlassInput
+            value={val}
+            onChange={setVal}
+            placeholder="Enter your email"
+            label="Email"
+            icon={
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect width="20" height="16" x="2" y="4" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+            }
+          />
+          <div className="mt-3">
+            <LG.LiquidGlassInput type="password" placeholder="••••••••" error="Min 8 characters" />
+          </div>
+        </DemoBox>
+        <DemoBox label="States">
+          <div className="flex flex-wrap gap-2">
+            <LG.LiquidGlassInput value="" onChange={() => {}} placeholder="Disabled" disabled className="flex-1 min-w-[140px]" />
+            <LG.LiquidGlassInput value="" onChange={() => {}} placeholder="Error" error="Required" className="flex-1 min-w-[140px]" />
+          </div>
+        </DemoBox>
+      </>
     );
   },
 
@@ -443,20 +502,40 @@ const componentDemos: Record<string, React.FC> = {
   "color-picker": () => {
     const [c, setC] = useState("#3b82f6");
     return (
-      <DemoBox>
-        <LG.LiquidGlassColorPicker value={c} onChange={setC} />
-        <div className="mt-3 flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg" style={{ backgroundColor: c }} />
-          <span className="text-sm font-mono text-[var(--lg-text-secondary)]">{c}</span>
-        </div>
-      </DemoBox>
+      <>
+        <DemoBox label="Default palette">
+          <LG.LiquidGlassColorPicker value={c} onChange={setC} />
+          <div className="mt-3 flex items-center gap-3">
+            <div className="h-8 w-8 rounded-lg" style={{ backgroundColor: c }} />
+            <span className="text-sm font-mono text-[var(--lg-text-secondary)]">{c}</span>
+          </div>
+        </DemoBox>
+        <DemoBox label="Custom palette (no custom input)">
+          <LG.LiquidGlassColorPicker
+            value={c}
+            onChange={setC}
+            colors={["#ef4444", "#f97316", "#f59e0b", "#22c55e", "#3b82f6"]}
+            showCustom={false}
+          />
+        </DemoBox>
+      </>
     );
   },
 
   "file-upload": () => (
-    <DemoBox>
-      <LG.LiquidGlassFileUpload onFilesSelected={(files) => alert(`${files.length} file(s) selected`)} />
-    </DemoBox>
+    <>
+      <DemoBox label="Default">
+        <LG.LiquidGlassFileUpload onFilesSelected={(files) => alert(`${files.length} file(s) selected`)} />
+      </DemoBox>
+      <DemoBox label="Image only, multiple, 2MB max">
+        <LG.LiquidGlassFileUpload
+          accept="image/*"
+          multiple
+          maxSize={2}
+          onFilesSelected={(files) => alert(`${files.length} image(s) selected`)}
+        />
+      </DemoBox>
+    </>
   ),
 
   "search-bar": () => {
@@ -567,14 +646,25 @@ const componentDemos: Record<string, React.FC> = {
   },
 
   avatar: () => (
-    <DemoBox>
-      <div className="flex items-center gap-3 flex-wrap">
-        <LG.LiquidGlassAvatar size="sm" fallback="JD" status="online" />
-        <LG.LiquidGlassAvatar size="md" fallback="MK" status="away" ring />
-        <LG.LiquidGlassAvatar size="lg" fallback="SL" status="busy" />
-        <LG.LiquidGlassAvatar size="xl" fallback="RW" status="offline" ring />
-      </div>
-    </DemoBox>
+    <>
+      <DemoBox label="Sizes">
+        <div className="flex items-center gap-3 flex-wrap">
+          <LG.LiquidGlassAvatar size="xs" fallback="XS" />
+          <LG.LiquidGlassAvatar size="sm" fallback="SM" />
+          <LG.LiquidGlassAvatar size="md" fallback="MD" />
+          <LG.LiquidGlassAvatar size="lg" fallback="LG" />
+          <LG.LiquidGlassAvatar size="xl" fallback="XL" />
+        </div>
+      </DemoBox>
+      <DemoBox label="Statuses & rings">
+        <div className="flex items-center gap-3 flex-wrap">
+          <LG.LiquidGlassAvatar size="md" fallback="JD" status="online" />
+          <LG.LiquidGlassAvatar size="md" fallback="MK" status="away" ring />
+          <LG.LiquidGlassAvatar size="md" fallback="SL" status="busy" />
+          <LG.LiquidGlassAvatar size="md" fallback="RW" status="offline" ring ringColor="ring-liquid-rose" />
+        </div>
+      </DemoBox>
+    </>
   ),
 
   chip: () => {
@@ -612,9 +702,13 @@ const componentDemos: Record<string, React.FC> = {
         ),
       },
     ];
+    const [autoPlay, setAutoPlay] = useState(false);
     return (
       <DemoBox>
-        <LG.LiquidGlassCarousel items={items} />
+        <LG.LiquidGlassCarousel items={items} autoPlay={autoPlay} interval={3000} />
+        <div className="mt-3 flex items-center gap-2">
+          <LG.LiquidGlassCheckbox checked={autoPlay} onChange={setAutoPlay} label="Autoplay" />
+        </div>
       </DemoBox>
     );
   },
@@ -625,11 +719,46 @@ const componentDemos: Record<string, React.FC> = {
     </DemoBox>
   ),
 
-  "weather-widget": () => (
-    <DemoBox className="flex justify-center">
-      <LG.LiquidGlassWeatherWidget />
-    </DemoBox>
-  ),
+  "weather-widget": () => {
+    const [condition, setCondition] = useState<"sunny" | "cloudy" | "rainy" | "snowy">("sunny");
+    const data = {
+      temp: 72,
+      condition,
+      location: "San Francisco, CA",
+      high: 78,
+      low: 62,
+      humidity: 45,
+      wind: 8,
+      visibility: 10,
+      pressure: 30.12,
+      hourly: [
+        { time: "Now", temp: 72, icon: "sun" as const },
+        { time: "1PM", temp: 74, icon: (condition === "snowy" ? "cloud" : "sun") as "sun" | "cloud" | "rain" },
+        { time: "2PM", temp: 76, icon: (condition === "rainy" ? "rain" : "cloud") as "sun" | "cloud" | "rain" },
+      ],
+    };
+    return (
+      <DemoBox className="flex flex-col items-center">
+        <LG.LiquidGlassWeatherWidget data={data} />
+        <div className="flex gap-2 mt-4">
+          {(["sunny", "cloudy", "rainy", "snowy"] as const).map((c) => (
+            <button
+              key={c}
+              onClick={() => setCondition(c)}
+              className={cn(
+                "px-3 py-1 rounded-lg text-xs capitalize transition-colors",
+                condition === c
+                  ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
+                  : "bg-[var(--lg-border-subtle)] text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border)]"
+              )}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+      </DemoBox>
+    );
+  },
 
   table: () => {
     const data = [
@@ -637,13 +766,18 @@ const componentDemos: Record<string, React.FC> = {
       { id: "2", name: "Bob Smith", role: "Developer", status: "Away", team: "Engineering" },
       { id: "3", name: "Carol White", role: "Manager", status: "Active", team: "Operations" },
     ];
+    const [clicked, setClicked] = useState<string | null>(null);
     return (
       <DemoBox>
+        {clicked && (
+          <p className="text-xs text-[var(--lg-text-muted)] mb-3">Last clicked: {clicked}</p>
+        )}
         <LG.LiquidGlassTable
           data={data}
           rowKey={(r: any) => r.id}
+          onRowClick={(r: any) => setClicked(r.name)}
           columns={[
-            { key: "name", header: "Name", sortable: true },
+            { key: "name", header: "Name", sortable: true, width: "140px" },
             { key: "role", header: "Role", sortable: true },
             {
               key: "status",
@@ -930,25 +1064,28 @@ const componentDemos: Record<string, React.FC> = {
   ),
 
   "alert-dialog": () => (
-    <DemoBox>
-      <PortalOverlay
-        trigger={(setOpen) => (
-          <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
-            Open alert dialog
-          </LG.LiquidGlassButton>
-        )}
-      >
-        {(open, setOpen) => (
-          <LG.MobileAlertDialog
-            isOpen={open}
-            onClose={() => setOpen(false)}
-            title="Delete Item?"
-            message="This action cannot be undone."
-            icon="warning"
-            options={[{ text: "Delete", style: "destructive" }, { text: "Cancel", style: "cancel" }]}
-          />
-        )}
-      </PortalOverlay>
+    <DemoBox className="flex flex-wrap gap-2">
+      {(["info", "warning", "success", "error"] as const).map((icon) => (
+        <PortalOverlay
+          key={icon}
+          trigger={(setOpen) => (
+            <LG.LiquidGlassButton size="sm" variant={icon === "error" ? "danger" : "secondary"} onClick={() => setOpen(true)}>
+              {icon}
+            </LG.LiquidGlassButton>
+          )}
+        >
+          {(open, setOpen) => (
+            <LG.MobileAlertDialog
+              isOpen={open}
+              onClose={() => setOpen(false)}
+              title={`${icon.charAt(0).toUpperCase() + icon.slice(1)}`}
+              message="This action cannot be undone."
+              icon={icon}
+              options={[{ text: "Delete", style: "destructive" }, { text: "Cancel", style: "cancel" }]}
+            />
+          )}
+        </PortalOverlay>
+      ))}
     </DemoBox>
   ),
 
@@ -1036,6 +1173,8 @@ const componentDemos: Record<string, React.FC> = {
             onClose={() => setOpen(false)}
             slides={[
               { id: "1", title: "Welcome", subtitle: "Liquid Glass", icon: <Sparkles size={32} />, gradient: "bg-gradient-to-b from-liquid-blue/30 to-transparent" },
+              { id: "2", title: "Customize", subtitle: "Adjust blur & transparency", icon: <SlidersHorizontal size={32} />, gradient: "bg-gradient-to-b from-liquid-purple/30 to-transparent" },
+              { id: "3", title: "Build", subtitle: "Create stunning UIs", icon: <Zap size={32} />, gradient: "bg-gradient-to-b from-liquid-emerald/30 to-transparent" },
             ]}
           />
         )}
@@ -1072,7 +1211,14 @@ const componentDemos: Record<string, React.FC> = {
         actions={[
           { id: "1", title: "Preview", icon: <Search size={14} /> },
           { id: "2", title: "Share", icon: <Share2 size={14} /> },
+          { id: "3", title: "Delete", destructive: true, icon: <Trash2 size={14} /> },
         ]}
+        previewContent={
+          <div className="text-center">
+            <p className="text-sm font-medium text-[var(--lg-text)]">Preview card</p>
+            <p className="text-xs text-[var(--lg-text-muted)]">Right-click to see actions</p>
+          </div>
+        }
       >
         <div className="p-6 rounded-xl bg-[var(--lg-border-subtle)] text-sm text-[var(--lg-text-muted)] text-center">
           Right click / long press

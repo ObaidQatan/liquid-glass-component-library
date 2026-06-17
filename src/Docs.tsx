@@ -20,12 +20,12 @@ import {
   MoreVertical,
   BarChart3,
   Image,
-  Smartphone,
   Command,
-  MessageSquare,
   LayoutGrid,
   X,
   SlidersHorizontal,
+  Navigation2,
+  LayoutTemplate,
 } from "lucide-react";
 import { cn } from "./utils/cn";
 import { useTheme, LiquidGlassControls } from "./components/liquid-glass";
@@ -33,7 +33,7 @@ import AnimatedBackground from "./AnimatedBackground";
 import { docsComponents, docsCategories, type DocsComponentEntry } from "./docs-data";
 import { useRoute, navigate, type Route } from "./router";
 import componentDemos from "./docs-demos";
-import { VariantDemo } from "./docs-variants";
+import { VariantDemo, OptionDemo, optionDemos } from "./docs-variants";
 
 /* ───────── Types & constants ───────── */
 type DocsSection = "intro" | "installation" | "theme" | "glass" | "components";
@@ -52,15 +52,16 @@ const sectionMeta: Record<
 };
 
 const categoryIcons: Record<string, ElementType<{ size?: number; className?: string }>> = {
-  "Core & Theme": Layers,
-  Layout: LayoutGrid,
-  "Buttons & Controls": Command,
-  "Inputs & Forms": MessageSquare,
-  Feedback: Bell,
-  "Overlays & Menus": MoreVertical,
+  "Theme & Glass Primitives": Sparkles,
+  "Buttons & FABs": Command,
+  "Inputs, Toggles & Pickers": SlidersHorizontal,
+  Navigation: Navigation2,
+  "Layout & Surfaces": LayoutGrid,
   "Data Display": BarChart3,
+  "Feedback & Status": Bell,
   "Media & Content": Image,
-  Mobile: Smartphone,
+  "Overlays, Menus & Tooltips": MoreVertical,
+  "Modals, Drawers & Sheets": LayoutTemplate,
 };
 
 const CODE_COLLAPSE_LINES = 12;
@@ -1283,6 +1284,37 @@ function VariantShowcase({
   );
 }
 
+function OptionShowcase({
+  component,
+  propName,
+  label,
+}: {
+  component: DocsComponentEntry;
+  propName: string;
+  label: string;
+}) {
+  const prop = component.props.find(
+    (p) => p.name === propName && p.type.includes('"')
+  );
+  const values = prop ? extractEnum(prop.type) : [];
+  const hasDemo = optionDemos[component.id]?.[propName];
+  if (values.length === 0 || !hasDemo) return null;
+
+  return (
+    <section className="scroll-mt-28 mt-10">
+      <H3>{label}</H3>
+      <P>Every supported {propName} of {component.name}.</P>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        {values.map((value) => (
+          <VariantBox key={value} label={value}>
+            <OptionDemo id={component.id} prop={propName} value={value} />
+          </VariantBox>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function ComponentDetail({
   component,
   category,
@@ -1342,6 +1374,10 @@ function ComponentDetail({
       )}
 
       <VariantShowcase component={component} />
+      <OptionShowcase component={component} propName="size" label="Sizes" />
+      <OptionShowcase component={component} propName="position" label="Positions" />
+      <OptionShowcase component={component} propName="direction" label="Directions" />
+      <OptionShowcase component={component} propName="orientation" label="Orientations" />
 
       <H2 id="props">Props</H2>
       <PropTable props={component.props} />

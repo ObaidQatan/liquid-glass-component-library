@@ -19,31 +19,102 @@ function getComponentName(file) {
 }
 
 function getCategory(componentName) {
-  if (["ThemeProvider", "useGlassSurface", "useLiquidPress", "GlassSheen", "GlassTopHighlight", "LiquidGlassPressSplash", "LiquidGlassControls"].includes(componentName)) {
-    return "Core & Theme";
+  const map = {
+    "Theme & Glass Primitives": [
+      "ThemeProvider",
+      "useGlassSurface",
+      "useLiquidPress",
+      "GlassSheen",
+      "GlassTopHighlight",
+      "LiquidGlassPressSplash",
+      "LiquidGlassControls",
+    ],
+    "Buttons & FABs": [
+      "LiquidGlassButton",
+      "LiquidGlassIos26Button",
+      "MobileFloatingActionButton",
+    ],
+    "Inputs, Toggles & Pickers": [
+      "LiquidGlassInput",
+      "LiquidGlassSelect",
+      "LiquidGlassCheckbox",
+      "LiquidGlassRadioGroup",
+      "LiquidGlassColorPicker",
+      "LiquidGlassFileUpload",
+      "MobileSearchBar",
+      "LiquidGlassSlider",
+      "LiquidGlassToggle",
+      "MobileSegmentedControl",
+      "MobileStepper",
+    ],
+    "Navigation": [
+      "LiquidGlassNavigation",
+      "LiquidGlassBreadcrumb",
+      "LiquidGlassDock",
+      "LiquidGlassTabBar",
+      "MobileBottomTabBar",
+      "MobileTopNavBar",
+    ],
+    "Layout & Surfaces": [
+      "LiquidGlassCard",
+      "LiquidGlassFluidCard",
+      "LiquidGlassScrollArea",
+      "LiquidGlassResizable",
+    ],
+    "Data Display": [
+      "LiquidGlassAccordion",
+      "LiquidGlassCalendar",
+      "LiquidGlassKanban",
+      "LiquidGlassPagination",
+      "LiquidGlassStatCard",
+      "LiquidGlassStepper",
+      "LiquidGlassTable",
+      "LiquidGlassTimeline",
+      "MobileSwipeableList",
+    ],
+    "Feedback & Status": [
+      "LiquidGlassAlert",
+      "LiquidGlassBadge",
+      "LiquidGlassEmptyState",
+      "LiquidGlassProgress",
+      "LiquidGlassRating",
+      "LiquidGlassSkeleton",
+      "LiquidGlassToast",
+      "MobileSnackbar",
+    ],
+    "Media & Content": [
+      "LiquidGlassAvatar",
+      "LiquidGlassChip",
+      "LiquidGlassCarousel",
+      "LiquidGlassMusicPlayer",
+      "LiquidGlassWeatherWidget",
+      "MobilePageIndicator",
+    ],
+    "Overlays, Menus & Tooltips": [
+      "LiquidGlassCommandPalette",
+      "LiquidGlassContextMenu",
+      "MobileContextPreview",
+      "LiquidGlassHoverCard",
+      "LiquidGlassMenubar",
+      "LiquidGlassNotificationDropdown",
+      "LiquidGlassTooltip",
+    ],
+    "Modals, Drawers & Sheets": [
+      "LiquidGlassModal",
+      "LiquidGlassDrawer",
+      "LiquidGlassSheet",
+      "MobileActionSheet",
+      "MobileAlertDialog",
+      "MobilePermissionDialog",
+      "MobileAppRating",
+      "MobileSlideMenu",
+      "MobileSplashScreen",
+    ],
+  };
+  for (const [category, names] of Object.entries(map)) {
+    if (names.includes(componentName)) return category;
   }
-  if (componentName.startsWith("Mobile")) {
-    return "Mobile";
-  }
-  if (["LiquidGlassButton", "LiquidGlassIos26Button", "LiquidGlassToggle", "LiquidGlassSlider"].includes(componentName)) {
-    return "Buttons & Controls";
-  }
-  if (["LiquidGlassInput", "LiquidGlassSelect", "LiquidGlassCheckbox", "LiquidGlassRadioGroup", "LiquidGlassColorPicker", "LiquidGlassFileUpload"].includes(componentName)) {
-    return "Inputs & Forms";
-  }
-  if (["LiquidGlassAlert", "LiquidGlassBadge", "LiquidGlassProgress", "LiquidGlassRating", "LiquidGlassToast", "LiquidGlassSkeleton", "LiquidGlassEmptyState"].includes(componentName)) {
-    return "Feedback";
-  }
-  if (["LiquidGlassModal", "LiquidGlassDrawer", "LiquidGlassSheet", "LiquidGlassCommandPalette", "LiquidGlassTooltip", "LiquidGlassHoverCard", "LiquidGlassNotificationDropdown", "LiquidGlassContextMenu", "LiquidGlassMenubar"].includes(componentName)) {
-    return "Overlays & Menus";
-  }
-  if (["LiquidGlassTable", "LiquidGlassPagination", "LiquidGlassTimeline", "LiquidGlassAccordion", "LiquidGlassCalendar", "LiquidGlassStatCard", "LiquidGlassStepper", "LiquidGlassKanban"].includes(componentName)) {
-    return "Data Display";
-  }
-  if (["LiquidGlassAvatar", "LiquidGlassChip", "LiquidGlassCarousel", "LiquidGlassMusicPlayer", "LiquidGlassWeatherWidget"].includes(componentName)) {
-    return "Media & Content";
-  }
-  return "Layout";
+  return "Layout & Surfaces";
 }
 
 function getDescription(componentName) {
@@ -382,15 +453,16 @@ const content = `export interface DocsComponentEntry {
 }
 
 export const docsCategories = [
-  "Core & Theme",
-  "Layout",
-  "Buttons & Controls",
-  "Inputs & Forms",
-  "Feedback",
-  "Overlays & Menus",
+  "Theme & Glass Primitives",
+  "Buttons & FABs",
+  "Inputs, Toggles & Pickers",
+  "Navigation",
+  "Layout & Surfaces",
   "Data Display",
+  "Feedback & Status",
   "Media & Content",
-  "Mobile",
+  "Overlays, Menus & Tooltips",
+  "Modals, Drawers & Sheets",
 ];
 
 export const docsComponents: DocsComponentEntry[] = ${JSON.stringify(entries, null, 2)};
