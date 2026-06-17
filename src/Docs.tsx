@@ -459,7 +459,7 @@ export default function Docs() {
   const activeCategoryForNav = selectedComponent ? selectedComponent.category : category;
 
   return (
-    <div className="min-h-screen bg-[var(--lg-bg)] text-[var(--lg-text)] selection:bg-liquid-blue/30">
+    <div className="relative min-h-screen text-[var(--lg-text)] selection:bg-liquid-blue/30">
       <AnimatedBackground />
       <DocsHeader
         search={search}
