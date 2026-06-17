@@ -108,7 +108,6 @@ function getDescription(componentName) {
     MobileSegmentedControl: "iOS segmented control.",
     MobileStepper: "Plus/minus stepper control.",
     MobileSearchBar: "iOS-style search bar with cancel button.",
-    MobilePullToRefresh: "Pull-to-refresh wrapper for touch scrolling.",
     MobileSwipeableList: "Swipeable list items with action buttons.",
     MobileSnackbar: "Bottom snackbar with progress and action.",
     MobileAlertDialog: "Mobile alert dialog with options.",

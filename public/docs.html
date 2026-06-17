@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Liquid Glass component library documentation. 69 copy-paste React components with props, usage, and source code." />
+<meta name="description" content="Liquid Glass component library documentation. 68 copy-paste React components with props, usage, and source code." />
 <meta name="robots" content="index, follow" />
 <title>Liquid Glass Docs — Copy-paste React glass components</title>
 <link rel="canonical" href="/docs.html" />
@@ -43,7 +43,7 @@ footer { color: #64748b; font-size: 0.8rem; border-top: 1px solid #1f1f2e; }
 </header>
 <main>
   <section id="intro">
-    <p>Liquid Glass is a copy-paste React component library for translucent, frosted-glass interfaces inspired by iOS 26. It includes <strong>69 components</strong> built with Tailwind CSS v4, Framer Motion, and a shared glass system.</p>
+    <p>Liquid Glass is a copy-paste React component library for translucent, frosted-glass interfaces inspired by iOS 26. It includes <strong>68 components</strong> built with Tailwind CSS v4, Framer Motion, and a shared glass system.</p>
     <p>Each component is a self-contained <code>.tsx</code> file. Copy the source into your own project and customize it.</p>
     <h2>Quick start</h2>
     <ol>
@@ -59,7 +59,7 @@ footer { color: #64748b; font-size: 0.8rem; border-top: 1px solid #1f1f2e; }
     <nav class="toc" aria-label="Component list">
       <h2>Browse by component</h2>
       <ul>
-        <li><a href="#topic-glass-sheen">GlassSheen</a> — Reusable specular sheen overlay for glass surfaces.</li><li><a href="#topic-glass-top-highlight">GlassTopHighlight</a> — Reusable top highlight line used across glass components.</li><li><a href="#topic-accordion">LiquidGlassAccordion</a> — Collapsible accordion panels.</li><li><a href="#topic-alert">LiquidGlassAlert</a> — Theme-aware alert banners with status variants.</li><li><a href="#topic-avatar">LiquidGlassAvatar</a> — Avatar with fallback, status, and ring.</li><li><a href="#topic-badge">LiquidGlassBadge</a> — Small status badge with dot and color variants.</li><li><a href="#topic-breadcrumb">LiquidGlassBreadcrumb</a> — Breadcrumb navigation with separators.</li><li><a href="#topic-button">LiquidGlassButton</a> — Primary button with liquid ripple and glass surface styles.</li><li><a href="#topic-calendar">LiquidGlassCalendar</a> — Month calendar with highlighted and disabled dates.</li><li><a href="#topic-card">LiquidGlassCard</a> — Basic glass card container with variants, padding, and hover lift.</li><li><a href="#topic-carousel">LiquidGlassCarousel</a> — Image/content carousel with arrows and indicators.</li><li><a href="#topic-checkbox">LiquidGlassCheckbox</a> — Glass checkbox with indeterminate support.</li><li><a href="#topic-chip">LiquidGlassChip</a> — Filter/removable chip component.</li><li><a href="#topic-color-picker">LiquidGlassColorPicker</a> — Color palette picker with custom hex input.</li><li><a href="#topic-command-palette">LiquidGlassCommandPalette</a> — Cmd+K style searchable command palette.</li><li><a href="#topic-context-menu">LiquidGlassContextMenu</a> — Right-click context menu portaled to document.body.</li><li><a href="#topic-controls">LiquidGlassControls</a> — Interactive panel to adjust blur, transparency, reflection, and fluidity.</li><li><a href="#topic-dock">LiquidGlassDock</a> — macOS-style floating dock.</li><li><a href="#topic-drawer">LiquidGlassDrawer</a> — Side drawer that slides in from left or right.</li><li><a href="#topic-empty-state">LiquidGlassEmptyState</a> — Empty state illustration with icon variants.</li><li><a href="#topic-file-upload">LiquidGlassFileUpload</a> — Drag-and-drop file upload with file list.</li><li><a href="#topic-fluid-card">LiquidGlassFluidCard</a> — Card with a cursor-following liquid refraction glow.</li><li><a href="#topic-hover-card">LiquidGlassHoverCard</a> — Hover-triggered popover portaled to document.body.</li><li><a href="#topic-input">LiquidGlassInput</a> — Glass text input with icons, label, and error states.</li><li><a href="#topic-ios26-button">LiquidGlassIos26Button</a> — iOS 26 inspired chrome button with rich glass effects.</li><li><a href="#topic-kanban">LiquidGlassKanban</a> — Drag-and-drop kanban board.</li><li><a href="#topic-menubar">LiquidGlassMenubar</a> — Dropdown menubar for desktop-style menus.</li><li><a href="#topic-modal">LiquidGlassModal</a> — Centered modal dialog with glass blur.</li><li><a href="#topic-music-player">LiquidGlassMusicPlayer</a> — Glass music player card.</li><li><a href="#topic-navigation">LiquidGlassNavigation</a> — Horizontal glass navigation bar with animated active indicator.</li><li><a href="#topic-notification-dropdown">LiquidGlassNotificationDropdown</a> — Bell dropdown panel portaled to document.body.</li><li><a href="#topic-pagination">LiquidGlassPagination</a> — Pagination controls with ellipsis handling.</li><li><a href="#topic-press-splash">LiquidGlassPressSplash</a> — Animated press splash used by buttons and chips.</li><li><a href="#topic-progress">LiquidGlassProgress</a> — Progress bar with default, gradient, and segmented variants.</li><li><a href="#topic-radio-group">LiquidGlassRadioGroup</a> — Radio group with glass selection indicators.</li><li><a href="#topic-rating">LiquidGlassRating</a> — Star rating with half-star support.</li><li><a href="#topic-resizable">LiquidGlassResizable</a> — Resizable panel with drag handle.</li><li><a href="#topic-scroll-area">LiquidGlassScrollArea</a> — Custom scrollbar scroll area.</li><li><a href="#topic-select">LiquidGlassSelect</a> — Dropdown select portaled to document.body for working blur.</li><li><a href="#topic-sheet">LiquidGlassSheet</a> — Bottom sheet with default, compact, full, inset, and detached variants.</li><li><a href="#topic-skeleton">LiquidGlassSkeleton</a> — Loading placeholder with shimmer animation.</li><li><a href="#topic-slider">LiquidGlassSlider</a> — Range slider with a stretching liquid-glass thumb.</li><li><a href="#topic-stat-card">LiquidGlassStatCard</a> — Grid of stat cards with change indicators.</li><li><a href="#topic-stepper">LiquidGlassStepper</a> — Horizontal or vertical stepper.</li><li><a href="#topic-tab-bar">LiquidGlassTabBar</a> — Tab bar with default, pills, and underline variants.</li><li><a href="#topic-table">LiquidGlassTable</a> — Sortable data table with glass styling.</li><li><a href="#topic-timeline">LiquidGlassTimeline</a> — Vertical timeline component.</li><li><a href="#topic-toast">LiquidGlassToast</a> — Stacked toast notifications with progress bars.</li><li><a href="#topic-toggle">LiquidGlassToggle</a> — Fluid or iOS 26 style toggle switch.</li><li><a href="#topic-tooltip">LiquidGlassTooltip</a> — Hover tooltip with directional positioning.</li><li><a href="#topic-weather-widget">LiquidGlassWeatherWidget</a> — Weather widget with hourly forecast.</li><li><a href="#topic-action-sheet">MobileActionSheet</a> — Bottom action sheet with default, grouped, minimal, and grid variants.</li><li><a href="#topic-alert-dialog">MobileAlertDialog</a> — Mobile alert dialog with options.</li><li><a href="#topic-app-rating">MobileAppRating</a> — App rating modal with star selection.</li><li><a href="#topic-bottom-tab-bar">MobileBottomTabBar</a> — iOS/Android bottom tab bar with 8 visual variants.</li><li><a href="#topic-context-preview">MobileContextPreview</a> — Context menu preview modal.</li><li><a href="#topic-floating-action">MobileFloatingAction</a> — Liquid Glass FloatingAction component.</li><li><a href="#topic-page-indicator">MobilePageIndicator</a> — Dots, line, or fraction page indicator.</li><li><a href="#topic-permission-dialog">MobilePermissionDialog</a> — Permission request sheet with toggles.</li><li><a href="#topic-pull-to-refresh">MobilePullToRefresh</a> — Pull-to-refresh wrapper for touch scrolling.</li><li><a href="#topic-search-bar">MobileSearchBar</a> — iOS-style search bar with cancel button.</li><li><a href="#topic-segmented-control">MobileSegmentedControl</a> — iOS segmented control.</li><li><a href="#topic-slide-menu">MobileSlideMenu</a> — Slide-in side menu for mobile.</li><li><a href="#topic-snackbar">MobileSnackbar</a> — Bottom snackbar with progress and action.</li><li><a href="#topic-splash-screen">MobileSplashScreen</a> — Onboarding splash screen with slides.</li><li><a href="#topic-mobile-stepper">MobileStepper</a> — Plus/minus stepper control.</li><li><a href="#topic-swipeable-list">MobileSwipeableList</a> — Swipeable list items with action buttons.</li><li><a href="#topic-top-nav-bar">MobileTopNavBar</a> — Mobile top navigation bar with 5 layout variants.</li><li><a href="#topic-theme-provider">ThemeProvider</a> — Wraps your app to provide theme state, glass settings, and persistence.</li>
+        <li><a href="#topic-glass-sheen">GlassSheen</a> — Reusable specular sheen overlay for glass surfaces.</li><li><a href="#topic-glass-top-highlight">GlassTopHighlight</a> — Reusable top highlight line used across glass components.</li><li><a href="#topic-accordion">LiquidGlassAccordion</a> — Collapsible accordion panels.</li><li><a href="#topic-alert">LiquidGlassAlert</a> — Theme-aware alert banners with status variants.</li><li><a href="#topic-avatar">LiquidGlassAvatar</a> — Avatar with fallback, status, and ring.</li><li><a href="#topic-badge">LiquidGlassBadge</a> — Small status badge with dot and color variants.</li><li><a href="#topic-breadcrumb">LiquidGlassBreadcrumb</a> — Breadcrumb navigation with separators.</li><li><a href="#topic-button">LiquidGlassButton</a> — Primary button with liquid ripple and glass surface styles.</li><li><a href="#topic-calendar">LiquidGlassCalendar</a> — Month calendar with highlighted and disabled dates.</li><li><a href="#topic-card">LiquidGlassCard</a> — Basic glass card container with variants, padding, and hover lift.</li><li><a href="#topic-carousel">LiquidGlassCarousel</a> — Image/content carousel with arrows and indicators.</li><li><a href="#topic-checkbox">LiquidGlassCheckbox</a> — Glass checkbox with indeterminate support.</li><li><a href="#topic-chip">LiquidGlassChip</a> — Filter/removable chip component.</li><li><a href="#topic-color-picker">LiquidGlassColorPicker</a> — Color palette picker with custom hex input.</li><li><a href="#topic-command-palette">LiquidGlassCommandPalette</a> — Cmd+K style searchable command palette.</li><li><a href="#topic-context-menu">LiquidGlassContextMenu</a> — Right-click context menu portaled to document.body.</li><li><a href="#topic-controls">LiquidGlassControls</a> — Interactive panel to adjust blur, transparency, reflection, and fluidity.</li><li><a href="#topic-dock">LiquidGlassDock</a> — macOS-style floating dock.</li><li><a href="#topic-drawer">LiquidGlassDrawer</a> — Side drawer that slides in from left or right.</li><li><a href="#topic-empty-state">LiquidGlassEmptyState</a> — Empty state illustration with icon variants.</li><li><a href="#topic-file-upload">LiquidGlassFileUpload</a> — Drag-and-drop file upload with file list.</li><li><a href="#topic-fluid-card">LiquidGlassFluidCard</a> — Card with a cursor-following liquid refraction glow.</li><li><a href="#topic-hover-card">LiquidGlassHoverCard</a> — Hover-triggered popover portaled to document.body.</li><li><a href="#topic-input">LiquidGlassInput</a> — Glass text input with icons, label, and error states.</li><li><a href="#topic-ios26-button">LiquidGlassIos26Button</a> — iOS 26 inspired chrome button with rich glass effects.</li><li><a href="#topic-kanban">LiquidGlassKanban</a> — Drag-and-drop kanban board.</li><li><a href="#topic-menubar">LiquidGlassMenubar</a> — Dropdown menubar for desktop-style menus.</li><li><a href="#topic-modal">LiquidGlassModal</a> — Centered modal dialog with glass blur.</li><li><a href="#topic-music-player">LiquidGlassMusicPlayer</a> — Glass music player card.</li><li><a href="#topic-navigation">LiquidGlassNavigation</a> — Horizontal glass navigation bar with animated active indicator.</li><li><a href="#topic-notification-dropdown">LiquidGlassNotificationDropdown</a> — Bell dropdown panel portaled to document.body.</li><li><a href="#topic-pagination">LiquidGlassPagination</a> — Pagination controls with ellipsis handling.</li><li><a href="#topic-press-splash">LiquidGlassPressSplash</a> — Animated press splash used by buttons and chips.</li><li><a href="#topic-progress">LiquidGlassProgress</a> — Progress bar with default, gradient, and segmented variants.</li><li><a href="#topic-radio-group">LiquidGlassRadioGroup</a> — Radio group with glass selection indicators.</li><li><a href="#topic-rating">LiquidGlassRating</a> — Star rating with half-star support.</li><li><a href="#topic-resizable">LiquidGlassResizable</a> — Resizable panel with drag handle.</li><li><a href="#topic-scroll-area">LiquidGlassScrollArea</a> — Custom scrollbar scroll area.</li><li><a href="#topic-select">LiquidGlassSelect</a> — Dropdown select portaled to document.body for working blur.</li><li><a href="#topic-sheet">LiquidGlassSheet</a> — Bottom sheet with default, compact, full, inset, and detached variants.</li><li><a href="#topic-skeleton">LiquidGlassSkeleton</a> — Loading placeholder with shimmer animation.</li><li><a href="#topic-slider">LiquidGlassSlider</a> — Range slider with a stretching liquid-glass thumb.</li><li><a href="#topic-stat-card">LiquidGlassStatCard</a> — Grid of stat cards with change indicators.</li><li><a href="#topic-stepper">LiquidGlassStepper</a> — Horizontal or vertical stepper.</li><li><a href="#topic-tab-bar">LiquidGlassTabBar</a> — Tab bar with default, pills, and underline variants.</li><li><a href="#topic-table">LiquidGlassTable</a> — Sortable data table with glass styling.</li><li><a href="#topic-timeline">LiquidGlassTimeline</a> — Vertical timeline component.</li><li><a href="#topic-toast">LiquidGlassToast</a> — Stacked toast notifications with progress bars.</li><li><a href="#topic-toggle">LiquidGlassToggle</a> — Fluid or iOS 26 style toggle switch.</li><li><a href="#topic-tooltip">LiquidGlassTooltip</a> — Hover tooltip with directional positioning.</li><li><a href="#topic-weather-widget">LiquidGlassWeatherWidget</a> — Weather widget with hourly forecast.</li><li><a href="#topic-action-sheet">MobileActionSheet</a> — Bottom action sheet with default, grouped, minimal, and grid variants.</li><li><a href="#topic-alert-dialog">MobileAlertDialog</a> — Mobile alert dialog with options.</li><li><a href="#topic-app-rating">MobileAppRating</a> — App rating modal with star selection.</li><li><a href="#topic-bottom-tab-bar">MobileBottomTabBar</a> — iOS/Android bottom tab bar with 8 visual variants.</li><li><a href="#topic-context-preview">MobileContextPreview</a> — Context menu preview modal.</li><li><a href="#topic-floating-action">MobileFloatingAction</a> — Liquid Glass FloatingAction component.</li><li><a href="#topic-page-indicator">MobilePageIndicator</a> — Dots, line, or fraction page indicator.</li><li><a href="#topic-permission-dialog">MobilePermissionDialog</a> — Permission request sheet with toggles.</li><li><a href="#topic-search-bar">MobileSearchBar</a> — iOS-style search bar with cancel button.</li><li><a href="#topic-segmented-control">MobileSegmentedControl</a> — iOS segmented control.</li><li><a href="#topic-slide-menu">MobileSlideMenu</a> — Slide-in side menu for mobile.</li><li><a href="#topic-snackbar">MobileSnackbar</a> — Bottom snackbar with progress and action.</li><li><a href="#topic-splash-screen">MobileSplashScreen</a> — Onboarding splash screen with slides.</li><li><a href="#topic-mobile-stepper">MobileStepper</a> — Plus/minus stepper control.</li><li><a href="#topic-swipeable-list">MobileSwipeableList</a> — Swipeable list items with action buttons.</li><li><a href="#topic-top-nav-bar">MobileTopNavBar</a> — Mobile top navigation bar with 5 layout variants.</li><li><a href="#topic-theme-provider">ThemeProvider</a> — Wraps your app to provide theme state, glass settings, and persistence.</li>
       </ul>
     </nav>
     
@@ -2230,6 +2230,7 @@ export function LiquidGlassCommandPalette({
 import { motion, AnimatePresence } from &quot;framer-motion&quot;;
 import { useState, useCallback, useEffect, useRef } from &quot;react&quot;;
 import { createPortal } from &quot;react-dom&quot;;
+import { useGlassSurface } from &quot;./useGlassSurface&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
 
 interface MenuItem {
@@ -2257,6 +2258,8 @@ export function LiquidGlassContextMenu({
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const triggerRef = useRef&lt;HTMLDivElement&gt;(null);
   const menuRef = useRef&lt;HTMLDivElement&gt;(null);
+
+  const popover = useGlassSurface({ variant: &quot;popover&quot; });
 
   const handleContextMenu = useCallback((e: React.MouseEvent) =&gt; {
     e.preventDefault();
@@ -2309,8 +2312,11 @@ export function LiquidGlassContextMenu({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.1 }}
-          className=&quot;fixed z-[100] min-w-[180px] rounded-xl overflow-hidden glass-blur-xl glass-surface glass-border glass-highlight&quot;
-          style={{ left: position.x, top: position.y }}
+          style={{ left: position.x, top: position.y, ...popover.style }}
+          className={cn(
+            &quot;fixed z-[100] min-w-[180px] rounded-xl overflow-hidden&quot;,
+            popover.className
+          )}
           onClick={(e) =&gt; e.stopPropagation()}
           onContextMenu={(e) =&gt; e.preventDefault()}
         &gt;
@@ -3867,6 +3873,7 @@ export function LiquidGlassKanban({
     <pre><code>import { cn } from &quot;../../utils/cn&quot;;
 import { motion, AnimatePresence } from &quot;framer-motion&quot;;
 import { useState, useRef, useEffect } from &quot;react&quot;;
+import { createPortal } from &quot;react-dom&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
 
 interface MenuItem {
@@ -3887,11 +3894,19 @@ interface LiquidGlassMenubarProps {
 
 export function LiquidGlassMenubar({ menus, className }: LiquidGlassMenubarProps) {
   const [activeIndex, setActiveIndex] = useState&lt;number | null&gt;(null);
-  const ref = useRef&lt;HTMLDivElement&gt;(null);
+  const [menuPos, setMenuPos] = useState&lt;{ left: number; top: number } | null&gt;(null);
+  const barRef = useRef&lt;HTMLDivElement&gt;(null);
+  const dropdownRef = useRef&lt;HTMLDivElement&gt;(null);
+  const triggerRefs = useRef&lt;(HTMLButtonElement | null)[]&gt;([]);
 
   useEffect(() =&gt; {
     const handle = (e: MouseEvent) =&gt; {
-      if (ref.current &amp;&amp; !ref.current.contains(e.target as Node)) {
+      if (
+        barRef.current &amp;&amp;
+        !barRef.current.contains(e.target as Node) &amp;&amp;
+        dropdownRef.current &amp;&amp;
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setActiveIndex(null);
       }
     };
@@ -3899,9 +3914,74 @@ export function LiquidGlassMenubar({ menus, className }: LiquidGlassMenubarProps
     return () =&gt; document.removeEventListener(&quot;mousedown&quot;, handle);
   }, []);
 
+  useEffect(() =&gt; {
+    if (activeIndex === null) {
+      setMenuPos(null);
+      return;
+    }
+    const btn = triggerRefs.current[activeIndex];
+    if (!btn) return;
+    const update = () =&gt; {
+      const rect = btn.getBoundingClientRect();
+      setMenuPos({ left: rect.left, top: rect.bottom + 6 });
+    };
+    update();
+    window.addEventListener(&quot;resize&quot;, update);
+    return () =&gt; window.removeEventListener(&quot;resize&quot;, update);
+  }, [activeIndex]);
+
+  const dropdown = (
+    &lt;AnimatePresence&gt;
+      {activeIndex !== null &amp;&amp; menuPos &amp;&amp; (
+        &lt;motion.div
+          ref={dropdownRef}
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 4 }}
+          transition={{ duration: 0.1 }}
+          style={{ left: menuPos.left, top: menuPos.top }}
+          className=&quot;fixed z-[100] min-w-[180px] rounded-xl overflow-hidden glass-blur-xl glass-surface glass-border glass-highlight&quot;
+        &gt;
+          {/* Top highlight */}
+          &lt;GlassTopHighlight className=&quot;inset-x-0 top-0&quot; opacity={0.2} /&gt;
+          &lt;div className=&quot;py-1&quot;&gt;
+            {menus[activeIndex]?.items.map((item, j) =&gt;
+              item.separator ? (
+                &lt;div key={`sep-${j}`} className=&quot;my-1 h-px bg-[var(--lg-border-subtle)] mx-2&quot; /&gt;
+              ) : (
+                &lt;button
+                  key={j}
+                  onClick={() =&gt; {
+                    if (!item.disabled) {
+                      item.onClick?.();
+                      setActiveIndex(null);
+                    }
+                  }}
+                  className={cn(
+                    &quot;flex w-full items-center justify-between px-3 py-2 text-left text-sm transition-colors&quot;,
+                    item.disabled
+                      ? &quot;text-[var(--lg-text-muted)] cursor-not-allowed&quot;
+                      : &quot;text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border)] hover:text-[var(--lg-text)]&quot;
+                  )}
+                &gt;
+                  &lt;span&gt;{item.label}&lt;/span&gt;
+                  {item.shortcut &amp;&amp; (
+                    &lt;span className=&quot;text-[10px] text-[var(--lg-text-muted)] ml-4&quot;&gt;
+                      {item.shortcut}
+                    &lt;/span&gt;
+                  )}
+                &lt;/button&gt;
+              )
+            )}
+          &lt;/div&gt;
+        &lt;/motion.div&gt;
+      )}
+    &lt;/AnimatePresence&gt;
+  );
+
   return (
     &lt;div
-      ref={ref}
+      ref={barRef}
       className={cn(
         &quot;inline-flex items-center gap-0.5 px-2 py-1.5 rounded-xl&quot;,
         &quot;glass-blur-sm glass-surface glass-border&quot;,
@@ -3911,6 +3991,7 @@ export function LiquidGlassMenubar({ menus, className }: LiquidGlassMenubarProps
       {menus.map((menu, i) =&gt; (
         &lt;div key={i} className=&quot;relative&quot;&gt;
           &lt;motion.button
+            ref={(el) =&gt; (triggerRefs.current[i] = el)}
             whileHover={{ scale: 1.02 }}
             onClick={() =&gt; setActiveIndex(activeIndex === i ? null : i)}
             className={cn(
@@ -3922,53 +4003,9 @@ export function LiquidGlassMenubar({ menus, className }: LiquidGlassMenubarProps
           &gt;
             {menu.label}
           &lt;/motion.button&gt;
-
-          &lt;AnimatePresence&gt;
-            {activeIndex === i &amp;&amp; (
-              &lt;motion.div
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 4 }}
-                transition={{ duration: 0.1 }}
-                className=&quot;absolute left-0 top-full mt-1 min-w-[180px] rounded-xl overflow-hidden glass-blur-xl glass-surface glass-border glass-highlight z-50&quot;
-              &gt;
-                {/* Top highlight */}
-                &lt;GlassTopHighlight className=&quot;inset-x-0 top-0&quot; opacity={0.2} /&gt;
-                &lt;div className=&quot;py-1&quot;&gt;
-                  {menu.items.map((item, j) =&gt;
-                    item.separator ? (
-                      &lt;div key={`sep-${j}`} className=&quot;my-1 h-px bg-[var(--lg-border-subtle)] mx-2&quot; /&gt;
-                    ) : (
-                      &lt;button
-                        key={j}
-                        onClick={() =&gt; {
-                          if (!item.disabled) {
-                            item.onClick?.();
-                            setActiveIndex(null);
-                          }
-                        }}
-                        className={cn(
-                          &quot;flex w-full items-center justify-between px-3 py-2 text-left text-sm transition-colors&quot;,
-                          item.disabled
-                            ? &quot;text-[var(--lg-text-muted)] cursor-not-allowed&quot;
-                            : &quot;text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border)] hover:text-[var(--lg-text)]&quot;
-                        )}
-                      &gt;
-                        &lt;span&gt;{item.label}&lt;/span&gt;
-                        {item.shortcut &amp;&amp; (
-                          &lt;span className=&quot;text-[10px] text-[var(--lg-text-muted)] ml-4&quot;&gt;
-                            {item.shortcut}
-                          &lt;/span&gt;
-                        )}
-                      &lt;/button&gt;
-                    )
-                  )}
-                &lt;/div&gt;
-              &lt;/motion.div&gt;
-            )}
-          &lt;/AnimatePresence&gt;
         &lt;/div&gt;
       ))}
+      {createPortal(dropdown, document.body)}
     &lt;/div&gt;
   );
 }
@@ -9098,6 +9135,7 @@ function TabButton({
     <pre><code>import { cn } from &quot;../../utils/cn&quot;;
 import { motion, AnimatePresence } from &quot;framer-motion&quot;;
 import { useState, useRef, useEffect, type ReactNode } from &quot;react&quot;;
+import { createPortal } from &quot;react-dom&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
 
 interface ContextAction {
@@ -9137,98 +9175,99 @@ export function MobileContextPreview({
 
   useEffect(() =&gt; {
     if (!isOpen) return;
-    const handleClick = (e: MouseEvent) =&gt; {
-      if (ref.current &amp;&amp; !ref.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
+    const handleKeyDown = (e: KeyboardEvent) =&gt; {
+      if (e.key === &quot;Escape&quot;) setIsOpen(false);
     };
-    window.addEventListener(&quot;click&quot;, handleClick);
-    return () =&gt; window.removeEventListener(&quot;click&quot;, handleClick);
+    window.addEventListener(&quot;keydown&quot;, handleKeyDown);
+    return () =&gt; window.removeEventListener(&quot;keydown&quot;, handleKeyDown);
   }, [isOpen]);
+
+  const overlay = (
+    &lt;AnimatePresence&gt;
+      {isOpen &amp;&amp; childRect &amp;&amp; (
+        &lt;motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
+          className=&quot;fixed inset-0 z-[80] flex items-center justify-center&quot;
+        &gt;
+          &lt;motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className=&quot;absolute inset-0 bg-black/30&quot;
+            onClick={() =&gt; setIsOpen(false)}
+          /&gt;
+
+          {/* Preview */}
+          &lt;motion.div
+            initial={{ scale: 0.8, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.8, opacity: 0, y: 20 }}
+            className=&quot;relative w-full max-w-xs mx-auto&quot;
+          &gt;
+            &lt;motion.div
+              className={cn(
+                &quot;relative rounded-2xl overflow-hidden mb-4&quot;,
+                &quot;glass-blur-xl glass-surface glass-border glass-highlight-strong&quot;,
+                previewContent ? &quot;p-4&quot; : &quot;h-32 bg-gradient-to-br from-liquid-blue/20 to-liquid-purple/20&quot;
+              )}
+            &gt;
+              &lt;GlassTopHighlight className=&quot;inset-x-0 top-0&quot; opacity={0.25} /&gt;
+              {previewContent || (
+                &lt;div className=&quot;flex h-full items-center justify-center text-[var(--lg-text-muted)] text-sm&quot;&gt;
+                  Preview
+                &lt;/div&gt;
+              )}
+            &lt;/motion.div&gt;
+
+            {/* Actions */}
+            &lt;motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className={cn(
+                &quot;rounded-2xl overflow-hidden&quot;,
+                &quot;glass-blur-xl glass-surface glass-border glass-highlight&quot;
+              )}
+            &gt;
+              &lt;GlassTopHighlight className=&quot;inset-x-0 top-0&quot; opacity={0.2} /&gt;
+              {actions.map((action, i) =&gt; (
+                &lt;motion.button
+                  key={action.id}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() =&gt; {
+                    action.onClick?.();
+                    setIsOpen(false);
+                  }}
+                  className={cn(
+                    &quot;flex w-full items-center gap-3 px-5 py-3 text-left transition-colors hover:bg-[var(--lg-border-subtle)]&quot;,
+                    i &lt; actions.length - 1 &amp;&amp; &quot;border-b border-[var(--lg-border-subtle)]&quot;,
+                    action.destructive ? &quot;text-liquid-rose&quot; : &quot;text-[var(--lg-text-secondary)]&quot;
+                  )}
+                &gt;
+                  &lt;span className={cn(
+                    action.destructive ? &quot;text-liquid-rose&quot; : &quot;text-[var(--lg-text-muted)]&quot;
+                  )}&gt;
+                    {action.icon}
+                  &lt;/span&gt;
+                  &lt;span className=&quot;text-sm&quot;&gt;{action.title}&lt;/span&gt;
+                &lt;/motion.button&gt;
+              ))}
+            &lt;/motion.div&gt;
+          &lt;/motion.div&gt;
+        &lt;/motion.div&gt;
+      )}
+    &lt;/AnimatePresence&gt;
+  );
 
   return (
     &lt;div ref={ref} className={cn(&quot;relative&quot;, className)}&gt;
       &lt;div ref={childRef} onContextMenu={handleContextMenu}&gt;
         {children}
       &lt;/div&gt;
-
-      &lt;AnimatePresence&gt;
-        {isOpen &amp;&amp; childRect &amp;&amp; (
-          &lt;motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            className=&quot;fixed inset-0 z-[80] flex items-center justify-center&quot;
-          &gt;
-            &lt;motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className=&quot;absolute inset-0 bg-black/30&quot;
-              onClick={() =&gt; setIsOpen(false)}
-            /&gt;
-
-            {/* Preview */}
-            &lt;motion.div
-              initial={{ scale: 0.8, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: 20 }}
-              className=&quot;relative w-full max-w-xs mx-auto&quot;
-            &gt;
-              &lt;motion.div
-                className={cn(
-                  &quot;relative rounded-2xl overflow-hidden mb-4&quot;,
-                  &quot;glass-blur-xl glass-surface glass-border glass-highlight-strong&quot;,
-                  previewContent ? &quot;p-4&quot; : &quot;h-32 bg-gradient-to-br from-liquid-blue/20 to-liquid-purple/20&quot;
-                )}
-              &gt;
-                &lt;GlassTopHighlight className=&quot;inset-x-0 top-0&quot; opacity={0.25} /&gt;
-                {previewContent || (
-                  &lt;div className=&quot;flex h-full items-center justify-center text-[var(--lg-text-muted)] text-sm&quot;&gt;
-                    Preview
-                  &lt;/div&gt;
-                )}
-              &lt;/motion.div&gt;
-
-              {/* Actions */}
-              &lt;motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.1 }}
-                className={cn(
-                  &quot;rounded-2xl overflow-hidden&quot;,
-                  &quot;glass-blur-xl glass-surface glass-border glass-highlight&quot;
-                )}
-              &gt;
-                &lt;GlassTopHighlight className=&quot;inset-x-0 top-0&quot; opacity={0.2} /&gt;
-                {actions.map((action, i) =&gt; (
-                  &lt;motion.button
-                    key={action.id}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() =&gt; {
-                      action.onClick?.();
-                      setIsOpen(false);
-                    }}
-                    className={cn(
-                      &quot;flex w-full items-center gap-3 px-5 py-3 text-left transition-colors hover:bg-[var(--lg-border-subtle)]&quot;,
-                      i &lt; actions.length - 1 &amp;&amp; &quot;border-b border-[var(--lg-border-subtle)]&quot;,
-                      action.destructive ? &quot;text-liquid-rose&quot; : &quot;text-[var(--lg-text-secondary)]&quot;
-                    )}
-                  &gt;
-                    &lt;span className={cn(
-                      action.destructive ? &quot;text-liquid-rose&quot; : &quot;text-[var(--lg-text-muted)]&quot;
-                    )}&gt;
-                      {action.icon}
-                    &lt;/span&gt;
-                    &lt;span className=&quot;text-sm&quot;&gt;{action.title}&lt;/span&gt;
-                  &lt;/motion.button&gt;
-                ))}
-              &lt;/motion.div&gt;
-            &lt;/motion.div&gt;
-          &lt;/motion.div&gt;
-        )}
-      &lt;/AnimatePresence&gt;
+      {createPortal(overlay, document.body)}
     &lt;/div&gt;
   );
 }
@@ -9793,153 +9832,6 @@ export function MobilePermissionDialog({
 
 </code></pre>
     <p><a href="/docs?topic=permission-dialog">Open in interactive docs</a></p>
-  </article>
-
-  <article id="topic-pull-to-refresh" data-topic="pull-to-refresh">
-    <h2>MobilePullToRefresh</h2>
-    <p><strong>Category:</strong> Mobile</p>
-    <p>Pull-to-refresh wrapper for touch scrolling.</p>
-    <h3>Props</h3>
-    <table>
-      <thead><tr><th>Prop</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
-      <tbody>
-    <tr>
-      <td><code>children</code></td>
-      <td><code>React.ReactNode</code></td>
-      <td>Yes</td>
-      <td>Child React nodes rendered inside the component.</td>
-    </tr>
-    <tr>
-      <td><code>onRefresh</code></td>
-      <td><code>() =&gt; Promise&lt;void&gt;</code></td>
-      <td>Yes</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><code>className</code></td>
-      <td><code>string</code></td>
-      <td>No</td>
-      <td>Additional Tailwind CSS classes.</td>
-    </tr>
-    <tr>
-      <td><code>threshold</code></td>
-      <td><code>number</code></td>
-      <td>No</td>
-      <td>-</td>
-    </tr></tbody>
-    </table>
-    <h3>Usage</h3>
-    <pre><code>&lt;MobilePullToRefresh /&gt;</code></pre>
-    <h3>Source</h3>
-    <pre><code>import { cn } from &quot;../../utils/cn&quot;;
-import { motion } from &quot;framer-motion&quot;;
-import { ArrowDownToLine, RefreshCw, Check } from &quot;lucide-react&quot;;
-import { useRef, useState, useCallback } from &quot;react&quot;;
-
-interface MobilePullToRefreshProps {
-  children: React.ReactNode;
-  onRefresh: () =&gt; Promise&lt;void&gt;;
-  className?: string;
-  threshold?: number;
-}
-
-export function MobilePullToRefresh({
-  children,
-  onRefresh,
-  className,
-  threshold = 80,
-}: MobilePullToRefreshProps) {
-  const [refreshState, setRefreshState] = useState&lt;&quot;idle&quot; | &quot;pulling&quot; | &quot;ready&quot; | &quot;loading&quot; | &quot;done&quot;&gt;(&quot;idle&quot;);
-  const [pullDistance, setPullDistance] = useState(0);
-  const startY = useRef(0);
-  const startScroll = useRef(0);
-  const containerRef = useRef&lt;HTMLDivElement&gt;(null);
-
-  const handleTouchStart = useCallback((e: React.TouchEvent) =&gt; {
-    if (containerRef.current?.scrollTop === 0) {
-      startY.current = e.touches[0].clientY;
-      startScroll.current = containerRef.current.scrollTop;
-    }
-  }, []);
-
-  const handleTouchMove = useCallback((e: React.TouchEvent) =&gt; {
-    if (refreshState !== &quot;idle&quot; &amp;&amp; refreshState !== &quot;pulling&quot;) return;
-    const diff = e.touches[0].clientY - startY.current;
-    if (diff &gt; 0 &amp;&amp; containerRef.current?.scrollTop === 0) {
-      const distance = Math.min(diff * 0.6, threshold * 1.5);
-      setPullDistance(distance);
-      setRefreshState(distance &gt;= threshold ? &quot;ready&quot; : &quot;pulling&quot;);
-    }
-  }, [refreshState, threshold]);
-
-  const handleTouchEnd = useCallback(async () =&gt; {
-    if (refreshState === &quot;ready&quot;) {
-      setRefreshState(&quot;loading&quot;);
-      setPullDistance(threshold);
-      await onRefresh();
-      setRefreshState(&quot;done&quot;);
-      setTimeout(() =&gt; {
-        setRefreshState(&quot;idle&quot;);
-        setPullDistance(0);
-      }, 600);
-    } else {
-      setRefreshState(&quot;idle&quot;);
-      setPullDistance(0);
-    }
-  }, [refreshState, threshold, onRefresh]);
-
-  const progress = Math.min(pullDistance / threshold, 1);
-
-  return (
-    &lt;div
-      ref={containerRef}
-      className={cn(&quot;relative overflow-y-auto&quot;, className)}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    &gt;
-      {/* Pull indicator */}
-      &lt;div
-        className=&quot;absolute top-0 left-0 right-0 flex justify-center pointer-events-none z-10&quot;
-        style={{ height: pullDistance, overflow: &quot;hidden&quot; }}
-      &gt;
-        &lt;motion.div
-          animate={{
-            y: Math.max(0, pullDistance - 30),
-            rotate: refreshState === &quot;loading&quot; ? 360 : 0,
-          }}
-          transition={
-            refreshState === &quot;loading&quot;
-              ? { duration: 1, repeat: Infinity, ease: &quot;linear&quot; }
-              : { type: &quot;spring&quot;, stiffness: 300, damping: 25 }
-          }
-          className={cn(
-            &quot;flex h-8 w-8 items-center justify-center rounded-full&quot;,
-            &quot;glass-blur-sm glass-surface glass-border&quot;
-          )}
-        &gt;
-          {refreshState === &quot;loading&quot; ? (
-            &lt;RefreshCw size={16} className=&quot;text-liquid-blue&quot; /&gt;
-          ) : refreshState === &quot;done&quot; ? (
-            &lt;Check size={16} className=&quot;text-liquid-emerald&quot; /&gt;
-          ) : (
-            &lt;ArrowDownToLine
-              size={16}
-              className={cn(&quot;transition-transform&quot;, progress &gt; 0.8 &amp;&amp; &quot;rotate-180&quot;)}
-              style={{ opacity: progress }}
-            /&gt;
-          )}
-        &lt;/motion.div&gt;
-      &lt;/div&gt;
-
-      &lt;div style={{ minHeight: pullDistance &gt; 0 ? &quot;100%&quot; : undefined }}&gt;
-        {children}
-      &lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-    <p><a href="/docs?topic=pull-to-refresh">Open in interactive docs</a></p>
   </article>
 
   <article id="topic-search-bar" data-topic="search-bar">

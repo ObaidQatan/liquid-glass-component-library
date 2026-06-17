@@ -54,7 +54,6 @@ export { MobileActionSheet } from "./MobileActionSheet";
 export { MobileSegmentedControl } from "./MobileSegmentedControl";
 export { MobileStepper } from "./MobileStepper";
 export { MobileSearchBar } from "./MobileSearchBar";
-export { MobilePullToRefresh } from "./MobilePullToRefresh";
 export { MobileSwipeableList } from "./MobileSwipeableList";
 export { MobileSnackbar } from "./MobileSnackbar";
 export { MobileAlertDialog } from "./MobileAlertDialog";
@@ -69,6 +68,7 @@ export { MobileContextPreview } from "./MobileContextPreview";
 // Theme & glass surface system
 export { ThemeProvider, useTheme } from "./ThemeProvider";
 export { useGlassSurface } from "./useGlassSurface";
+export type { GlassSurfaceVariant } from "./useGlassSurface";
 export { useLiquidPress } from "./useLiquidPress";
 export { GlassTopHighlight } from "./GlassTopHighlight";
 export { GlassSheen } from "./GlassSheen";

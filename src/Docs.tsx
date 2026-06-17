@@ -33,6 +33,7 @@ import AnimatedBackground from "./AnimatedBackground";
 import { docsComponents, docsCategories, type DocsComponentEntry } from "./docs-data";
 import { useRoute, navigate, type Route } from "./router";
 import componentDemos from "./docs-demos";
+import { VariantDemo } from "./docs-variants";
 
 /* ───────── Types & constants ───────── */
 type DocsSection = "intro" | "installation" | "theme" | "glass" | "components";
@@ -260,6 +261,43 @@ function Highlight({ text, query }: { text: string; query: string }) {
 
 function escapeRegExp(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+const variantAliases: Record<string, string[]> = {
+  MobileBottomTabVariant: [
+    "default",
+    "pill",
+    "floating",
+    "ios26-fluid",
+    "ios26-chrome",
+    "ios26-glow",
+    "ios26-dock",
+    "ios26-super-pill",
+  ],
+};
+
+function extractEnum(type: string): string[] {
+  const alias = variantAliases[type.trim()];
+  if (alias) return alias;
+  const matches = type.matchAll(/"([^"]+)"/g);
+  return Array.from(matches).map((m) => m[1]);
+}
+
+function VariantBox({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-xl border border-[var(--lg-border)] glass-blur-sm glass-surface p-3">
+      <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--lg-text-muted)] mb-2">
+        {label}
+      </p>
+      <div className="min-h-[48px] flex items-center justify-center">{children}</div>
+    </div>
+  );
 }
 
 /* ───────── Static docs content ───────── */
@@ -1219,6 +1257,32 @@ export default function Example() {
 }`;
 }
 
+function VariantShowcase({
+  component,
+}: {
+  component: DocsComponentEntry;
+}) {
+  const variantProp = component.props.find(
+    (p) => p.name === "variant" && p.type.includes('"')
+  );
+  const variants = variantProp ? extractEnum(variantProp.type) : [];
+  if (variants.length === 0) return null;
+
+  return (
+    <section id="variants" className="scroll-mt-28">
+      <H2>Variants</H2>
+      <P>Every supported variant of {component.name}.</P>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {variants.map((variant) => (
+          <VariantBox key={variant} label={variant}>
+            <VariantDemo id={component.id} variant={variant} />
+          </VariantBox>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function ComponentDetail({
   component,
   category,
@@ -1276,6 +1340,8 @@ function ComponentDetail({
           <Demo />
         </>
       )}
+
+      <VariantShowcase component={component} />
 
       <H2 id="props">Props</H2>
       <PropTable props={component.props} />

@@ -51,7 +51,7 @@ function DemoBox({
   );
 }
 
-function PortalOverlay({
+export function PortalOverlay({
   trigger,
   children,
 }: {
@@ -69,7 +69,7 @@ function PortalOverlay({
   );
 }
 
-function PortalWrap({ children }: { children: React.ReactNode }) {
+export function PortalWrap({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   return mounted ? createPortal(children, document.body) : null;
@@ -124,14 +124,42 @@ const componentDemos: Record<string, React.FC> = {
   },
 
   "use-glass-surface": () => {
-    const { style, className } = LG.useGlassSurface({ variant: "surface-strong" });
+    const variants: LG.GlassSurfaceVariant[] = [
+      "surface",
+      "surface-strong",
+      "surface-dark",
+      "fill",
+      "thumb",
+      "track",
+      "track-active",
+      "sheen",
+      "highlight",
+      "popover",
+    ];
     return (
       <DemoBox>
-        <div
-          style={style}
-          className={cn(className, "h-20 rounded-2xl grid place-items-center text-sm text-[var(--lg-text)]")}
-        >
-          Glass surface
+        <p className="text-sm text-[var(--lg-text-secondary)] mb-4">
+          <code className="text-xs bg-[var(--lg-border-subtle)] px-1.5 py-0.5 rounded">surface-strong</code>{" "}
+          is the boldest glass panel style: it uses the strongest blur + white gradient surface and is used for
+          popovers, modals, and command palettes. The other variants are specialized surfaces for thumbs, tracks,
+          sheens, highlights, and filled backgrounds.
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {variants.map((variant) => {
+            const { style, className } = LG.useGlassSurface({ variant });
+            return (
+              <div
+                key={variant}
+                style={style}
+                className={cn(
+                  className,
+                  "h-20 rounded-2xl grid place-items-center text-xs text-[var(--lg-text)] border border-[var(--lg-border)]"
+                )}
+              >
+                {variant}
+              </div>
+            );
+          })}
         </div>
       </DemoBox>
     );
@@ -1040,18 +1068,16 @@ const componentDemos: Record<string, React.FC> = {
 
   "context-preview": () => (
     <DemoBox className="flex justify-center">
-      <PortalWrap>
-        <LG.MobileContextPreview
-          actions={[
-            { id: "1", title: "Preview", icon: <Search size={14} /> },
-            { id: "2", title: "Share", icon: <Share2 size={14} /> },
-          ]}
-        >
-          <div className="p-6 rounded-xl bg-[var(--lg-border-subtle)] text-sm text-[var(--lg-text-muted)] text-center">
-            Right click / long press
-          </div>
-        </LG.MobileContextPreview>
-      </PortalWrap>
+      <LG.MobileContextPreview
+        actions={[
+          { id: "1", title: "Preview", icon: <Search size={14} /> },
+          { id: "2", title: "Share", icon: <Share2 size={14} /> },
+        ]}
+      >
+        <div className="p-6 rounded-xl bg-[var(--lg-border-subtle)] text-sm text-[var(--lg-text-muted)] text-center">
+          Right click / long press
+        </div>
+      </LG.MobileContextPreview>
     </DemoBox>
   ),
 
