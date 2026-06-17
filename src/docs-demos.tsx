@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as LG from "./components/liquid-glass";
+import { createPortal } from "react-dom";
 import { cn } from "./utils/cn";
 import {
   Home,
@@ -48,6 +49,30 @@ function DemoBox({
       {children}
     </div>
   );
+}
+
+function PortalOverlay({
+  trigger,
+  children,
+}: {
+  trigger: (setOpen: (v: boolean) => void) => React.ReactNode;
+  children: (isOpen: boolean, setOpen: (v: boolean) => void) => React.ReactNode;
+}) {
+  const [isOpen, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  return (
+    <>
+      {trigger(setOpen)}
+      {mounted && createPortal(children(isOpen, setOpen), document.body)}
+    </>
+  );
+}
+
+function PortalWrap({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  return mounted ? createPortal(children, document.body) : null;
 }
 
 const componentDemos: Record<string, React.FC> = {
@@ -468,7 +493,9 @@ const componentDemos: Record<string, React.FC> = {
             Error
           </LG.LiquidGlassButton>
         </div>
-        <LG.LiquidGlassToast toasts={toasts} onRemove={(id) => setToasts((t) => t.filter((x) => x.id !== id))} />
+        <PortalWrap>
+          <LG.LiquidGlassToast toasts={toasts} onRemove={(id) => setToasts((t) => t.filter((x) => x.id !== id))} />
+        </PortalWrap>
       </DemoBox>
     );
   },
@@ -498,12 +525,14 @@ const componentDemos: Record<string, React.FC> = {
           Show snackbar
         </LG.LiquidGlassButton>
         {key > 0 && (
-          <LG.MobileSnackbar
-            key={key}
-            message="Changes saved"
-            action={{ label: "Undo", onClick: () => {} }}
-            variant="success"
-          />
+          <PortalWrap>
+            <LG.MobileSnackbar
+              key={key}
+              message="Changes saved"
+              action={{ label: "Undo", onClick: () => {} }}
+              variant="success"
+            />
+          </PortalWrap>
         )}
       </DemoBox>
     );
@@ -773,178 +802,218 @@ const componentDemos: Record<string, React.FC> = {
     </DemoBox>
   ),
 
-  modal: () => {
-    const [open, setOpen] = useState(false);
-    return (
-      <DemoBox>
-        <LG.LiquidGlassButton onClick={() => setOpen(true)}>Open modal</LG.LiquidGlassButton>
-        <LG.LiquidGlassModal isOpen={open} onClose={() => setOpen(false)} title="Glass Modal">
-          <p className="text-sm text-[var(--lg-text-secondary)]">This is a glass modal dialog.</p>
-        </LG.LiquidGlassModal>
-      </DemoBox>
-    );
-  },
+  modal: () => (
+    <DemoBox>
+      <PortalOverlay
+        trigger={(setOpen) => (
+          <LG.LiquidGlassButton onClick={() => setOpen(true)}>Open modal</LG.LiquidGlassButton>
+        )}
+      >
+        {(open, setOpen) => (
+          <LG.LiquidGlassModal isOpen={open} onClose={() => setOpen(false)} title="Glass Modal">
+            <p className="text-sm text-[var(--lg-text-secondary)]">This is a glass modal dialog.</p>
+          </LG.LiquidGlassModal>
+        )}
+      </PortalOverlay>
+    </DemoBox>
+  ),
 
-  drawer: () => {
-    const [open, setOpen] = useState(false);
-    return (
-      <DemoBox>
-        <LG.LiquidGlassButton variant="secondary" onClick={() => setOpen(true)}>
-          Open drawer
-        </LG.LiquidGlassButton>
-        <LG.LiquidGlassDrawer isOpen={open} onClose={() => setOpen(false)} title="Settings" position="right">
-          <p className="text-sm text-[var(--lg-text-secondary)]">Drawer content goes here.</p>
-        </LG.LiquidGlassDrawer>
-      </DemoBox>
-    );
-  },
+  drawer: () => (
+    <DemoBox>
+      <PortalOverlay
+        trigger={(setOpen) => (
+          <LG.LiquidGlassButton variant="secondary" onClick={() => setOpen(true)}>
+            Open drawer
+          </LG.LiquidGlassButton>
+        )}
+      >
+        {(open, setOpen) => (
+          <LG.LiquidGlassDrawer isOpen={open} onClose={() => setOpen(false)} title="Settings" position="right">
+            <p className="text-sm text-[var(--lg-text-secondary)]">Drawer content goes here.</p>
+          </LG.LiquidGlassDrawer>
+        )}
+      </PortalOverlay>
+    </DemoBox>
+  ),
 
-  sheet: () => {
-    const [open, setOpen] = useState(false);
-    return (
-      <DemoBox>
-        <LG.LiquidGlassButton variant="secondary" onClick={() => setOpen(true)}>
-          Open sheet
-        </LG.LiquidGlassButton>
-        <LG.LiquidGlassSheet isOpen={open} onClose={() => setOpen(false)} title="Actions">
-          <p className="text-sm text-[var(--lg-text-secondary)]">Bottom sheet content.</p>
-        </LG.LiquidGlassSheet>
-      </DemoBox>
-    );
-  },
+  sheet: () => (
+    <DemoBox>
+      <PortalOverlay
+        trigger={(setOpen) => (
+          <LG.LiquidGlassButton variant="secondary" onClick={() => setOpen(true)}>
+            Open sheet
+          </LG.LiquidGlassButton>
+        )}
+      >
+        {(open, setOpen) => (
+          <LG.LiquidGlassSheet isOpen={open} onClose={() => setOpen(false)} title="Actions">
+            <p className="text-sm text-[var(--lg-text-secondary)]">Bottom sheet content.</p>
+          </LG.LiquidGlassSheet>
+        )}
+      </PortalOverlay>
+    </DemoBox>
+  ),
 
-  "command-palette": () => {
-    const [open, setOpen] = useState(false);
-    return (
-      <DemoBox>
-        <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
-          Open command palette
-        </LG.LiquidGlassButton>
-        <LG.LiquidGlassCommandPalette
-          isOpen={open}
-          onClose={() => setOpen(false)}
-          items={[
-            { id: "1", label: "Search", shortcut: "⌘F", category: "Navigation", icon: <Search size={14} /> },
-            { id: "2", label: "Theme", shortcut: "⌘T", category: "Preferences", icon: <Palette size={14} /> },
-          ]}
-        />
-      </DemoBox>
-    );
-  },
+  "command-palette": () => (
+    <DemoBox>
+      <PortalOverlay
+        trigger={(setOpen) => (
+          <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
+            Open command palette
+          </LG.LiquidGlassButton>
+        )}
+      >
+        {(open, setOpen) => (
+          <LG.LiquidGlassCommandPalette
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            items={[
+              { id: "1", label: "Search", shortcut: "⌘F", category: "Navigation", icon: <Search size={14} /> },
+              { id: "2", label: "Theme", shortcut: "⌘T", category: "Preferences", icon: <Palette size={14} /> },
+            ]}
+          />
+        )}
+      </PortalOverlay>
+    </DemoBox>
+  ),
 
-  "action-sheet": () => {
-    const [open, setOpen] = useState(false);
-    return (
-      <DemoBox>
-        <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
-          Open action sheet
-        </LG.LiquidGlassButton>
-        <LG.MobileActionSheet
-          isOpen={open}
-          onClose={() => setOpen(false)}
-          title="Share this item"
-          items={[
-            { id: "1", title: "Share", icon: <Share2 size={18} /> },
-            { id: "2", title: "Delete", destructive: true, icon: <Trash2 size={18} /> },
-          ]}
-        />
-      </DemoBox>
-    );
-  },
+  "action-sheet": () => (
+    <DemoBox>
+      <PortalOverlay
+        trigger={(setOpen) => (
+          <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
+            Open action sheet
+          </LG.LiquidGlassButton>
+        )}
+      >
+        {(open, setOpen) => (
+          <LG.MobileActionSheet
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            title="Share this item"
+            items={[
+              { id: "1", title: "Share", icon: <Share2 size={18} /> },
+              { id: "2", title: "Delete", destructive: true, icon: <Trash2 size={18} /> },
+            ]}
+          />
+        )}
+      </PortalOverlay>
+    </DemoBox>
+  ),
 
-  "alert-dialog": () => {
-    const [open, setOpen] = useState(false);
-    return (
-      <DemoBox>
-        <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
-          Open alert dialog
-        </LG.LiquidGlassButton>
-        <LG.MobileAlertDialog
-          isOpen={open}
-          onClose={() => setOpen(false)}
-          title="Delete Item?"
-          message="This action cannot be undone."
-          icon="warning"
-          options={[{ text: "Delete", style: "destructive" }, { text: "Cancel", style: "cancel" }]}
-        />
-      </DemoBox>
-    );
-  },
+  "alert-dialog": () => (
+    <DemoBox>
+      <PortalOverlay
+        trigger={(setOpen) => (
+          <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
+            Open alert dialog
+          </LG.LiquidGlassButton>
+        )}
+      >
+        {(open, setOpen) => (
+          <LG.MobileAlertDialog
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            title="Delete Item?"
+            message="This action cannot be undone."
+            icon="warning"
+            options={[{ text: "Delete", style: "destructive" }, { text: "Cancel", style: "cancel" }]}
+          />
+        )}
+      </PortalOverlay>
+    </DemoBox>
+  ),
 
-  "app-rating": () => {
-    const [open, setOpen] = useState(false);
-    return (
-      <DemoBox>
-        <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
-          Rate app
-        </LG.LiquidGlassButton>
-        <LG.MobileAppRating isOpen={open} onClose={() => setOpen(false)} onRate={() => setOpen(false)} appName="Liquid Glass" />
-      </DemoBox>
-    );
-  },
+  "app-rating": () => (
+    <DemoBox>
+      <PortalOverlay
+        trigger={(setOpen) => (
+          <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
+            Rate app
+          </LG.LiquidGlassButton>
+        )}
+      >
+        {(open, setOpen) => (
+          <LG.MobileAppRating isOpen={open} onClose={() => setOpen(false)} onRate={() => setOpen(false)} appName="Liquid Glass" />
+        )}
+      </PortalOverlay>
+    </DemoBox>
+  ),
 
-  "permission-dialog": () => {
-    const [open, setOpen] = useState(false);
-    return (
-      <DemoBox>
-        <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
-          Open permissions
-        </LG.LiquidGlassButton>
-        <LG.MobilePermissionDialog
-          isOpen={open}
-          onClose={() => setOpen(false)}
-          title="Permissions"
-          message="Allow access for the best experience."
-          permissions={[
-            { id: "1", title: "Camera", description: "Take photos", icon: <Camera size={20} /> },
-            { id: "2", title: "Notifications", description: "Stay updated", icon: <Bell size={20} />, granted: true },
-          ]}
-        />
-      </DemoBox>
-    );
-  },
+  "permission-dialog": () => (
+    <DemoBox>
+      <PortalOverlay
+        trigger={(setOpen) => (
+          <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
+            Open permissions
+          </LG.LiquidGlassButton>
+        )}
+      >
+        {(open, setOpen) => (
+          <LG.MobilePermissionDialog
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            title="Permissions"
+            message="Allow access for the best experience."
+            permissions={[
+              { id: "1", title: "Camera", description: "Take photos", icon: <Camera size={20} /> },
+              { id: "2", title: "Notifications", description: "Stay updated", icon: <Bell size={20} />, granted: true },
+            ]}
+          />
+        )}
+      </PortalOverlay>
+    </DemoBox>
+  ),
 
-  "slide-menu": () => {
-    const [open, setOpen] = useState(false);
-    return (
-      <DemoBox>
-        <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
-          Open slide menu
-        </LG.LiquidGlassButton>
-        <LG.MobileSlideMenu
-          isOpen={open}
-          onClose={() => setOpen(false)}
-          sections={[
-            {
-              title: "Navigation",
-              items: [
-                { id: "1", label: "Home", icon: <Home size={18} /> },
-                { id: "2", label: "Search", icon: <Search size={18} /> },
-              ],
-            },
-          ]}
-        />
-      </DemoBox>
-    );
-  },
+  "slide-menu": () => (
+    <DemoBox>
+      <PortalOverlay
+        trigger={(setOpen) => (
+          <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
+            Open slide menu
+          </LG.LiquidGlassButton>
+        )}
+      >
+        {(open, setOpen) => (
+          <LG.MobileSlideMenu
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            sections={[
+              {
+                title: "Navigation",
+                items: [
+                  { id: "1", label: "Home", icon: <Home size={18} /> },
+                  { id: "2", label: "Search", icon: <Search size={18} /> },
+                ],
+              },
+            ]}
+          />
+        )}
+      </PortalOverlay>
+    </DemoBox>
+  ),
 
-  "splash-screen": () => {
-    const [open, setOpen] = useState(false);
-    return (
-      <DemoBox>
-        <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
-          Open splash screen
-        </LG.LiquidGlassButton>
-        <LG.MobileSplashScreen
-          isOpen={open}
-          onClose={() => setOpen(false)}
-          slides={[
-            { id: "1", title: "Welcome", subtitle: "Liquid Glass", icon: <Sparkles size={32} />, gradient: "bg-gradient-to-b from-liquid-blue/30 to-transparent" },
-          ]}
-        />
-      </DemoBox>
-    );
-  },
+  "splash-screen": () => (
+    <DemoBox>
+      <PortalOverlay
+        trigger={(setOpen) => (
+          <LG.LiquidGlassButton size="sm" onClick={() => setOpen(true)}>
+            Open splash screen
+          </LG.LiquidGlassButton>
+        )}
+      >
+        {(open, setOpen) => (
+          <LG.MobileSplashScreen
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            slides={[
+              { id: "1", title: "Welcome", subtitle: "Liquid Glass", icon: <Sparkles size={32} />, gradient: "bg-gradient-to-b from-liquid-blue/30 to-transparent" },
+            ]}
+          />
+        )}
+      </PortalOverlay>
+    </DemoBox>
+  ),
 
   "bottom-tab-bar": () => {
     const [tab, setTab] = useState("home");
@@ -956,8 +1025,8 @@ const componentDemos: Record<string, React.FC> = {
     ];
     return (
       <DemoBox className="flex justify-center">
-        <div className="w-full max-w-sm rounded-t-3xl bg-gradient-to-br from-liquid-blue/20 to-liquid-purple/20 p-4">
-          <LG.MobileBottomTabBar tabs={tabs} activeTab={tab} onChange={setTab} variant="ios26-fluid" />
+        <div className="relative w-full max-w-sm rounded-t-3xl bg-gradient-to-br from-liquid-blue/20 to-liquid-purple/20 p-4">
+          <LG.MobileBottomTabBar tabs={tabs} activeTab={tab} onChange={setTab} variant="ios26-fluid" className="!relative !left-auto !right-auto !bottom-auto !translate-x-0" />
         </div>
       </DemoBox>
     );
@@ -971,16 +1040,18 @@ const componentDemos: Record<string, React.FC> = {
 
   "context-preview": () => (
     <DemoBox className="flex justify-center">
-      <LG.MobileContextPreview
-        actions={[
-          { id: "1", title: "Preview", icon: <Search size={14} /> },
-          { id: "2", title: "Share", icon: <Share2 size={14} /> },
-        ]}
-      >
-        <div className="p-6 rounded-xl bg-[var(--lg-border-subtle)] text-sm text-[var(--lg-text-muted)] text-center">
-          Right click / long press
-        </div>
-      </LG.MobileContextPreview>
+      <PortalWrap>
+        <LG.MobileContextPreview
+          actions={[
+            { id: "1", title: "Preview", icon: <Search size={14} /> },
+            { id: "2", title: "Share", icon: <Share2 size={14} /> },
+          ]}
+        >
+          <div className="p-6 rounded-xl bg-[var(--lg-border-subtle)] text-sm text-[var(--lg-text-muted)] text-center">
+            Right click / long press
+          </div>
+        </LG.MobileContextPreview>
+      </PortalWrap>
     </DemoBox>
   ),
 
@@ -989,10 +1060,12 @@ const componentDemos: Record<string, React.FC> = {
       <LG.MobileFloatingActionButton
         variant="chrome"
         actions={[{ id: "new", icon: <Plus size={18} />, label: "New", onClick: () => {} }]}
+        className="!relative !left-auto !right-auto !top-auto !bottom-auto !translate-x-0 !translate-y-0"
       />
       <LG.MobileFloatingActionButton
         variant="colored"
         actions={[{ id: "new", icon: <Plus size={18} />, label: "New", onClick: () => {} }]}
+        className="!relative !left-auto !right-auto !top-auto !bottom-auto !translate-x-0 !translate-y-0"
       />
     </DemoBox>
   ),
