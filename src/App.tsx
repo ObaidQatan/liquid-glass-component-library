@@ -8,13 +8,14 @@ import {
   Image, Bookmark, Share2, ExternalLink, Copy,
   BarChart3, Activity, TrendingDown, Users,
   MoreVertical, MapPin, Camera, Mic,
-  Sun, Moon,
+  Sun, Moon, BookOpen,
 } from "lucide-react";
 
 import * as LG from "./components/liquid-glass";
 import { cn } from "./utils/cn";
 import type { ToastItem } from "./components/liquid-glass/LiquidGlassToast";
 import type { MobileBottomTabVariant } from "./components/liquid-glass/MobileBottomTabBar";
+import Docs from "./Docs";
 
 /* ───────── Animated Background ───────── */
 function AnimatedBackground() {
@@ -85,6 +86,11 @@ function ThemeToggle() {
 
 /* ───────── Main App ───────── */
 export default function App() {
+  const [showDocs, setShowDocs] = useState(false);
+  if (showDocs) {
+    return <Docs onBack={() => setShowDocs(false)} />;
+  }
+
   const [modalOpen, setModalOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -330,6 +336,7 @@ export default function App() {
                 <LG.LiquidGlassButton onClick={() => setCmdOpen(true)} icon={<Command size={14} />}>Command Palette</LG.LiquidGlassButton>
                 <LG.LiquidGlassButton variant="secondary" onClick={() => setSplashOpen(true)} icon={<Sparkles size={14} />}>Splash Screen</LG.LiquidGlassButton>
                 <LG.LiquidGlassButton variant="ghost" onClick={() => addToast("Liquid ripple!", "success")}>Click Me</LG.LiquidGlassButton>
+                <LG.LiquidGlassButton variant="secondary" onClick={() => setShowDocs(true)} icon={<BookOpen size={14} />}>Docs</LG.LiquidGlassButton>
               </div>
             </motion.div>
           </div>
