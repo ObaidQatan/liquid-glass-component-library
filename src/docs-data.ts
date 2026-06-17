@@ -35,7 +35,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "opacity",
@@ -58,7 +58,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "opacity",
@@ -87,7 +87,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "allowMultiple",
@@ -116,37 +116,37 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "variant",
         "type": "\"info\" | \"success\" | \"warning\" | \"error\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       },
       {
         "name": "title",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Title text."
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the component requests to close."
       },
       {
         "name": "icon",
         "type": "ReactNode",
         "required": false,
-        "description": ""
+        "description": "Icon element to display."
       }
     ]
   },
@@ -181,13 +181,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "size",
         "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       },
       {
         "name": "status",
@@ -222,25 +222,25 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "variant",
         "type": "\"default\" | \"primary\" | \"success\" | \"warning\" | \"danger\" | \"info\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       },
       {
         "name": "size",
         "type": "\"sm\" | \"md\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       },
       {
         "name": "dot",
@@ -269,7 +269,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "separator",
@@ -292,31 +292,31 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "variant",
         "type": "\"primary\" | \"secondary\" | \"ghost\" | \"danger\" | \"success\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       },
       {
         "name": "size",
         "type": "\"sm\" | \"md\" | \"lg\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       },
       {
         "name": "icon",
         "type": "ReactNode",
         "required": false,
-        "description": ""
+        "description": "Icon element to display."
       },
       {
         "name": "iconPosition",
@@ -340,19 +340,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "disabled",
         "type": "boolean",
         "required": false,
-        "description": ""
+        "description": "Whether the component is disabled."
       },
       {
         "name": "onClick",
         "type": "() => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the element is clicked."
       },
       {
         "name": "type",
         "type": "\"button\" | \"submit\" | \"reset\"",
         "required": false,
-        "description": ""
+        "description": "Input type or visual variant."
       },
       {
         "name": "fluid",
@@ -375,19 +375,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "value",
         "type": "Date",
         "required": false,
-        "description": ""
+        "description": "Current value of the control."
       },
       {
         "name": "onChange",
         "type": "(date: Date) => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "minDate",
@@ -422,19 +422,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "variant",
         "type": "\"default\" | \"thick\" | \"thin\" | \"chrome\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       },
       {
         "name": "hover",
@@ -481,7 +481,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "autoPlay",
@@ -534,31 +534,31 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "onChange",
         "type": "(checked: boolean) => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "label",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Label text."
       },
       {
         "name": "disabled",
         "type": "boolean",
         "required": false,
-        "description": ""
+        "description": "Whether the component is disabled."
       },
       {
         "name": "size",
         "type": "\"sm\" | \"md\" | \"lg\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       }
     ]
   },
@@ -575,25 +575,25 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "variant",
         "type": "\"default\" | \"primary\" | \"success\" | \"warning\" | \"danger\" | \"info\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       },
       {
         "name": "size",
         "type": "\"sm\" | \"md\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       },
       {
         "name": "onRemove",
@@ -605,7 +605,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "onClick",
         "type": "() => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the element is clicked."
       },
       {
         "name": "active",
@@ -617,7 +617,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "icon",
         "type": "ReactNode",
         "required": false,
-        "description": ""
+        "description": "Icon element to display."
       }
     ]
   },
@@ -634,19 +634,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "value",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Current value of the control."
       },
       {
         "name": "onChange",
         "type": "(color: string) => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "colors",
@@ -675,13 +675,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "isOpen",
         "type": "boolean",
         "required": true,
-        "description": ""
+        "description": "Controlled open state."
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the component requests to close."
       },
       {
         "name": "items",
@@ -693,7 +693,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "placeholder",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Placeholder text."
       }
     ]
   },
@@ -710,7 +710,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "React.ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "items",
@@ -722,7 +722,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       }
     ]
   },
@@ -739,7 +739,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       }
     ]
   },
@@ -762,7 +762,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "position",
@@ -785,25 +785,25 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "isOpen",
         "type": "boolean",
         "required": true,
-        "description": ""
+        "description": "Controlled open state."
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the component requests to close."
       },
       {
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "position",
@@ -821,7 +821,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "title",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Title text."
       }
     ]
   },
@@ -838,25 +838,25 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "icon",
         "type": "React.ReactNode",
         "required": false,
-        "description": ""
+        "description": "Icon element to display."
       },
       {
         "name": "title",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Title text."
       },
       {
         "name": "description",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Description text."
       },
       {
         "name": "action",
@@ -868,7 +868,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "variant",
         "type": "\"search\" | \"folder\" | \"inbox\" | \"error\" | \"custom\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       }
     ]
   },
@@ -891,7 +891,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "accept",
@@ -920,13 +920,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "padding",
@@ -938,13 +938,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "variant",
         "type": "\"default\" | \"strong\" | \"ios26\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       },
       {
         "name": "onClick",
         "type": "() => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the element is clicked."
       }
     ]
   },
@@ -961,7 +961,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "content",
@@ -973,7 +973,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "delay",
@@ -1002,31 +1002,31 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "placeholder",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Placeholder text."
       },
       {
         "name": "value",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Current value of the control."
       },
       {
         "name": "onChange",
         "type": "(value: string) => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "icon",
         "type": "ReactNode",
         "required": false,
-        "description": ""
+        "description": "Icon element to display."
       },
       {
         "name": "iconRight",
@@ -1038,13 +1038,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "type",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Input type or visual variant."
       },
       {
         "name": "disabled",
         "type": "boolean",
         "required": false,
-        "description": ""
+        "description": "Whether the component is disabled."
       },
       {
         "name": "error",
@@ -1056,13 +1056,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "label",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Label text."
       },
       {
         "name": "size",
         "type": "\"sm\" | \"md\" | \"lg\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       }
     ]
   },
@@ -1079,37 +1079,37 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "size",
         "type": "\"sm\" | \"md\" | \"lg\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       },
       {
         "name": "icon",
         "type": "ReactNode",
         "required": false,
-        "description": ""
+        "description": "Icon element to display."
       },
       {
         "name": "disabled",
         "type": "boolean",
         "required": false,
-        "description": ""
+        "description": "Whether the component is disabled."
       },
       {
         "name": "onClick",
         "type": "() => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the element is clicked."
       },
       {
         "name": "fullWidth",
@@ -1138,7 +1138,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "onTaskMove",
@@ -1167,7 +1167,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       }
     ]
   },
@@ -1184,37 +1184,37 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "isOpen",
         "type": "boolean",
         "required": true,
-        "description": ""
+        "description": "Controlled open state."
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the component requests to close."
       },
       {
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "title",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Title text."
       },
       {
         "name": "size",
         "type": "\"sm\" | \"md\" | \"lg\" | \"xl\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       }
     ]
   },
@@ -1231,13 +1231,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "title",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Title text."
       },
       {
         "name": "artist",
@@ -1278,7 +1278,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "logo",
@@ -1313,7 +1313,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "onMarkAllRead",
@@ -1360,13 +1360,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "onChange",
         "type": "(page: number) => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "showEdges",
@@ -1395,7 +1395,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "size",
         "type": "number",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       },
       {
         "name": "tint",
@@ -1407,7 +1407,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "duration",
@@ -1430,7 +1430,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "value",
         "type": "number",
         "required": false,
-        "description": ""
+        "description": "Current value of the control."
       },
       {
         "name": "max",
@@ -1442,19 +1442,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "size",
         "type": "\"sm\" | \"md\" | \"lg\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       },
       {
         "name": "variant",
         "type": "\"default\" | \"gradient\" | \"segmented\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       },
       {
         "name": "showValue",
@@ -1489,19 +1489,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "value",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Current value of the control."
       },
       {
         "name": "onChange",
         "type": "(value: string) => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "direction",
@@ -1513,7 +1513,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "size",
         "type": "\"sm\" | \"md\" | \"lg\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       }
     ]
   },
@@ -1530,7 +1530,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "value",
         "type": "number",
         "required": false,
-        "description": ""
+        "description": "Current value of the control."
       },
       {
         "name": "max",
@@ -1542,19 +1542,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "onChange",
         "type": "(value: number) => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "size",
         "type": "\"sm\" | \"md\" | \"lg\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       },
       {
         "name": "readonly",
@@ -1583,13 +1583,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "defaultWidth",
@@ -1636,13 +1636,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "maxHeight",
@@ -1677,37 +1677,37 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "value",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Current value of the control."
       },
       {
         "name": "onChange",
         "type": "(value: string) => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "placeholder",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Placeholder text."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "label",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Label text."
       },
       {
         "name": "disabled",
         "type": "boolean",
         "required": false,
-        "description": ""
+        "description": "Whether the component is disabled."
       }
     ]
   },
@@ -1724,31 +1724,31 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "isOpen",
         "type": "boolean",
         "required": true,
-        "description": ""
+        "description": "Controlled open state."
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the component requests to close."
       },
       {
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "title",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Title text."
       },
       {
         "name": "maxHeight",
@@ -1760,7 +1760,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "variant",
         "type": "\"default\" | \"compact\" | \"full\" | \"inset\" | \"detached\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       }
     ]
   },
@@ -1777,13 +1777,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "variant",
         "type": "\"text\" | \"circular\" | \"rectangular\" | \"rounded\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       },
       {
         "name": "width",
@@ -1824,7 +1824,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "value",
         "type": "number",
         "required": false,
-        "description": ""
+        "description": "Current value of the control."
       },
       {
         "name": "min",
@@ -1848,13 +1848,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "onChange",
         "type": "(value: number) => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "showValue",
@@ -1866,13 +1866,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "disabled",
         "type": "boolean",
         "required": false,
-        "description": ""
+        "description": "Whether the component is disabled."
       },
       {
         "name": "label",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Label text."
       },
       {
         "name": "valueFormatter",
@@ -1901,7 +1901,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "columns",
@@ -1936,7 +1936,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "orientation",
@@ -1971,19 +1971,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "onChange",
         "type": "(index: number) => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "variant",
         "type": "\"default\" | \"pills\" | \"underline\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       }
     ]
   },
@@ -2016,7 +2016,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       }
     ]
   },
@@ -2059,58 +2059,10 @@ export const docsComponents: DocsComponentEntry[] = [
     "sourceCode": "import { cn } from \"../../utils/cn\";\nimport { motion, AnimatePresence } from \"framer-motion\";\nimport { useState, useCallback, useEffect, useMemo, type MouseEvent } from \"react\";\nimport { useGlassSurface } from \"./useGlassSurface\";\nimport { GlassTopHighlight } from \"./GlassTopHighlight\";\nimport { GlassSheen } from \"./GlassSheen\";\n\ninterface LiquidGlassToggleProps {\n  checked?: boolean;\n  onChange?: (checked: boolean) => void;\n  className?: string;\n  size?: \"sm\" | \"md\" | \"lg\";\n  disabled?: boolean;\n  label?: string;\n  description?: string;\n  variant?: \"ios26\" | \"fluid\";\n  /**\n   * Tint color for the active track. iOS 26 uses system green by default,\n   * but can be overridden per context.\n   */\n  activeTint?: string;\n}\n\nconst sizeStyles = {\n  // Wide recessed track with a lozenge thumb that bulges out when pressed.\n  sm: { track: \"w-12 h-6\", thumb: 18, widthRatio: 1.4, padding: 3.5 },\n  md: { track: \"w-[4rem] h-7\", thumb: 22, widthRatio: 1.4, padding: 3.5 },\n  lg: { track: \"w-[5rem] h-9\", thumb: 28, widthRatio: 1.4, padding: 3.5 },\n};\n\nfunction useGlassFluidity() {\n  const [fluidity, setFluidity] = useState(() => {\n    if (typeof document === \"undefined\") return 50;\n    return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(\"--lg-fluidity\")) || 50;\n  });\n\n  useEffect(() => {\n    if (typeof document === \"undefined\") return;\n    const root = document.documentElement;\n    const update = () => setFluidity(parseFloat(getComputedStyle(root).getPropertyValue(\"--lg-fluidity\")) || 50);\n    const observer = new MutationObserver(update);\n    observer.observe(root, { attributes: true, attributeFilter: [\"style\"] });\n    return () => observer.disconnect();\n  }, []);\n\n  return fluidity;\n}\n\nexport function LiquidGlassToggle({\n  checked = false,\n  onChange,\n  className,\n  size = \"md\",\n  disabled,\n  label,\n  description,\n  variant = \"fluid\",\n  activeTint,\n}: LiquidGlassToggleProps) {\n  const tint = activeTint ?? (variant === \"ios26\" ? \"#34c759\" : \"#3b82f6\");\n  const s = sizeStyles[size];\n  const idleWidth = s.thumb * s.widthRatio;\n  const [ripples, setRipples] = useState<{ id: number; x: number; y: number }[]>([]);\n  const [pressPoint, setPressPoint] = useState({ x: 50, y: 50 });\n  const [isPressed, setIsPressed] = useState(false);\n  const [isMoving, setIsMoving] = useState(false);\n  const fluidity = useGlassFluidity();\n\n  const thumbSurface = useGlassSurface({ variant: \"thumb\" });\n  const trackSurface = useGlassSurface({ variant: \"track\" });\n  const trackActiveSurface = useGlassSurface({ variant: \"track-active\", tint, activeTint: tint });\n  const trackLensingChecked = useGlassSurface({ variant: \"fill\", opacity: 0.24 });\n  const trackLensingUnchecked = useGlassSurface({ variant: \"fill\", opacity: 0.14 });\n\n  // Snappy spring so the shape snaps back immediately when the state change finishes.\n  const spring = useMemo(() => {\n    const stiffness = 720 - fluidity * 3.6;\n    const damping = 46 - fluidity * 0.2;\n    return { stiffness, damping };\n  }, [fluidity]);\n\n  const createRipple = useCallback(\n    (e: MouseEvent<HTMLButtonElement>) => {\n      if (disabled) return;\n      const rect = e.currentTarget.getBoundingClientRect();\n      const x = e.clientX - rect.left;\n      const y = e.clientY - rect.top;\n      setPressPoint({ x: (x / rect.width) * 100, y: (y / rect.height) * 100 });\n      const id = Date.now();\n      setRipples((prev) => [...prev, { id, x, y }]);\n      setTimeout(() => setRipples((prev) => prev.filter((r) => r.id !== id)), 700);\n    },\n    [disabled]\n  );\n\n  // Compute travel from the idle width so the lozenge stays within the track at rest.\n  const trackWidth = useMemo(() => {\n    // Parse Tailwind class widths into pixels (rem = 16px).\n    if (s.track.includes(\"w-[\")) {\n      const match = s.track.match(/w-\\[(.+?)\\]/);\n      const val = match?.[1] ?? \"3rem\";\n      if (val.endsWith(\"rem\")) return parseFloat(val) * 16;\n      return parseFloat(val);\n    }\n    // Tailwind w-12 = 48.\n    if (s.track.includes(\"w-12\")) return 48;\n    return 48;\n  }, [s.track]);\n\n  const travel = trackWidth - idleWidth - s.padding * 2;\n\n  // Width-based stretch keeps semicircular ends (stadium/lozenge) instead of an ellipse.\n  const thumbWidth = isPressed\n    ? idleWidth * 1.65\n    : isMoving\n      ? idleWidth * 1.45\n      : idleWidth;\n\n  // Slight vertical expansion so the thumb bulges out of the track when active.\n  const scaleY = isPressed\n    ? 1.18\n    : isMoving\n      ? 1.12\n      : 1;\n\n  return (\n    <div className={cn(\"inline-flex items-center gap-4\", className)}>\n      <motion.button\n        disabled={disabled}\n        onPointerDown={() => setIsPressed(true)}\n        onPointerUp={() => setIsPressed(false)}\n        onPointerLeave={() => setIsPressed(false)}\n        onClick={(e) => {\n          createRipple(e);\n          if (!disabled) {\n            setIsMoving(true);\n            onChange?.(!checked);\n          }\n        }}\n        className={cn(\n          \"relative inline-flex items-center rounded-full isolate\",\n          \"overflow-visible\",\n          s.track,\n          disabled && \"opacity-40 cursor-not-allowed\"\n        )}\n      >\n        {/* Track — recessed glass pill underneath the thumb */}\n        <div\n          className={cn(\n            \"absolute inset-0 rounded-full -z-10\",\n            \"glass-blur-xl\",\n            \"border border-[var(--lg-border)]\"\n          )}\n          style={{\n            background: checked ? trackActiveSurface.style.background : trackSurface.style.background,\n            boxShadow: trackSurface.style.boxShadow,\n          }}\n        >\n          {/* Lensing backdrop layer */}\n          <div\n            className=\"absolute inset-[-1px] rounded-full opacity-70 pointer-events-none\"\n            style={{\n              background: checked\n                ? `${trackLensingChecked.style.background}, radial-gradient(circle at 75% 85%, ${tint}18 0%, transparent 45%)`\n                : trackLensingUnchecked.style.background,\n            }}\n          />\n\n          {/* Top highlight line */}\n          <GlassTopHighlight className=\"inset-x-3 top-[1px]\" opacity={0.35} />\n        </div>\n\n        {/* Thumb — lozenge at rest; expands into a wider, taller stadium shape when active. */}\n        <motion.div\n          initial={{ width: idleWidth, marginLeft: -idleWidth / 2 }}\n          animate={{\n            x: checked ? travel : 0,\n            width: thumbWidth,\n            marginLeft: -thumbWidth / 2,\n            scaleY,\n          }}\n          transition={{\n            x: { type: \"spring\", stiffness: spring.stiffness, damping: spring.damping, mass: 0.45 },\n            width: { type: \"spring\", stiffness: spring.stiffness, damping: spring.damping, mass: 0.45 },\n            marginLeft: { type: \"spring\", stiffness: spring.stiffness, damping: spring.damping, mass: 0.45 },\n            scaleY: { type: \"spring\", stiffness: spring.stiffness, damping: spring.damping, mass: 0.45 },\n          }}\n          onAnimationComplete={() => {\n            // Return to idle exactly when the motion finishes.\n            if (!isPressed) setIsMoving(false);\n          }}\n          className={cn(\n            \"absolute top-1/2 -translate-y-1/2 rounded-full z-10 pointer-events-none\",\n            thumbSurface.className\n          )}\n          style={{\n            left: s.padding + idleWidth / 2,\n            height: s.thumb,\n            ...thumbSurface.style,\n          }}\n        >\n          {/* Reflection response */}\n          <div className=\"absolute inset-0 rounded-full glass-reflection mix-blend-soft-light pointer-events-none\" />\n\n          {/* Subtle specular sheen */}\n          <GlassSheen className=\"rounded-full\" opacity={0.18} />\n\n          {/* Touch-point shimmer */}\n          <AnimatePresence>\n            {isPressed && (\n              <motion.div\n                initial={{ opacity: 0, scale: 0.7 }}\n                animate={{ opacity: 0.55, scale: 1 }}\n                exit={{ opacity: 0, scale: 1.15 }}\n                transition={{ duration: 0.2 }}\n                className=\"absolute inset-[-2px] rounded-full\"\n                style={{\n                  background: `radial-gradient(circle at ${pressPoint.x}% ${pressPoint.y}%, rgba(255,255,255,0.45) 0%, transparent 55%)`,\n                }}\n              />\n            )}\n          </AnimatePresence>\n        </motion.div>\n\n        {/* Ripple */}\n        <AnimatePresence>\n          {ripples.map((ripple) => (\n            <motion.span\n              key={ripple.id}\n              initial={{ scale: 0, opacity: 0.5, borderRadius: \"45% 55% 50% 50% / 55% 45% 50% 50%\" }}\n              animate={{ scale: 2.8, opacity: 0, borderRadius: \"50%\" }}\n              exit={{ opacity: 0 }}\n              transition={{ duration: 0.7, ease: \"easeOut\" }}\n              className=\"absolute pointer-events-none z-20\"\n              style={{\n                left: ripple.x,\n                top: ripple.y,\n                width: 40,\n                height: 40,\n                marginLeft: -20,\n                marginTop: -20,\n                background: \"radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 70%)\",\n              }}\n            />\n          ))}\n        </AnimatePresence>\n      </motion.button>\n\n      {(label || description) && (\n        <div className=\"flex flex-col\">\n          {label && (\n            <span className={cn(\"text-sm font-medium\", disabled ? \"text-[var(--lg-text-muted)]\" : \"text-[var(--lg-text)]\")}>\n              {label}\n            </span>\n          )}\n          {description && <span className=\"text-xs text-[var(--lg-text-muted)]\">{description}</span>}\n        </div>\n      )}\n    </div>\n  );\n}\n",
     "props": [
       {
-        "name": "checked",
-        "type": "boolean",
-        "required": false,
-        "description": ""
-      },
-      {
-        "name": "onChange",
-        "type": "(checked: boolean) => void",
-        "required": false,
-        "description": ""
-      },
-      {
-        "name": "className",
-        "type": "string",
-        "required": false,
-        "description": ""
-      },
-      {
-        "name": "size",
-        "type": "\"sm\" | \"md\" | \"lg\"",
-        "required": false,
-        "description": ""
-      },
-      {
-        "name": "disabled",
-        "type": "boolean",
-        "required": false,
-        "description": ""
-      },
-      {
-        "name": "label",
-        "type": "string",
-        "required": false,
-        "description": ""
-      },
-      {
-        "name": "description",
-        "type": "string",
-        "required": false,
-        "description": ""
-      },
-      {
-        "name": "variant",
-        "type": "\"ios26\" | \"fluid\"",
-        "required": false,
-        "description": ""
-      },
-      {
         "name": "activeTint",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Tint color for the active track. iOS 26 uses system green by default, but can be overridden per context."
       }
     ]
   },
@@ -2127,7 +2079,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "content",
@@ -2139,7 +2091,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "position",
@@ -2174,7 +2126,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       }
     ]
   },
@@ -2191,19 +2143,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "isOpen",
         "type": "boolean",
         "required": true,
-        "description": ""
+        "description": "Controlled open state."
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the component requests to close."
       },
       {
         "name": "title",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Title text."
       },
       {
         "name": "subtitle",
@@ -2227,13 +2179,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "variant",
         "type": "\"default\" | \"grouped\" | \"minimal\" | \"grid\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       }
     ]
   },
@@ -2250,25 +2202,25 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "isOpen",
         "type": "boolean",
         "required": true,
-        "description": ""
+        "description": "Controlled open state."
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the component requests to close."
       },
       {
         "name": "title",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Title text."
       },
       {
         "name": "message",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Message content."
       },
       {
         "name": "options",
@@ -2280,13 +2232,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "icon",
         "type": "\"info\" | \"warning\" | \"success\" | \"error\" | ReactNode",
         "required": false,
-        "description": ""
+        "description": "Icon element to display."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       }
     ]
   },
@@ -2303,13 +2255,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "isOpen",
         "type": "boolean",
         "required": true,
-        "description": ""
+        "description": "Controlled open state."
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the component requests to close."
       },
       {
         "name": "onRate",
@@ -2321,13 +2273,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "title",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Title text."
       },
       {
         "name": "message",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Message content."
       },
       {
         "name": "appName",
@@ -2339,7 +2291,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       }
     ]
   },
@@ -2368,13 +2320,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "onChange",
         "type": "(id: string) => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "showLabels",
@@ -2392,7 +2344,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "variant",
         "type": "MobileBottomTabVariant",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       },
       {
         "name": "centerTabButton",
@@ -2404,19 +2356,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "icon",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Icon element to display."
       },
       {
         "name": "label",
         "type": "string",
         "required": true,
-        "description": ""
+        "description": "Label text."
       },
       {
         "name": "onClick",
         "type": "() => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the element is clicked."
       },
       {
         "name": "trailingButton",
@@ -2428,19 +2380,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "icon",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Icon element to display."
       },
       {
         "name": "label",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Label text."
       },
       {
         "name": "onClick",
         "type": "() => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the element is clicked."
       }
     ]
   },
@@ -2457,7 +2409,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "actions",
@@ -2475,7 +2427,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       }
     ]
   },
@@ -2492,13 +2444,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "icon",
         "type": "ReactNode",
         "required": false,
-        "description": ""
+        "description": "Icon element to display."
       },
       {
         "name": "expandedIcon",
@@ -2516,7 +2468,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "onClick",
         "type": "() => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the element is clicked."
       },
       {
         "name": "position",
@@ -2534,7 +2486,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "variant",
         "type": "\"chrome\" | \"colored\" | \"ghost\" | \"glow\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       }
     ]
   },
@@ -2563,13 +2515,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "variant",
         "type": "\"dots\" | \"line\" | \"fraction\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       },
       {
         "name": "activeColor",
@@ -2598,25 +2550,25 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "isOpen",
         "type": "boolean",
         "required": true,
-        "description": ""
+        "description": "Controlled open state."
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the component requests to close."
       },
       {
         "name": "title",
         "type": "string",
         "required": true,
-        "description": ""
+        "description": "Title text."
       },
       {
         "name": "message",
         "type": "string",
         "required": true,
-        "description": ""
+        "description": "Message content."
       },
       {
         "name": "permissions",
@@ -2634,7 +2586,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       }
     ]
   },
@@ -2651,7 +2603,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "children",
         "type": "React.ReactNode",
         "required": true,
-        "description": ""
+        "description": "Child React nodes rendered inside the component."
       },
       {
         "name": "onRefresh",
@@ -2663,7 +2615,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "threshold",
@@ -2686,19 +2638,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "placeholder",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Placeholder text."
       },
       {
         "name": "value",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Current value of the control."
       },
       {
         "name": "onChange",
         "type": "(value: string) => void",
         "required": false,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "onCancel",
@@ -2716,7 +2668,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "autoFocus",
@@ -2751,25 +2703,25 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "onChange",
         "type": "(id: string) => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "size",
         "type": "\"sm\" | \"md\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       },
       {
         "name": "variant",
         "type": "\"default\" | \"ios26\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       }
     ]
   },
@@ -2786,13 +2738,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "isOpen",
         "type": "boolean",
         "required": true,
-        "description": ""
+        "description": "Controlled open state."
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the component requests to close."
       },
       {
         "name": "sections",
@@ -2816,7 +2768,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "position",
@@ -2834,7 +2786,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "variant",
         "type": "\"default\" | \"compact\" | \"floating\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       }
     ]
   },
@@ -2851,13 +2803,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "message",
         "type": "string",
         "required": true,
-        "description": ""
+        "description": "Message content."
       },
       {
         "name": "variant",
         "type": "\"info\" | \"success\" | \"error\" | \"warning\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       },
       {
         "name": "duration",
@@ -2869,7 +2821,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       }
     ]
   },
@@ -2886,13 +2838,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "isOpen",
         "type": "boolean",
         "required": true,
-        "description": ""
+        "description": "Controlled open state."
       },
       {
         "name": "onClose",
         "type": "() => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the component requests to close."
       },
       {
         "name": "slides",
@@ -2904,7 +2856,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "getStartedText",
@@ -2933,13 +2885,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "value",
         "type": "number",
         "required": true,
-        "description": ""
+        "description": "Current value of the control."
       },
       {
         "name": "onChange",
         "type": "(value: number) => void",
         "required": true,
-        "description": ""
+        "description": "Callback when the value changes."
       },
       {
         "name": "min",
@@ -2963,19 +2915,19 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "label",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Label text."
       },
       {
         "name": "size",
         "type": "\"sm\" | \"md\" | \"lg\"",
         "required": false,
-        "description": ""
+        "description": "Size preset."
       }
     ]
   },
@@ -2998,7 +2950,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       }
     ]
   },
@@ -3015,7 +2967,7 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "title",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Title text."
       },
       {
         "name": "subtitle",
@@ -3051,13 +3003,13 @@ export const docsComponents: DocsComponentEntry[] = [
         "name": "className",
         "type": "string",
         "required": false,
-        "description": ""
+        "description": "Additional Tailwind CSS classes."
       },
       {
         "name": "variant",
         "type": "\"standard\" | \"large\" | \"inline\" | \"search\" | \"prominent\"",
         "required": false,
-        "description": ""
+        "description": "Visual variant to use."
       },
       {
         "name": "translucent",

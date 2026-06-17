@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef, type ReactNode, type ElementType } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -16,36 +16,120 @@ import {
   Package,
   Code2,
   Hash,
+  Bell,
+  MoreVertical,
+  BarChart3,
+  Image,
+  Smartphone,
+  Command,
+  MessageSquare,
+  LayoutGrid,
+  X,
 } from "lucide-react";
 import { cn } from "./utils/cn";
 import { useTheme } from "./components/liquid-glass";
-import { docsComponents, docsCategories } from "./docs-data";
+import { docsComponents, docsCategories, type DocsComponentEntry } from "./docs-data";
+import { useRoute, navigate, type Route } from "./router";
 
-/* ───────── Types ───────── */
-type DocsSection = "intro" | "installation" | "theme" | "glass" | "component";
+/* ───────── Types & constants ───────── */
+type DocsSection = "intro" | "installation" | "theme" | "glass" | "components";
 
-/* ───────── Code Block ───────── */
+const SECTIONS: DocsSection[] = ["intro", "installation", "theme", "glass", "components"];
+
+const sectionMeta: Record<
+  DocsSection,
+  { label: string; icon: ElementType<{ size?: number; className?: string }> }
+> = {
+  intro: { label: "Getting Started", icon: BookOpen },
+  installation: { label: "Installation", icon: Package },
+  theme: { label: "Theme System", icon: Palette },
+  glass: { label: "Glass System", icon: Layers },
+  components: { label: "Components", icon: Hash },
+};
+
+const categoryIcons: Record<string, ElementType<{ size?: number; className?: string }>> = {
+  "Core & Theme": Layers,
+  Layout: LayoutGrid,
+  "Buttons & Controls": Command,
+  "Inputs & Forms": MessageSquare,
+  Feedback: Bell,
+  "Overlays & Menus": MoreVertical,
+  "Data Display": BarChart3,
+  "Media & Content": Image,
+  Mobile: Smartphone,
+};
+
+const CODE_COLLAPSE_LINES = 12;
+
+/* ───────── Router helpers ───────── */
+function buildDocsUrl(params: Record<string, string>) {
+  const sp = new URLSearchParams(params);
+  return `/docs?${sp.toString()}`;
+}
+
+function useDocsRoute() {
+  const route = useRoute();
+  const topic = route.searchParams.get("topic");
+  const rawSection = route.searchParams.get("section") as DocsSection | null;
+  const section: DocsSection = SECTIONS.includes(rawSection as DocsSection)
+    ? (rawSection as DocsSection)
+    : "intro";
+  const category = route.searchParams.get("category");
+  const selectedComponent = useMemo(
+    () => docsComponents.find((c) => c.id === topic) || null,
+    [topic]
+  );
+  return { route, topic, section, category, selectedComponent };
+}
+
+function useDocsScrollRestore(route: Route) {
+  useEffect(() => {
+    const key = `docs:scroll:${route.pathname}${route.search}`;
+    const saved = sessionStorage.getItem(key);
+    let raf = 0;
+    if (saved) {
+      raf = requestAnimationFrame(() =>
+        window.scrollTo({ top: parseInt(saved, 10), behavior: "auto" })
+      );
+    }
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      sessionStorage.setItem(key, String(window.scrollY));
+    };
+  }, [route.pathname, route.search]);
+}
+
+/* ───────── UI primitives ───────── */
 function CodeBlock({
   code,
   filename,
   language = "tsx",
+  maxLines = CODE_COLLAPSE_LINES,
 }: {
   code: string;
   filename?: string;
   language?: string;
+  maxLines?: number;
 }) {
   const [copied, setCopied] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const lines = useMemo(() => code.split("\n"), [code]);
+  const hasMore = lines.length > maxLines;
+  const displayCode = !hasMore || expanded ? code : lines.slice(0, maxLines).join("\n");
+  const remaining = Math.max(0, lines.length - maxLines);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {}
   };
 
   return (
-    <div className="relative group rounded-2xl overflow-hidden border border-[var(--lg-border)] bg-black/40 my-4">
+    <div className="relative group rounded-2xl overflow-hidden border border-[var(--lg-border)] bg-black/40 my-6">
       {filename && (
-        <div className="flex items-center justify-between px-4 py-2 border-b border-[var(--lg-border-subtle)] bg-white/5">
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--lg-border-subtle)] bg-white/5">
           <div className="flex items-center gap-2">
             <Code2 size={14} className="text-[var(--lg-text-muted)]" />
             <span className="text-xs font-medium text-[var(--lg-text-secondary)]">{filename}</span>
@@ -60,15 +144,30 @@ function CodeBlock({
         {copied ? <Check size={14} /> : <Copy size={14} />}
         {copied ? "Copied" : "Copy"}
       </button>
-      <pre className="p-4 overflow-x-auto text-[13px] leading-relaxed font-mono text-[var(--lg-text-secondary)]">
-        <code>{code}</code>
+      <pre
+        className={cn(
+          "p-4 overflow-x-auto text-[13px] leading-relaxed font-mono text-[var(--lg-text-secondary)]",
+          hasMore && "pb-12"
+        )}
+      >
+        <code>{displayCode}</code>
       </pre>
+      {hasMore && !expanded && (
+        <div className="absolute bottom-10 left-0 right-0 h-24 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
+      )}
+      {hasMore && (
+        <button
+          onClick={() => setExpanded((e) => !e)}
+          className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3.5 py-1.5 rounded-full text-xs font-medium text-[var(--lg-text-secondary)] glass-blur-sm glass-surface-strong glass-border hover:bg-white/10 transition-colors"
+        >
+          {expanded ? "Show less" : `Expand ${remaining} more line${remaining === 1 ? "" : "s"}`}
+        </button>
+      )}
     </div>
   );
 }
 
-/* ───────── Prop Table ───────── */
-function PropTable({ props }: { props: { name: string; type: string; required: boolean; description: string }[] }) {
+function PropTable({ props }: { props: DocsComponentEntry["props"] }) {
   if (!props.length) return null;
   return (
     <div className="overflow-hidden rounded-2xl border border-[var(--lg-border)] my-6">
@@ -78,14 +177,16 @@ function PropTable({ props }: { props: { name: string; type: string; required: b
             <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-[var(--lg-text-muted)]">Prop</th>
             <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-[var(--lg-text-muted)]">Type</th>
             <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-[var(--lg-text-muted)]">Req</th>
+            <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-[var(--lg-text-muted)]">Description</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-[var(--lg-border-subtle)]">
           {props.map((p) => (
             <tr key={p.name} className="hover:bg-[var(--lg-border-subtle)]/50">
-              <td className="px-4 py-3 font-mono text-xs text-[var(--lg-text)]">{p.name}</td>
-              <td className="px-4 py-3 font-mono text-xs text-liquid-blue">{p.type}</td>
-              <td className="px-4 py-3 text-xs text-[var(--lg-text-muted)]">{p.required ? "Yes" : "No"}</td>
+              <td className="px-4 py-3 font-mono text-xs text-[var(--lg-text)] align-top">{p.name}</td>
+              <td className="px-4 py-3 font-mono text-xs text-liquid-blue align-top">{p.type}</td>
+              <td className="px-4 py-3 text-xs text-[var(--lg-text-muted)] align-top">{p.required ? "Yes" : "No"}</td>
+              <td className="px-4 py-3 text-xs text-[var(--lg-text-secondary)] align-top">{p.description || "-"}</td>
             </tr>
           ))}
         </tbody>
@@ -94,28 +195,27 @@ function PropTable({ props }: { props: { name: string; type: string; required: b
   );
 }
 
-/* ───────── Section Heading ───────── */
-function H2({ children, id }: { children: React.ReactNode; id?: string }) {
+function H2({ children, id }: { children: ReactNode; id?: string }) {
   return (
-    <h2 id={id} className="text-2xl font-bold text-[var(--lg-text)] mt-12 mb-4 scroll-mt-24">
+    <h2 id={id} className="text-2xl font-bold text-[var(--lg-text)] mt-12 mb-4 scroll-mt-28">
       {children}
     </h2>
   );
 }
 
-function H3({ children, id }: { children: React.ReactNode; id?: string }) {
+function H3({ children, id }: { children: ReactNode; id?: string }) {
   return (
-    <h3 id={id} className="text-lg font-semibold text-[var(--lg-text)] mt-8 mb-3 scroll-mt-24">
+    <h3 id={id} className="text-lg font-semibold text-[var(--lg-text)] mt-8 mb-3 scroll-mt-28">
       {children}
     </h3>
   );
 }
 
-function P({ children }: { children: React.ReactNode }) {
+function P({ children }: { children: ReactNode }) {
   return <p className="text-[var(--lg-text-secondary)] leading-relaxed mb-4">{children}</p>;
 }
 
-function InlineCode({ children }: { children: React.ReactNode }) {
+function InlineCode({ children }: { children: ReactNode }) {
   return (
     <code className="px-1.5 py-0.5 rounded-md bg-[var(--lg-border-subtle)] text-xs font-mono text-[var(--lg-text-secondary)]">
       {children}
@@ -123,7 +223,6 @@ function InlineCode({ children }: { children: React.ReactNode }) {
   );
 }
 
-/* ───────── Theme Toggle ───────── */
 function ThemeToggle() {
   const { isDark, toggleTheme } = useTheme();
   return (
@@ -137,7 +236,30 @@ function ThemeToggle() {
   );
 }
 
-/* ───────── Static Docs Content ───────── */
+function Highlight({ text, query }: { text: string; query: string }) {
+  if (!query) return text;
+  const re = new RegExp(`(${escapeRegExp(query)})`, "gi");
+  const parts = text.split(re);
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.toLowerCase() === query.toLowerCase() ? (
+          <mark key={i} className="bg-liquid-blue/20 text-[var(--lg-text)] rounded px-0.5">
+            {part}
+          </mark>
+        ) : (
+          <span key={i}>{part}</span>
+        )
+      )}
+    </>
+  );
+}
+
+function escapeRegExp(s: string) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/* ───────── Static docs content ───────── */
 const indexCssSample = `@import "tailwindcss";
 
 @theme {
@@ -184,6 +306,7 @@ const indexCssSample = `@import "tailwindcss";
 
 @layer utilities {
   .glass-blur { backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(180%); }
+  .glass-blur-sm { backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%); }
   .glass-blur-lg { backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(200%); }
   .glass-blur-xl { backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(220%); }
 
@@ -253,27 +376,225 @@ function Page() {
   );
 }`;
 
-/* ───────── Main Docs Component ───────── */
-export default function Docs({ onBack }: { onBack: () => void }) {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [selectedComponentId, setSelectedComponentId] = useState<string | null>(null);
+/* ───────── Main Docs component ───────── */
+export default function Docs() {
+  const { route, topic, section, category, selectedComponent } = useDocsRoute();
   const [search, setSearch] = useState("");
-  const [activeSection, setActiveSection] = useState<DocsSection>("intro");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  useDocsScrollRestore(route);
+
+  useEffect(() => {
+    let title = "Liquid Glass Docs — iOS 26 Design System";
+    let desc =
+      "Browse 69 copy-paste React components, props, usage examples, and source code for the Liquid Glass UI kit.";
+    if (selectedComponent) {
+      title = `${selectedComponent.name} — Liquid Glass Docs`;
+      desc = `${selectedComponent.description} Copy the source from ${selectedComponent.file}.`;
+    } else if (section === "installation") {
+      title = "Installation — Liquid Glass Docs";
+      desc =
+        "Install the peer dependencies and set up the Liquid Glass design system in your React + Vite + Tailwind CSS v4 project.";
+    } else if (section === "theme") {
+      title = "Theme System — Liquid Glass Docs";
+      desc =
+        "Learn how ThemeProvider, useTheme, and glass sliders drive light/dark modes and global glass surfaces.";
+    } else if (section === "glass") {
+      title = "Glass System — Liquid Glass Docs";
+      desc =
+        "Understand the Tailwind utilities and CSS variables that create Liquid Glass blur, surface, border, and highlight effects.";
+    } else if (section === "components") {
+      title = category ? `${category} — Liquid Glass Docs` : "Components — Liquid Glass Docs";
+      desc = category
+        ? `Browse ${category} components in the Liquid Glass UI kit.`
+        : "Browse all copy-paste React glass components.";
+    }
+    document.title = title;
+    let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "description");
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute("content", desc);
+  }, [selectedComponent, section, category]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+      if (e.key === "Escape" && selectedComponent) {
+        e.preventDefault();
+        navigate(
+          category
+            ? buildDocsUrl({ section: "components", category })
+            : buildDocsUrl({ section: "components" })
+        );
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [selectedComponent, category]);
 
   const filteredComponents = useMemo(() => {
     const q = search.toLowerCase();
-    return docsComponents.filter(
-      (c) =>
-        (activeCategory ? c.category === activeCategory : true) &&
-        (c.name.toLowerCase().includes(q) || c.description.toLowerCase().includes(q))
-    );
-  }, [activeCategory, search]);
+    return docsComponents.filter((c) => {
+      const matchesCategory = category ? c.category === category : true;
+      const matchesSearch =
+        !q ||
+        c.name.toLowerCase().includes(q) ||
+        c.description.toLowerCase().includes(q) ||
+        c.category.toLowerCase().includes(q);
+      return matchesCategory && matchesSearch;
+    });
+  }, [category, search]);
 
-  const selectedComponent = useMemo(
-    () => docsComponents.find((c) => c.id === selectedComponentId) || null,
-    [selectedComponentId]
+  const activeSectionForNav = selectedComponent ? "components" : section;
+  const activeCategoryForNav = selectedComponent ? selectedComponent.category : category;
+
+  return (
+    <div className="min-h-screen bg-[var(--lg-bg)] text-[var(--lg-text)] selection:bg-liquid-blue/30">
+      <DocsBackground />
+      <DocsHeader search={search} setSearch={setSearch} searchInputRef={searchInputRef} />
+
+      <div className="max-w-7xl mx-auto pt-16 flex relative z-10">
+        <DocsSidebar
+          section={activeSectionForNav}
+          category={activeCategoryForNav}
+          onSearchFocus={() => searchInputRef.current?.focus()}
+        />
+
+        <main className="flex-1 lg:ml-72 min-h-[calc(100vh-4rem)] px-6 py-10 max-w-4xl">
+          <AnimatePresence mode="wait">
+            {selectedComponent ? (
+              <ComponentDetail key={selectedComponent.id} component={selectedComponent} category={category} />
+            ) : topic ? (
+              <NotFoundTopic key={topic} topic={topic} />
+            ) : (
+              <motion.div
+                key={section}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.22 }}
+              >
+                {section === "intro" && <IntroSection />}
+                {section === "installation" && <InstallationSection />}
+                {section === "theme" && <ThemeSection />}
+                {section === "glass" && <GlassSection />}
+                {section === "components" && (
+                  <ComponentGrid
+                    components={filteredComponents}
+                    categoryLabel={category || "All Components"}
+                    search={search}
+                    onSearch={setSearch}
+                    activeCategory={category}
+                  />
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </main>
+
+        {selectedComponent && <DetailToc />}
+      </div>
+    </div>
   );
+}
 
+/* ───────── Layout pieces ───────── */
+function DocsBackground() {
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+      <div className="absolute inset-0 bg-[var(--lg-bg)]" />
+      <motion.div
+        animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], scale: [1, 1.05, 0.98, 1] }}
+        transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-liquid-blue/10 blur-[120px]"
+      />
+      <motion.div
+        animate={{ x: [0, -30, 40, 0], y: [0, 40, -20, 0], scale: [1, 0.98, 1.04, 1] }}
+        transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/3 -left-40 h-[500px] w-[500px] rounded-full bg-liquid-purple/10 blur-[100px]"
+      />
+      <motion.div
+        animate={{ x: [0, 20, -40, 0], y: [0, -20, 40, 0] }}
+        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -bottom-40 right-1/4 h-[500px] w-[500px] rounded-full bg-liquid-pink/8 blur-[100px]"
+      />
+    </div>
+  );
+}
+
+function DocsHeader({
+  search,
+  setSearch,
+  searchInputRef,
+}: {
+  search: string;
+  setSearch: (q: string) => void;
+  searchInputRef: React.RefObject<HTMLInputElement | null>;
+}) {
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 h-16 border-b border-[var(--lg-border)] glass-blur-xl glass-surface-strong">
+      <div className="max-w-7xl mx-auto h-full px-4 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-medium text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--lg-border-subtle)] transition-colors"
+          >
+            <ArrowLeft size={16} />
+            <span className="hidden sm:inline">Demo</span>
+          </button>
+          <div className="h-6 w-px bg-[var(--lg-border)]" />
+          <button
+            onClick={() => navigate("/docs")}
+            className="flex items-center gap-2 group"
+          >
+            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-liquid-blue to-liquid-purple flex items-center justify-center">
+              <Sparkles size={16} className="text-white" />
+            </div>
+            <div className="hidden sm:block">
+              <span className="font-semibold text-[var(--lg-text)]">Liquid Glass</span>
+              <span className="ml-2 text-xs text-[var(--lg-text-muted)]">Docs</span>
+            </div>
+          </button>
+        </div>
+
+        <div className="flex items-center gap-3 flex-1 justify-end max-w-md">
+          <div className="relative flex-1 hidden sm:block">
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--lg-text-muted)]" />
+            <input
+              ref={searchInputRef}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search components..."
+              className="w-full pl-9 pr-20 py-2 rounded-xl text-sm bg-[var(--lg-border-subtle)] text-[var(--lg-text)] placeholder-[var(--lg-text-muted)] outline-none focus:ring-2 focus:ring-white/20"
+            />
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 pointer-events-none">
+              <kbd className="hidden md:inline-flex h-5 px-1.5 items-center rounded text-[10px] font-medium text-[var(--lg-text-muted)] bg-[var(--lg-border)] border border-[var(--lg-border-subtle)]">
+                ⌘K
+              </kbd>
+            </div>
+          </div>
+          <ThemeToggle />
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function DocsSidebar({
+  section,
+  category,
+  onSearchFocus,
+}: {
+  section: DocsSection;
+  category: string | null;
+  onSearchFocus: () => void;
+}) {
   const componentByCategory = useMemo(() => {
     const map = new Map<string, typeof docsComponents>();
     for (const cat of docsCategories) {
@@ -282,196 +603,118 @@ export default function Docs({ onBack }: { onBack: () => void }) {
     return map;
   }, []);
 
-  // Close details when switching category/search clears selection
-  useEffect(() => {
-    if (selectedComponent && !filteredComponents.find((c) => c.id === selectedComponent.id)) {
-      setSelectedComponentId(null);
-    }
-  }, [filteredComponents, selectedComponent]);
-
   return (
-    <div className="min-h-screen bg-[var(--lg-bg)] text-[var(--lg-text)]">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 border-b border-[var(--lg-border)] glass-blur-xl glass-surface-strong">
-        <div className="max-w-7xl mx-auto h-full px-4 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={onBack}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-medium text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--lg-border-subtle)] transition-colors"
-            >
-              <ArrowLeft size={16} />
-              <span className="hidden sm:inline">Back to Demo</span>
-            </button>
-            <div className="h-6 w-px bg-[var(--lg-border)]" />
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-liquid-blue to-liquid-purple flex items-center justify-center">
-                <Sparkles size={16} className="text-white" />
-              </div>
-              <span className="font-semibold text-[var(--lg-text)]">Liquid Glass</span>
-              <span className="hidden sm:inline text-xs text-[var(--lg-text-muted)]">Docs</span>
-            </div>
-          </div>
+    <aside className="hidden lg:block w-72 fixed top-16 bottom-0 overflow-y-auto border-r border-[var(--lg-border)] px-5 py-8">
+      <nav className="space-y-8" aria-label="Docs navigation">
+        <div>
+          {SECTIONS.map((s) => {
+            const { label, icon: Icon } = sectionMeta[s];
+            const active = section === s && !category;
+            return (
+              <button
+                key={s}
+                onClick={() =>
+                  navigate(s === "components" ? buildDocsUrl({ section: s }) : buildDocsUrl({ section: s }))
+                }
+                className={cn(
+                  "flex items-center gap-2 w-full px-3 py-2 rounded-xl text-sm font-medium transition-colors mt-1 first:mt-0",
+                  active
+                    ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
+                    : "text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--lg-border-subtle)]"
+                )}
+              >
+                <Icon size={16} />
+                {label}
+              </button>
+            );
+          })}
+        </div>
 
-          <div className="flex items-center gap-3 flex-1 justify-end max-w-md">
-            <div className="relative flex-1 hidden sm:block">
-              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--lg-text-muted)]" />
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search components..."
-                className="w-full pl-9 pr-4 py-2 rounded-xl text-sm bg-[var(--lg-border-subtle)] text-[var(--lg-text)] placeholder-[var(--lg-text-muted)] outline-none focus:ring-2 focus:ring-white/20"
-              />
-            </div>
-            <ThemeToggle />
+        <div>
+          <div className="flex items-center gap-2 px-3 mb-3 text-xs font-semibold uppercase tracking-wider text-[var(--lg-text-muted)]">
+            <Hash size={12} />
+            Component Categories
+          </div>
+          <div className="space-y-1">
+            {docsCategories.map((cat) => {
+              const Icon = categoryIcons[cat] || Layers;
+              const active = category === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() =>
+                    navigate(
+                      active
+                        ? buildDocsUrl({ section: "components" })
+                        : buildDocsUrl({ section: "components", category: cat })
+                    )
+                  }
+                  className={cn(
+                    "flex items-center justify-between w-full px-3 py-2 rounded-xl text-sm font-medium transition-colors",
+                    active
+                      ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
+                      : "text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--lg-border-subtle)]"
+                  )}
+                >
+                  <span className="flex items-center gap-2">
+                    <Icon size={15} />
+                    {cat}
+                  </span>
+                  <span className="text-xs text-[var(--lg-text-muted)] bg-[var(--lg-border-subtle)] px-1.5 py-0.5 rounded-md">
+                    {componentByCategory.get(cat)?.length || 0}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
-      </header>
 
-      <div className="max-w-7xl mx-auto pt-16 flex">
-        {/* Sidebar */}
-        <aside className="hidden lg:block w-72 fixed top-16 bottom-0 overflow-y-auto border-r border-[var(--lg-border)] px-5 py-8">
-          <nav className="space-y-8">
-            <div>
-              <button
-                onClick={() => {
-                  setActiveSection("intro");
-                  setSelectedComponentId(null);
-                  setActiveCategory(null);
-                }}
-                className={cn(
-                  "flex items-center gap-2 w-full px-3 py-2 rounded-xl text-sm font-medium transition-colors",
-                  activeSection === "intro" && !selectedComponentId
-                    ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
-                    : "text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--lg-border-subtle)]"
-                )}
-              >
-                <BookOpen size={16} />
-                Getting Started
-              </button>
-              <button
-                onClick={() => {
-                  setActiveSection("installation");
-                  setSelectedComponentId(null);
-                  setActiveCategory(null);
-                }}
-                className={cn(
-                  "flex items-center gap-2 w-full px-3 py-2 rounded-xl text-sm font-medium transition-colors mt-1",
-                  activeSection === "installation" && !selectedComponentId
-                    ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
-                    : "text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--lg-border-subtle)]"
-                )}
-              >
-                <Package size={16} />
-                Installation
-              </button>
-              <button
-                onClick={() => {
-                  setActiveSection("theme");
-                  setSelectedComponentId(null);
-                  setActiveCategory(null);
-                }}
-                className={cn(
-                  "flex items-center gap-2 w-full px-3 py-2 rounded-xl text-sm font-medium transition-colors mt-1",
-                  activeSection === "theme" && !selectedComponentId
-                    ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
-                    : "text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--lg-border-subtle)]"
-                )}
-              >
-                <Palette size={16} />
-                Theme System
-              </button>
-              <button
-                onClick={() => {
-                  setActiveSection("glass");
-                  setSelectedComponentId(null);
-                  setActiveCategory(null);
-                }}
-                className={cn(
-                  "flex items-center gap-2 w-full px-3 py-2 rounded-xl text-sm font-medium transition-colors mt-1",
-                  activeSection === "glass" && !selectedComponentId
-                    ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
-                    : "text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--lg-border-subtle)]"
-                )}
-              >
-                <Layers size={16} />
-                Glass System
-              </button>
-            </div>
-
-            <div>
-              <div className="flex items-center gap-2 px-3 mb-3 text-xs font-semibold uppercase tracking-wider text-[var(--lg-text-muted)]">
-                <Hash size={12} />
-                Components
-              </div>
-              <div className="space-y-1">
-                {docsCategories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => {
-                      setActiveCategory(cat === activeCategory ? null : cat);
-                      setSelectedComponentId(null);
-                      setActiveSection("component");
-                    }}
-                    className={cn(
-                      "flex items-center justify-between w-full px-3 py-2 rounded-xl text-sm font-medium transition-colors",
-                      activeCategory === cat && !selectedComponentId
-                        ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
-                        : "text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--lg-border-subtle)]"
-                    )}
-                  >
-                    <span>{cat}</span>
-                    <span className="text-xs text-[var(--lg-text-muted)] bg-[var(--lg-border-subtle)] px-1.5 py-0.5 rounded-md">
-                      {componentByCategory.get(cat)?.length || 0}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </nav>
-        </aside>
-
-        {/* Main content */}
-        <main className="flex-1 lg:ml-72 min-h-[calc(100vh-4rem)] px-6 py-10 max-w-4xl">
-          <AnimatePresence mode="wait">
-            {selectedComponent ? (
-              <ComponentDetail
-                key={selectedComponent.id}
-                component={selectedComponent}
-                onBack={() => setSelectedComponentId(null)}
-              />
-            ) : (
-              <motion.div
-                key={activeSection}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-              >
-                {activeSection === "intro" && <IntroSection />}
-                {activeSection === "installation" && <InstallationSection />}
-                {activeSection === "theme" && <ThemeSection />}
-                {activeSection === "glass" && <GlassSection />}
-                {activeSection === "component" && (
-                  <ComponentGrid
-                    components={filteredComponents}
-                    category={activeCategory || "All Components"}
-                    search={search}
-                    onSelect={setSelectedComponentId}
-                    onSearch={setSearch}
-                    activeCategory={activeCategory}
-                    onCategoryChange={setActiveCategory}
-                  />
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </main>
-      </div>
-    </div>
+        <button
+          onClick={onSearchFocus}
+          className="lg:hidden w-full px-3 py-2 rounded-xl text-sm text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:bg-[var(--lg-border-subtle)] transition-colors"
+        >
+          Search components
+        </button>
+      </nav>
+    </aside>
   );
 }
 
-/* ───────── Intro Section ───────── */
+function DetailToc() {
+  const items = [
+    { id: "overview", label: "Overview" },
+    { id: "props", label: "Props" },
+    { id: "usage", label: "Usage" },
+    { id: "source", label: "Source" },
+  ];
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  return (
+    <aside className="hidden xl:block w-64 fixed right-[max(0px,calc(50%-42rem))] top-24 bottom-0 overflow-y-auto px-6 py-2">
+      <nav aria-label="On this page">
+        <div className="text-xs font-semibold uppercase tracking-wider text-[var(--lg-text-muted)] mb-3">
+          On this page
+        </div>
+        <ul className="space-y-1 border-l border-[var(--lg-border)]">
+          {items.map((item) => (
+            <li key={item.id}>
+              <button
+                onClick={() => scrollTo(item.id)}
+                className="block w-full text-left pl-3 py-1 text-sm text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] hover:border-l-2 hover:border-liquid-blue transition-all"
+              >
+                {item.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+  );
+}
+
+/* ───────── Content sections ───────── */
 function IntroSection() {
   return (
     <div>
@@ -481,7 +724,10 @@ function IntroSection() {
           iOS 26 Inspired Design System
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold text-[var(--lg-text)] mb-4 tracking-tight">
-          Liquid Glass <span className="text-transparent bg-clip-text bg-gradient-to-r from-liquid-blue via-liquid-purple to-liquid-pink">Documentation</span>
+          Liquid Glass{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-liquid-blue via-liquid-purple to-liquid-pink">
+            Documentation
+          </span>
         </h1>
         <p className="text-lg text-[var(--lg-text-muted)] max-w-2xl leading-relaxed">
           A copy-paste React component library for building translucent, frosted-glass interfaces.
@@ -535,7 +781,6 @@ function IntroSection() {
   );
 }
 
-/* ───────── Installation Section ───────── */
 function InstallationSection() {
   const depsCode = `npm install framer-motion lucide-react clsx tailwind-merge tailwindcss @tailwindcss/vite`;
   const devDepsCode = `npm install -D @types/react @types/react-dom typescript vite @vitejs/plugin-react`;
@@ -566,6 +811,7 @@ function InstallationSection() {
 │       ├── GlassSheen.tsx
 │       ├── GlassTopHighlight.tsx
 │       ├── LiquidGlassPressSplash.tsx
+│       ├── LiquidGlassControls.tsx
 │       └── ...components you need
 ├── utils/
 │   └── cn.ts
@@ -599,7 +845,6 @@ export function cn(...inputs: ClassValue[]) {
   );
 }
 
-/* ───────── Theme Section ───────── */
 function ThemeSection() {
   return (
     <div>
@@ -666,7 +911,6 @@ function ThemeSection() {
   );
 }
 
-/* ───────── Glass System Section ───────── */
 function GlassSection() {
   return (
     <div>
@@ -762,28 +1006,24 @@ function MySurface() {
   );
 }
 
-/* ───────── Component Grid ───────── */
+/* ───────── Component grid ───────── */
 function ComponentGrid({
   components,
-  category,
+  categoryLabel,
   search,
-  onSelect,
   onSearch,
   activeCategory,
-  onCategoryChange,
 }: {
-  components: typeof docsComponents;
-  category: string;
+  components: DocsComponentEntry[];
+  categoryLabel: string;
   search: string;
-  onSelect: (id: string) => void;
   onSearch: (q: string) => void;
   activeCategory: string | null;
-  onCategoryChange: (cat: string | null) => void;
 }) {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-[var(--lg-text)] mb-2">{category}</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold text-[var(--lg-text)] mb-2">{categoryLabel}</h1>
         <p className="text-[var(--lg-text-muted)]">
           {components.length} component{components.length !== 1 ? "s" : ""} available.
         </p>
@@ -796,54 +1036,83 @@ function ComponentGrid({
             value={search}
             onChange={(e) => onSearch(e.target.value)}
             placeholder="Filter components..."
-            className="w-full pl-9 pr-4 py-2.5 rounded-xl text-sm bg-[var(--lg-border-subtle)] text-[var(--lg-text)] placeholder-[var(--lg-text-muted)] outline-none focus:ring-2 focus:ring-white/20"
+            className="w-full pl-9 pr-9 py-2.5 rounded-xl text-sm bg-[var(--lg-border-subtle)] text-[var(--lg-text)] placeholder-[var(--lg-text-muted)] outline-none focus:ring-2 focus:ring-white/20"
           />
-        </div>
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
-          <button
-            onClick={() => { /* handled by parent */ }}
-            className="sr-only"
-          >
-            Categories
-          </button>
-          {docsCategories.map((cat) => (
+          {search && (
             <button
-              key={cat}
-              onClick={() => onCategoryChange(activeCategory === cat ? null : cat)}
-              className={cn(
-                "flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap",
-                activeCategory === cat
-                  ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
-                  : "bg-[var(--lg-border-subtle)] text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
-              )}
+              onClick={() => onSearch("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
             >
-              {cat}
+              <X size={14} />
             </button>
-          ))}
+          )}
+        </div>
+        <div className="flex gap-2 overflow-x-auto pb-2">
+          {["All", ...docsCategories].map((cat) => {
+            const isAll = cat === "All";
+            const active = isAll ? !activeCategory : activeCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() =>
+                  navigate(
+                    isAll || active
+                      ? buildDocsUrl({ section: "components" })
+                      : buildDocsUrl({ section: "components", category: cat })
+                  )
+                }
+                className={cn(
+                  "flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap",
+                  active
+                    ? "bg-[var(--lg-border)] text-[var(--lg-text)]"
+                    : "bg-[var(--lg-border-subtle)] text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)]"
+                )}
+              >
+                {cat}
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {components.length === 0 ? (
-        <div className="text-center py-20 text-[var(--lg-text-muted)]">
-          <p>No components match your search.</p>
+        <div className="text-center py-20 rounded-2xl glass-blur-sm glass-surface glass-border">
+          <p className="text-[var(--lg-text-muted)] mb-3">No components match your search.</p>
+          <button
+            onClick={() => onSearch("")}
+            className="px-4 py-2 rounded-xl text-sm font-medium bg-[var(--lg-border-subtle)] text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border)] hover:text-[var(--lg-text)] transition-colors"
+          >
+            Clear search
+          </button>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 gap-4">
           {components.map((c) => (
-            <button
+            <motion.button
               key={c.id}
-              onClick={() => onSelect(c.id)}
-              className="text-left p-5 rounded-2xl glass-blur-sm glass-surface glass-border glass-highlight hover:scale-[1.01] transition-transform"
+              onClick={() => navigate(buildDocsUrl({ topic: c.id }))}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.99 }}
+              className="text-left p-5 rounded-2xl glass-blur-sm glass-surface glass-border glass-highlight hover:shadow-lg hover:shadow-black/5 transition-shadow"
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="font-semibold text-[var(--lg-text)]">{c.name}</span>
+                <span className="font-semibold text-[var(--lg-text)]">
+                  <Highlight text={c.name} query={search} />
+                </span>
                 <ChevronRight size={16} className="text-[var(--lg-text-muted)]" />
               </div>
-              <p className="text-sm text-[var(--lg-text-muted)] line-clamp-2">{c.description}</p>
-              <div className="mt-3 inline-flex items-center px-2 py-1 rounded-md bg-[var(--lg-border-subtle)] text-[10px] font-medium text-[var(--lg-text-muted)]">
-                {c.props.length} prop{c.props.length !== 1 ? "s" : ""}
+              <p className="text-sm text-[var(--lg-text-muted)] line-clamp-2">
+                <Highlight text={c.description} query={search} />
+              </p>
+              <div className="mt-3 flex items-center gap-2">
+                <span className="inline-flex items-center px-2 py-1 rounded-md bg-[var(--lg-border-subtle)] text-[10px] font-medium text-[var(--lg-text-muted)]">
+                  {c.category}
+                </span>
+                <span className="inline-flex items-center px-2 py-1 rounded-md bg-[var(--lg-border-subtle)] text-[10px] font-medium text-[var(--lg-text-muted)]">
+                  {c.props.length} prop{c.props.length !== 1 ? "s" : ""}
+                </span>
               </div>
-            </button>
+            </motion.button>
           ))}
         </div>
       )}
@@ -851,8 +1120,8 @@ function ComponentGrid({
   );
 }
 
-/* ───────── Component Detail ───────── */
-function generateUsage(component: (typeof docsComponents)[number]) {
+/* ───────── Component detail ───────── */
+function generateUsage(component: DocsComponentEntry) {
   const isHook = component.name.startsWith("use");
   const requiredProps = component.props.filter((p) => p.required);
 
@@ -916,49 +1185,101 @@ export default function Example() {
 
 function ComponentDetail({
   component,
-  onBack,
+  category,
 }: {
-  component: (typeof docsComponents)[number];
-  onBack: () => void;
+  component: DocsComponentEntry;
+  category: string | null;
 }) {
   const usageCode = generateUsage(component);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.2 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.22 }}
     >
-      <button
-        onClick={onBack}
-        className="flex items-center gap-1.5 text-sm text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] mb-6 transition-colors"
-      >
-        <ArrowLeft size={16} />
-        Back to {component.category}
-      </button>
+      <nav aria-label="Breadcrumb" className="mb-6">
+        <ol className="flex flex-wrap items-center gap-2 text-sm text-[var(--lg-text-muted)]">
+          <li>
+            <button onClick={() => navigate("/docs")} className="hover:text-[var(--lg-text-secondary)] transition-colors">
+              Docs
+            </button>
+          </li>
+          <ChevronRight size={14} />
+          <li>
+            <button
+              onClick={() =>
+                navigate(buildDocsUrl({ section: "components", category: component.category }))
+              }
+              className="hover:text-[var(--lg-text-secondary)] transition-colors"
+            >
+              {component.category}
+            </button>
+          </li>
+          <ChevronRight size={14} />
+          <li className="text-[var(--lg-text)] font-medium">{component.name}</li>
+        </ol>
+      </nav>
 
-      <div className="mb-8">
+      <section id="overview" className="mb-8 scroll-mt-28">
         <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-[var(--lg-border-subtle)] text-[10px] font-semibold uppercase tracking-wider text-[var(--lg-text-muted)] mb-3">
           {component.category}
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold text-[var(--lg-text)] mb-3">{component.name}</h1>
         <p className="text-lg text-[var(--lg-text-muted)] max-w-2xl">{component.description}</p>
         <p className="text-xs text-[var(--lg-text-muted)] mt-3 font-mono">{component.file}</p>
-      </div>
+      </section>
 
-      <H2>Props</H2>
+      <H2 id="props">Props</H2>
       <PropTable props={component.props} />
 
-      <H2>Usage</H2>
+      <H2 id="usage">Usage</H2>
+      <P>
+        Copy the import and example below into your project. Fill in any required props from the
+        table above.
+      </P>
       <CodeBlock code={usageCode} filename={`${component.name} usage`} />
 
-      <H2>Source code</H2>
+      <H2 id="source">Source code</H2>
       <P>
         Copy the component below into <InlineCode>{component.file}</InlineCode>. It depends on the
         shared utilities shown in the Installation section.
       </P>
       <CodeBlock code={component.sourceCode} filename={component.file} />
+
+      <div className="mt-10 pt-8 border-t border-[var(--lg-border)]">
+        <button
+          onClick={() =>
+            navigate(
+              category
+                ? buildDocsUrl({ section: "components", category })
+                : buildDocsUrl({ section: "components" })
+            )
+          }
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-[var(--lg-text-secondary)] bg-[var(--lg-border-subtle)] hover:bg-[var(--lg-border)] hover:text-[var(--lg-text)] transition-colors"
+        >
+          <ArrowLeft size={16} />
+          Back to {category || "components"}
+        </button>
+      </div>
     </motion.div>
+  );
+}
+
+function NotFoundTopic({ topic }: { topic: string }) {
+  return (
+    <div className="py-20 text-center">
+      <h1 className="text-3xl font-bold text-[var(--lg-text)] mb-3">Topic not found</h1>
+      <p className="text-[var(--lg-text-muted)] mb-6">
+        No component matches <InlineCode>{topic}</InlineCode>.
+      </p>
+      <button
+        onClick={() => navigate(buildDocsUrl({ section: "components" }))}
+        className="px-4 py-2 rounded-xl text-sm font-medium bg-[var(--lg-border-subtle)] text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border)] hover:text-[var(--lg-text)] transition-colors"
+      >
+        Browse components
+      </button>
+    </div>
   );
 }

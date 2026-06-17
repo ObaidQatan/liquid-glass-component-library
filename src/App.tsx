@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
   Search, Home, User, Heart, Settings, Bell, Plus,
@@ -16,6 +16,7 @@ import { cn } from "./utils/cn";
 import type { ToastItem } from "./components/liquid-glass/LiquidGlassToast";
 import type { MobileBottomTabVariant } from "./components/liquid-glass/MobileBottomTabBar";
 import Docs from "./Docs";
+import { useRoute, navigate } from "./router";
 
 /* ───────── Animated Background ───────── */
 function AnimatedBackground() {
@@ -84,20 +85,6 @@ function ThemeToggle() {
   );
 }
 
-function usePathname() {
-  const [pathname, setPathname] = useState(window.location.pathname);
-  useEffect(() => {
-    const onChange = () => setPathname(window.location.pathname);
-    window.addEventListener("popstate", onChange);
-    return () => window.removeEventListener("popstate", onChange);
-  }, []);
-  return pathname;
-}
-
-function navigate(path: string) {
-  window.history.pushState({}, "", path);
-  window.dispatchEvent(new PopStateEvent("popstate"));
-}
 
 /* ───────── Main App ───────── */
 export default function App() {
@@ -303,10 +290,10 @@ export default function App() {
     { id: "message", icon: <MessageSquare size={18} />, label: "Message", onClick: () => addToast("Message", "success") },
   ];
 
-  const pathname = usePathname();
+  const route = useRoute();
 
-  if (pathname === "/docs") {
-    return <Docs onBack={() => navigate("/")} />;
+  if (route.pathname === "/docs") {
+    return <Docs />;
   }
 
   return (
