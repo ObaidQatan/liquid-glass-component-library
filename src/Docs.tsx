@@ -460,7 +460,7 @@ export default function Docs() {
       <DocsBackground />
       <DocsHeader search={search} setSearch={setSearch} searchInputRef={searchInputRef} />
 
-      <div className="max-w-7xl mx-auto pt-16 flex relative z-10">
+      <div className="max-w-7xl mx-auto pt-16 flex">
         <DocsSidebar
           section={activeSectionForNav}
           category={activeCategoryForNav}
@@ -1201,6 +1201,7 @@ function ComponentDetail({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.22 }}
+      style={{ willChange: "opacity" }}
     >
       <nav aria-label="Breadcrumb" className="mb-6">
         <ol className="flex flex-wrap items-center gap-2 text-sm text-[var(--lg-text-muted)]">
