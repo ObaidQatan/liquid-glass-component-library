@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { cn } from "./utils/cn";
 import { useTheme, LiquidGlassControls } from "./components/liquid-glass";
+import AnimatedBackground from "./AnimatedBackground";
 import { docsComponents, docsCategories, type DocsComponentEntry } from "./docs-data";
 import { useRoute, navigate, type Route } from "./router";
 import componentDemos from "./docs-demos";
@@ -459,7 +460,7 @@ export default function Docs() {
 
   return (
     <div className="min-h-screen bg-[var(--lg-bg)] text-[var(--lg-text)] selection:bg-liquid-blue/30">
-      <DocsBackground />
+      <AnimatedBackground />
       <DocsHeader
         search={search}
         setSearch={setSearch}
@@ -515,29 +516,6 @@ export default function Docs() {
 }
 
 /* ───────── Layout pieces ───────── */
-function DocsBackground() {
-  return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-      <div className="absolute inset-0 bg-[var(--lg-bg)]" />
-      <motion.div
-        animate={{ x: [0, 40, -20, 0], y: [0, -30, 20, 0], scale: [1, 1.05, 0.98, 1] }}
-        transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-liquid-blue/10 blur-[120px]"
-      />
-      <motion.div
-        animate={{ x: [0, -30, 40, 0], y: [0, 40, -20, 0], scale: [1, 0.98, 1.04, 1] }}
-        transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/3 -left-40 h-[500px] w-[500px] rounded-full bg-liquid-purple/10 blur-[100px]"
-      />
-      <motion.div
-        animate={{ x: [0, 20, -40, 0], y: [0, -20, 40, 0] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -bottom-40 right-1/4 h-[500px] w-[500px] rounded-full bg-liquid-pink/8 blur-[100px]"
-      />
-    </div>
-  );
-}
-
 function DocsHeader({
   search,
   setSearch,
