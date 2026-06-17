@@ -6,12 +6,20 @@ export type Route = {
   searchParams: URLSearchParams;
 };
 
+let cachedRoute: Route | null = null;
+
 function getRoute(): Route {
-  return {
-    pathname: window.location.pathname,
-    search: window.location.search,
-    searchParams: new URLSearchParams(window.location.search),
+  const pathname = window.location.pathname;
+  const search = window.location.search;
+  if (cachedRoute && cachedRoute.pathname === pathname && cachedRoute.search === search) {
+    return cachedRoute;
+  }
+  cachedRoute = {
+    pathname,
+    search,
+    searchParams: new URLSearchParams(search),
   };
+  return cachedRoute;
 }
 
 function subscribe(callback: () => void) {
