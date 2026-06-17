@@ -348,11 +348,19 @@ const files = fs
   .filter((f) => f.endsWith(".tsx"))
   .sort();
 
+const usedIds = new Set();
+
 const entries = files.map((file) => {
   const componentName = getComponentName(file);
   const source = fs.readFileSync(path.join(componentsDir, file), "utf8");
+  let id = toKebab(componentName.replace(/^(LiquidGlass|Mobile)/, "")).replace(/^-/, "");
+  // Disambiguate when a Mobile component collides with a regular one.
+  if (usedIds.has(id) && componentName.startsWith("Mobile")) {
+    id = `mobile-${id}`;
+  }
+  usedIds.add(id);
   return {
-    id: toKebab(componentName.replace(/^(LiquidGlass|Mobile)/, "")).replace(/^-/, ""),
+    id,
     name: componentName,
     file: `src/components/liquid-glass/${file}`,
     category: getCategory(componentName),

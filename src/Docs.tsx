@@ -30,6 +30,7 @@ import { cn } from "./utils/cn";
 import { useTheme } from "./components/liquid-glass";
 import { docsComponents, docsCategories, type DocsComponentEntry } from "./docs-data";
 import { useRoute, navigate, type Route } from "./router";
+import componentDemos from "./docs-demos";
 
 /* ───────── Types & constants ───────── */
 type DocsSection = "intro" | "installation" | "theme" | "glass" | "components";
@@ -498,7 +499,7 @@ export default function Docs() {
           </AnimatePresence>
         </main>
 
-        {selectedComponent && <DetailToc />}
+        {selectedComponent && <DetailToc hasDemo={!!componentDemos[selectedComponent.id]} />}
       </div>
     </div>
   );
@@ -680,13 +681,14 @@ function DocsSidebar({
   );
 }
 
-function DetailToc() {
+function DetailToc({ hasDemo }: { hasDemo: boolean }) {
   const items = [
     { id: "overview", label: "Overview" },
+    hasDemo && { id: "demo", label: "Demo" },
     { id: "props", label: "Props" },
     { id: "usage", label: "Usage" },
     { id: "source", label: "Source" },
-  ];
+  ].filter(Boolean) as { id: string; label: string }[];
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1191,6 +1193,7 @@ function ComponentDetail({
   category: string | null;
 }) {
   const usageCode = generateUsage(component);
+  const Demo = componentDemos[component.id];
 
   return (
     <motion.div
@@ -1230,6 +1233,14 @@ function ComponentDetail({
         <p className="text-lg text-[var(--lg-text-muted)] max-w-2xl">{component.description}</p>
         <p className="text-xs text-[var(--lg-text-muted)] mt-3 font-mono">{component.file}</p>
       </section>
+
+      {Demo && (
+        <>
+          <H2 id="demo">Demo</H2>
+          <P>Interactive preview of the component and common variants.</P>
+          <Demo />
+        </>
+      )}
 
       <H2 id="props">Props</H2>
       <PropTable props={component.props} />

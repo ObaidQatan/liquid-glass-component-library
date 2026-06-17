@@ -69,5 +69,7 @@ export { MobileContextPreview } from "./MobileContextPreview";
 // Theme & glass surface system
 export { ThemeProvider, useTheme } from "./ThemeProvider";
 export { useGlassSurface } from "./useGlassSurface";
+export { useLiquidPress } from "./useLiquidPress";
 export { GlassTopHighlight } from "./GlassTopHighlight";
 export { GlassSheen } from "./GlassSheen";
+export { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";

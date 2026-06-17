@@ -2873,7 +2873,7 @@ export const docsComponents: DocsComponentEntry[] = [
     ]
   },
   {
-    "id": "stepper",
+    "id": "mobile-stepper",
     "name": "MobileStepper",
     "file": "src/components/liquid-glass/MobileStepper.tsx",
     "category": "Mobile",
