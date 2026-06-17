@@ -396,7 +396,12 @@ const componentDemos: Record<string, React.FC> = {
     ];
     return (
       <DemoBox className="flex justify-center">
-        <LG.LiquidGlassDock items={items} />
+        <div className="relative w-full max-w-md h-40 rounded-2xl overflow-hidden border border-[var(--lg-border)] bg-gradient-to-br from-liquid-blue/10 to-liquid-purple/10">
+          <LG.LiquidGlassDock
+            items={items}
+            className="!absolute !bottom-4 !left-1/2 !-translate-x-1/2"
+          />
+        </div>
       </DemoBox>
     );
   },

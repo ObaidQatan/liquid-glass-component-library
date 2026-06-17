@@ -1264,7 +1264,7 @@ function VariantShowcase({
   component: DocsComponentEntry;
 }) {
   const variantProp = component.props.find(
-    (p) => p.name === "variant" && p.type.includes('"')
+    (p) => p.name === "variant"
   );
   const variants = variantProp ? extractEnum(variantProp.type) : [];
   if (variants.length === 0) return null;

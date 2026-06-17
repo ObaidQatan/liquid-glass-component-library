@@ -217,7 +217,7 @@ export const variantDemos: Record<string, React.FC<{ variant: string }>> = {
       { id: "profile", icon: <User size={22} />, activeIcon: <User size={22} />, label: "Profile" },
     ];
     return (
-      <div className="w-full rounded-t-3xl bg-gradient-to-br from-liquid-blue/20 to-liquid-purple/20 p-4">
+      <div className="relative w-full h-28 rounded-2xl overflow-hidden border border-[var(--lg-border)] bg-gradient-to-br from-liquid-blue/20 to-liquid-purple/20 p-4 flex items-end justify-center">
         <LG.MobileBottomTabBar
           variant={variant as any}
           tabs={tabs}
@@ -418,12 +418,18 @@ export const optionDemos: Record<string, Record<string, React.FC<{ value: string
         { id: "photos", icon: <ImageIcon size={22} />, label: "Photos", active: active === "photos", onClick: () => setActive("photos") },
         { id: "settings", icon: <Settings size={22} />, label: "Settings", active: active === "settings", onClick: () => setActive("settings") },
       ];
+      const placement =
+        value === "bottom"
+          ? "!absolute !bottom-3 !left-1/2 !-translate-x-1/2"
+          : value === "top"
+          ? "!absolute !top-3 !left-1/2 !-translate-x-1/2"
+          : value === "left"
+          ? "!absolute !left-3 !top-1/2 !-translate-y-1/2"
+          : "!absolute !right-3 !top-1/2 !-translate-y-1/2";
       return (
-        <LG.LiquidGlassDock
-          position={value as any}
-          items={items}
-          className="!relative !top-auto !bottom-auto !left-auto !right-auto"
-        />
+        <div className="relative w-full h-32 rounded-xl overflow-hidden border border-[var(--lg-border)] bg-gradient-to-br from-liquid-blue/10 to-liquid-purple/10">
+          <LG.LiquidGlassDock position={value as any} items={items} className={placement} />
+        </div>
       );
     },
   },
