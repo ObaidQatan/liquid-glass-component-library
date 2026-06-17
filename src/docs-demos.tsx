@@ -1019,20 +1019,6 @@ const componentDemos: Record<string, React.FC> = {
     );
   },
 
-  "pull-to-refresh": () => (
-    <DemoBox>
-      <LG.MobilePullToRefresh onRefresh={async () => await new Promise((r) => setTimeout(r, 1000))}>
-        <div className="p-4 space-y-2">
-          {Array.from({ length: 5 }, (_, i) => (
-            <div key={i} className="p-3 rounded-xl bg-[var(--lg-border-subtle)] text-sm text-[var(--lg-text)]">
-              Pullable item {i + 1}
-            </div>
-          ))}
-        </div>
-      </LG.MobilePullToRefresh>
-    </DemoBox>
-  ),
-
   "swipeable-list": () => {
     const items = [
       {
