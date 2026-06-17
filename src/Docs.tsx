@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef, type ReactNode, type ElementType } from "react";
+import { useState, useMemo, useEffect, type ReactNode, type ElementType } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -33,7 +33,8 @@ import AnimatedBackground from "./AnimatedBackground";
 import { docsComponents, docsCategories, type DocsComponentEntry } from "./docs-data";
 import { useRoute, navigate, type Route } from "./router";
 import componentDemos from "./docs-demos";
-import { VariantDemo, OptionDemo, optionDemos } from "./docs-variants";
+import { VariantDemo, OptionDemo, optionDemos, BottomTabBarLayoutDemos } from "./docs-variants";
+import { SearchPalette } from "./SearchPalette";
 
 /* ───────── Types & constants ───────── */
 type DocsSection = "intro" | "installation" | "theme" | "glass" | "components";
@@ -423,7 +424,7 @@ export default function Docs() {
   const { route, topic, section, category, selectedComponent } = useDocsRoute();
   const [search, setSearch] = useState("");
   const [showControls, setShowControls] = useState(false);
-  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [cmdOpen, setCmdOpen] = useState(false);
 
   useDocsScrollRestore(route);
 
@@ -466,20 +467,25 @@ export default function Docs() {
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        searchInputRef.current?.focus();
+        setCmdOpen(true);
       }
-      if (e.key === "Escape" && selectedComponent) {
-        e.preventDefault();
-        navigate(
-          category
-            ? buildDocsUrl({ section: "components", category })
-            : buildDocsUrl({ section: "components" })
-        );
+      if (e.key === "Escape") {
+        if (cmdOpen) {
+          e.preventDefault();
+          setCmdOpen(false);
+        } else if (selectedComponent) {
+          e.preventDefault();
+          navigate(
+            category
+              ? buildDocsUrl({ section: "components", category })
+              : buildDocsUrl({ section: "components" })
+          );
+        }
       }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [selectedComponent, category]);
+  }, [selectedComponent, category, cmdOpen]);
 
   const filteredComponents = useMemo(() => {
     const q = search.toLowerCase();
@@ -501,9 +507,7 @@ export default function Docs() {
     <div className="relative min-h-screen text-[var(--lg-text)] selection:bg-liquid-blue/30">
       <AnimatedBackground />
       <DocsHeader
-        search={search}
-        setSearch={setSearch}
-        searchInputRef={searchInputRef}
+        onOpenSearch={() => setCmdOpen(true)}
         showControls={showControls}
         onToggleControls={() => setShowControls((v) => !v)}
       />
@@ -512,7 +516,7 @@ export default function Docs() {
         <DocsSidebar
           section={activeSectionForNav}
           category={activeCategoryForNav}
-          onSearchFocus={() => searchInputRef.current?.focus()}
+          onSearchFocus={() => setCmdOpen(true)}
         />
 
         <main className="flex-1 lg:ml-72 min-h-[calc(100vh-4rem)] px-6 py-10 max-w-4xl">
@@ -549,6 +553,14 @@ export default function Docs() {
 
         {selectedComponent && <DetailToc hasDemo={!!componentDemos[selectedComponent.id]} />}
       <GlassControlsPanel open={showControls} onClose={() => setShowControls(false)} />
+      <SearchPalette
+        open={cmdOpen}
+        onClose={() => setCmdOpen(false)}
+        onSelect={(c) => {
+          setCmdOpen(false);
+          navigate(buildDocsUrl({ topic: c.id }));
+        }}
+      />
       </div>
     </div>
   );
@@ -556,15 +568,11 @@ export default function Docs() {
 
 /* ───────── Layout pieces ───────── */
 function DocsHeader({
-  search,
-  setSearch,
-  searchInputRef,
+  onOpenSearch,
   showControls,
   onToggleControls,
 }: {
-  search: string;
-  setSearch: (q: string) => void;
-  searchInputRef: React.RefObject<HTMLInputElement | null>;
+  onOpenSearch: () => void;
   showControls: boolean;
   onToggleControls: () => void;
 }) {
@@ -595,21 +603,24 @@ function DocsHeader({
         </div>
 
         <div className="flex items-center gap-3 flex-1 justify-end max-w-md">
-          <div className="relative flex-1 hidden sm:block">
+          <button
+            onClick={onOpenSearch}
+            className="relative hidden sm:flex flex-1 items-center gap-2 w-full max-w-xs pl-9 pr-3 py-2 rounded-xl text-sm text-left bg-[var(--lg-border-subtle)] text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border-subtle)]/80 transition-colors outline-none focus:ring-2 focus:ring-white/20"
+          >
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--lg-text-muted)]" />
-            <input
-              ref={searchInputRef}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search components..."
-              className="w-full pl-9 pr-20 py-2 rounded-xl text-sm bg-[var(--lg-border-subtle)] text-[var(--lg-text)] placeholder-[var(--lg-text-muted)] outline-none focus:ring-2 focus:ring-white/20"
-            />
-            <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 pointer-events-none">
-              <kbd className="hidden md:inline-flex h-5 px-1.5 items-center rounded text-[10px] font-medium text-[var(--lg-text-muted)] bg-[var(--lg-border)] border border-[var(--lg-border-subtle)]">
-                ⌘K
-              </kbd>
-            </div>
-          </div>
+            <span>Search components...</span>
+            <kbd className="ml-auto hidden md:inline-flex h-5 px-1.5 items-center rounded text-[10px] font-medium text-[var(--lg-text-muted)] bg-[var(--lg-border)] border border-[var(--lg-border-subtle)]">
+              ⌘K
+            </kbd>
+          </button>
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={onOpenSearch}
+            className="flex sm:hidden h-9 w-9 items-center justify-center rounded-xl glass-blur glass-surface glass-border glass-highlight transition-colors"
+            aria-label="Search"
+          >
+            <Search size={16} />
+          </motion.button>
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={onToggleControls}
@@ -1378,6 +1389,14 @@ function ComponentDetail({
       <OptionShowcase component={component} propName="position" label="Positions" />
       <OptionShowcase component={component} propName="direction" label="Directions" />
       <OptionShowcase component={component} propName="orientation" label="Orientations" />
+
+      {component.id === "bottom-tab-bar" && (
+        <section id="layouts" className="scroll-mt-28 mt-10">
+          <H2>Layouts</H2>
+          <P>Bottom tab bar with a prominent center main button or a trailing standalone button.</P>
+          <BottomTabBarLayoutDemos />
+        </section>
+      )}
 
       <H2 id="props">Props</H2>
       <PropTable props={component.props} />

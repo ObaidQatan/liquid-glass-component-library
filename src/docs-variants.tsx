@@ -533,6 +533,69 @@ export const optionDemos: Record<string, Record<string, React.FC<{ value: string
 
 /* ───────── Shared helpers ───────── */
 
+export function BottomTabBarLayoutDemos() {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="rounded-xl border border-[var(--lg-border)] glass-blur-sm glass-surface p-3">
+        <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--lg-text-muted)] mb-2">
+          Center button
+        </p>
+        <div className="relative w-full h-32 rounded-2xl overflow-hidden border border-[var(--lg-border)] bg-gradient-to-br from-liquid-blue/20 to-liquid-purple/20 p-4 flex items-end justify-center">
+          <CenterTabBarDemo />
+        </div>
+      </div>
+      <div className="rounded-xl border border-[var(--lg-border)] glass-blur-sm glass-surface p-3">
+        <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--lg-text-muted)] mb-2">
+          Trailing button
+        </p>
+        <div className="relative w-full h-32 rounded-2xl overflow-hidden border border-[var(--lg-border)] bg-gradient-to-br from-liquid-blue/20 to-liquid-purple/20 p-4 flex items-center justify-center">
+          <TrailingTabBarDemo />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CenterTabBarDemo() {
+  const [tab, setTab] = useState("home");
+  const tabs = [
+    { id: "home", icon: <Home size={22} />, activeIcon: <Home size={22} />, label: "Home" },
+    { id: "search", icon: <Search size={22} />, activeIcon: <Search size={22} />, label: "Search" },
+    { id: "notifications", icon: <Bell size={22} />, activeIcon: <Bell size={22} />, label: "Alerts" },
+    { id: "profile", icon: <User size={22} />, activeIcon: <User size={22} />, label: "Profile" },
+  ];
+  return (
+    <LG.MobileBottomTabBar
+      variant="ios26-fluid"
+      tabs={tabs}
+      activeTab={tab}
+      onChange={setTab}
+      centerTabButton={{ icon: <Plus size={24} />, label: "Create", onClick: () => {} }}
+      className="!relative !left-auto !right-auto !bottom-auto !translate-x-0"
+    />
+  );
+}
+
+function TrailingTabBarDemo() {
+  const [tab, setTab] = useState("home");
+  const tabs = [
+    { id: "home", icon: <Home size={22} />, activeIcon: <Home size={22} />, label: "Home" },
+    { id: "search", icon: <Search size={22} />, activeIcon: <Search size={22} />, label: "Search" },
+    { id: "notifications", icon: <Bell size={22} />, activeIcon: <Bell size={22} />, label: "Alerts" },
+    { id: "profile", icon: <User size={22} />, activeIcon: <User size={22} />, label: "Profile" },
+  ];
+  return (
+    <LG.MobileBottomTabBar
+      variant="ios26-super-pill"
+      tabs={tabs}
+      activeTab={tab}
+      onChange={setTab}
+      trailingButton={{ icon: <Share2 size={22} />, label: "Share", onClick: () => {} }}
+      className="!relative !left-auto !right-auto !bottom-auto !translate-x-0"
+    />
+  );
+}
+
 function PaletteIcon({ size }: { size: number }) {
   return (
     <svg
