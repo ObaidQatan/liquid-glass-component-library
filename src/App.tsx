@@ -16,6 +16,7 @@ import { cn } from "./utils/cn";
 import type { ToastItem } from "./components/liquid-glass/LiquidGlassToast";
 import type { MobileBottomTabVariant } from "./components/liquid-glass/MobileBottomTabBar";
 import Docs from "./Docs";
+import Kube from "./Kube";
 import { useRoute, navigate } from "./router";
 import AnimatedBackground from "./AnimatedBackground";
 
@@ -275,6 +276,10 @@ export default function App() {
     return <Docs />;
   }
 
+  if (route.pathname === "/kube") {
+    return <Kube />;
+  }
+
   return (
     <div className="relative min-h-screen transition-colors duration-500">
       <AnimatedBackground />
@@ -319,6 +324,7 @@ export default function App() {
                 <LG.LiquidGlassButton variant="secondary" onClick={() => setSplashOpen(true)} icon={<Sparkles size={14} />}>Splash Screen</LG.LiquidGlassButton>
                 <LG.LiquidGlassButton variant="ghost" onClick={() => addToast("Liquid ripple!", "success")}>Click Me</LG.LiquidGlassButton>
                 <LG.LiquidGlassButton variant="secondary" onClick={() => navigate("/docs")} icon={<BookOpen size={14} />}>Docs</LG.LiquidGlassButton>
+                <LG.LiquidGlassButton variant="secondary" onClick={() => navigate("/kube")} icon={<Sparkles size={14} />}>Kube</LG.LiquidGlassButton>
               </div>
             </motion.div>
           </div>
