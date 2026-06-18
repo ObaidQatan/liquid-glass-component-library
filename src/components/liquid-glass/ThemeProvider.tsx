@@ -216,7 +216,7 @@ export function ThemeProvider({ children, defaultTheme = "dark" }: { children: R
           lightAngle={liquidGlass.lightAngle}
           shininess={6}
           specularOpacity={liquidGlass.specularOpacity / 100}
-          borderRadius={0.08}
+          borderRadius={0.03}
           blur={(liquidGlass.blur / 100) * (30 / 400)}
           normalized
         />

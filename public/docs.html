@@ -2390,15 +2390,34 @@ export function LiquidGlassContextMenu({
 import { motion } from &quot;framer-motion&quot;;
 import { useTheme } from &quot;./ThemeProvider&quot;;
 import { LiquidGlassSlider } from &quot;./LiquidGlassSlider&quot;;
-import { SlidersHorizontal, RotateCcw } from &quot;lucide-react&quot;;
+import { SlidersHorizontal, RotateCcw, Sparkles } from &quot;lucide-react&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
+import { profileLabels } from &quot;./kube&quot;;
+import type { KubeProfile } from &quot;./kube&quot;;
 
 interface LiquidGlassControlsProps {
   className?: string;
 }
 
+const profiles: KubeProfile[] = [
+  &quot;convex-circle&quot;,
+  &quot;convex-squircle&quot;,
+  &quot;concave&quot;,
+  &quot;lip&quot;,
+];
+
 export function LiquidGlassControls({ className }: LiquidGlassControlsProps) {
-  const { glass, setGlass, resetGlass } = useTheme();
+  const {
+    mode,
+    glass,
+    setGlass,
+    resetGlass,
+    liquidGlass,
+    setLiquidGlass,
+    resetLiquidGlass,
+  } = useTheme();
+
+  const isLiquid = mode === &quot;liquid-glass&quot;;
 
   return (
     &lt;motion.div
@@ -2413,37 +2432,194 @@ export function LiquidGlassControls({ className }: LiquidGlassControlsProps) {
       &lt;GlassTopHighlight className=&quot;inset-x-4 top-0&quot; opacity={0.3} /&gt;
       &lt;div className=&quot;flex items-center justify-between mb-5&quot;&gt;
         &lt;div className=&quot;flex items-center gap-2&quot;&gt;
-          &lt;SlidersHorizontal size={16} className=&quot;text-liquid-blue&quot; /&gt;
-          &lt;span className=&quot;text-sm font-semibold text-[var(--lg-text)]&quot;&gt;Glass Controls&lt;/span&gt;
+          {isLiquid ? (
+            &lt;Sparkles size={16} className=&quot;text-liquid-blue&quot; /&gt;
+          ) : (
+            &lt;SlidersHorizontal size={16} className=&quot;text-liquid-blue&quot; /&gt;
+          )}
+          &lt;span className=&quot;text-sm font-semibold text-[var(--lg-text)]&quot;&gt;
+            {isLiquid ? &quot;Liquid Glass Controls&quot; : &quot;Glass Controls&quot;}
+          &lt;/span&gt;
         &lt;/div&gt;
         &lt;motion.button
           whileTap={{ scale: 0.9 }}
-          onClick={resetGlass}
+          onClick={isLiquid ? resetLiquidGlass : resetGlass}
           className=&quot;p-1.5 rounded-lg hover:bg-[var(--lg-border-subtle)] text-[var(--lg-text-muted)]&quot;
         &gt;
           &lt;RotateCcw size={14} /&gt;
         &lt;/motion.button&gt;
       &lt;/div&gt;
 
-      &lt;div className=&quot;space-y-5&quot;&gt;
-        &lt;LiquidGlassSlider label=&quot;Blur&quot; value={glass.blur} onChange={(v) =&gt; setGlass({ blur: v })} valueFormatter={(v) =&gt; `${v}%`} /&gt;
-        &lt;LiquidGlassSlider label=&quot;Transparency&quot; value={glass.transparency} onChange={(v) =&gt; setGlass({ transparency: v })} valueFormatter={(v) =&gt; `${v}%`} /&gt;
-        &lt;LiquidGlassSlider label=&quot;Reflection&quot; value={glass.reflection} onChange={(v) =&gt; setGlass({ reflection: v })} valueFormatter={(v) =&gt; `${v}%`} /&gt;
-        &lt;LiquidGlassSlider label=&quot;Fluidity&quot; value={glass.fluidity} onChange={(v) =&gt; setGlass({ fluidity: v })} valueFormatter={(v) =&gt; `${v}%`} /&gt;
-      &lt;/div&gt;
+      {isLiquid ? (
+        &lt;div className=&quot;space-y-5&quot;&gt;
+          &lt;div&gt;
+            &lt;span className=&quot;text-xs text-[var(--lg-text-secondary)] block mb-2&quot;&gt;
+              Surface profile
+            &lt;/span&gt;
+            &lt;div className=&quot;flex flex-wrap gap-2&quot;&gt;
+              {profiles.map((p) =&gt; (
+                &lt;button
+                  key={p}
+                  onClick={() =&gt; setLiquidGlass({ profile: p })}
+                  className={cn(
+                    &quot;px-2.5 py-1 rounded-full text-[10px] font-medium transition-colors&quot;,
+                    liquidGlass.profile === p
+                      ? &quot;bg-liquid-blue text-white&quot;
+                      : &quot;bg-white/10 text-[var(--lg-text-secondary)] hover:bg-white/15&quot;
+                  )}
+                &gt;
+                  {profileLabels[p]}
+                &lt;/button&gt;
+              ))}
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;LiquidGlassSlider
+            label=&quot;Bezel&quot;
+            value={liquidGlass.bezel}
+            min={8}
+            max={80}
+            onChange={(v) =&gt; setLiquidGlass({ bezel: v })}
+            valueFormatter={(v) =&gt; `${v}px`}
+          /&gt;
+          &lt;LiquidGlassSlider
+            label=&quot;Refraction&quot;
+            value={liquidGlass.refraction}
+            min={0}
+            max={100}
+            onChange={(v) =&gt; setLiquidGlass({ refraction: v })}
+            valueFormatter={(v) =&gt; `${v}%`}
+          /&gt;
+          &lt;LiquidGlassSlider
+            label=&quot;Thickness&quot;
+            value={liquidGlass.thickness}
+            min={10}
+            max={120}
+            onChange={(v) =&gt; setLiquidGlass({ thickness: v })}
+            valueFormatter={(v) =&gt; `${v}%`}
+          /&gt;
+          &lt;LiquidGlassSlider
+            label=&quot;Light angle&quot;
+            value={liquidGlass.lightAngle}
+            min={-180}
+            max={180}
+            step={5}
+            onChange={(v) =&gt; setLiquidGlass({ lightAngle: v })}
+            valueFormatter={(v) =&gt; `${v}°`}
+          /&gt;
+          &lt;LiquidGlassSlider
+            label=&quot;Specular&quot;
+            value={liquidGlass.specularOpacity}
+            min={0}
+            max={100}
+            onChange={(v) =&gt; setLiquidGlass({ specularOpacity: v })}
+            valueFormatter={(v) =&gt; `${v}%`}
+          /&gt;
+          &lt;LiquidGlassSlider
+            label=&quot;Transparency&quot;
+            value={liquidGlass.transparency}
+            min={0}
+            max={100}
+            onChange={(v) =&gt; setLiquidGlass({ transparency: v })}
+            valueFormatter={(v) =&gt; `${v}%`}
+          /&gt;
+          &lt;LiquidGlassSlider
+            label=&quot;Blur&quot;
+            value={liquidGlass.blur}
+            min={0}
+            max={100}
+            onChange={(v) =&gt; setLiquidGlass({ blur: v })}
+            valueFormatter={(v) =&gt; `${v}%`}
+          /&gt;
+        &lt;/div&gt;
+      ) : (
+        &lt;div className=&quot;space-y-5&quot;&gt;
+          &lt;LiquidGlassSlider
+            label=&quot;Blur&quot;
+            value={glass.blur}
+            onChange={(v) =&gt; setGlass({ blur: v })}
+            valueFormatter={(v) =&gt; `${v}%`}
+          /&gt;
+          &lt;LiquidGlassSlider
+            label=&quot;Transparency&quot;
+            value={glass.transparency}
+            onChange={(v) =&gt; setGlass({ transparency: v })}
+            valueFormatter={(v) =&gt; `${v}%`}
+          /&gt;
+          &lt;LiquidGlassSlider
+            label=&quot;Reflection&quot;
+            value={glass.reflection}
+            onChange={(v) =&gt; setGlass({ reflection: v })}
+            valueFormatter={(v) =&gt; `${v}%`}
+          /&gt;
+          &lt;LiquidGlassSlider
+            label=&quot;Fluidity&quot;
+            value={glass.fluidity}
+            onChange={(v) =&gt; setGlass({ fluidity: v })}
+            valueFormatter={(v) =&gt; `${v}%`}
+          /&gt;
+        &lt;/div&gt;
+      )}
 
       &lt;div className=&quot;mt-5 pt-4 border-t border-[var(--lg-border)] grid grid-cols-4 gap-2 text-center&quot;&gt;
-        {[
-          { label: &quot;Blur&quot;, value: `${Math.round((glass.blur / 100) * 60)}px` },
-          { label: &quot;Alpha&quot;, value: `${Math.round((glass.transparency / 100) * 80)}%` },
-          { label: &quot;Glow&quot;, value: `${Math.round((glass.reflection / 100) * 40)}%` },
-          { label: &quot;Snap&quot;, value: `${Math.round((glass.fluidity / 100) * 500)}` },
-        ].map((stat) =&gt; (
-          &lt;div key={stat.label} className=&quot;space-y-0.5&quot;&gt;
-            &lt;div className=&quot;text-xs font-semibold text-[var(--lg-text)]&quot;&gt;{stat.value}&lt;/div&gt;
-            &lt;div className=&quot;text-[10px] text-[var(--lg-text-muted)]&quot;&gt;{stat.label}&lt;/div&gt;
-          &lt;/div&gt;
-        ))}
+        {isLiquid ? (
+          &lt;&gt;
+            &lt;div className=&quot;space-y-0.5&quot;&gt;
+              &lt;div className=&quot;text-xs font-semibold text-[var(--lg-text)]&quot;&gt;
+                {profileLabels[liquidGlass.profile]}
+              &lt;/div&gt;
+              &lt;div className=&quot;text-[10px] text-[var(--lg-text-muted)]&quot;&gt;Profile&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div className=&quot;space-y-0.5&quot;&gt;
+              &lt;div className=&quot;text-xs font-semibold text-[var(--lg-text)]&quot;&gt;
+                {liquidGlass.bezel}px
+              &lt;/div&gt;
+              &lt;div className=&quot;text-[10px] text-[var(--lg-text-muted)]&quot;&gt;Bezel&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div className=&quot;space-y-0.5&quot;&gt;
+              &lt;div className=&quot;text-xs font-semibold text-[var(--lg-text)]&quot;&gt;
+                {liquidGlass.refraction}%
+              &lt;/div&gt;
+              &lt;div className=&quot;text-[10px] text-[var(--lg-text-muted)]&quot;&gt;Refract&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div className=&quot;space-y-0.5&quot;&gt;
+              &lt;div className=&quot;text-xs font-semibold text-[var(--lg-text)]&quot;&gt;
+                {liquidGlass.thickness}%
+              &lt;/div&gt;
+              &lt;div className=&quot;text-[10px] text-[var(--lg-text-muted)]&quot;&gt;Thick&lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/&gt;
+        ) : (
+          &lt;&gt;
+            {[
+              {
+                label: &quot;Blur&quot;,
+                value: `${Math.round((glass.blur / 100) * 60)}px`,
+              },
+              {
+                label: &quot;Alpha&quot;,
+                value: `${Math.round((glass.transparency / 100) * 80)}%`,
+              },
+              {
+                label: &quot;Glow&quot;,
+                value: `${Math.round((glass.reflection / 100) * 40)}%`,
+              },
+              {
+                label: &quot;Snap&quot;,
+                value: `${Math.round((glass.fluidity / 100) * 500)}`,
+              },
+            ].map((stat) =&gt; (
+              &lt;div key={stat.label} className=&quot;space-y-0.5&quot;&gt;
+                &lt;div className=&quot;text-xs font-semibold text-[var(--lg-text)]&quot;&gt;
+                  {stat.value}
+                &lt;/div&gt;
+                &lt;div className=&quot;text-[10px] text-[var(--lg-text-muted)]&quot;&gt;
+                  {stat.label}
+                &lt;/div&gt;
+              &lt;/div&gt;
+            ))}
+          &lt;/&gt;
+        )}
       &lt;/div&gt;
     &lt;/motion.div&gt;
   );
@@ -11565,7 +11741,7 @@ export function ThemeProvider({ children, defaultTheme = &quot;dark&quot; }: { c
           lightAngle={liquidGlass.lightAngle}
           shininess={6}
           specularOpacity={liquidGlass.specularOpacity / 100}
-          borderRadius={0.08}
+          borderRadius={0.03}
           blur={(liquidGlass.blur / 100) * (30 / 400)}
           normalized
         /&gt;

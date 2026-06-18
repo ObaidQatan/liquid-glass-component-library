@@ -128,6 +128,7 @@ export default function App() {
   const [searchValue, setSearchValue] = useState("");
   const [showCenterTabBar, setShowCenterTabBar] = useState(false);
 
+  const { mode } = LG.useTheme();
 
   const addToast = useCallback((msg: string, v: ToastItem["variant"] = "info") => {
     setToasts((p) => [...p, { id: Math.random().toString(36).slice(2), message: msg, variant: v }]);
@@ -344,9 +345,17 @@ export default function App() {
         </header>
 
         <main className="max-w-6xl mx-auto px-6 pb-32 space-y-20">
-          {/* Glass Controls */}
+          {/* Glass / Liquid Glass Controls */}
           <section>
-            <SectionHeader icon={<SlidersHorizontal size={18} />} title="Glass Controls" description="Adjust blur, transparency, reflection, and fluidity in real-time" />
+            <SectionHeader
+              icon={<SlidersHorizontal size={18} />}
+              title={mode === "liquid-glass" ? "Liquid Glass Controls" : "Glass Controls"}
+              description={
+                mode === "liquid-glass"
+                  ? "Adjust profile, bezel, refraction, thickness, light angle, specular, transparency, and blur"
+                  : "Adjust blur, transparency, reflection, and fluidity in real-time"
+              }
+            />
             <div className="flex flex-col lg:flex-row items-start gap-8">
               <LG.LiquidGlassControls />
               <div className="flex-1 w-full grid md:grid-cols-2 gap-6">

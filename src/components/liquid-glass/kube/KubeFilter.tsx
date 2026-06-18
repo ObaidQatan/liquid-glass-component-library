@@ -27,7 +27,7 @@ export interface KubeFilterProps {
 
 export const LIQUID_GLASS_FILTER_ID = "lg-liquid-glass-filter";
 
-const NORMALIZED_TEXTURE_SIZE = 512;
+const NORMALIZED_TEXTURE_SIZE = 256;
 
 export function KubeFilter({
   id,
@@ -50,6 +50,8 @@ export function KubeFilter({
   useEffect(() => {
     let mounted = true;
 
+    // Debounce texture generation so dragging sliders doesn't queue dozens of
+    // expensive canvas renders in a row.
     const timeout = setTimeout(() => {
       const texWidth = normalized ? NORMALIZED_TEXTURE_SIZE : width;
       const texHeight = normalized ? NORMALIZED_TEXTURE_SIZE : height;
@@ -82,7 +84,7 @@ export function KubeFilter({
         setDisplacementUrl(displacement?.url ?? null);
         setSpecularUrl(specular);
       }
-    }, 16);
+    }, 100);
 
     return () => {
       mounted = false;
