@@ -15,6 +15,7 @@ export interface KubeFilterProps {
   shininess: number;
   borderRadius?: number;
   specularOpacity: number;
+  blur?: number;
 }
 
 export function KubeFilter({
@@ -29,6 +30,7 @@ export function KubeFilter({
   shininess,
   borderRadius,
   specularOpacity,
+  blur = 0,
 }: KubeFilterProps) {
   const [displacementUrl, setDisplacementUrl] = useState<string | null>(null);
   const [specularUrl, setSpecularUrl] = useState<string | null>(null);
@@ -98,8 +100,13 @@ export function KubeFilter({
             preserveAspectRatio="none"
             result="specularMap"
           />
-          <feDisplacementMap
+          <feGaussianBlur
             in="SourceGraphic"
+            stdDeviation={blur}
+            result="blurred"
+          />
+          <feDisplacementMap
+            in="blurred"
             in2="displacementMap"
             scale={refractionScale}
             xChannelSelector="R"

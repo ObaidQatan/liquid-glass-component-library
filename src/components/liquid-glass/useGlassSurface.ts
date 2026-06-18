@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useTheme } from "./ThemeProvider";
+import { useKubeFilterId } from "./kube";
 
 export type GlassSurfaceVariant =
   | "surface"
@@ -11,13 +12,26 @@ export type GlassSurfaceVariant =
   | "track-active"
   | "sheen"
   | "highlight"
-  | "popover";
+  | "popover"
+  | "liquid-glass";
 
 interface UseGlassSurfaceOptions {
   variant?: GlassSurfaceVariant;
   tint?: string;
   activeTint?: string;
   opacity?: number;
+}
+
+export interface UseGlassSurfaceResult {
+  style: {
+    background?: string;
+    backgroundColor?: string;
+    border?: string;
+    boxShadow?: string;
+    backdropFilter?: string;
+  };
+  className: string;
+  filterId?: string;
 }
 
 function hexToRgb(hex: string) {
@@ -42,7 +56,7 @@ function withAlpha(color: string, alphaBase: number, transparency: number, opaci
   return color;
 }
 
-export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
+export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassSurfaceResult {
   const {
     variant = "surface",
     tint = "#3b82f6",
@@ -52,11 +66,21 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
 
   const { glass } = useTheme();
   const { transparency, reflection } = glass;
+  const liquidGlassFilterId = variant === "liquid-glass" ? useKubeFilterId() : undefined;
 
   return useMemo(() => {
     const w = (base: number) => withAlpha("#ffffff", base, transparency, opacity);
 
     switch (variant) {
+      case "liquid-glass": {
+        return {
+          style: { backdropFilter: `url(#${liquidGlassFilterId})` },
+          className:
+            "relative overflow-hidden rounded-3xl border border-white/25 shadow-2xl",
+          filterId: liquidGlassFilterId,
+        };
+      }
+
       case "thumb":
         return {
           style: {
@@ -138,5 +162,5 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
           className: "glass-blur glass-surface glass-border glass-highlight",
         };
     }
-  }, [variant, tint, activeTint, opacity, transparency, reflection]);
+  }, [variant, tint, activeTint, opacity, transparency, reflection, liquidGlassFilterId]);
 }

@@ -28,7 +28,7 @@ import {
   LayoutTemplate,
 } from "lucide-react";
 import { cn } from "./utils/cn";
-import { useTheme, LiquidGlassControls } from "./components/liquid-glass";
+import { useTheme, LiquidGlassControls, LiquidGlassToggle } from "./components/liquid-glass";
 import AnimatedBackground from "./AnimatedBackground";
 import { docsComponents, docsCategories, type DocsComponentEntry } from "./docs-data";
 import { useRoute, navigate, type Route } from "./router";
@@ -239,6 +239,17 @@ function ThemeToggle() {
     >
       {isDark ? <Moon size={16} className="text-liquid-amber" /> : <Sun size={16} className="text-liquid-amber" />}
     </motion.button>
+  );
+}
+
+function ModeToggle() {
+  const { mode, toggleMode } = useTheme();
+  return (
+    <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl glass-blur-sm glass-surface border border-white/10">
+      <span className={cn("text-xs font-medium transition-colors", mode === "glass" ? "text-[var(--lg-text)]" : "text-[var(--lg-text-muted)]")}>Glass</span>
+      <LiquidGlassToggle checked={mode === "liquid-glass"} onChange={toggleMode} variant="ios26" size="sm" activeTint="#3b82f6" />
+      <span className={cn("text-xs font-medium transition-colors", mode === "liquid-glass" ? "text-[var(--lg-text)]" : "text-[var(--lg-text-muted)]")}>Liquid</span>
+    </div>
   );
 }
 
@@ -633,6 +644,7 @@ function DocsHeader({
           >
             <SlidersHorizontal size={16} />
           </motion.button>
+          <ModeToggle />
           <ThemeToggle />
         </div>
       </div>
@@ -841,6 +853,39 @@ function IntroSection() {
             <p className="text-sm text-[var(--lg-text-muted)]">{item.desc}</p>
           </div>
         ))}
+      </div>
+
+      <div className="rounded-2xl border border-[var(--lg-border)] glass-blur-sm glass-surface p-5 my-8">
+        <div className="flex items-start gap-3">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-liquid-blue to-liquid-purple flex items-center justify-center shrink-0">
+            <Sparkles size={14} className="text-white" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-[var(--lg-text)] mb-1">Liquid Glass refraction</h3>
+            <p className="text-sm text-[var(--lg-text-muted)] leading-relaxed">
+              The optional "Liquid Glass" mode is an implementation of the refractive glass
+              technique described by{" "}
+              <a
+                href="https://www.kube.io/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-liquid-blue hover:underline"
+              >
+                kube.io
+              </a>
+              . It uses SVG displacement maps via{" "}
+              <InlineCode>backdrop-filter: url(#id)</InlineCode> to bend the real background behind
+              a component. Try it in the{" "}
+              <button
+                onClick={() => navigate("/playground")}
+                className="text-liquid-blue hover:underline"
+              >
+                playground
+              </button>
+              .
+            </p>
+          </div>
+        </div>
       </div>
 
       <H2>How this library works</H2>

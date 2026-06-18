@@ -67,9 +67,11 @@ export { MobileContextPreview } from "./MobileContextPreview";
 
 // Theme & glass surface system
 export { ThemeProvider, useTheme } from "./ThemeProvider";
+export type { GlassMode, GlassSettings, LiquidGlassSettings } from "./ThemeProvider";
 export { useGlassSurface } from "./useGlassSurface";
-export type { GlassSurfaceVariant } from "./useGlassSurface";
+export type { GlassSurfaceVariant, UseGlassSurfaceResult } from "./useGlassSurface";
 export { useLiquidPress } from "./useLiquidPress";
 export { GlassTopHighlight } from "./GlassTopHighlight";
 export { GlassSheen } from "./GlassSheen";
 export { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";
+export { LiquidGlassSurface } from "./LiquidGlassSurface";
