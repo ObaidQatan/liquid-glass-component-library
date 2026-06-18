@@ -653,6 +653,7 @@ function DocsHeader({
 }
 
 function GlassControlsPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { mode } = useTheme();
   return (
     <AnimatePresence>
       {open && (
@@ -661,12 +662,12 @@ function GlassControlsPanel({ open, onClose }: { open: boolean; onClose: () => v
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 20 }}
           transition={{ duration: 0.2 }}
-          className="fixed bottom-4 right-4 z-[60] w-80 max-w-[calc(100vw-2rem)] rounded-2xl glass-blur-xl glass-surface-strong glass-border glass-highlight-strong p-5"
+          className="fixed bottom-4 right-4 z-[60] w-80 max-w-[calc(100vw-2rem)] max-h-[80vh] overflow-y-auto rounded-2xl glass-blur-xl glass-surface-strong glass-border glass-highlight-strong p-5"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2 text-sm font-semibold text-[var(--lg-text)]">
               <SlidersHorizontal size={16} className="text-liquid-blue" />
-              Glass Config
+              {mode === "liquid-glass" ? "Liquid Glass Config" : "Glass Config"}
             </div>
             <button
               onClick={onClose}
