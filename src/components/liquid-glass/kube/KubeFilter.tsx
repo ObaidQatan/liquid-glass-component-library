@@ -94,9 +94,14 @@ export function KubeFilter({
   const texBezel = normalized
     ? Math.max(1, bezel * NORMALIZED_TEXTURE_SIZE)
     : bezel;
+  // Keep the displacement/specular corner radius at least as large as the
+  // bezel. If the bezel reaches past the rounded corner into the flat interior,
+  // the texture samples the flat-SDF region with bad normals and produces
+  // sharp triangular artifacts.
+  const effectiveBorderRadius = Math.max(borderRadius ?? 0.15, bezel);
   const texBorderRadius = normalized
-    ? Math.max(0, (borderRadius ?? 0.15) * NORMALIZED_TEXTURE_SIZE)
-    : borderRadius;
+    ? Math.max(0, effectiveBorderRadius * NORMALIZED_TEXTURE_SIZE)
+    : effectiveBorderRadius;
 
   // Displacement only depends on geometry and physics profile.
   useDebouncedRafEffect(() => {

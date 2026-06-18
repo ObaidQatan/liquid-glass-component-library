@@ -1,5 +1,6 @@
 import type { KubeProfile } from "./profiles";
 import { profiles } from "./profiles";
+import { roundedRectangleSdf } from "./sdf";
 
 export interface SpecularTextureOptions {
   width: number;
@@ -14,58 +15,6 @@ export interface SpecularTextureOptions {
    * so it can skip the feComponentTransfer primitive.
    */
   opacity?: number;
-}
-
-function roundedRectangleDistance(
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  radius: number
-): { distance: number; nx: number; ny: number } {
-  const cx = width / 2;
-  const cy = height / 2;
-  const dx = Math.abs(x - cx);
-  const dy = Math.abs(y - cy);
-
-  const halfW = width / 2;
-  const halfH = height / 2;
-  const r = Math.min(radius, halfW, halfH);
-
-  const cornerX = halfW - r;
-  const cornerY = halfH - r;
-  const distX = Math.max(0, dx - cornerX);
-  const distY = Math.max(0, dy - cornerY);
-  const cornerDist = Math.sqrt(distX * distX + distY * distY);
-  const distance = cornerDist - r;
-
-  let nx = 0;
-  let ny = 0;
-
-  if (dx > cornerX && dy > cornerY) {
-    const len = Math.sqrt(distX * distX + distY * distY) || 1;
-    nx = distX / len;
-    ny = distY / len;
-  } else if (dx > cornerX) {
-    nx = 1;
-    ny = 0;
-  } else if (dy > cornerY) {
-    nx = 0;
-    ny = 1;
-  } else {
-    const distToRight = halfW - dx;
-    const distToTop = halfH - dy;
-    if (distToRight < distToTop) {
-      nx = 1;
-    } else {
-      ny = 1;
-    }
-  }
-
-  nx *= x < cx ? -1 : 1;
-  ny *= y < cy ? -1 : 1;
-
-  return { distance, nx, ny };
 }
 
 /**
@@ -111,7 +60,7 @@ export function generateSpecularTexture(
     for (let x = 0; x < canvas.width; x++) {
       const idx = (y * canvas.width + x) * 4;
 
-      const sdf = roundedRectangleDistance(x, y, canvas.width, canvas.height, borderRadius);
+      const sdf = roundedRectangleSdf(x, y, canvas.width, canvas.height, borderRadius);
 
       if (sdf.distance >= 0) {
         data[idx] = 255;
@@ -121,6 +70,8 @@ export function generateSpecularTexture(
         continue;
       }
 
+      // Clamp to the bezel band so the highlight never bleeds into the flat
+      // interior with invalid normals.
       const distanceFromBorder = Math.max(0, Math.min(1, -sdf.distance / bezelPx));
 
       // Surface normal from the profile derivative.

@@ -1,5 +1,6 @@
 import type { KubeProfile } from "./profiles";
 import { computeDisplacementField } from "./displacementMath";
+import { roundedRectangleSdf } from "./sdf";
 
 export interface KubeTextureOptions {
   width: number;
@@ -9,69 +10,6 @@ export interface KubeTextureOptions {
   thickness: number;
   samples?: number;
   borderRadius?: number;
-}
-
-function roundedRectangleDistance(
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  radius: number
-): { distance: number; nx: number; ny: number } {
-  // Transform to first quadrant relative to the center.
-  const cx = width / 2;
-  const cy = height / 2;
-  const dx = Math.abs(x - cx);
-  const dy = Math.abs(y - cy);
-
-  const halfW = width / 2;
-  const halfH = height / 2;
-  const r = Math.min(radius, halfW, halfH);
-
-  // Distance from the inner corner center.
-  const cornerX = halfW - r;
-  const cornerY = halfH - r;
-  const distX = Math.max(0, dx - cornerX);
-  const distY = Math.max(0, dy - cornerY);
-  const cornerDist = Math.sqrt(distX * distX + distY * distY);
-
-  // Signed distance: negative inside, positive outside.
-  const distance = cornerDist - r;
-
-  // Normal direction points outward from the shape.
-  let nx = 0;
-  let ny = 0;
-
-  if (dx > cornerX && dy > cornerY) {
-    // In the rounded corner region.
-    const len = Math.sqrt(distX * distX + distY * distY) || 1;
-    nx = distX / len;
-    ny = distY / len;
-  } else if (dx > cornerX) {
-    // Near the vertical edge (left/right).
-    nx = 1;
-    ny = 0;
-  } else if (dy > cornerY) {
-    // Near the horizontal edge (top/bottom).
-    nx = 0;
-    ny = 1;
-  } else {
-    // Deep inside: normal points toward the nearest edge/corner.
-    // For simplicity, point toward the closest edge.
-    const distToRight = halfW - dx;
-    const distToTop = halfH - dy;
-    if (distToRight < distToTop) {
-      nx = 1;
-    } else {
-      ny = 1;
-    }
-  }
-
-  // Restore sign based on quadrant.
-  nx *= x < cx ? -1 : 1;
-  ny *= y < cy ? -1 : 1;
-
-  return { distance, nx, ny };
 }
 
 function lerp(a: number, b: number, t: number): number {
@@ -129,7 +67,7 @@ export function generateDisplacementTexture(
     for (let x = 0; x < canvas.width; x++) {
       const idx = (y * canvas.width + x) * 4;
 
-      const sdf = roundedRectangleDistance(x, y, canvas.width, canvas.height, borderRadius);
+      const sdf = roundedRectangleSdf(x, y, canvas.width, canvas.height, borderRadius);
 
       if (sdf.distance >= 0) {
         // Outside the shape: neutral.
