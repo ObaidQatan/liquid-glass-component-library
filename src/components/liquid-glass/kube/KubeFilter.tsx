@@ -17,6 +17,12 @@ export interface KubeFilterProps {
   specularOpacity: number;
   blur?: number;
   /**
+   * Optional id for a second, cheaper filter used by small/medium glass
+   * elements. When provided, two filters are rendered: the full-quality
+   * filter at `id` and a lite variant at `liteId`.
+   */
+  liteId?: string;
+  /**
    * When true, the filter is authored in objectBoundingBox units so a single
    * filter can scale to elements of any size. Width/height are ignored and a
    * fixed-resolution unit-square texture is generated; bezel and borderRadius
@@ -26,8 +32,42 @@ export interface KubeFilterProps {
 }
 
 export const LIQUID_GLASS_FILTER_ID = "lg-liquid-glass-filter";
+export const LIQUID_GLASS_FILTER_LITE_ID = "lg-liquid-glass-filter-lite";
 
 const NORMALIZED_TEXTURE_SIZE = 256;
+
+const GENERATION_DEBOUNCE_MS = 100;
+
+/**
+ * Schedule expensive canvas work after a short debounce and inside a
+ * requestAnimationFrame so it runs when the browser is least busy.
+ */
+function useDebouncedRafEffect(
+  effect: () => (() => void) | void,
+  deps: React.DependencyList
+) {
+  useEffect(() => {
+    let mounted = true;
+    let raf = 0;
+    let cleanup: (() => void) | void;
+
+    const timeout = setTimeout(() => {
+      raf = requestAnimationFrame(() => {
+        if (mounted) {
+          cleanup = effect();
+        }
+      });
+    }, GENERATION_DEBOUNCE_MS);
+
+    return () => {
+      mounted = false;
+      clearTimeout(timeout);
+      cancelAnimationFrame(raf);
+      if (cleanup) cleanup();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+}
 
 export function KubeFilter({
   id,
@@ -42,64 +82,75 @@ export function KubeFilter({
   borderRadius,
   specularOpacity,
   blur = 0,
+  liteId,
   normalized = false,
 }: KubeFilterProps) {
   const [displacementUrl, setDisplacementUrl] = useState<string | null>(null);
   const [specularUrl, setSpecularUrl] = useState<string | null>(null);
+  const [specularLiteUrl, setSpecularLiteUrl] = useState<string | null>(null);
 
-  useEffect(() => {
-    let mounted = true;
+  const texWidth = normalized ? NORMALIZED_TEXTURE_SIZE : width;
+  const texHeight = normalized ? NORMALIZED_TEXTURE_SIZE : height;
+  const texBezel = normalized
+    ? Math.max(1, bezel * NORMALIZED_TEXTURE_SIZE)
+    : bezel;
+  const texBorderRadius = normalized
+    ? Math.max(0, (borderRadius ?? 0.15) * NORMALIZED_TEXTURE_SIZE)
+    : borderRadius;
 
-    // Debounce texture generation so dragging sliders doesn't queue dozens of
-    // expensive canvas renders in a row.
-    const timeout = setTimeout(() => {
-      const texWidth = normalized ? NORMALIZED_TEXTURE_SIZE : width;
-      const texHeight = normalized ? NORMALIZED_TEXTURE_SIZE : height;
-      const texBezel = normalized
-        ? Math.max(1, bezel * NORMALIZED_TEXTURE_SIZE)
-        : bezel;
-      const texBorderRadius = normalized
-        ? Math.max(0, (borderRadius ?? 0.15) * NORMALIZED_TEXTURE_SIZE)
-        : borderRadius;
+  // Displacement only depends on geometry and physics profile.
+  useDebouncedRafEffect(() => {
+    const displacement = generateDisplacementTexture({
+      width: texWidth,
+      height: texHeight,
+      bezel: texBezel,
+      profile,
+      thickness,
+      borderRadius: texBorderRadius,
+    });
 
-      const displacement = generateDisplacementTexture({
-        width: texWidth,
-        height: texHeight,
-        bezel: texBezel,
-        profile,
-        thickness,
-        borderRadius: texBorderRadius,
-      });
-      const specular = generateSpecularTexture({
-        width: texWidth,
-        height: texHeight,
-        bezel: texBezel,
-        profile,
-        lightAngle,
-        shininess,
-        borderRadius: texBorderRadius,
-      });
+    setDisplacementUrl(displacement?.url ?? null);
+  }, [texWidth, texHeight, texBezel, profile, thickness, texBorderRadius]);
 
-      if (mounted) {
-        setDisplacementUrl(displacement?.url ?? null);
-        setSpecularUrl(specular);
-      }
-    }, 100);
+  // Specular depends on lighting; the lite variant bakes in specularOpacity
+  // so it can drop the feComponentTransfer primitive.
+  useDebouncedRafEffect(() => {
+    const full = generateSpecularTexture({
+      width: texWidth,
+      height: texHeight,
+      bezel: texBezel,
+      profile,
+      lightAngle,
+      shininess,
+      borderRadius: texBorderRadius,
+      opacity: 1,
+    });
 
-    return () => {
-      mounted = false;
-      clearTimeout(timeout);
-    };
+    const lite = liteId
+      ? generateSpecularTexture({
+          width: texWidth,
+          height: texHeight,
+          bezel: texBezel,
+          profile,
+          lightAngle,
+          shininess,
+          borderRadius: texBorderRadius,
+          opacity: specularOpacity,
+        })
+      : null;
+
+    setSpecularUrl(full);
+    setSpecularLiteUrl(lite);
   }, [
-    width,
-    height,
-    bezel,
+    texWidth,
+    texHeight,
+    texBezel,
     profile,
-    thickness,
     lightAngle,
     shininess,
-    borderRadius,
-    normalized,
+    texBorderRadius,
+    specularOpacity,
+    liteId,
   ]);
 
   if (!displacementUrl || !specularUrl) return null;
@@ -162,6 +213,40 @@ export function KubeFilter({
             mode="screen"
           />
         </filter>
+
+        {liteId && specularLiteUrl && (
+          <filter
+            id={liteId}
+            colorInterpolationFilters="sRGB"
+            {...filterAttrs}
+          >
+            <feImage
+              href={displacementUrl}
+              {...imageAttrs}
+              preserveAspectRatio="none"
+              result="displacementMap"
+            />
+            <feImage
+              href={specularLiteUrl}
+              {...imageAttrs}
+              preserveAspectRatio="none"
+              result="specularMap"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="displacementMap"
+              scale={refractionScale}
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="refracted"
+            />
+            <feBlend
+              in="specularMap"
+              in2="refracted"
+              mode="screen"
+            />
+          </filter>
+        )}
       </defs>
     </svg>
   );

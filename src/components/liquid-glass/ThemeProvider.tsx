@@ -4,6 +4,7 @@ import {
   KubeFilter,
   supportsKubeBackdropFilter,
   LIQUID_GLASS_FILTER_ID,
+  LIQUID_GLASS_FILTER_LITE_ID,
 } from "./kube";
 
 type Theme = "dark" | "light";
@@ -203,6 +204,7 @@ export function ThemeProvider({ children, defaultTheme = "dark" }: { children: R
       {mode === "liquid-glass" && kubeSupported && (
         <KubeFilter
           id={LIQUID_GLASS_FILTER_ID}
+          liteId={LIQUID_GLASS_FILTER_LITE_ID}
           width={1}
           height={1}
           bezel={liquidGlass.bezel / 400}

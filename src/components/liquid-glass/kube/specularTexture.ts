@@ -9,6 +9,11 @@ export interface SpecularTextureOptions {
   lightAngle: number; // degrees from vertical
   shininess: number;
   borderRadius?: number;
+  /**
+   * Optional alpha multiplier baked into the texture. Used by the lite filter
+   * so it can skip the feComponentTransfer primitive.
+   */
+  opacity?: number;
 }
 
 function roundedRectangleDistance(
@@ -79,6 +84,7 @@ export function generateSpecularTexture(
     lightAngle,
     shininess,
     borderRadius = 24,
+    opacity = 1,
   } = options;
 
   if (width <= 0 || height <= 0 || bezel <= 0) return null;
@@ -145,7 +151,7 @@ export function generateSpecularTexture(
       data[idx] = 255;
       data[idx + 1] = 255;
       data[idx + 2] = 255;
-      data[idx + 3] = Math.round(alpha * 255);
+      data[idx + 3] = Math.round(alpha * 255 * opacity);
     }
   }
 
