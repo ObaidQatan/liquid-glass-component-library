@@ -37,7 +37,7 @@ export function MobileAppRating({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="absolute inset-0 bg-black/50 glass-blur-sm"
+        className="glass-backdrop"
       />
 
       <motion.div

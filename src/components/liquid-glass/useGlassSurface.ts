@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useTheme } from "./ThemeProvider";
-import { useKubeFilterId } from "./kube";
+import { LIQUID_GLASS_FILTER_ID, supportsKubeBackdropFilter } from "./kube";
 
 export type GlassSurfaceVariant =
   | "surface"
@@ -12,8 +12,7 @@ export type GlassSurfaceVariant =
   | "track-active"
   | "sheen"
   | "highlight"
-  | "popover"
-  | "liquid-glass";
+  | "popover";
 
 interface UseGlassSurfaceOptions {
   variant?: GlassSurfaceVariant;
@@ -64,24 +63,29 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassS
     opacity = 1,
   } = options;
 
-  const { glass } = useTheme();
+  const { glass, mode } = useTheme();
   const { transparency, reflection } = glass;
-  const liquidGlassFilterId = variant === "liquid-glass" ? useKubeFilterId() : undefined;
+  const liquidGlassActive =
+    mode === "liquid-glass" && supportsKubeBackdropFilter();
+  const liquidFilter = liquidGlassActive
+    ? `url(#${LIQUID_GLASS_FILTER_ID})`
+    : undefined;
 
   return useMemo(() => {
     const w = (base: number) => withAlpha("#ffffff", base, transparency, opacity);
 
     switch (variant) {
-      case "liquid-glass": {
-        return {
-          style: { backdropFilter: `url(#${liquidGlassFilterId})` },
-          className:
-            "relative overflow-hidden rounded-3xl border border-white/25 shadow-2xl",
-          filterId: liquidGlassFilterId,
-        };
-      }
-
       case "thumb":
+        return {
+          style: {
+            background: `radial-gradient(circle at 30% 25%, ${w(0.75)} 0%, ${w(0.48)} 45%, ${w(0.22)} 100%)`,
+            border: "1px solid rgba(255,255,255,0.24)",
+            boxShadow:
+              "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
+            backdropFilter: liquidFilter,
+          },
+          className: "glass-blur-lg",
+        };
         return {
           style: {
             background: `radial-gradient(circle at 30% 25%, ${w(0.75)} 0%, ${w(0.48)} 45%, ${w(0.22)} 100%)`,
@@ -97,6 +101,7 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassS
           style: {
             background: w(0.08),
             boxShadow: "inset 0 3px 8px rgba(0,0,0,0.28), inset 0 -1px 2px rgba(255,255,255,0.10)",
+            backdropFilter: liquidFilter,
           },
           className: "glass-blur-xl border",
         };
@@ -138,29 +143,29 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassS
         // Modal, CommandPalette, and Select so the panel visibly reacts to
         // all glass sliders exactly like the rest of the library.
         return {
-          style: {},
+          style: { backdropFilter: liquidFilter },
           className: "glass-blur-xl glass-surface-strong glass-border glass-highlight",
         };
       }
 
       case "surface-strong":
         return {
-          style: {},
+          style: { backdropFilter: liquidFilter },
           className: "glass-blur glass-surface-strong glass-border glass-highlight",
         };
 
       case "surface-dark":
         return {
-          style: {},
+          style: { backdropFilter: liquidFilter },
           className: "glass-blur-sm glass-surface-dark glass-border",
         };
 
       case "surface":
       default:
         return {
-          style: {},
+          style: { backdropFilter: liquidFilter },
           className: "glass-blur glass-surface glass-border glass-highlight",
         };
     }
-  }, [variant, tint, activeTint, opacity, transparency, reflection, liquidGlassFilterId]);
+  }, [variant, tint, activeTint, opacity, transparency, reflection, liquidFilter]);
 }

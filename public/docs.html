@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Liquid Glass component library documentation. 68 copy-paste React components with props, usage, and source code." />
+<meta name="description" content="Liquid Glass component library documentation. 69 copy-paste React components with props, usage, and source code." />
 <meta name="robots" content="index, follow" />
 <title>Liquid Glass Docs — Copy-paste React glass components</title>
 <link rel="canonical" href="/docs.html" />
@@ -43,7 +43,7 @@ footer { color: #64748b; font-size: 0.8rem; border-top: 1px solid #1f1f2e; }
 </header>
 <main>
   <section id="intro">
-    <p>Liquid Glass is a copy-paste React component library for translucent, frosted-glass interfaces inspired by iOS 26. It includes <strong>68 components</strong> built with Tailwind CSS v4, Framer Motion, and a shared glass system.</p>
+    <p>Liquid Glass is a copy-paste React component library for translucent, frosted-glass interfaces inspired by iOS 26. It includes <strong>69 components</strong> built with Tailwind CSS v4, Framer Motion, and a shared glass system.</p>
     <p>Each component is a self-contained <code>.tsx</code> file. Copy the source into your own project and customize it.</p>
     <h2>Quick start</h2>
     <ol>
@@ -59,7 +59,7 @@ footer { color: #64748b; font-size: 0.8rem; border-top: 1px solid #1f1f2e; }
     <nav class="toc" aria-label="Component list">
       <h2>Browse by component</h2>
       <ul>
-        <li><a href="#topic-glass-sheen">GlassSheen</a> — Reusable specular sheen overlay for glass surfaces.</li><li><a href="#topic-glass-top-highlight">GlassTopHighlight</a> — Reusable top highlight line used across glass components.</li><li><a href="#topic-accordion">LiquidGlassAccordion</a> — Collapsible accordion panels.</li><li><a href="#topic-alert">LiquidGlassAlert</a> — Theme-aware alert banners with status variants.</li><li><a href="#topic-avatar">LiquidGlassAvatar</a> — Avatar with fallback, status, and ring.</li><li><a href="#topic-badge">LiquidGlassBadge</a> — Small status badge with dot and color variants.</li><li><a href="#topic-breadcrumb">LiquidGlassBreadcrumb</a> — Breadcrumb navigation with separators.</li><li><a href="#topic-button">LiquidGlassButton</a> — Primary button with liquid ripple and glass surface styles.</li><li><a href="#topic-calendar">LiquidGlassCalendar</a> — Month calendar with highlighted and disabled dates.</li><li><a href="#topic-card">LiquidGlassCard</a> — Basic glass card container with variants, padding, and hover lift.</li><li><a href="#topic-carousel">LiquidGlassCarousel</a> — Image/content carousel with arrows and indicators.</li><li><a href="#topic-checkbox">LiquidGlassCheckbox</a> — Glass checkbox with indeterminate support.</li><li><a href="#topic-chip">LiquidGlassChip</a> — Filter/removable chip component.</li><li><a href="#topic-color-picker">LiquidGlassColorPicker</a> — Color palette picker with custom hex input.</li><li><a href="#topic-command-palette">LiquidGlassCommandPalette</a> — Cmd+K style searchable command palette.</li><li><a href="#topic-context-menu">LiquidGlassContextMenu</a> — Right-click context menu portaled to document.body.</li><li><a href="#topic-controls">LiquidGlassControls</a> — Interactive panel to adjust blur, transparency, reflection, and fluidity.</li><li><a href="#topic-dock">LiquidGlassDock</a> — macOS-style floating dock.</li><li><a href="#topic-drawer">LiquidGlassDrawer</a> — Side drawer that slides in from left or right.</li><li><a href="#topic-empty-state">LiquidGlassEmptyState</a> — Empty state illustration with icon variants.</li><li><a href="#topic-file-upload">LiquidGlassFileUpload</a> — Drag-and-drop file upload with file list.</li><li><a href="#topic-fluid-card">LiquidGlassFluidCard</a> — Card with a cursor-following liquid refraction glow.</li><li><a href="#topic-hover-card">LiquidGlassHoverCard</a> — Hover-triggered popover portaled to document.body.</li><li><a href="#topic-input">LiquidGlassInput</a> — Glass text input with icons, label, and error states.</li><li><a href="#topic-ios26-button">LiquidGlassIos26Button</a> — iOS 26 inspired chrome button with rich glass effects.</li><li><a href="#topic-kanban">LiquidGlassKanban</a> — Drag-and-drop kanban board.</li><li><a href="#topic-menubar">LiquidGlassMenubar</a> — Dropdown menubar for desktop-style menus.</li><li><a href="#topic-modal">LiquidGlassModal</a> — Centered modal dialog with glass blur.</li><li><a href="#topic-music-player">LiquidGlassMusicPlayer</a> — Glass music player card.</li><li><a href="#topic-navigation">LiquidGlassNavigation</a> — Horizontal glass navigation bar with animated active indicator.</li><li><a href="#topic-notification-dropdown">LiquidGlassNotificationDropdown</a> — Bell dropdown panel portaled to document.body.</li><li><a href="#topic-pagination">LiquidGlassPagination</a> — Pagination controls with ellipsis handling.</li><li><a href="#topic-press-splash">LiquidGlassPressSplash</a> — Animated press splash used by buttons and chips.</li><li><a href="#topic-progress">LiquidGlassProgress</a> — Progress bar with default, gradient, and segmented variants.</li><li><a href="#topic-radio-group">LiquidGlassRadioGroup</a> — Radio group with glass selection indicators.</li><li><a href="#topic-rating">LiquidGlassRating</a> — Star rating with half-star support.</li><li><a href="#topic-resizable">LiquidGlassResizable</a> — Resizable panel with drag handle.</li><li><a href="#topic-scroll-area">LiquidGlassScrollArea</a> — Custom scrollbar scroll area.</li><li><a href="#topic-select">LiquidGlassSelect</a> — Dropdown select portaled to document.body for working blur.</li><li><a href="#topic-sheet">LiquidGlassSheet</a> — Bottom sheet with default, compact, full, inset, and detached variants.</li><li><a href="#topic-skeleton">LiquidGlassSkeleton</a> — Loading placeholder with shimmer animation.</li><li><a href="#topic-slider">LiquidGlassSlider</a> — Range slider with a stretching liquid-glass thumb.</li><li><a href="#topic-stat-card">LiquidGlassStatCard</a> — Grid of stat cards with change indicators.</li><li><a href="#topic-stepper">LiquidGlassStepper</a> — Horizontal or vertical stepper.</li><li><a href="#topic-tab-bar">LiquidGlassTabBar</a> — Tab bar with default, pills, and underline variants.</li><li><a href="#topic-table">LiquidGlassTable</a> — Sortable data table with glass styling.</li><li><a href="#topic-timeline">LiquidGlassTimeline</a> — Vertical timeline component.</li><li><a href="#topic-toast">LiquidGlassToast</a> — Stacked toast notifications with progress bars.</li><li><a href="#topic-toggle">LiquidGlassToggle</a> — Fluid or iOS 26 style toggle switch.</li><li><a href="#topic-tooltip">LiquidGlassTooltip</a> — Hover tooltip with directional positioning.</li><li><a href="#topic-weather-widget">LiquidGlassWeatherWidget</a> — Weather widget with hourly forecast.</li><li><a href="#topic-action-sheet">MobileActionSheet</a> — Bottom action sheet with default, grouped, minimal, and grid variants.</li><li><a href="#topic-alert-dialog">MobileAlertDialog</a> — Mobile alert dialog with options.</li><li><a href="#topic-app-rating">MobileAppRating</a> — App rating modal with star selection.</li><li><a href="#topic-bottom-tab-bar">MobileBottomTabBar</a> — iOS/Android bottom tab bar with 8 visual variants.</li><li><a href="#topic-context-preview">MobileContextPreview</a> — Context menu preview modal.</li><li><a href="#topic-floating-action">MobileFloatingAction</a> — Liquid Glass FloatingAction component.</li><li><a href="#topic-page-indicator">MobilePageIndicator</a> — Dots, line, or fraction page indicator.</li><li><a href="#topic-permission-dialog">MobilePermissionDialog</a> — Permission request sheet with toggles.</li><li><a href="#topic-search-bar">MobileSearchBar</a> — iOS-style search bar with cancel button.</li><li><a href="#topic-segmented-control">MobileSegmentedControl</a> — iOS segmented control.</li><li><a href="#topic-slide-menu">MobileSlideMenu</a> — Slide-in side menu for mobile.</li><li><a href="#topic-snackbar">MobileSnackbar</a> — Bottom snackbar with progress and action.</li><li><a href="#topic-splash-screen">MobileSplashScreen</a> — Onboarding splash screen with slides.</li><li><a href="#topic-mobile-stepper">MobileStepper</a> — Plus/minus stepper control.</li><li><a href="#topic-swipeable-list">MobileSwipeableList</a> — Swipeable list items with action buttons.</li><li><a href="#topic-top-nav-bar">MobileTopNavBar</a> — Mobile top navigation bar with 5 layout variants.</li><li><a href="#topic-theme-provider">ThemeProvider</a> — Wraps your app to provide theme state, glass settings, and persistence.</li>
+        <li><a href="#topic-glass-sheen">GlassSheen</a> — Reusable specular sheen overlay for glass surfaces.</li><li><a href="#topic-glass-top-highlight">GlassTopHighlight</a> — Reusable top highlight line used across glass components.</li><li><a href="#topic-accordion">LiquidGlassAccordion</a> — Collapsible accordion panels.</li><li><a href="#topic-alert">LiquidGlassAlert</a> — Theme-aware alert banners with status variants.</li><li><a href="#topic-avatar">LiquidGlassAvatar</a> — Avatar with fallback, status, and ring.</li><li><a href="#topic-badge">LiquidGlassBadge</a> — Small status badge with dot and color variants.</li><li><a href="#topic-breadcrumb">LiquidGlassBreadcrumb</a> — Breadcrumb navigation with separators.</li><li><a href="#topic-button">LiquidGlassButton</a> — Primary button with liquid ripple and glass surface styles.</li><li><a href="#topic-calendar">LiquidGlassCalendar</a> — Month calendar with highlighted and disabled dates.</li><li><a href="#topic-card">LiquidGlassCard</a> — Basic glass card container with variants, padding, and hover lift.</li><li><a href="#topic-carousel">LiquidGlassCarousel</a> — Image/content carousel with arrows and indicators.</li><li><a href="#topic-checkbox">LiquidGlassCheckbox</a> — Glass checkbox with indeterminate support.</li><li><a href="#topic-chip">LiquidGlassChip</a> — Filter/removable chip component.</li><li><a href="#topic-color-picker">LiquidGlassColorPicker</a> — Color palette picker with custom hex input.</li><li><a href="#topic-command-palette">LiquidGlassCommandPalette</a> — Cmd+K style searchable command palette.</li><li><a href="#topic-context-menu">LiquidGlassContextMenu</a> — Right-click context menu portaled to document.body.</li><li><a href="#topic-controls">LiquidGlassControls</a> — Interactive panel to adjust blur, transparency, reflection, and fluidity.</li><li><a href="#topic-dock">LiquidGlassDock</a> — macOS-style floating dock.</li><li><a href="#topic-drawer">LiquidGlassDrawer</a> — Side drawer that slides in from left or right.</li><li><a href="#topic-empty-state">LiquidGlassEmptyState</a> — Empty state illustration with icon variants.</li><li><a href="#topic-file-upload">LiquidGlassFileUpload</a> — Drag-and-drop file upload with file list.</li><li><a href="#topic-fluid-card">LiquidGlassFluidCard</a> — Card with a cursor-following liquid refraction glow.</li><li><a href="#topic-hover-card">LiquidGlassHoverCard</a> — Hover-triggered popover portaled to document.body.</li><li><a href="#topic-input">LiquidGlassInput</a> — Glass text input with icons, label, and error states.</li><li><a href="#topic-ios26-button">LiquidGlassIos26Button</a> — iOS 26 inspired chrome button with rich glass effects.</li><li><a href="#topic-kanban">LiquidGlassKanban</a> — Drag-and-drop kanban board.</li><li><a href="#topic-menubar">LiquidGlassMenubar</a> — Dropdown menubar for desktop-style menus.</li><li><a href="#topic-modal">LiquidGlassModal</a> — Centered modal dialog with glass blur.</li><li><a href="#topic-music-player">LiquidGlassMusicPlayer</a> — Glass music player card.</li><li><a href="#topic-navigation">LiquidGlassNavigation</a> — Horizontal glass navigation bar with animated active indicator.</li><li><a href="#topic-notification-dropdown">LiquidGlassNotificationDropdown</a> — Bell dropdown panel portaled to document.body.</li><li><a href="#topic-pagination">LiquidGlassPagination</a> — Pagination controls with ellipsis handling.</li><li><a href="#topic-press-splash">LiquidGlassPressSplash</a> — Animated press splash used by buttons and chips.</li><li><a href="#topic-progress">LiquidGlassProgress</a> — Progress bar with default, gradient, and segmented variants.</li><li><a href="#topic-radio-group">LiquidGlassRadioGroup</a> — Radio group with glass selection indicators.</li><li><a href="#topic-rating">LiquidGlassRating</a> — Star rating with half-star support.</li><li><a href="#topic-resizable">LiquidGlassResizable</a> — Resizable panel with drag handle.</li><li><a href="#topic-scroll-area">LiquidGlassScrollArea</a> — Custom scrollbar scroll area.</li><li><a href="#topic-select">LiquidGlassSelect</a> — Dropdown select portaled to document.body for working blur.</li><li><a href="#topic-sheet">LiquidGlassSheet</a> — Bottom sheet with default, compact, full, inset, and detached variants.</li><li><a href="#topic-skeleton">LiquidGlassSkeleton</a> — Loading placeholder with shimmer animation.</li><li><a href="#topic-slider">LiquidGlassSlider</a> — Range slider with a stretching liquid-glass thumb.</li><li><a href="#topic-stat-card">LiquidGlassStatCard</a> — Grid of stat cards with change indicators.</li><li><a href="#topic-stepper">LiquidGlassStepper</a> — Horizontal or vertical stepper.</li><li><a href="#topic-surface">LiquidGlassSurface</a> — Liquid Glass Surface component.</li><li><a href="#topic-tab-bar">LiquidGlassTabBar</a> — Tab bar with default, pills, and underline variants.</li><li><a href="#topic-table">LiquidGlassTable</a> — Sortable data table with glass styling.</li><li><a href="#topic-timeline">LiquidGlassTimeline</a> — Vertical timeline component.</li><li><a href="#topic-toast">LiquidGlassToast</a> — Stacked toast notifications with progress bars.</li><li><a href="#topic-toggle">LiquidGlassToggle</a> — Fluid or iOS 26 style toggle switch.</li><li><a href="#topic-tooltip">LiquidGlassTooltip</a> — Hover tooltip with directional positioning.</li><li><a href="#topic-weather-widget">LiquidGlassWeatherWidget</a> — Weather widget with hourly forecast.</li><li><a href="#topic-action-sheet">MobileActionSheet</a> — Bottom action sheet with default, grouped, minimal, and grid variants.</li><li><a href="#topic-alert-dialog">MobileAlertDialog</a> — Mobile alert dialog with options.</li><li><a href="#topic-app-rating">MobileAppRating</a> — App rating modal with star selection.</li><li><a href="#topic-bottom-tab-bar">MobileBottomTabBar</a> — iOS/Android bottom tab bar with 8 visual variants.</li><li><a href="#topic-context-preview">MobileContextPreview</a> — Context menu preview modal.</li><li><a href="#topic-floating-action">MobileFloatingAction</a> — Liquid Glass FloatingAction component.</li><li><a href="#topic-page-indicator">MobilePageIndicator</a> — Dots, line, or fraction page indicator.</li><li><a href="#topic-permission-dialog">MobilePermissionDialog</a> — Permission request sheet with toggles.</li><li><a href="#topic-search-bar">MobileSearchBar</a> — iOS-style search bar with cancel button.</li><li><a href="#topic-segmented-control">MobileSegmentedControl</a> — iOS segmented control.</li><li><a href="#topic-slide-menu">MobileSlideMenu</a> — Slide-in side menu for mobile.</li><li><a href="#topic-snackbar">MobileSnackbar</a> — Bottom snackbar with progress and action.</li><li><a href="#topic-splash-screen">MobileSplashScreen</a> — Onboarding splash screen with slides.</li><li><a href="#topic-mobile-stepper">MobileStepper</a> — Plus/minus stepper control.</li><li><a href="#topic-swipeable-list">MobileSwipeableList</a> — Swipeable list items with action buttons.</li><li><a href="#topic-top-nav-bar">MobileTopNavBar</a> — Mobile top navigation bar with 5 layout variants.</li><li><a href="#topic-theme-provider">ThemeProvider</a> — Wraps your app to provide theme state, glass settings, and persistence.</li>
       </ul>
     </nav>
     
@@ -2107,7 +2107,7 @@ export function LiquidGlassCommandPalette({
           className=&quot;fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4&quot;
           onClick={onClose}
         &gt;
-          &lt;div className=&quot;absolute inset-0 bg-black/50 glass-blur-sm&quot; /&gt;
+          &lt;div className=&quot;glass-backdrop&quot; /&gt;
           &lt;motion.div
             initial={{ opacity: 0, y: -20, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -2668,7 +2668,7 @@ export function LiquidGlassDrawer({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className=&quot;absolute inset-0 bg-black/40 glass-blur-sm&quot;
+            className=&quot;glass-backdrop-subtle&quot;
           /&gt;
           {/* Drawer */}
           &lt;motion.div
@@ -4103,7 +4103,7 @@ export function LiquidGlassModal({
           onClick={onClose}
         &gt;
           {/* Backdrop */}
-          &lt;div className=&quot;absolute inset-0 bg-black/50 glass-blur-sm&quot; /&gt;
+          &lt;div className=&quot;glass-backdrop&quot; /&gt;
 
           {/* Modal */}
           &lt;motion.div
@@ -5986,10 +5986,7 @@ export function LiquidGlassSheet({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className={cn(
-              &quot;absolute inset-0&quot;,
-              &quot;bg-[var(--lg-overlay)] glass-blur-sm&quot;
-            )}
+            className=&quot;glass-backdrop-overlay&quot;
           /&gt;
           {/* Sheet */}
           &lt;motion.div
@@ -6759,6 +6756,112 @@ export function LiquidGlassStepper({
 }
 </code></pre>
     <p><a href="/docs?topic=stepper">Open in interactive docs</a></p>
+  </article>
+
+  <article id="topic-surface" data-topic="surface">
+    <h2>LiquidGlassSurface</h2>
+    <p><strong>Category:</strong> Layout &amp; Surfaces</p>
+    <p>Liquid Glass Surface component.</p>
+    <h3>Props</h3>
+    <table>
+      <thead><tr><th>Prop</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody>
+    <tr>
+      <td><code>children</code></td>
+      <td><code>ReactNode</code></td>
+      <td>Yes</td>
+      <td>Child React nodes rendered inside the component.</td>
+    </tr>
+    <tr>
+      <td><code>className</code></td>
+      <td><code>string</code></td>
+      <td>No</td>
+      <td>Additional Tailwind CSS classes.</td>
+    </tr>
+    <tr>
+      <td><code>mode</code></td>
+      <td><code>&quot;glass&quot; | &quot;liquid-glass&quot;</code></td>
+      <td>No</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><code>borderRadius</code></td>
+      <td><code>number</code></td>
+      <td>No</td>
+      <td>-</td>
+    </tr></tbody>
+    </table>
+    <h3>Usage</h3>
+    <pre><code>&lt;LiquidGlassSurface /&gt;</code></pre>
+    <h3>Source</h3>
+    <pre><code>import { useRef, type ReactNode } from &quot;react&quot;;
+import { motion } from &quot;framer-motion&quot;;
+import { cn } from &quot;../../utils/cn&quot;;
+import { useTheme } from &quot;./ThemeProvider&quot;;
+import { useGlassSurface } from &quot;./useGlassSurface&quot;;
+
+interface LiquidGlassSurfaceProps {
+  children: ReactNode;
+  className?: string;
+  mode?: &quot;glass&quot; | &quot;liquid-glass&quot;;
+  borderRadius?: number;
+}
+
+export function LiquidGlassSurface({
+  children,
+  className,
+  mode: modeProp,
+  borderRadius = 24,
+}: LiquidGlassSurfaceProps) {
+  const ref = useRef&lt;HTMLDivElement&gt;(null);
+  const { mode: globalMode, liquidGlass } = useTheme();
+  const mode = modeProp ?? globalMode;
+  const isLiquid = mode === &quot;liquid-glass&quot;;
+
+  const surface = useGlassSurface({ variant: &quot;surface-strong&quot; });
+
+  return (
+    &lt;motion.div
+      ref={ref}
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+      className={cn(surface.className, className)}
+      style={{ ...surface.style, borderRadius }}
+    &gt;
+      {/* Surface tint — transparency controls how much of the refracted backdrop shows through */}
+      {isLiquid &amp;&amp; (
+        &lt;div
+          className=&quot;pointer-events-none absolute inset-0 -z-10&quot;
+          style={{
+            borderRadius,
+            backgroundColor: `rgba(255, 255, 255, ${1 - liquidGlass.transparency / 100})`,
+          }}
+        /&gt;
+      )}
+
+      {/* Top sheen */}
+      &lt;div
+        className=&quot;pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent rounded-full z-20&quot;
+        style={{ borderRadius }}
+      /&gt;
+
+      {/* Rim specular highlight overlay */}
+      &lt;div
+        className=&quot;pointer-events-none absolute inset-0 z-0&quot;
+        style={{
+          borderRadius,
+          boxShadow:
+            &quot;inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.15)&quot;,
+        }}
+      /&gt;
+
+      &lt;div className=&quot;relative z-10 h-full&quot;&gt;{children}&lt;/div&gt;
+    &lt;/motion.div&gt;
+  );
+}
+</code></pre>
+    <p><a href="/docs?topic=surface">Open in interactive docs</a></p>
   </article>
 
   <article id="topic-tab-bar" data-topic="tab-bar">
@@ -8019,7 +8122,7 @@ export function MobileActionSheet({
         &lt;div className=&quot;fixed inset-0 z-[60] flex items-end justify-center&quot;&gt;
           &lt;motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }} onClick={onClose}
-            className=&quot;absolute inset-0 bg-[var(--lg-overlay)] glass-blur-sm&quot; /&gt;
+            className=&quot;glass-backdrop-overlay&quot; /&gt;
 
           &lt;motion.div
             initial={{ y: &quot;100%&quot; }} animate={{ y: 0 }} exit={{ y: &quot;100%&quot; }}
@@ -8253,7 +8356,7 @@ export function MobileAlertDialog({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className=&quot;absolute inset-0 bg-black/50 glass-blur-sm&quot;
+            className=&quot;glass-backdrop&quot;
           /&gt;
 
           {/* Dialog */}
@@ -8423,7 +8526,7 @@ export function MobileAppRating({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className=&quot;absolute inset-0 bg-black/50 glass-blur-sm&quot;
+        className=&quot;glass-backdrop&quot;
       /&gt;
 
       &lt;motion.div
@@ -9196,7 +9299,7 @@ export function MobileContextPreview({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className=&quot;absolute inset-0 bg-black/30&quot;
+            className=&quot;glass-backdrop-subtle&quot;
             onClick={() =&gt; setIsOpen(false)}
           /&gt;
 
@@ -9743,7 +9846,7 @@ export function MobilePermissionDialog({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className=&quot;absolute inset-0 bg-black/50 glass-blur-sm&quot;
+            className=&quot;glass-backdrop&quot;
           /&gt;
 
           &lt;motion.div
@@ -10239,7 +10342,7 @@ export function MobileSlideMenu({
       {isOpen &amp;&amp; (
         &lt;div className=&quot;fixed inset-0 z-[55]&quot;&gt;
           &lt;motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={onClose} className=&quot;absolute inset-0 bg-[var(--lg-overlay)] glass-blur-sm&quot; /&gt;
+            onClick={onClose} className=&quot;glass-backdrop-overlay&quot; /&gt;
           &lt;motion.div
             initial={{ x: isLeft ? &quot;-100%&quot; : &quot;100%&quot; }}
             animate={{ x: 0 }}
@@ -11245,8 +11348,15 @@ export function MobileTopNavBar({
     <pre><code>&lt;ThemeProvider /&gt;</code></pre>
     <h3>Source</h3>
     <pre><code>import { createContext, useContext, useState, useEffect, type ReactNode } from &quot;react&quot;;
+import type { KubeProfile } from &quot;./kube/profiles&quot;;
+import {
+  KubeFilter,
+  supportsKubeBackdropFilter,
+  LIQUID_GLASS_FILTER_ID,
+} from &quot;./kube&quot;;
 
 type Theme = &quot;dark&quot; | &quot;light&quot;;
+export type GlassMode = &quot;glass&quot; | &quot;liquid-glass&quot;;
 
 export interface GlassSettings {
   blur: number;
@@ -11255,14 +11365,31 @@ export interface GlassSettings {
   fluidity: number;
 }
 
+export interface LiquidGlassSettings {
+  profile: KubeProfile;
+  bezel: number;
+  refraction: number;
+  thickness: number;
+  lightAngle: number;
+  specularOpacity: number;
+  transparency: number;
+  blur: number;
+}
+
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) =&gt; void;
   toggleTheme: () =&gt; void;
   isDark: boolean;
+  mode: GlassMode;
+  setMode: (mode: GlassMode) =&gt; void;
+  toggleMode: () =&gt; void;
   glass: GlassSettings;
   setGlass: (settings: Partial&lt;GlassSettings&gt;) =&gt; void;
   resetGlass: () =&gt; void;
+  liquidGlass: LiquidGlassSettings;
+  setLiquidGlass: (settings: Partial&lt;LiquidGlassSettings&gt;) =&gt; void;
+  resetLiquidGlass: () =&gt; void;
 }
 
 const defaultGlass: GlassSettings = {
@@ -11272,14 +11399,31 @@ const defaultGlass: GlassSettings = {
   fluidity: 50,
 };
 
+const defaultLiquidGlass: LiquidGlassSettings = {
+  profile: &quot;convex-circle&quot;,
+  bezel: 55,
+  refraction: 90,
+  thickness: 90,
+  lightAngle: -150,
+  specularOpacity: 50,
+  transparency: 50,
+  blur: 25,
+};
+
 const ThemeContext = createContext&lt;ThemeContextType&gt;({
   theme: &quot;dark&quot;,
   setTheme: () =&gt; {},
   toggleTheme: () =&gt; {},
   isDark: true,
+  mode: &quot;glass&quot;,
+  setMode: () =&gt; {},
+  toggleMode: () =&gt; {},
   glass: defaultGlass,
   setGlass: () =&gt; {},
   resetGlass: () =&gt; {},
+  liquidGlass: defaultLiquidGlass,
+  setLiquidGlass: () =&gt; {},
+  resetLiquidGlass: () =&gt; {},
 });
 
 export function useTheme() {
@@ -11295,6 +11439,14 @@ export function ThemeProvider({ children, defaultTheme = &quot;dark&quot; }: { c
     return defaultTheme;
   });
 
+  const [mode, setModeState] = useState&lt;GlassMode&gt;(() =&gt; {
+    if (typeof window !== &quot;undefined&quot;) {
+      const stored = localStorage.getItem(&quot;lg-mode&quot;);
+      if (stored === &quot;glass&quot; || stored === &quot;liquid-glass&quot;) return stored;
+    }
+    return &quot;glass&quot;;
+  });
+
   const [glass, setGlassState] = useState&lt;GlassSettings&gt;(() =&gt; {
     if (typeof window !== &quot;undefined&quot;) {
       const stored = localStorage.getItem(&quot;lg-glass&quot;);
@@ -11306,6 +11458,19 @@ export function ThemeProvider({ children, defaultTheme = &quot;dark&quot; }: { c
       }
     }
     return defaultGlass;
+  });
+
+  const [liquidGlass, setLiquidGlassState] = useState&lt;LiquidGlassSettings&gt;(() =&gt; {
+    if (typeof window !== &quot;undefined&quot;) {
+      const stored = localStorage.getItem(&quot;lg-liquid-glass&quot;);
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          return { ...defaultLiquidGlass, ...parsed };
+        } catch {}
+      }
+    }
+    return defaultLiquidGlass;
   });
 
   useEffect(() =&gt; {
@@ -11323,6 +11488,20 @@ export function ThemeProvider({ children, defaultTheme = &quot;dark&quot; }: { c
 
   useEffect(() =&gt; {
     const root = document.documentElement;
+    root.setAttribute(&quot;data-glass-mode&quot;, mode);
+    localStorage.setItem(&quot;lg-mode&quot;, mode);
+  }, [mode]);
+
+  useEffect(() =&gt; {
+    const supported = supportsKubeBackdropFilter();
+    document.documentElement.setAttribute(
+      &quot;data-liquid-glass-supported&quot;,
+      supported ? &quot;true&quot; : &quot;false&quot;
+    );
+  }, []);
+
+  useEffect(() =&gt; {
+    const root = document.documentElement;
     root.style.setProperty(&quot;--lg-blur&quot;, `${glass.blur}`);
     root.style.setProperty(&quot;--lg-transparency&quot;, `${glass.transparency}`);
     root.style.setProperty(&quot;--lg-reflection&quot;, `${glass.reflection}`);
@@ -11330,7 +11509,12 @@ export function ThemeProvider({ children, defaultTheme = &quot;dark&quot; }: { c
     localStorage.setItem(&quot;lg-glass&quot;, JSON.stringify(glass));
   }, [glass]);
 
+  useEffect(() =&gt; {
+    localStorage.setItem(&quot;lg-liquid-glass&quot;, JSON.stringify(liquidGlass));
+  }, [liquidGlass]);
+
   const toggleTheme = () =&gt; setTheme((t) =&gt; (t === &quot;dark&quot; ? &quot;light&quot; : &quot;dark&quot;));
+  const toggleMode = () =&gt; setModeState((m) =&gt; (m === &quot;glass&quot; ? &quot;liquid-glass&quot; : &quot;glass&quot;));
 
   const setGlass = (settings: Partial&lt;GlassSettings&gt;) =&gt; {
     setGlassState((prev) =&gt; ({ ...prev, ...settings }));
@@ -11338,9 +11522,54 @@ export function ThemeProvider({ children, defaultTheme = &quot;dark&quot; }: { c
 
   const resetGlass = () =&gt; setGlassState(defaultGlass);
 
+  const setLiquidGlass = (settings: Partial&lt;LiquidGlassSettings&gt;) =&gt; {
+    setLiquidGlassState((prev) =&gt; ({ ...prev, ...settings }));
+  };
+
+  const resetLiquidGlass = () =&gt; setLiquidGlassState(defaultLiquidGlass);
+
+  const kubeSupported = supportsKubeBackdropFilter();
+
   return (
-    &lt;ThemeContext.Provider value={{ theme, setTheme, toggleTheme, isDark: theme === &quot;dark&quot;, glass, setGlass, resetGlass }}&gt;
+    &lt;ThemeContext.Provider
+      value={{
+        theme,
+        setTheme,
+        toggleTheme,
+        isDark: theme === &quot;dark&quot;,
+        mode,
+        setMode: setModeState,
+        toggleMode,
+        glass,
+        setGlass,
+        resetGlass,
+        liquidGlass,
+        setLiquidGlass,
+        resetLiquidGlass,
+      }}
+    &gt;
       {children}
+      {mode === &quot;liquid-glass&quot; &amp;&amp; kubeSupported &amp;&amp; (
+        &lt;KubeFilter
+          id={LIQUID_GLASS_FILTER_ID}
+          width={1}
+          height={1}
+          bezel={liquidGlass.bezel / 400}
+          profile={liquidGlass.profile}
+          thickness={liquidGlass.thickness / 100}
+          refractionScale={
+            (liquidGlass.refraction / 100) *
+            0.15 *
+            (liquidGlass.thickness / 90)
+          }
+          lightAngle={liquidGlass.lightAngle}
+          shininess={6}
+          specularOpacity={liquidGlass.specularOpacity / 100}
+          borderRadius={0.08}
+          blur={(liquidGlass.blur / 100) * (30 / 400)}
+          normalized
+        /&gt;
+      )}
     &lt;/ThemeContext.Provider&gt;
   );
 }

@@ -62,7 +62,7 @@ export function MobileContextPreview({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="absolute inset-0 bg-black/30"
+            className="glass-backdrop-subtle"
             onClick={() => setIsOpen(false)}
           />
 

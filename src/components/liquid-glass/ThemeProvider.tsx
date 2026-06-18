@@ -1,5 +1,10 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 import type { KubeProfile } from "./kube/profiles";
+import {
+  KubeFilter,
+  supportsKubeBackdropFilter,
+  LIQUID_GLASS_FILTER_ID,
+} from "./kube";
 
 type Theme = "dark" | "light";
 export type GlassMode = "glass" | "liquid-glass";
@@ -139,6 +144,14 @@ export function ThemeProvider({ children, defaultTheme = "dark" }: { children: R
   }, [mode]);
 
   useEffect(() => {
+    const supported = supportsKubeBackdropFilter();
+    document.documentElement.setAttribute(
+      "data-liquid-glass-supported",
+      supported ? "true" : "false"
+    );
+  }, []);
+
+  useEffect(() => {
     const root = document.documentElement;
     root.style.setProperty("--lg-blur", `${glass.blur}`);
     root.style.setProperty("--lg-transparency", `${glass.transparency}`);
@@ -166,6 +179,8 @@ export function ThemeProvider({ children, defaultTheme = "dark" }: { children: R
 
   const resetLiquidGlass = () => setLiquidGlassState(defaultLiquidGlass);
 
+  const kubeSupported = supportsKubeBackdropFilter();
+
   return (
     <ThemeContext.Provider
       value={{
@@ -185,6 +200,27 @@ export function ThemeProvider({ children, defaultTheme = "dark" }: { children: R
       }}
     >
       {children}
+      {mode === "liquid-glass" && kubeSupported && (
+        <KubeFilter
+          id={LIQUID_GLASS_FILTER_ID}
+          width={1}
+          height={1}
+          bezel={liquidGlass.bezel / 400}
+          profile={liquidGlass.profile}
+          thickness={liquidGlass.thickness / 100}
+          refractionScale={
+            (liquidGlass.refraction / 100) *
+            0.15 *
+            (liquidGlass.thickness / 90)
+          }
+          lightAngle={liquidGlass.lightAngle}
+          shininess={6}
+          specularOpacity={liquidGlass.specularOpacity / 100}
+          borderRadius={0.08}
+          blur={(liquidGlass.blur / 100) * (30 / 400)}
+          normalized
+        />
+      )}
     </ThemeContext.Provider>
   );
 }

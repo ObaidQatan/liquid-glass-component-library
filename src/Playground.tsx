@@ -80,7 +80,7 @@ function ColorBars({ className }: { className?: string }) {
   return (
     <div className={cn("flex flex-col gap-4 p-6", className)}>
       <img
-        src={`https://picsum.photos/id/19/${window.innerWidth}/${window.innerHeight}`}
+        src={`https://picsum.photos/id/15/${window.innerWidth}/${window.innerHeight}`}
         alt=""
         className="w-screen h-screen object-cover"
       />
@@ -89,7 +89,8 @@ function ColorBars({ className }: { className?: string }) {
 }
 
 export default function Playground() {
-  const { mode, toggleMode, glass, setGlass, liquidGlass, setLiquidGlass } = useTheme();
+  const { mode, toggleMode, glass, setGlass, liquidGlass, setLiquidGlass } =
+    useTheme();
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -302,7 +303,7 @@ export default function Playground() {
         onClick={() => navigate("/")}
         className="fixed bottom-8 left-1/2 -translate-x-1/2 z-20 px-4 py-2 rounded-xl glass-blur glass-surface glass-border text-sm text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] transition-colors"
       >
-        Back to playground
+        Back to home
       </motion.button>
     </div>
   );

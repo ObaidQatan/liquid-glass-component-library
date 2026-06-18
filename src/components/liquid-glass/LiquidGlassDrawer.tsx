@@ -35,7 +35,7 @@ export function LiquidGlassDrawer({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/40 glass-blur-sm"
+            className="glass-backdrop-subtle"
           />
           {/* Drawer */}
           <motion.div

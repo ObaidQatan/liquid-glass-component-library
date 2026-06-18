@@ -38,7 +38,7 @@ export function MobileActionSheet({
         <div className="fixed inset-0 z-[60] flex items-end justify-center">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }} onClick={onClose}
-            className="absolute inset-0 bg-[var(--lg-overlay)] glass-blur-sm" />
+            className="glass-backdrop-overlay" />
 
           <motion.div
             initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}

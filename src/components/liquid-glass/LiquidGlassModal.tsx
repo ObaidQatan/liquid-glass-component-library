@@ -40,7 +40,7 @@ export function LiquidGlassModal({
           onClick={onClose}
         >
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/50 glass-blur-sm" />
+          <div className="glass-backdrop" />
 
           {/* Modal */}
           <motion.div

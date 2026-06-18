@@ -95,7 +95,7 @@ export function LiquidGlassCommandPalette({
           className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4"
           onClick={onClose}
         >
-          <div className="absolute inset-0 bg-black/50 glass-blur-sm" />
+          <div className="glass-backdrop" />
           <motion.div
             initial={{ opacity: 0, y: -20, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}

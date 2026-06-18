@@ -30,7 +30,7 @@ export function MobileSlideMenu({
       {isOpen && (
         <div className="fixed inset-0 z-[55]">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={onClose} className="absolute inset-0 bg-[var(--lg-overlay)] glass-blur-sm" />
+            onClick={onClose} className="glass-backdrop-overlay" />
           <motion.div
             initial={{ x: isLeft ? "-100%" : "100%" }}
             animate={{ x: 0 }}

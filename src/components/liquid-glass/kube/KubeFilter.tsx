@@ -16,7 +16,18 @@ export interface KubeFilterProps {
   borderRadius?: number;
   specularOpacity: number;
   blur?: number;
+  /**
+   * When true, the filter is authored in objectBoundingBox units so a single
+   * filter can scale to elements of any size. Width/height are ignored and a
+   * fixed-resolution unit-square texture is generated; bezel and borderRadius
+   * are interpreted as fractions of the element's smaller dimension.
+   */
+  normalized?: boolean;
 }
+
+export const LIQUID_GLASS_FILTER_ID = "lg-liquid-glass-filter";
+
+const NORMALIZED_TEXTURE_SIZE = 512;
 
 export function KubeFilter({
   id,
@@ -31,6 +42,7 @@ export function KubeFilter({
   borderRadius,
   specularOpacity,
   blur = 0,
+  normalized = false,
 }: KubeFilterProps) {
   const [displacementUrl, setDisplacementUrl] = useState<string | null>(null);
   const [specularUrl, setSpecularUrl] = useState<string | null>(null);
@@ -39,22 +51,31 @@ export function KubeFilter({
     let mounted = true;
 
     const timeout = setTimeout(() => {
+      const texWidth = normalized ? NORMALIZED_TEXTURE_SIZE : width;
+      const texHeight = normalized ? NORMALIZED_TEXTURE_SIZE : height;
+      const texBezel = normalized
+        ? Math.max(1, bezel * NORMALIZED_TEXTURE_SIZE)
+        : bezel;
+      const texBorderRadius = normalized
+        ? Math.max(0, (borderRadius ?? 0.15) * NORMALIZED_TEXTURE_SIZE)
+        : borderRadius;
+
       const displacement = generateDisplacementTexture({
-        width,
-        height,
-        bezel,
+        width: texWidth,
+        height: texHeight,
+        bezel: texBezel,
         profile,
         thickness,
-        borderRadius,
+        borderRadius: texBorderRadius,
       });
       const specular = generateSpecularTexture({
-        width,
-        height,
-        bezel,
+        width: texWidth,
+        height: texHeight,
+        bezel: texBezel,
         profile,
         lightAngle,
         shininess,
-        borderRadius,
+        borderRadius: texBorderRadius,
       });
 
       if (mounted) {
@@ -67,36 +88,53 @@ export function KubeFilter({
       mounted = false;
       clearTimeout(timeout);
     };
-  }, [width, height, bezel, profile, thickness, lightAngle, shininess, borderRadius]);
+  }, [
+    width,
+    height,
+    bezel,
+    profile,
+    thickness,
+    lightAngle,
+    shininess,
+    borderRadius,
+    normalized,
+  ]);
 
   if (!displacementUrl || !specularUrl) return null;
+
+  const filterAttrs = normalized
+    ? {
+        filterUnits: "objectBoundingBox",
+        primitiveUnits: "objectBoundingBox",
+        x: "0",
+        y: "0",
+        width: "1",
+        height: "1",
+      }
+    : {
+        x: "0",
+        y: "0",
+        width: "100%",
+        height: "100%",
+      };
+
+  const imageAttrs = normalized
+    ? { x: "0", y: "0", width: "1", height: "1" }
+    : { x: "0", y: "0", width, height };
 
   return (
     <svg width="0" height="0" className="absolute" aria-hidden="true">
       <defs>
-        <filter
-          id={id}
-          colorInterpolationFilters="sRGB"
-          x="0"
-          y="0"
-          width="100%"
-          height="100%"
-        >
+        <filter id={id} colorInterpolationFilters="sRGB" {...filterAttrs}>
           <feImage
             href={displacementUrl}
-            x="0"
-            y="0"
-            width={width}
-            height={height}
+            {...imageAttrs}
             preserveAspectRatio="none"
             result="displacementMap"
           />
           <feImage
             href={specularUrl}
-            x="0"
-            y="0"
-            width={width}
-            height={height}
+            {...imageAttrs}
             preserveAspectRatio="none"
             result="specularMap"
           />

@@ -41,10 +41,7 @@ export function LiquidGlassSheet({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className={cn(
-              "absolute inset-0",
-              "bg-[var(--lg-overlay)] glass-blur-sm"
-            )}
+            className="glass-backdrop-overlay"
           />
           {/* Sheet */}
           <motion.div
