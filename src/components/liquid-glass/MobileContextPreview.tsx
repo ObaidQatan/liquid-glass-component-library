@@ -7,6 +7,7 @@ import {
   useLiquidOverlayVariants,
   useLiquidTransition,
   useLiquidTapScale,
+  useGlassOverlayRootStyle,
 } from "./useLiquidMotion";
 
 interface ContextAction {
@@ -33,6 +34,7 @@ export function MobileContextPreview({
   const overlayVariants = useLiquidOverlayVariants();
   const transition = useLiquidTransition();
   const tapScale = useLiquidTapScale();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const [isOpen, setIsOpen] = useState(false);
   const [childRect, setChildRect] = useState<DOMRect | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -64,6 +66,7 @@ export function MobileContextPreview({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
+          style={overlayRootStyle}
           className="fixed inset-0 z-[80] flex items-center justify-center"
         >
           <motion.div

@@ -1,7 +1,11 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
-import { useLiquidSlideVariants, useLiquidTransition } from "./useLiquidMotion";
+import {
+  useLiquidSlideVariants,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 interface LiquidGlassSheetProps {
   isOpen: boolean;
@@ -28,11 +32,14 @@ export function LiquidGlassSheet({
   const isCompact = variant === "compact";
   const slideVariants = useLiquidSlideVariants("bottom", { stiff: true });
   const transition = useLiquidTransition({ stiff: true });
+  const overlayRootStyle = useGlassOverlayRootStyle();
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className={cn(
+        <div
+          style={overlayRootStyle}
+          className={cn(
           "fixed inset-0 z-50 flex items-end justify-center",
           isDetached && "p-4",
           isInset && "p-3"

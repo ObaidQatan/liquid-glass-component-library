@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, type CSSProperties } from "react";
 import { ChevronDown, Check } from "lucide-react";
 import { createPortal } from "react-dom";
 import { useGlassSurface } from "./useGlassSurface";
-import { useLiquidTapScale } from "./useLiquidMotion";
+import { useGlassOverlayRootStyle, useLiquidTapScale } from "./useLiquidMotion";
 
 interface SelectOption {
   value: string;
@@ -41,6 +41,7 @@ export function LiquidGlassSelect({
   const sheen = useGlassSurface({ variant: "sheen", opacity: 0.12 });
   const topHighlight = useGlassSurface({ variant: "highlight", opacity: 0.30 });
   const dropdownHighlight = useGlassSurface({ variant: "highlight", opacity: 0.20 });
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const selectedFill = useGlassSurface({ variant: "fill", opacity: 0.10 });
   const hoverFill = useGlassSurface({ variant: "fill", opacity: 0.06 });
 
@@ -90,6 +91,7 @@ export function LiquidGlassSelect({
             "rounded-2xl py-1"
           )}
           style={{
+            ...overlayRootStyle,
             left: position.left,
             top: position.top,
             width: position.width,

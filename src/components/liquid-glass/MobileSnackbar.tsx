@@ -4,7 +4,11 @@ import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { useGlassSurface } from "./useGlassSurface";
 import { GlassTopHighlight } from "./GlassTopHighlight";
-import { useLiquidSlideVariants, useLiquidTransition } from "./useLiquidMotion";
+import {
+  useLiquidSlideVariants,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 
 interface MobileSnackbarProps {
@@ -24,6 +28,7 @@ export function MobileSnackbar({
 }: MobileSnackbarProps) {
   const slideVariants = useLiquidSlideVariants("bottom");
   const transition = useLiquidTransition();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const progressFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(100);
@@ -61,6 +66,7 @@ export function MobileSnackbar({
         <motion.div
           {...slideVariants}
           transition={transition}
+          style={overlayRootStyle}
           className={cn(
             "fixed bottom-4 left-4 right-4 z-50 max-w-lg mx-auto",
             "rounded-2xl overflow-hidden",

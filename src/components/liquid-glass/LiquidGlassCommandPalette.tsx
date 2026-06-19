@@ -3,7 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Search, Command } from "lucide-react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
-import { useLiquidOverlayVariants, useLiquidTransition } from "./useLiquidMotion";
+import {
+  useLiquidOverlayVariants,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 interface CommandItem {
   id: string;
@@ -29,6 +33,7 @@ export function LiquidGlassCommandPalette({
 }: LiquidGlassCommandPaletteProps) {
   const overlayVariants = useLiquidOverlayVariants();
   const transition = useLiquidTransition();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -95,6 +100,7 @@ export function LiquidGlassCommandPalette({
           initial={{ opacity: 0.01 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          style={overlayRootStyle}
           className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4"
           onClick={onClose}
         >

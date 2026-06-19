@@ -7,6 +7,7 @@ import {
   useLiquidOverlayVariants,
   useLiquidTransition,
   useLiquidTapScale,
+  useGlassOverlayRootStyle,
 } from "./useLiquidMotion";
 
 interface LiquidGlassModalProps {
@@ -35,6 +36,7 @@ export function LiquidGlassModal({
 }: LiquidGlassModalProps) {
   const overlayVariants = useLiquidOverlayVariants();
   const tapScale = useLiquidTapScale();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   return (
     <AnimatePresence>
       {isOpen && (
@@ -43,6 +45,7 @@ export function LiquidGlassModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
+          style={overlayRootStyle}
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           onClick={onClose}
         >

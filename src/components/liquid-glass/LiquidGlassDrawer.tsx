@@ -2,7 +2,11 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
-import { useLiquidSlideVariants, useLiquidTransition } from "./useLiquidMotion";
+import {
+  useLiquidSlideVariants,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 interface LiquidGlassDrawerProps {
   isOpen: boolean;
@@ -26,11 +30,12 @@ export function LiquidGlassDrawer({
   const isLeft = position === "left";
   const slideVariants = useLiquidSlideVariants(position, { stiff: true });
   const transition = useLiquidTransition({ stiff: true });
+  const overlayRootStyle = useGlassOverlayRootStyle();
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50">
+        <div className="fixed inset-0 z-50" style={overlayRootStyle}>
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0.01 }}

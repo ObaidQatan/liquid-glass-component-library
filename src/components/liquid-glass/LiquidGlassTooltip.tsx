@@ -2,6 +2,7 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, type ReactNode } from "react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import { useGlassOverlayRootStyle } from "./useLiquidMotion";
 
 interface LiquidGlassTooltipProps {
   children: ReactNode;
@@ -33,6 +34,7 @@ export function LiquidGlassTooltip({
   delay = 0.3,
 }: LiquidGlassTooltipProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const overlayRootStyle = useGlassOverlayRootStyle();
   let timeoutId: ReturnType<typeof setTimeout>;
 
   const show = () => {
@@ -61,6 +63,7 @@ export function LiquidGlassTooltip({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.15 }}
+            style={overlayRootStyle}
             className={cn(
               "absolute z-50 px-3 py-2 rounded-xl whitespace-nowrap",
               "glass-blur-lg glass-surface glass-border glass-highlight",

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { useGlassSurface } from "./useGlassSurface";
-import { useLiquidTransition } from "./useLiquidMotion";
+import { useLiquidTransition, useGlassOverlayRootStyle } from "./useLiquidMotion";
 
 interface SplashSlide {
   id: string;
@@ -31,6 +31,7 @@ export function MobileSplashScreen({
   skipText = "Skip",
 }: MobileSplashScreenProps) {
   const transition = useLiquidTransition();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const buttonFill = useGlassSurface({ variant: "fill", opacity: 0.15 });
   const [currentSlide, setCurrentSlide] = useState(0);
   const isLastSlide = currentSlide === slides.length - 1;
@@ -44,6 +45,7 @@ export function MobileSplashScreen({
       initial={{ opacity: 0.01 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      style={overlayRootStyle}
       className={cn(
         "fixed inset-0 z-[70] flex flex-col items-center justify-between",
         "bg-[#0a0a0f]",

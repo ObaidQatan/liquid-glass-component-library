@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import { useGlassOverlayRootStyle } from "./useLiquidMotion";
 
 interface MenuItem {
   label: string;
@@ -23,6 +24,7 @@ interface LiquidGlassMenubarProps {
 export function LiquidGlassMenubar({ menus, className }: LiquidGlassMenubarProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [menuPos, setMenuPos] = useState<{ left: number; top: number } | null>(null);
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const barRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const triggerRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -63,11 +65,11 @@ export function LiquidGlassMenubar({ menus, className }: LiquidGlassMenubarProps
       {activeIndex !== null && menuPos && (
         <motion.div
           ref={dropdownRef}
-          initial={{ opacity: 0, y: 4 }}
+          initial={{ opacity: 0.01, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 4 }}
           transition={{ duration: 0.1 }}
-          style={{ left: menuPos.left, top: menuPos.top }}
+          style={{ ...overlayRootStyle, left: menuPos.left, top: menuPos.top }}
           className="fixed z-[100] min-w-[180px] rounded-xl overflow-hidden glass-blur-xl glass-surface glass-border glass-highlight"
         >
           {/* Top highlight */}

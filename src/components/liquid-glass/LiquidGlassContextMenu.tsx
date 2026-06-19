@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useGlassSurface } from "./useGlassSurface";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import { useGlassOverlayRootStyle } from "./useLiquidMotion";
 
 interface MenuItem {
   id: string;
@@ -32,6 +33,7 @@ export function LiquidGlassContextMenu({
   const menuRef = useRef<HTMLDivElement>(null);
 
   const popover = useGlassSurface({ variant: "popover" });
+  const overlayRootStyle = useGlassOverlayRootStyle();
 
   const handleContextMenu = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -84,7 +86,7 @@ export function LiquidGlassContextMenu({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.1 }}
-          style={{ left: position.x, top: position.y, ...popover.style }}
+          style={{ left: position.x, top: position.y, ...popover.style, ...overlayRootStyle }}
           className={cn(
             "fixed z-[100] min-w-[180px] rounded-xl overflow-hidden",
             popover.className

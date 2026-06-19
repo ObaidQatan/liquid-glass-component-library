@@ -6,6 +6,7 @@ import {
   useLiquidSlideVariants,
   useLiquidTransition,
   useLiquidTapScale,
+  useGlassOverlayRootStyle,
 } from "./useLiquidMotion";
 
 interface MenuSection { title: string; items: MenuItem[]; }
@@ -33,11 +34,12 @@ export function MobileSlideMenu({
   const slideVariants = useLiquidSlideVariants(position, { stiff: edgeStiff });
   const transition = useLiquidTransition({ stiff: edgeStiff });
   const tapScale = useLiquidTapScale();
+  const overlayRootStyle = useGlassOverlayRootStyle();
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[55]">
+        <div className="fixed inset-0 z-[55]" style={overlayRootStyle}>
           <motion.div initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onClose} className="glass-backdrop-overlay" />
           <motion.div

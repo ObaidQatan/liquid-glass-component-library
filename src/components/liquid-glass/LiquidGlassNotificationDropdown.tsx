@@ -4,7 +4,7 @@ import { Bell, Check, Trash2, MessageSquare, Heart, UserPlus, AlertCircle } from
 import { useState, useRef, useEffect, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { useGlassSurface } from "./useGlassSurface";
-import { useLiquidTapScale } from "./useLiquidMotion";
+import { useGlassOverlayRootStyle, useLiquidTapScale } from "./useLiquidMotion";
 
 interface Notification {
   id: string;
@@ -53,6 +53,7 @@ export function LiquidGlassNotificationDropdown({
   const popoverRef = useRef<HTMLDivElement>(null);
   const popover = useGlassSurface({ variant: "popover" });
   const topHighlight = useGlassSurface({ variant: "highlight", opacity: 0.25 });
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const unreadFill = useGlassSurface({ variant: "fill", opacity: 0.06 });
   const hoverFill = useGlassSurface({ variant: "fill", opacity: 0.05 });
 
@@ -100,6 +101,7 @@ export function LiquidGlassNotificationDropdown({
             popover.className
           )}
           style={{
+            ...overlayRootStyle,
             left: position.left,
             top: position.top,
             width: POPOVER_WIDTH,

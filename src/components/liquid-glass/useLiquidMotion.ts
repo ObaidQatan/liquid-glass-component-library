@@ -1,6 +1,26 @@
+import { useEffect, useState } from "react";
 import { useTheme } from "./ThemeProvider";
 
 type SlidePosition = "left" | "right" | "top" | "bottom";
+
+/**
+ * Inline style that starts the local glass variables at 0 so the registered
+ * CSS transition can ramp blur/saturation up when an overlay mounts. The style
+ * is removed after the first animation frame, triggering the transition to the
+ * inherited global values.
+ */
+export function useGlassOverlayRootStyle(): React.CSSProperties {
+  const [intro, setIntro] = useState(true);
+
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setIntro(false));
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  return intro
+    ? ({ "--lg-blur": 0, "--lg-saturation": 0 } as React.CSSProperties)
+    : {};
+}
 
 const glassSpring = { type: "spring" as const, stiffness: 400, damping: 30 };
 const liquidSpring = {

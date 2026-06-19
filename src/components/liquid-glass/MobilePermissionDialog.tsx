@@ -7,6 +7,7 @@ import {
   useLiquidSlideVariants,
   useLiquidTransition,
   useLiquidTapScale,
+  useGlassOverlayRootStyle,
 } from "./useLiquidMotion";
 
 interface Permission {
@@ -39,6 +40,7 @@ export function MobilePermissionDialog({
   const slideVariants = useLiquidSlideVariants("bottom", { stiff: true });
   const transition = useLiquidTransition({ stiff: true });
   const tapScale = useLiquidTapScale();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const handleFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [permMap, setPermMap] = useState<Record<string, boolean>>(
     Object.fromEntries(permissions.map((p) => [p.id, p.granted ?? false]))
@@ -51,7 +53,7 @@ export function MobilePermissionDialog({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[60] flex items-end justify-center">
+        <div className="fixed inset-0 z-[60] flex items-end justify-center" style={overlayRootStyle}>
           <motion.div
             initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}

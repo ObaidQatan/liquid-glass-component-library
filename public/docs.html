@@ -2025,7 +2025,11 @@ import { motion, AnimatePresence } from &quot;framer-motion&quot;;
 import { useState, useEffect, useRef, useMemo } from &quot;react&quot;;
 import { Search, Command } from &quot;lucide-react&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
-import { useLiquidOverlayVariants, useLiquidTransition } from &quot;./useLiquidMotion&quot;;
+import {
+  useLiquidOverlayVariants,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from &quot;./useLiquidMotion&quot;;
 
 interface CommandItem {
   id: string;
@@ -2051,6 +2055,7 @@ export function LiquidGlassCommandPalette({
 }: LiquidGlassCommandPaletteProps) {
   const overlayVariants = useLiquidOverlayVariants();
   const transition = useLiquidTransition();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const [query, setQuery] = useState(&quot;&quot;);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef&lt;HTMLInputElement&gt;(null);
@@ -2117,6 +2122,7 @@ export function LiquidGlassCommandPalette({
           initial={{ opacity: 0.01 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          style={overlayRootStyle}
           className=&quot;fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4&quot;
           onClick={onClose}
         &gt;
@@ -2243,6 +2249,7 @@ import { useState, useCallback, useEffect, useRef } from &quot;react&quot;;
 import { createPortal } from &quot;react-dom&quot;;
 import { useGlassSurface } from &quot;./useGlassSurface&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
+import { useGlassOverlayRootStyle } from &quot;./useLiquidMotion&quot;;
 
 interface MenuItem {
   id: string;
@@ -2271,6 +2278,7 @@ export function LiquidGlassContextMenu({
   const menuRef = useRef&lt;HTMLDivElement&gt;(null);
 
   const popover = useGlassSurface({ variant: &quot;popover&quot; });
+  const overlayRootStyle = useGlassOverlayRootStyle();
 
   const handleContextMenu = useCallback((e: React.MouseEvent) =&gt; {
     e.preventDefault();
@@ -2323,7 +2331,7 @@ export function LiquidGlassContextMenu({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.1 }}
-          style={{ left: position.x, top: position.y, ...popover.style }}
+          style={{ left: position.x, top: position.y, ...popover.style, ...overlayRootStyle }}
           className={cn(
             &quot;fixed z-[100] min-w-[180px] rounded-xl overflow-hidden&quot;,
             popover.className
@@ -2826,7 +2834,11 @@ export function LiquidGlassDock({
 import { motion, AnimatePresence } from &quot;framer-motion&quot;;
 import type { ReactNode } from &quot;react&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
-import { useLiquidSlideVariants, useLiquidTransition } from &quot;./useLiquidMotion&quot;;
+import {
+  useLiquidSlideVariants,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from &quot;./useLiquidMotion&quot;;
 
 interface LiquidGlassDrawerProps {
   isOpen: boolean;
@@ -2850,11 +2862,12 @@ export function LiquidGlassDrawer({
   const isLeft = position === &quot;left&quot;;
   const slideVariants = useLiquidSlideVariants(position, { stiff: true });
   const transition = useLiquidTransition({ stiff: true });
+  const overlayRootStyle = useGlassOverlayRootStyle();
 
   return (
     &lt;AnimatePresence&gt;
       {isOpen &amp;&amp; (
-        &lt;div className=&quot;fixed inset-0 z-50&quot;&gt;
+        &lt;div className=&quot;fixed inset-0 z-50&quot; style={overlayRootStyle}&gt;
           {/* Backdrop */}
           &lt;motion.div
             initial={{ opacity: 0.01 }}
@@ -3369,6 +3382,7 @@ import { motion, AnimatePresence } from &quot;framer-motion&quot;;
 import { useState, useRef, useEffect, type ReactNode } from &quot;react&quot;;
 import { createPortal } from &quot;react-dom&quot;;
 import { useGlassSurface } from &quot;./useGlassSurface&quot;;
+import { useGlassOverlayRootStyle } from &quot;./useLiquidMotion&quot;;
 
 interface LiquidGlassHoverCardProps {
   children: ReactNode;
@@ -3394,6 +3408,7 @@ export function LiquidGlassHoverCard({
   const popover = useGlassSurface({ variant: &quot;popover&quot; });
   const topHighlight = useGlassSurface({ variant: &quot;highlight&quot;, opacity: 0.20 });
   const arrowFill = useGlassSurface({ variant: &quot;fill&quot;, opacity: 0.12 });
+  const overlayRootStyle = useGlassOverlayRootStyle();
 
   const measurePosition = () =&gt; {
     if (!triggerRef.current) return;
@@ -3431,6 +3446,7 @@ export function LiquidGlassHoverCard({
           transition={{ duration: 0.15 }}
           className=&quot;fixed z-[100] flex justify-center pointer-events-none&quot;
           style={{
+            ...overlayRootStyle,
             left: position.left,
             top: position.top,
             width: position.width,
@@ -4077,6 +4093,7 @@ import { motion, AnimatePresence } from &quot;framer-motion&quot;;
 import { useState, useRef, useEffect } from &quot;react&quot;;
 import { createPortal } from &quot;react-dom&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
+import { useGlassOverlayRootStyle } from &quot;./useLiquidMotion&quot;;
 
 interface MenuItem {
   label: string;
@@ -4097,6 +4114,7 @@ interface LiquidGlassMenubarProps {
 export function LiquidGlassMenubar({ menus, className }: LiquidGlassMenubarProps) {
   const [activeIndex, setActiveIndex] = useState&lt;number | null&gt;(null);
   const [menuPos, setMenuPos] = useState&lt;{ left: number; top: number } | null&gt;(null);
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const barRef = useRef&lt;HTMLDivElement&gt;(null);
   const dropdownRef = useRef&lt;HTMLDivElement&gt;(null);
   const triggerRefs = useRef&lt;(HTMLButtonElement | null)[]&gt;([]);
@@ -4137,11 +4155,11 @@ export function LiquidGlassMenubar({ menus, className }: LiquidGlassMenubarProps
       {activeIndex !== null &amp;&amp; menuPos &amp;&amp; (
         &lt;motion.div
           ref={dropdownRef}
-          initial={{ opacity: 0, y: 4 }}
+          initial={{ opacity: 0.01, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 4 }}
           transition={{ duration: 0.1 }}
-          style={{ left: menuPos.left, top: menuPos.top }}
+          style={{ ...overlayRootStyle, left: menuPos.left, top: menuPos.top }}
           className=&quot;fixed z-[100] min-w-[180px] rounded-xl overflow-hidden glass-blur-xl glass-surface glass-border glass-highlight&quot;
         &gt;
           {/* Top highlight */}
@@ -4272,6 +4290,7 @@ import {
   useLiquidOverlayVariants,
   useLiquidTransition,
   useLiquidTapScale,
+  useGlassOverlayRootStyle,
 } from &quot;./useLiquidMotion&quot;;
 
 interface LiquidGlassModalProps {
@@ -4300,6 +4319,7 @@ export function LiquidGlassModal({
 }: LiquidGlassModalProps) {
   const overlayVariants = useLiquidOverlayVariants();
   const tapScale = useLiquidTapScale();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   return (
     &lt;AnimatePresence&gt;
       {isOpen &amp;&amp; (
@@ -4308,6 +4328,7 @@ export function LiquidGlassModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
+          style={overlayRootStyle}
           className=&quot;fixed inset-0 z-50 flex items-center justify-center p-4&quot;
           onClick={onClose}
         &gt;
@@ -4730,7 +4751,7 @@ import { Bell, Check, Trash2, MessageSquare, Heart, UserPlus, AlertCircle } from
 import { useState, useRef, useEffect, type CSSProperties } from &quot;react&quot;;
 import { createPortal } from &quot;react-dom&quot;;
 import { useGlassSurface } from &quot;./useGlassSurface&quot;;
-import { useLiquidTapScale } from &quot;./useLiquidMotion&quot;;
+import { useGlassOverlayRootStyle, useLiquidTapScale } from &quot;./useLiquidMotion&quot;;
 
 interface Notification {
   id: string;
@@ -4779,6 +4800,7 @@ export function LiquidGlassNotificationDropdown({
   const popoverRef = useRef&lt;HTMLDivElement&gt;(null);
   const popover = useGlassSurface({ variant: &quot;popover&quot; });
   const topHighlight = useGlassSurface({ variant: &quot;highlight&quot;, opacity: 0.25 });
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const unreadFill = useGlassSurface({ variant: &quot;fill&quot;, opacity: 0.06 });
   const hoverFill = useGlassSurface({ variant: &quot;fill&quot;, opacity: 0.05 });
 
@@ -4826,6 +4848,7 @@ export function LiquidGlassNotificationDropdown({
             popover.className
           )}
           style={{
+            ...overlayRootStyle,
             left: position.left,
             top: position.top,
             width: POPOVER_WIDTH,
@@ -5934,7 +5957,7 @@ import { useState, useRef, useEffect, type CSSProperties } from &quot;react&quot
 import { ChevronDown, Check } from &quot;lucide-react&quot;;
 import { createPortal } from &quot;react-dom&quot;;
 import { useGlassSurface } from &quot;./useGlassSurface&quot;;
-import { useLiquidTapScale } from &quot;./useLiquidMotion&quot;;
+import { useGlassOverlayRootStyle, useLiquidTapScale } from &quot;./useLiquidMotion&quot;;
 
 interface SelectOption {
   value: string;
@@ -5971,6 +5994,7 @@ export function LiquidGlassSelect({
   const sheen = useGlassSurface({ variant: &quot;sheen&quot;, opacity: 0.12 });
   const topHighlight = useGlassSurface({ variant: &quot;highlight&quot;, opacity: 0.30 });
   const dropdownHighlight = useGlassSurface({ variant: &quot;highlight&quot;, opacity: 0.20 });
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const selectedFill = useGlassSurface({ variant: &quot;fill&quot;, opacity: 0.10 });
   const hoverFill = useGlassSurface({ variant: &quot;fill&quot;, opacity: 0.06 });
 
@@ -6020,6 +6044,7 @@ export function LiquidGlassSelect({
             &quot;rounded-2xl py-1&quot;
           )}
           style={{
+            ...overlayRootStyle,
             left: position.left,
             top: position.top,
             width: position.width,
@@ -6162,7 +6187,11 @@ export function LiquidGlassSelect({
     <pre><code>import { cn } from &quot;../../utils/cn&quot;;
 import { motion, AnimatePresence } from &quot;framer-motion&quot;;
 import type { ReactNode } from &quot;react&quot;;
-import { useLiquidSlideVariants, useLiquidTransition } from &quot;./useLiquidMotion&quot;;
+import {
+  useLiquidSlideVariants,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from &quot;./useLiquidMotion&quot;;
 
 interface LiquidGlassSheetProps {
   isOpen: boolean;
@@ -6189,11 +6218,14 @@ export function LiquidGlassSheet({
   const isCompact = variant === &quot;compact&quot;;
   const slideVariants = useLiquidSlideVariants(&quot;bottom&quot;, { stiff: true });
   const transition = useLiquidTransition({ stiff: true });
+  const overlayRootStyle = useGlassOverlayRootStyle();
 
   return (
     &lt;AnimatePresence&gt;
       {isOpen &amp;&amp; (
-        &lt;div className={cn(
+        &lt;div
+          style={overlayRootStyle}
+          className={cn(
           &quot;fixed inset-0 z-50 flex items-end justify-center&quot;,
           isDetached &amp;&amp; &quot;p-4&quot;,
           isInset &amp;&amp; &quot;p-3&quot;
@@ -7490,7 +7522,11 @@ import { X, CheckCircle, AlertTriangle, Info, AlertCircle } from &quot;lucide-re
 import { useEffect, useState } from &quot;react&quot;;
 import { useGlassSurface } from &quot;./useGlassSurface&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
-import { useLiquidTapScale, useLiquidTransition } from &quot;./useLiquidMotion&quot;;
+import {
+  useLiquidTapScale,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from &quot;./useLiquidMotion&quot;;
 
 export interface ToastItem {
   id: string;
@@ -7557,6 +7593,7 @@ function ToastItemComponent({
 }) {
   const tapScale = useLiquidTapScale();
   const transition = useLiquidTransition();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const progressFill = useGlassSurface({ variant: &quot;fill&quot;, opacity: 0.2 });
   const [progress, setProgress] = useState(100);
   const duration = toast.duration || 4000;
@@ -7582,6 +7619,7 @@ function ToastItemComponent({
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: 50, scale: 0.9 }}
       transition={transition}
+      style={overlayRootStyle}
       className={cn(
         &quot;relative flex items-center gap-3 min-w-[280px] max-w-[400px] px-4 py-3 rounded-2xl&quot;,
         &quot;glass-blur-xl glass-surface border&quot;,
@@ -7929,6 +7967,7 @@ export function LiquidGlassToggle({
 import { motion, AnimatePresence } from &quot;framer-motion&quot;;
 import { useState, type ReactNode } from &quot;react&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
+import { useGlassOverlayRootStyle } from &quot;./useLiquidMotion&quot;;
 
 interface LiquidGlassTooltipProps {
   children: ReactNode;
@@ -7960,6 +7999,7 @@ export function LiquidGlassTooltip({
   delay = 0.3,
 }: LiquidGlassTooltipProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const overlayRootStyle = useGlassOverlayRootStyle();
   let timeoutId: ReturnType&lt;typeof setTimeout&gt;;
 
   const show = () =&gt; {
@@ -7988,6 +8028,7 @@ export function LiquidGlassTooltip({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.15 }}
+            style={overlayRootStyle}
             className={cn(
               &quot;absolute z-50 px-3 py-2 rounded-xl whitespace-nowrap&quot;,
               &quot;glass-blur-lg glass-surface glass-border glass-highlight&quot;,
@@ -8245,6 +8286,7 @@ import {
   useLiquidSlideVariants,
   useLiquidTransition,
   useLiquidTapScale,
+  useGlassOverlayRootStyle,
 } from &quot;./useLiquidMotion&quot;;
 
 interface ActionSheetItem {
@@ -8280,10 +8322,11 @@ export function MobileActionSheet({
   const slideVariants = useLiquidSlideVariants(&quot;bottom&quot;, { stiff: true });
   const transition = useLiquidTransition({ stiff: true });
   const tapScale = useLiquidTapScale();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   return (
     &lt;AnimatePresence&gt;
       {isOpen &amp;&amp; (
-        &lt;div className=&quot;fixed inset-0 z-[60] flex items-end justify-center&quot;&gt;
+        &lt;div className=&quot;fixed inset-0 z-[60] flex items-end justify-center&quot; style={overlayRootStyle}&gt;
           &lt;motion.div initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }} onClick={onClose}
             className=&quot;glass-backdrop-overlay&quot; /&gt;
@@ -8476,6 +8519,7 @@ import {
   useLiquidOverlayVariants,
   useLiquidTransition,
   useLiquidTapScale,
+  useGlassOverlayRootStyle,
 } from &quot;./useLiquidMotion&quot;;
 
 interface AlertOption {
@@ -8506,6 +8550,7 @@ export function MobileAlertDialog({
   const overlayVariants = useLiquidOverlayVariants();
   const transition = useLiquidTransition();
   const tapScale = useLiquidTapScale();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const defaultOptions: AlertOption[] = options || [
     { text: &quot;OK&quot;, style: &quot;cancel&quot;, onClick: onClose },
   ];
@@ -8522,7 +8567,7 @@ export function MobileAlertDialog({
   return (
     &lt;AnimatePresence&gt;
       {isOpen &amp;&amp; (
-        &lt;div className=&quot;fixed inset-0 z-[60] flex items-center justify-center p-6&quot;&gt;
+        &lt;div className=&quot;fixed inset-0 z-[60] flex items-center justify-center p-6&quot; style={overlayRootStyle}&gt;
           {/* Backdrop */}
           &lt;motion.div
             initial={{ opacity: 0.01 }}
@@ -8659,10 +8704,12 @@ function InfoIcon() {
     <pre><code>&lt;MobileAppRating /&gt;</code></pre>
     <h3>Source</h3>
     <pre><code>import { cn } from &quot;../../utils/cn&quot;;
-import { motion } from &quot;framer-motion&quot;;
+import { motion, AnimatePresence } from &quot;framer-motion&quot;;
 import { Star } from &quot;lucide-react&quot;;
+import { useState } from &quot;react&quot;;
 import { useGlassSurface } from &quot;./useGlassSurface&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
+import { useGlassOverlayRootStyle } from &quot;./useLiquidMotion&quot;;
 
 interface MobileAppRatingProps {
   isOpen: boolean;
@@ -8687,98 +8734,107 @@ export function MobileAppRating({
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const displayRating = hoverRating || rating;
-
-  if (!isOpen) return null;
+  const overlayRootStyle = useGlassOverlayRootStyle();
 
   return (
-    &lt;div className=&quot;fixed inset-0 z-[60] flex items-center justify-center p-6&quot;&gt;
-      &lt;motion.div
-        initial={{ opacity: 0.01 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={onClose}
-        className=&quot;glass-backdrop&quot;
-      /&gt;
+    &lt;AnimatePresence&gt;
+      {isOpen &amp;&amp; (
+        &lt;motion.div
+          initial={{ opacity: 0.01 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          style={overlayRootStyle}
+          className=&quot;fixed inset-0 z-[60] flex items-center justify-center p-6&quot;
+        &gt;
+          &lt;motion.div
+            initial={{ opacity: 0.01 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className=&quot;glass-backdrop&quot;
+          /&gt;
 
-      &lt;motion.div
-        initial={{ opacity: 0.01, scale: 0.9, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        className={cn(
-          &quot;relative w-full max-w-sm&quot;,
-          &quot;glass-blur-xl glass-surface glass-border glass-highlight-strong&quot;,
-          &quot;rounded-2xl overflow-hidden&quot;,
-          className
-        )}
-      &gt;
-        &lt;GlassTopHighlight className=&quot;inset-x-0 top-0&quot; opacity={0.25} /&gt;
+          &lt;motion.div
+            initial={{ opacity: 0.01, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className={cn(
+              &quot;relative w-full max-w-sm&quot;,
+              &quot;glass-blur-xl glass-surface glass-border glass-highlight-strong&quot;,
+              &quot;rounded-2xl overflow-hidden&quot;,
+              className
+            )}
+          &gt;
+            &lt;GlassTopHighlight className=&quot;inset-x-0 top-0&quot; opacity={0.25} /&gt;
 
-        &lt;div className=&quot;px-6 py-8 text-center&quot;&gt;
-          {/* App icon */}
-          &lt;div className=&quot;mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-liquid-blue to-liquid-purple&quot;&gt;
-            &lt;Star size={28} className=&quot;text-white&quot; /&gt;
-          &lt;/div&gt;
+            &lt;div className=&quot;px-6 py-8 text-center&quot;&gt;
+              {/* App icon */}
+              &lt;div className=&quot;mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-liquid-blue to-liquid-purple&quot;&gt;
+                &lt;Star size={28} className=&quot;text-white&quot; /&gt;
+              &lt;/div&gt;
 
-          &lt;h3 className=&quot;text-lg font-semibold text-[var(--lg-text)] mb-2&quot;&gt;{title} — {appName}&lt;/h3&gt;
-          &lt;p className=&quot;text-sm text-[var(--lg-text-muted)] leading-relaxed mb-6&quot;&gt;{message}&lt;/p&gt;
+              &lt;h3 className=&quot;text-lg font-semibold text-[var(--lg-text)] mb-2&quot;&gt;{title} — {appName}&lt;/h3&gt;
+              &lt;p className=&quot;text-sm text-[var(--lg-text-muted)] leading-relaxed mb-6&quot;&gt;{message}&lt;/p&gt;
 
-          {/* Stars */}
-          &lt;div className=&quot;flex items-center justify-center gap-1 mb-6&quot;&gt;
-            {[1, 2, 3, 4, 5].map((star) =&gt; (
-              &lt;motion.button
-                key={star}
-                whileTap={{ scale: 0.85 }}
-                onMouseEnter={() =&gt; setHoverRating(star)}
-                onMouseLeave={() =&gt; setHoverRating(0)}
-                onClick={() =&gt; setRating(star)}
-                className=&quot;flex items-center justify-center&quot;
-              &gt;
-                &lt;Star
-                  size={32}
+              {/* Stars */}
+              &lt;div className=&quot;flex items-center justify-center gap-1 mb-6&quot;&gt;
+                {[1, 2, 3, 4, 5].map((star) =&gt; (
+                  &lt;motion.button
+                    key={star}
+                    whileTap={{ scale: 0.85 }}
+                    onMouseEnter={() =&gt; setHoverRating(star)}
+                    onMouseLeave={() =&gt; setHoverRating(0)}
+                    onClick={() =&gt; setRating(star)}
+                    className=&quot;flex items-center justify-center&quot;
+                  &gt;
+                    &lt;Star
+                      size={32}
+                      className={cn(
+                        &quot;transition-colors&quot;,
+                        star &lt;= displayRating
+                          ? &quot;text-liquid-amber fill-liquid-amber&quot;
+                          : &quot;text-[var(--lg-text-muted)]&quot;
+                      )}
+                    /&gt;
+                  &lt;/motion.button&gt;
+                ))}
+              &lt;/div&gt;
+
+              {/* Buttons */}
+              &lt;div className=&quot;flex gap-3&quot;&gt;
+                &lt;motion.button
+                  whileTap={{ scale: 0.98 }}
+                  onClick={onClose}
+                  className=&quot;flex-1 py-3 rounded-xl text-sm font-semibold text-[var(--lg-text-muted)] hover:bg-[var(--lg-border-subtle)] transition-colors&quot;
+                &gt;
+                  Remind Later
+                &lt;/motion.button&gt;
+                &lt;motion.button
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() =&gt; {
+                    if (rating &gt; 0) onRate(rating);
+                    onClose();
+                  }}
+                  disabled={rating === 0}
                   className={cn(
-                    &quot;transition-colors&quot;,
-                    star &lt;= displayRating
-                      ? &quot;text-liquid-amber fill-liquid-amber&quot;
-                      : &quot;text-[var(--lg-text-muted)]&quot;
+                    &quot;flex-1 py-3 rounded-xl text-sm font-semibold transition-all&quot;,
+                    rating &gt; 0
+                      ? &quot;text-white glass-blur-sm bg-liquid-blue/20 border border-liquid-blue/30&quot;
+                      : &quot;text-white/20&quot;
                   )}
-                /&gt;
-              &lt;/motion.button&gt;
-            ))}
-          &lt;/div&gt;
-
-          {/* Buttons */}
-          &lt;div className=&quot;flex gap-3&quot;&gt;
-            &lt;motion.button
-              whileTap={{ scale: 0.98 }}
-              onClick={onClose}
-              className=&quot;flex-1 py-3 rounded-xl text-sm font-semibold text-[var(--lg-text-muted)] hover:bg-[var(--lg-border-subtle)] transition-colors&quot;
-            &gt;
-              Remind Later
-            &lt;/motion.button&gt;
-            &lt;motion.button
-              whileTap={{ scale: 0.98 }}
-              onClick={() =&gt; {
-                if (rating &gt; 0) onRate(rating);
-                onClose();
-              }}
-              disabled={rating === 0}
-              className={cn(
-                &quot;flex-1 py-3 rounded-xl text-sm font-semibold transition-all&quot;,
-                rating &gt; 0
-                  ? &quot;text-white glass-blur-sm bg-liquid-blue/20 border border-liquid-blue/30&quot;
-                  : &quot;text-white/20&quot;
-              )}
-              style={rating &gt; 0 ? undefined : { background: disabledFill.style.background }}
-            &gt;
-              Submit Rating
-            &lt;/motion.button&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/motion.div&gt;
-    &lt;/div&gt;
+                  style={rating &gt; 0 ? undefined : { background: disabledFill.style.background }}
+                &gt;
+                  Submit Rating
+                &lt;/motion.button&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/motion.div&gt;
+        &lt;/motion.div&gt;
+      )}
+    &lt;/AnimatePresence&gt;
   );
 }
-
-import { useState } from &quot;react&quot;;
 </code></pre>
     <p><a href="/docs?topic=app-rating">Open in interactive docs</a></p>
   </article>
@@ -9418,6 +9474,7 @@ import {
   useLiquidOverlayVariants,
   useLiquidTransition,
   useLiquidTapScale,
+  useGlassOverlayRootStyle,
 } from &quot;./useLiquidMotion&quot;;
 
 interface ContextAction {
@@ -9444,6 +9501,7 @@ export function MobileContextPreview({
   const overlayVariants = useLiquidOverlayVariants();
   const transition = useLiquidTransition();
   const tapScale = useLiquidTapScale();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const [isOpen, setIsOpen] = useState(false);
   const [childRect, setChildRect] = useState&lt;DOMRect | null&gt;(null);
   const ref = useRef&lt;HTMLDivElement&gt;(null);
@@ -9475,6 +9533,7 @@ export function MobileContextPreview({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
+          style={overlayRootStyle}
           className=&quot;fixed inset-0 z-[80] flex items-center justify-center&quot;
         &gt;
           &lt;motion.div
@@ -9991,6 +10050,7 @@ import {
   useLiquidSlideVariants,
   useLiquidTransition,
   useLiquidTapScale,
+  useGlassOverlayRootStyle,
 } from &quot;./useLiquidMotion&quot;;
 
 interface Permission {
@@ -10023,6 +10083,7 @@ export function MobilePermissionDialog({
   const slideVariants = useLiquidSlideVariants(&quot;bottom&quot;, { stiff: true });
   const transition = useLiquidTransition({ stiff: true });
   const tapScale = useLiquidTapScale();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const handleFill = useGlassSurface({ variant: &quot;fill&quot;, opacity: 0.2 });
   const [permMap, setPermMap] = useState&lt;Record&lt;string, boolean&gt;&gt;(
     Object.fromEntries(permissions.map((p) =&gt; [p.id, p.granted ?? false]))
@@ -10035,7 +10096,7 @@ export function MobilePermissionDialog({
   return (
     &lt;AnimatePresence&gt;
       {isOpen &amp;&amp; (
-        &lt;div className=&quot;fixed inset-0 z-[60] flex items-end justify-center&quot;&gt;
+        &lt;div className=&quot;fixed inset-0 z-[60] flex items-end justify-center&quot; style={overlayRootStyle}&gt;
           &lt;motion.div
             initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
@@ -10515,6 +10576,7 @@ import {
   useLiquidSlideVariants,
   useLiquidTransition,
   useLiquidTapScale,
+  useGlassOverlayRootStyle,
 } from &quot;./useLiquidMotion&quot;;
 
 interface MenuSection { title: string; items: MenuItem[]; }
@@ -10542,11 +10604,12 @@ export function MobileSlideMenu({
   const slideVariants = useLiquidSlideVariants(position, { stiff: edgeStiff });
   const transition = useLiquidTransition({ stiff: edgeStiff });
   const tapScale = useLiquidTapScale();
+  const overlayRootStyle = useGlassOverlayRootStyle();
 
   return (
     &lt;AnimatePresence&gt;
       {isOpen &amp;&amp; (
-        &lt;div className=&quot;fixed inset-0 z-[55]&quot;&gt;
+        &lt;div className=&quot;fixed inset-0 z-[55]&quot; style={overlayRootStyle}&gt;
           &lt;motion.div initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onClose} className=&quot;glass-backdrop-overlay&quot; /&gt;
           &lt;motion.div
@@ -10653,7 +10716,11 @@ import { useState, useEffect } from &quot;react&quot;;
 import { X } from &quot;lucide-react&quot;;
 import { useGlassSurface } from &quot;./useGlassSurface&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
-import { useLiquidSlideVariants, useLiquidTransition } from &quot;./useLiquidMotion&quot;;
+import {
+  useLiquidSlideVariants,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from &quot;./useLiquidMotion&quot;;
 
 
 interface MobileSnackbarProps {
@@ -10673,6 +10740,7 @@ export function MobileSnackbar({
 }: MobileSnackbarProps) {
   const slideVariants = useLiquidSlideVariants(&quot;bottom&quot;);
   const transition = useLiquidTransition();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const progressFill = useGlassSurface({ variant: &quot;fill&quot;, opacity: 0.2 });
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(100);
@@ -10710,6 +10778,7 @@ export function MobileSnackbar({
         &lt;motion.div
           {...slideVariants}
           transition={transition}
+          style={overlayRootStyle}
           className={cn(
             &quot;fixed bottom-4 left-4 right-4 z-50 max-w-lg mx-auto&quot;,
             &quot;rounded-2xl overflow-hidden&quot;,
@@ -10820,7 +10889,7 @@ import { motion, AnimatePresence } from &quot;framer-motion&quot;;
 import { useState } from &quot;react&quot;;
 import type { ReactNode } from &quot;react&quot;;
 import { useGlassSurface } from &quot;./useGlassSurface&quot;;
-import { useLiquidTransition } from &quot;./useLiquidMotion&quot;;
+import { useLiquidTransition, useGlassOverlayRootStyle } from &quot;./useLiquidMotion&quot;;
 
 interface SplashSlide {
   id: string;
@@ -10848,6 +10917,7 @@ export function MobileSplashScreen({
   skipText = &quot;Skip&quot;,
 }: MobileSplashScreenProps) {
   const transition = useLiquidTransition();
+  const overlayRootStyle = useGlassOverlayRootStyle();
   const buttonFill = useGlassSurface({ variant: &quot;fill&quot;, opacity: 0.15 });
   const [currentSlide, setCurrentSlide] = useState(0);
   const isLastSlide = currentSlide === slides.length - 1;
@@ -10861,6 +10931,7 @@ export function MobileSplashScreen({
       initial={{ opacity: 0.01 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      style={overlayRootStyle}
       className={cn(
         &quot;fixed inset-0 z-[70] flex flex-col items-center justify-between&quot;,
         &quot;bg-[#0a0a0f]&quot;,
