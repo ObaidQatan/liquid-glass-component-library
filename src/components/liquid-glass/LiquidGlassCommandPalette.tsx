@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Search, Command } from "lucide-react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import { useLiquidOverlayVariants, useLiquidTransition } from "./useLiquidMotion";
 
 interface CommandItem {
   id: string;
@@ -26,6 +27,8 @@ export function LiquidGlassCommandPalette({
   items,
   placeholder = "Type a command or search...",
 }: LiquidGlassCommandPaletteProps) {
+  const overlayVariants = useLiquidOverlayVariants();
+  const transition = useLiquidTransition();
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -97,10 +100,8 @@ export function LiquidGlassCommandPalette({
         >
           <div className="glass-backdrop" />
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.96 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            {...overlayVariants}
+            transition={transition}
             onClick={(e) => e.stopPropagation()}
             className="relative w-full max-w-xl overflow-hidden rounded-2xl glass-blur-xl glass-surface glass-border glass-highlight-strong"
           >

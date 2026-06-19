@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { useGlassSurface } from "./useGlassSurface";
 import { GlassSheen } from "./GlassSheen";
+import { useLiquidTransition } from "./useLiquidMotion";
 
 interface TabItem {
   label: string;
@@ -25,6 +26,7 @@ export function LiquidGlassTabBar({
   className,
   variant = "default",
 }: LiquidGlassTabBarProps) {
+  const transition = useLiquidTransition();
   const thumbSurface = useGlassSurface({ variant: "thumb" });
   if (variant === "pills") {
     return (
@@ -48,7 +50,7 @@ export function LiquidGlassTabBar({
               <motion.div
                 layoutId="tab-pill"
                 className="absolute inset-0 rounded-xl glass-blur-lg pointer-events-none overflow-hidden"
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                transition={transition}
                 style={thumbSurface.style}
               >
                 <div className="absolute inset-0 rounded-xl glass-reflection mix-blend-soft-light pointer-events-none" />
@@ -83,7 +85,7 @@ export function LiquidGlassTabBar({
               <motion.div
                 layoutId="tab-underline"
                 className="absolute bottom-0 left-2 right-2 h-1.5 rounded-full glass-blur-lg pointer-events-none overflow-hidden"
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                transition={transition}
                 style={thumbSurface.style}
               >
                 <div className="absolute inset-0 rounded-full glass-reflection mix-blend-soft-light pointer-events-none" />
@@ -117,7 +119,7 @@ export function LiquidGlassTabBar({
             <motion.div
               layoutId="tab-default"
               className="absolute inset-0.5 rounded-xl glass-blur-lg pointer-events-none overflow-hidden"
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              transition={transition}
               style={thumbSurface.style}
             >
               <div className="absolute inset-0 rounded-xl glass-reflection mix-blend-soft-light pointer-events-none" />

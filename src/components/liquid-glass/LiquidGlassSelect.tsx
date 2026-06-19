@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, type CSSProperties } from "react";
 import { ChevronDown, Check } from "lucide-react";
 import { createPortal } from "react-dom";
 import { useGlassSurface } from "./useGlassSurface";
+import { useLiquidTapScale } from "./useLiquidMotion";
 
 interface SelectOption {
   value: string;
@@ -30,6 +31,7 @@ export function LiquidGlassSelect({
   label,
   disabled,
 }: LiquidGlassSelectProps) {
+  const tapScale = useLiquidTapScale();
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ left: 0, top: 0, width: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -134,7 +136,7 @@ export function LiquidGlassSelect({
         </label>
       )}
       <motion.button
-        whileTap={{ scale: disabled ? 1 : 0.98 }}
+        whileTap={{ scale: disabled ? 1 : tapScale }}
         onClick={handleToggle}
         className={cn(
           "relative flex w-full items-center justify-between gap-3 overflow-hidden",

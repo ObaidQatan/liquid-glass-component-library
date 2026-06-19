@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
+import { useLiquidSlideVariants, useLiquidTransition } from "./useLiquidMotion";
 
 interface LiquidGlassSheetProps {
   isOpen: boolean;
@@ -25,6 +26,8 @@ export function LiquidGlassSheet({
   const isDetached = variant === "detached";
   const isInset = variant === "inset";
   const isCompact = variant === "compact";
+  const slideVariants = useLiquidSlideVariants("bottom");
+  const transition = useLiquidTransition();
 
   return (
     <AnimatePresence>
@@ -45,10 +48,8 @@ export function LiquidGlassSheet({
           />
           {/* Sheet */}
           <motion.div
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={{ type: "spring", stiffness: 350, damping: 35 }}
+            {...slideVariants}
+            transition={transition}
             className={cn(
               "relative w-full overflow-hidden",
               "glass-blur-xl glass-surface-strong glass-border glass-highlight-strong",

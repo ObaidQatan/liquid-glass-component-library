@@ -1,5 +1,6 @@
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
+import { useLiquidTransition } from "./useLiquidMotion";
 
 interface MobilePageIndicatorProps {
   currentPage: number;
@@ -18,6 +19,7 @@ export function MobilePageIndicator({
   activeColor = "bg-white",
   inactiveColor = "bg-white/20",
 }: MobilePageIndicatorProps) {
+  const transition = useLiquidTransition();
   if (variant === "line") {
     return (
       <div className={cn("flex gap-1", className)}>
@@ -28,7 +30,7 @@ export function MobilePageIndicator({
               width: i === currentPage ? 24 : 6,
               opacity: i === currentPage ? 1 : 0.4,
             }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            transition={transition}
             className={cn("h-1.5 rounded-full", i === currentPage ? activeColor : inactiveColor)}
           />
         ))}
@@ -58,7 +60,7 @@ export function MobilePageIndicator({
             scale: i === currentPage ? 1.2 : 1,
             width: i === currentPage ? 20 : 8,
           }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          transition={transition}
           className={cn(
             "h-2 rounded-full transition-colors",
             i === currentPage ? activeColor : inactiveColor

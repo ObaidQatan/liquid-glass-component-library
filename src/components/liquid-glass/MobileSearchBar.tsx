@@ -4,6 +4,7 @@ import { Search, X } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
 import { GlassSheen } from "./GlassSheen";
+import { useLiquidTransition } from "./useLiquidMotion";
 
 interface MobileSearchBarProps {
   placeholder?: string;
@@ -24,6 +25,7 @@ export function MobileSearchBar({
   className,
   autoFocus = false,
 }: MobileSearchBarProps) {
+  const transition = useLiquidTransition();
   const [value, setValue] = useState(controlledValue || "");
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -58,7 +60,7 @@ export function MobileSearchBar({
             "inset 0 1px 0 var(--lg-highlight-top), inset 0 -1px 0 var(--lg-highlight-bottom), 0 0 24px rgba(255,255,255,0.12)",
         }),
       }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      transition={transition}
       className={cn(
         "relative flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-200 overflow-hidden",
         "glass-blur glass-surface-strong glass-border glass-highlight",

@@ -4,6 +4,7 @@ import { Bell, Check, Trash2, MessageSquare, Heart, UserPlus, AlertCircle } from
 import { useState, useRef, useEffect, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { useGlassSurface } from "./useGlassSurface";
+import { useLiquidTapScale } from "./useLiquidMotion";
 
 interface Notification {
   id: string;
@@ -45,6 +46,7 @@ export function LiquidGlassNotificationDropdown({
   onClearAll,
   onNotificationClick,
 }: LiquidGlassNotificationDropdownProps) {
+  const tapScale = useLiquidTapScale();
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -115,7 +117,7 @@ export function LiquidGlassNotificationDropdown({
             <div className="flex items-center gap-1">
               <motion.button
                 whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                whileTap={{ scale: tapScale }}
                 onClick={onMarkAllRead}
                 className="p-1.5 rounded-lg text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border-subtle)] transition-colors"
                 title="Mark all read"
@@ -124,7 +126,7 @@ export function LiquidGlassNotificationDropdown({
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                whileTap={{ scale: tapScale }}
                 onClick={onClearAll}
                 className="p-1.5 rounded-lg text-[var(--lg-text-muted)] hover:text-liquid-rose hover:bg-[var(--lg-border-subtle)] transition-colors"
                 title="Clear all"
@@ -186,7 +188,7 @@ export function LiquidGlassNotificationDropdown({
     <div ref={triggerRef} className={cn("relative", className)}>
       <motion.button
         whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileTap={{ scale: tapScale }}
         onClick={handleToggle}
         className="relative flex h-10 w-10 items-center justify-center rounded-xl glass-blur-sm glass-surface glass-border text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors"
       >

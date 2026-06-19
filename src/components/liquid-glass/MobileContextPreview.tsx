@@ -3,6 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import {
+  useLiquidOverlayVariants,
+  useLiquidTransition,
+  useLiquidTapScale,
+} from "./useLiquidMotion";
 
 interface ContextAction {
   id: string;
@@ -25,6 +30,9 @@ export function MobileContextPreview({
   previewContent,
   className,
 }: MobileContextPreviewProps) {
+  const overlayVariants = useLiquidOverlayVariants();
+  const transition = useLiquidTransition();
+  const tapScale = useLiquidTapScale();
   const [isOpen, setIsOpen] = useState(false);
   const [childRect, setChildRect] = useState<DOMRect | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -68,9 +76,8 @@ export function MobileContextPreview({
 
           {/* Preview */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.8, opacity: 0, y: 20 }}
+            {...overlayVariants}
+            transition={transition}
             className="relative w-full max-w-xs mx-auto"
           >
             <motion.div
@@ -92,7 +99,7 @@ export function MobileContextPreview({
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.1 }}
+              transition={useLiquidTransition({ delay: 0.1 })}
               className={cn(
                 "rounded-2xl overflow-hidden",
                 "glass-blur-xl glass-surface glass-border glass-highlight"
@@ -102,7 +109,7 @@ export function MobileContextPreview({
               {actions.map((action, i) => (
                 <motion.button
                   key={action.id}
-                  whileTap={{ scale: 0.98 }}
+                  whileTap={{ scale: tapScale }}
                   onClick={() => {
                     action.onClick?.();
                     setIsOpen(false);

@@ -3,6 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Check, AlertTriangle } from "lucide-react";
 import type { ReactNode } from "react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import {
+  useLiquidOverlayVariants,
+  useLiquidTransition,
+  useLiquidTapScale,
+} from "./useLiquidMotion";
 
 interface AlertOption {
   text: string;
@@ -29,6 +34,9 @@ export function MobileAlertDialog({
   icon = "info",
   className,
 }: MobileAlertDialogProps) {
+  const overlayVariants = useLiquidOverlayVariants();
+  const transition = useLiquidTransition();
+  const tapScale = useLiquidTapScale();
   const defaultOptions: AlertOption[] = options || [
     { text: "OK", style: "cancel", onClick: onClose },
   ];
@@ -57,10 +65,8 @@ export function MobileAlertDialog({
 
           {/* Dialog */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 10 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            {...overlayVariants}
+            transition={transition}
             className={cn(
               "relative w-full max-w-sm",
               "glass-blur-xl glass-surface glass-border glass-highlight-strong",
@@ -89,8 +95,8 @@ export function MobileAlertDialog({
                   key={i}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.08 }}
-                  whileTap={{ scale: 0.98 }}
+                  transition={{ ...transition, delay: i * 0.08 }}
+                  whileTap={{ scale: tapScale }}
                   onClick={() => {
                     option.onClick?.();
                     onClose();

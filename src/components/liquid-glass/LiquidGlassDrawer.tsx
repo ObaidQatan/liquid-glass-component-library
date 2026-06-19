@@ -2,6 +2,7 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import { useLiquidSlideVariants, useLiquidTransition } from "./useLiquidMotion";
 
 interface LiquidGlassDrawerProps {
   isOpen: boolean;
@@ -23,6 +24,8 @@ export function LiquidGlassDrawer({
   title,
 }: LiquidGlassDrawerProps) {
   const isLeft = position === "left";
+  const slideVariants = useLiquidSlideVariants(position);
+  const transition = useLiquidTransition();
 
   return (
     <AnimatePresence>
@@ -39,10 +42,8 @@ export function LiquidGlassDrawer({
           />
           {/* Drawer */}
           <motion.div
-            initial={{ x: isLeft ? "-100%" : "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: isLeft ? "-100%" : "100%" }}
-            transition={{ type: "spring", stiffness: 350, damping: 35 }}
+            {...slideVariants}
+            transition={transition}
             className={cn(
               "absolute top-0 bottom-0",
               isLeft ? "left-0" : "right-0",

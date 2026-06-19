@@ -1,8 +1,10 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { useGlassSurface } from "./useGlassSurface";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import { useLiquidSlideVariants, useLiquidTransition } from "./useLiquidMotion";
 
 
 interface MobileSnackbarProps {
@@ -20,6 +22,8 @@ export function MobileSnackbar({
   duration = 4000,
   className,
 }: MobileSnackbarProps) {
+  const slideVariants = useLiquidSlideVariants("bottom");
+  const transition = useLiquidTransition();
   const progressFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(100);
@@ -55,10 +59,8 @@ export function MobileSnackbar({
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          {...slideVariants}
+          transition={transition}
           className={cn(
             "fixed bottom-4 left-4 right-4 z-50 max-w-lg mx-auto",
             "rounded-2xl overflow-hidden",
@@ -112,5 +114,3 @@ export function MobileSnackbar({
     </AnimatePresence>
   );
 }
-
-import { useState, useEffect } from "react";

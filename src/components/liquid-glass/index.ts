@@ -73,6 +73,13 @@ export type { GlassSurfaceVariant, UseGlassSurfaceResult } from "./useGlassSurfa
 export { useCustomKubeFilter } from "./useCustomKubeFilter";
 export type { UseCustomKubeFilterResult } from "./useCustomKubeFilter";
 export { useLiquidPress } from "./useLiquidPress";
+export {
+  useLiquidTransition,
+  useLiquidOverlayVariants,
+  useLiquidSlideVariants,
+  useLiquidTapScale,
+  useLiquidHoverLift,
+} from "./useLiquidMotion";
 export { GlassTopHighlight } from "./GlassTopHighlight";
 export { GlassSheen } from "./GlassSheen";
 export { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";

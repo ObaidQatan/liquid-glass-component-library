@@ -4,6 +4,7 @@ import { useState, useCallback, type ReactNode, type MouseEvent } from "react";
 import { useLiquidPress } from "./useLiquidPress";
 import { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import { useLiquidTapScale } from "./useLiquidMotion";
 
 interface LiquidGlassIos26ButtonProps {
   children: ReactNode;
@@ -24,6 +25,7 @@ export function LiquidGlassIos26Button({
   onClick,
   fullWidth,
 }: LiquidGlassIos26ButtonProps) {
+  const tapScale = useLiquidTapScale();
   const [ripples, setRipples] = useState<{ id: number; x: number; y: number }[]>([]);
   const { state: press, onPointerDown, onPointerUp, onPointerLeave, onPointerCancel } =
     useLiquidPress<HTMLButtonElement>(disabled);
@@ -51,7 +53,7 @@ export function LiquidGlassIos26Button({
   return (
     <motion.button
       whileHover={{ scale: disabled ? 1 : 1.03 }}
-      whileTap={{ scale: disabled ? 1 : 0.97 }}
+      whileTap={{ scale: disabled ? 1 : tapScale }}
       disabled={disabled}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}

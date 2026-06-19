@@ -2,6 +2,7 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useCallback, useEffect } from "react";
+import { useLiquidTapScale, useLiquidTransition } from "./useLiquidMotion";
 
 interface CarouselItem {
   id: string;
@@ -25,6 +26,8 @@ export function LiquidGlassCarousel({
   showIndicators = true,
   showArrows = true,
 }: LiquidGlassCarouselProps) {
+  const transition = useLiquidTransition();
+  const tapScale = useLiquidTapScale();
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -62,7 +65,7 @@ export function LiquidGlassCarousel({
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            transition={transition}
             className="absolute inset-0"
           >
             {items[current].content}
@@ -74,7 +77,7 @@ export function LiquidGlassCarousel({
         <>
           <motion.button
             whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: tapScale }}
             onClick={prev}
             className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full glass-blur-sm glass-surface glass-border text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] transition-colors"
           >
@@ -82,7 +85,7 @@ export function LiquidGlassCarousel({
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: tapScale }}
             onClick={next}
             className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full glass-blur-sm glass-surface glass-border text-[var(--lg-text-secondary)] hover:text-[var(--lg-text)] transition-colors"
           >

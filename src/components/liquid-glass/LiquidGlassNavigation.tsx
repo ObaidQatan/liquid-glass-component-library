@@ -5,6 +5,7 @@ import { useGlassSurface } from "./useGlassSurface";
 import { useGlassFluidity } from "./useGlassFluidity";
 import { GlassTopHighlight } from "./GlassTopHighlight";
 import { GlassSheen } from "./GlassSheen";
+import { useLiquidTapScale } from "./useLiquidMotion";
 
 interface NavItem {
   label: string;
@@ -26,6 +27,7 @@ export function LiquidGlassNavigation({
   logo,
   actions,
 }: LiquidGlassNavigationProps) {
+  const tapScale = useLiquidTapScale();
   const fluidity = useGlassFluidity();
   const thumbSurface = useGlassSurface({ variant: "thumb" });
 
@@ -47,7 +49,7 @@ export function LiquidGlassNavigation({
           <motion.button
             key={i}
             whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: tapScale }}
             onClick={item.onClick}
             className={cn(
               "relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-colors",

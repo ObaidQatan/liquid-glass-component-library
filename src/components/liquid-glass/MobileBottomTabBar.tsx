@@ -14,6 +14,7 @@ import { useGlassSurface } from "./useGlassSurface";
 import { useGlassFluidity } from "./useGlassFluidity";
 import { GlassTopHighlight } from "./GlassTopHighlight";
 import { GlassSheen } from "./GlassSheen";
+import { useLiquidTapScale } from "./useLiquidMotion";
 
 interface TabItem {
   id: string;
@@ -65,6 +66,7 @@ export function MobileBottomTabBar({
   centerTabButton,
   trailingButton,
 }: MobileBottomTabBarProps) {
+  const tapScale = useLiquidTapScale();
   const [ripples, setRipples] = useState<Record<string, { id: number; x: number; y: number }[]>>({});
   const [indicator, setIndicator] = useState({ left: 0, top: 0, width: 0, height: 0 });
   const tabsContainerRef = useRef<HTMLDivElement>(null);
@@ -173,7 +175,7 @@ export function MobileBottomTabBar({
 
   const TrailingButton = trailingButton ? (
     <motion.button
-      whileTap={{ scale: 0.88 }}
+      whileTap={{ scale: tapScale }}
       onClick={trailingButton.onClick}
       className="relative flex flex-col items-center justify-center"
     >
@@ -208,7 +210,7 @@ export function MobileBottomTabBar({
           {renderTabs(leftTabs)}
 
           <motion.button
-            whileTap={{ scale: 0.88 }}
+            whileTap={{ scale: tapScale }}
             onClick={centerTabButton.onClick}
             className="flex flex-col items-center -mt-5 relative"
           >
