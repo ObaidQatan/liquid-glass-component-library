@@ -9,6 +9,7 @@ import {
 export type GlassSurfaceVariant =
   | "surface"
   | "surface-strong"
+  | "surface-lg"
   | "surface-dark"
   | "fill"
   | "thumb"
@@ -150,6 +151,12 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassS
         return {
           style: { backdropFilter: liteFilter },
           className: "glass-blur glass-surface-strong glass-border glass-highlight",
+        };
+
+      case "surface-lg":
+        return {
+          style: { backdropFilter: fullFilter },
+          className: "glass-blur-lg glass-surface-strong glass-border glass-highlight",
         };
 
       case "surface-dark":

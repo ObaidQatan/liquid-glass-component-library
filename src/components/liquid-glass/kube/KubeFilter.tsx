@@ -279,8 +279,13 @@ export function KubeFilter({
               preserveAspectRatio="none"
               result="specularMap"
             />
-            <feDisplacementMap
+            <feGaussianBlur
               in="SourceGraphic"
+              stdDeviation={blur}
+              result="blurred"
+            />
+            <feDisplacementMap
+              in="blurred"
               in2="displacementMap"
               scale={refractionScale}
               xChannelSelector="R"

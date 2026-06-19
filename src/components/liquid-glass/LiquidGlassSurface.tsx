@@ -22,7 +22,7 @@ export function LiquidGlassSurface({
   const mode = modeProp ?? globalMode;
   const isLiquid = mode === "liquid-glass";
 
-  const surface = useGlassSurface({ variant: "surface-strong" });
+  const surface = useGlassSurface({ variant: "surface-lg" });
 
   return (
     <motion.div
