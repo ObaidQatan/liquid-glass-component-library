@@ -30,6 +30,19 @@
   --color-liquid-rose: #f43f5e;
 }
 
+/* Register the glass variables so they can be transitioned locally
+   (e.g. for overlay enter animations). */
+@property --lg-blur {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 17;
+}
+@property --lg-saturation {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 100;
+}
+
 /* ───────── Base Styles ───────── */
 @layer base {
   html {
@@ -299,6 +312,31 @@
   .glass-backdrop-subtle,
   .glass-backdrop-overlay {
     will-change: backdrop-filter;
+    transition:
+      --lg-blur 0.35s ease-out,
+      --lg-saturation 0.35s ease-out,
+      backdrop-filter 0.35s ease-out,
+      -webkit-backdrop-filter 0.35s ease-out;
+  }
+}
+
+/* When a fixed overlay/backdrop first mounts, start its local blur and
+   saturation at 0 and let them transition up to the global values. This gives
+   the glass effect a smooth fade-in instead of snapping on. */
+@starting-style {
+  .fixed .glass-blur,
+  .fixed .glass-blur-sm,
+  .fixed .glass-blur-lg,
+  .fixed .glass-blur-xl,
+  .fixed.glass-blur,
+  .fixed.glass-blur-sm,
+  .fixed.glass-blur-lg,
+  .fixed.glass-blur-xl,
+  .glass-backdrop,
+  .glass-backdrop-subtle,
+  .glass-backdrop-overlay {
+    --lg-blur: 0;
+    --lg-saturation: 0;
   }
 }
 
