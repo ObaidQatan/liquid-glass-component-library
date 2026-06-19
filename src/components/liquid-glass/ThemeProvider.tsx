@@ -60,7 +60,7 @@ const defaultLiquidGlass: LiquidGlassSettings = {
   specularOpacity: 10,
   transparency: 20,
   blur: 10,
-  saturation: 120,
+  saturation: 100,
 };
 
 const ThemeContext = createContext<ThemeContextType>({

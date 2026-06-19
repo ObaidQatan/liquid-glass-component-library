@@ -60,14 +60,14 @@ export function MobileContextPreview({
     <AnimatePresence>
       {isOpen && childRect && (
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 0.01 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
           className="fixed inset-0 z-[80] flex items-center justify-center"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0.01, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             className="glass-backdrop-subtle"

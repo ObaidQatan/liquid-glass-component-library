@@ -56,7 +56,7 @@ export function MobileAlertDialog({
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-6">
           {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}

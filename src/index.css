@@ -282,6 +282,24 @@
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
+
+  /* Overlays and portaled popovers mount on demand; tell the compositor to
+     prepare backdrop-filter ahead of time so blur/saturation do not pop in
+     after a short delay. Fixed-position hosts (overlay roots and portaled
+     popovers) are the only places where this hint is needed. */
+  .fixed .glass-blur,
+  .fixed .glass-blur-sm,
+  .fixed .glass-blur-lg,
+  .fixed .glass-blur-xl,
+  .fixed.glass-blur,
+  .fixed.glass-blur-sm,
+  .fixed.glass-blur-lg,
+  .fixed.glass-blur-xl,
+  .glass-backdrop,
+  .glass-backdrop-subtle,
+  .glass-backdrop-overlay {
+    will-change: backdrop-filter;
+  }
 }
 
 /* ───────── Keyframes ───────── */

@@ -239,7 +239,7 @@ export default function Playground() {
                       min={0}
                       max={100}
                       onChange={(v) => setLiquidGlass({ blur: v })}
-                      formatter={(v) => `${Math.round((v / 100) * 30)}px`}
+                      formatter={(v) => `${v}%`}
                     />
                     <Slider
                       label="Saturation"

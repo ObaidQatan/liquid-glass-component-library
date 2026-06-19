@@ -36,8 +36,8 @@ export function MobilePermissionDialog({
   onGrantAll,
   className,
 }: MobilePermissionDialogProps) {
-  const slideVariants = useLiquidSlideVariants("bottom");
-  const transition = useLiquidTransition();
+  const slideVariants = useLiquidSlideVariants("bottom", { stiff: true });
+  const transition = useLiquidTransition({ stiff: true });
   const tapScale = useLiquidTapScale();
   const handleFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [permMap, setPermMap] = useState<Record<string, boolean>>(
@@ -53,7 +53,7 @@ export function MobilePermissionDialog({
       {isOpen && (
         <div className="fixed inset-0 z-[60] flex items-end justify-center">
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}

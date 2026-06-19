@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { generateDisplacementTexture } from "./displacementTexture";
 import { generateSpecularTexture } from "./specularTexture";
 import type { KubeProfile } from "./profiles";
@@ -81,14 +81,30 @@ const NORMALIZED_TEXTURE_SIZE = 256;
 const GENERATION_DEBOUNCE_MS = 100;
 
 /**
- * Schedule expensive canvas work after a short debounce and inside a
- * requestAnimationFrame so it runs when the browser is least busy.
+ * Generate a filter texture immediately on first mount (so the SVG filter is
+ * ready before paint), then debounce + schedule in requestAnimationFrame for
+ * subsequent dependency changes (e.g. dragging sliders).
  */
-function useDebouncedRafEffect(
-  effect: () => (() => void) | void,
+function useFilterTextureEffect(
+  generate: () => (() => void) | void,
   deps: React.DependencyList
 ) {
+  const first = useRef(true);
+
+  // First render: run synchronously in the layout phase so the filter is
+  // already in the DOM on the first paint. This avoids the ~100-300 ms
+  // visible delay where glass overlays open before the texture is ready.
+  useLayoutEffect(() => {
+    if (first.current) {
+      first.current = false;
+      generate();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Subsequent changes: debounce to avoid regenerating on every slider tick.
   useEffect(() => {
+    if (first.current) return;
     let mounted = true;
     let raf = 0;
     let cleanup: (() => void) | void;
@@ -96,7 +112,7 @@ function useDebouncedRafEffect(
     const timeout = setTimeout(() => {
       raf = requestAnimationFrame(() => {
         if (mounted) {
-          cleanup = effect();
+          cleanup = generate();
         }
       });
     }, GENERATION_DEBOUNCE_MS);
@@ -146,7 +162,7 @@ export function KubeFilter({
     : effectiveBorderRadius;
 
   // Displacement only depends on geometry and physics profile.
-  useDebouncedRafEffect(() => {
+  useFilterTextureEffect(() => {
     const displacement = generateDisplacementTexture({
       width: texWidth,
       height: texHeight,
@@ -161,7 +177,7 @@ export function KubeFilter({
 
   // Specular depends on lighting; the lite variant bakes in specularOpacity
   // so it can drop the feComponentTransfer primitive.
-  useDebouncedRafEffect(() => {
+  useFilterTextureEffect(() => {
     const full = generateSpecularTexture({
       width: texWidth,
       height: texHeight,

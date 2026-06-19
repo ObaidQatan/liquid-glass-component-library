@@ -26,8 +26,8 @@ export function LiquidGlassSheet({
   const isDetached = variant === "detached";
   const isInset = variant === "inset";
   const isCompact = variant === "compact";
-  const slideVariants = useLiquidSlideVariants("bottom");
-  const transition = useLiquidTransition();
+  const slideVariants = useLiquidSlideVariants("bottom", { stiff: true });
+  const transition = useLiquidTransition({ stiff: true });
 
   return (
     <AnimatePresence>
@@ -39,7 +39,7 @@ export function LiquidGlassSheet({
         )}>
           {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}

@@ -28,16 +28,17 @@ export function MobileSlideMenu({
   position = "left", width = "280px", variant = "default",
 }: MobileSlideMenuProps) {
   const isLeft = position === "left";
-  const slideVariants = useLiquidSlideVariants(position);
-  const transition = useLiquidTransition();
-  const tapScale = useLiquidTapScale();
   const isFloating = variant === "floating";
+  const edgeStiff = !isFloating;
+  const slideVariants = useLiquidSlideVariants(position, { stiff: edgeStiff });
+  const transition = useLiquidTransition({ stiff: edgeStiff });
+  const tapScale = useLiquidTapScale();
 
   return (
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[55]">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          <motion.div initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onClose} className="glass-backdrop-overlay" />
           <motion.div
             {...slideVariants}

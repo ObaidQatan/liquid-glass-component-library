@@ -80,7 +80,7 @@ export function LiquidGlassContextMenu({
       {isOpen && (
         <motion.div
           ref={menuRef}
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0.01, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.1 }}

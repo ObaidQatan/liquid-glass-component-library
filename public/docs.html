@@ -2114,7 +2114,7 @@ export function LiquidGlassCommandPalette({
     &lt;AnimatePresence&gt;
       {isOpen &amp;&amp; (
         &lt;motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 0.01 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className=&quot;fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4&quot;
@@ -2319,7 +2319,7 @@ export function LiquidGlassContextMenu({
       {isOpen &amp;&amp; (
         &lt;motion.div
           ref={menuRef}
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0.01, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.1 }}
@@ -2848,8 +2848,8 @@ export function LiquidGlassDrawer({
   title,
 }: LiquidGlassDrawerProps) {
   const isLeft = position === &quot;left&quot;;
-  const slideVariants = useLiquidSlideVariants(position);
-  const transition = useLiquidTransition();
+  const slideVariants = useLiquidSlideVariants(position, { stiff: true });
+  const transition = useLiquidTransition({ stiff: true });
 
   return (
     &lt;AnimatePresence&gt;
@@ -2857,7 +2857,7 @@ export function LiquidGlassDrawer({
         &lt;div className=&quot;fixed inset-0 z-50&quot;&gt;
           {/* Backdrop */}
           &lt;motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
@@ -3425,7 +3425,7 @@ export function LiquidGlassHoverCard({
     &lt;AnimatePresence&gt;
       {isVisible &amp;&amp; (
         &lt;motion.div
-          initial={{ opacity: 0, y: 8, scale: 0.96 }}
+          initial={{ opacity: 0.01, y: 8, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 8, scale: 0.96 }}
           transition={{ duration: 0.15 }}
@@ -4304,7 +4304,7 @@ export function LiquidGlassModal({
     &lt;AnimatePresence&gt;
       {isOpen &amp;&amp; (
         &lt;motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 0.01 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
@@ -4817,7 +4817,7 @@ export function LiquidGlassNotificationDropdown({
       {isOpen &amp;&amp; (
         &lt;motion.div
           ref={popoverRef}
-          initial={{ opacity: 0, y: 8, scale: 0.96 }}
+          initial={{ opacity: 0.01, y: 8, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 8, scale: 0.96 }}
           transition={{ duration: 0.15 }}
@@ -6010,7 +6010,7 @@ export function LiquidGlassSelect({
       {isOpen &amp;&amp; (
         &lt;motion.div
           ref={popoverRef}
-          initial={{ opacity: 0, y: -8, scale: 0.96 }}
+          initial={{ opacity: 0.01, y: -8, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -8, scale: 0.96 }}
           transition={{ duration: 0.15 }}
@@ -6187,8 +6187,8 @@ export function LiquidGlassSheet({
   const isDetached = variant === &quot;detached&quot;;
   const isInset = variant === &quot;inset&quot;;
   const isCompact = variant === &quot;compact&quot;;
-  const slideVariants = useLiquidSlideVariants(&quot;bottom&quot;);
-  const transition = useLiquidTransition();
+  const slideVariants = useLiquidSlideVariants(&quot;bottom&quot;, { stiff: true });
+  const transition = useLiquidTransition({ stiff: true });
 
   return (
     &lt;AnimatePresence&gt;
@@ -6200,7 +6200,7 @@ export function LiquidGlassSheet({
         )}&gt;
           {/* Backdrop */}
           &lt;motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
@@ -7578,7 +7578,7 @@ function ToastItemComponent({
   return (
     &lt;motion.div
       layout
-      initial={{ opacity: 0, x: 50, scale: 0.9 }}
+      initial={{ opacity: 0.01, x: 50, scale: 0.9 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: 50, scale: 0.9 }}
       transition={transition}
@@ -7984,7 +7984,7 @@ export function LiquidGlassTooltip({
       &lt;AnimatePresence&gt;
         {isVisible &amp;&amp; (
           &lt;motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0.01, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.15 }}
@@ -8277,14 +8277,14 @@ export function MobileActionSheet({
   className,
   variant = &quot;default&quot;,
 }: MobileActionSheetProps) {
-  const slideVariants = useLiquidSlideVariants(&quot;bottom&quot;);
-  const transition = useLiquidTransition();
+  const slideVariants = useLiquidSlideVariants(&quot;bottom&quot;, { stiff: true });
+  const transition = useLiquidTransition({ stiff: true });
   const tapScale = useLiquidTapScale();
   return (
     &lt;AnimatePresence&gt;
       {isOpen &amp;&amp; (
         &lt;div className=&quot;fixed inset-0 z-[60] flex items-end justify-center&quot;&gt;
-          &lt;motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          &lt;motion.div initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }} onClick={onClose}
             className=&quot;glass-backdrop-overlay&quot; /&gt;
 
@@ -8525,7 +8525,7 @@ export function MobileAlertDialog({
         &lt;div className=&quot;fixed inset-0 z-[60] flex items-center justify-center p-6&quot;&gt;
           {/* Backdrop */}
           &lt;motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
@@ -8693,7 +8693,7 @@ export function MobileAppRating({
   return (
     &lt;div className=&quot;fixed inset-0 z-[60] flex items-center justify-center p-6&quot;&gt;
       &lt;motion.div
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 0.01 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
@@ -8701,7 +8701,7 @@ export function MobileAppRating({
       /&gt;
 
       &lt;motion.div
-        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        initial={{ opacity: 0.01, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         className={cn(
           &quot;relative w-full max-w-sm&quot;,
@@ -9471,14 +9471,14 @@ export function MobileContextPreview({
     &lt;AnimatePresence&gt;
       {isOpen &amp;&amp; childRect &amp;&amp; (
         &lt;motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 0.01 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
           className=&quot;fixed inset-0 z-[80] flex items-center justify-center&quot;
         &gt;
           &lt;motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0.01, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             className=&quot;glass-backdrop-subtle&quot;
@@ -10020,8 +10020,8 @@ export function MobilePermissionDialog({
   onGrantAll,
   className,
 }: MobilePermissionDialogProps) {
-  const slideVariants = useLiquidSlideVariants(&quot;bottom&quot;);
-  const transition = useLiquidTransition();
+  const slideVariants = useLiquidSlideVariants(&quot;bottom&quot;, { stiff: true });
+  const transition = useLiquidTransition({ stiff: true });
   const tapScale = useLiquidTapScale();
   const handleFill = useGlassSurface({ variant: &quot;fill&quot;, opacity: 0.2 });
   const [permMap, setPermMap] = useState&lt;Record&lt;string, boolean&gt;&gt;(
@@ -10037,7 +10037,7 @@ export function MobilePermissionDialog({
       {isOpen &amp;&amp; (
         &lt;div className=&quot;fixed inset-0 z-[60] flex items-end justify-center&quot;&gt;
           &lt;motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
@@ -10537,16 +10537,17 @@ export function MobileSlideMenu({
   position = &quot;left&quot;, width = &quot;280px&quot;, variant = &quot;default&quot;,
 }: MobileSlideMenuProps) {
   const isLeft = position === &quot;left&quot;;
-  const slideVariants = useLiquidSlideVariants(position);
-  const transition = useLiquidTransition();
-  const tapScale = useLiquidTapScale();
   const isFloating = variant === &quot;floating&quot;;
+  const edgeStiff = !isFloating;
+  const slideVariants = useLiquidSlideVariants(position, { stiff: edgeStiff });
+  const transition = useLiquidTransition({ stiff: edgeStiff });
+  const tapScale = useLiquidTapScale();
 
   return (
     &lt;AnimatePresence&gt;
       {isOpen &amp;&amp; (
         &lt;div className=&quot;fixed inset-0 z-[55]&quot;&gt;
-          &lt;motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          &lt;motion.div initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onClose} className=&quot;glass-backdrop-overlay&quot; /&gt;
           &lt;motion.div
             {...slideVariants}
@@ -10857,7 +10858,7 @@ export function MobileSplashScreen({
 
   return (
     &lt;motion.div
-      initial={{ opacity: 0 }}
+      initial={{ opacity: 0.01 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className={cn(
@@ -10889,7 +10890,7 @@ export function MobileSplashScreen({
         &lt;AnimatePresence mode=&quot;wait&quot;&gt;
           &lt;motion.div
             key={slide.id}
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            initial={{ opacity: 0.01, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.9 }}
             transition={transition}
@@ -11617,7 +11618,7 @@ const defaultLiquidGlass: LiquidGlassSettings = {
   specularOpacity: 10,
   transparency: 20,
   blur: 10,
-  saturation: 120,
+  saturation: 100,
 };
 
 const ThemeContext = createContext&lt;ThemeContextType&gt;({

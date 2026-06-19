@@ -1,10 +1,5 @@
 import { useMemo } from "react";
 import { useTheme } from "./ThemeProvider";
-import {
-  LIQUID_GLASS_FILTER_ID,
-  LIQUID_GLASS_FILTER_LITE_ID,
-  supportsKubeBackdropFilter,
-} from "./kube";
 
 export type GlassSurfaceVariant =
   | "surface"
@@ -32,10 +27,8 @@ export interface UseGlassSurfaceResult {
     backgroundColor?: string;
     border?: string;
     boxShadow?: string;
-    backdropFilter?: string;
   };
   className: string;
-  filterId?: string;
 }
 
 function hexToRgb(hex: string) {
@@ -74,14 +67,6 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassS
   // main controls.
   const transparency =
     mode === "liquid-glass" ? liquidGlass.transparency : glass.transparency;
-  const liquidGlassActive =
-    mode === "liquid-glass" && supportsKubeBackdropFilter();
-  const fullFilter = liquidGlassActive
-    ? `url(#${LIQUID_GLASS_FILTER_ID})`
-    : undefined;
-  const liteFilter = liquidGlassActive
-    ? `url(#${LIQUID_GLASS_FILTER_LITE_ID})`
-    : undefined;
 
   return useMemo(() => {
     const w = (base: number) => withAlpha("#ffffff", base, transparency, opacity);
@@ -94,7 +79,6 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassS
             border: "1px solid rgba(255,255,255,0.24)",
             boxShadow:
               "inset 0 1.5px 1px rgba(255,255,255,0.38), inset 0 -1px 2px rgba(0,0,0,0.12), 0 3px 10px rgba(0,0,0,0.18)",
-            backdropFilter: fullFilter,
           },
           className: "glass-blur-lg",
         };
@@ -104,7 +88,6 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassS
           style: {
             background: w(0.08),
             boxShadow: "inset 0 3px 8px rgba(0,0,0,0.28), inset 0 -1px 2px rgba(255,255,255,0.10)",
-            backdropFilter: fullFilter,
           },
           className: "glass-blur-xl border",
         };
@@ -146,35 +129,35 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassS
         // Modal, CommandPalette, and Select so the panel visibly reacts to
         // all glass sliders exactly like the rest of the library.
         return {
-          style: { backdropFilter: fullFilter },
+          style: {},
           className: "glass-blur-xl glass-surface-strong glass-border glass-highlight",
         };
       }
 
       case "surface-strong":
         return {
-          style: { backdropFilter: liteFilter },
+          style: {},
           className: "glass-blur glass-surface-strong glass-border glass-highlight",
         };
 
       case "surface-lg":
         return {
-          style: { backdropFilter: fullFilter },
+          style: {},
           className: "glass-blur-lg glass-surface-strong glass-border glass-highlight",
         };
 
       case "surface-dark":
         return {
-          style: { backdropFilter: liteFilter },
+          style: {},
           className: "glass-blur-sm glass-surface-dark glass-border",
         };
 
       case "surface":
       default:
         return {
-          style: { backdropFilter: liteFilter },
+          style: {},
           className: "glass-blur glass-surface glass-border glass-highlight",
         };
     }
-  }, [variant, tint, activeTint, opacity, transparency, fullFilter, liteFilter]);
+  }, [variant, tint, activeTint, opacity, transparency]);
 }

@@ -24,8 +24,8 @@ export function LiquidGlassDrawer({
   title,
 }: LiquidGlassDrawerProps) {
   const isLeft = position === "left";
-  const slideVariants = useLiquidSlideVariants(position);
-  const transition = useLiquidTransition();
+  const slideVariants = useLiquidSlideVariants(position, { stiff: true });
+  const transition = useLiquidTransition({ stiff: true });
 
   return (
     <AnimatePresence>
@@ -33,7 +33,7 @@ export function LiquidGlassDrawer({
         <div className="fixed inset-0 z-50">
           {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0.01 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
