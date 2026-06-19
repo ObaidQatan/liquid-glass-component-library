@@ -31,6 +31,48 @@ export interface KubeFilterProps {
   normalized?: boolean;
 }
 
+export type KubeFilterBaseProps = Omit<
+  KubeFilterProps,
+  "id" | "width" | "height" | "liteId" | "normalized"
+>;
+
+interface LiquidGlassSettingsLike {
+  profile?: KubeProfile;
+  bezel?: number;
+  refraction?: number;
+  thickness?: number;
+  lightAngle?: number;
+  specularOpacity?: number;
+  blur?: number;
+}
+
+/**
+ * Convert user-facing liquid-glass settings into the derived KubeFilter props.
+ * Shared by ThemeProvider (global filter) and useCustomKubeFilter (per-component
+ * overrides).
+ */
+export function kubePropsFromLiquidGlass(
+  settings: Partial<LiquidGlassSettingsLike>
+): KubeFilterBaseProps {
+  const profile = settings.profile ?? "convex-circle";
+  const bezel = settings.bezel ?? 55;
+  const refraction = settings.refraction ?? 90;
+  const thickness = settings.thickness ?? 90;
+
+  return {
+    profile,
+    bezel: bezel / 400,
+    thickness: thickness / 100,
+    refractionScale:
+      (refraction / 100) * 0.15 * (thickness / 90),
+    lightAngle: settings.lightAngle ?? -150,
+    shininess: 6,
+    specularOpacity: (settings.specularOpacity ?? 50) / 100,
+    borderRadius: 0.03,
+    blur: ((settings.blur ?? 25) / 100) * (30 / 400),
+  };
+}
+
 export const LIQUID_GLASS_FILTER_ID = "lg-liquid-glass-filter";
 export const LIQUID_GLASS_FILTER_LITE_ID = "lg-liquid-glass-filter-lite";
 

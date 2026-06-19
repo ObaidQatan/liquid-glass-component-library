@@ -71,4 +71,5 @@
   <url><loc>https://liquid-glass-ui.example.com/docs?topic=swipeable-list</loc></url>
   <url><loc>https://liquid-glass-ui.example.com/docs?topic=top-nav-bar</loc></url>
   <url><loc>https://liquid-glass-ui.example.com/docs?topic=theme-provider</loc></url>
+  <url><loc>https://liquid-glass-ui.example.com/docs?topic=use-custom-kube-filter</loc></url>
 </urlset>

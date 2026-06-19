@@ -15,7 +15,8 @@ export {
   KubeFilter,
   supportsKubeBackdropFilter,
   useKubeFilterId,
+  kubePropsFromLiquidGlass,
   LIQUID_GLASS_FILTER_ID,
   LIQUID_GLASS_FILTER_LITE_ID,
 } from "./KubeFilter";
-export type { KubeFilterProps } from "./KubeFilter";
+export type { KubeFilterProps, KubeFilterBaseProps } from "./KubeFilter";

@@ -70,6 +70,8 @@ export { ThemeProvider, useTheme } from "./ThemeProvider";
 export type { GlassMode, GlassSettings, LiquidGlassSettings } from "./ThemeProvider";
 export { useGlassSurface } from "./useGlassSurface";
 export type { GlassSurfaceVariant, UseGlassSurfaceResult } from "./useGlassSurface";
+export { useCustomKubeFilter } from "./useCustomKubeFilter";
+export type { UseCustomKubeFilterResult } from "./useCustomKubeFilter";
 export { useLiquidPress } from "./useLiquidPress";
 export { GlassTopHighlight } from "./GlassTopHighlight";
 export { GlassSheen } from "./GlassSheen";

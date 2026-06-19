@@ -3,6 +3,7 @@ import type { KubeProfile } from "./kube/profiles";
 import {
   KubeFilter,
   supportsKubeBackdropFilter,
+  kubePropsFromLiquidGlass,
   LIQUID_GLASS_FILTER_ID,
   LIQUID_GLASS_FILTER_LITE_ID,
 } from "./kube";
@@ -207,20 +208,8 @@ export function ThemeProvider({ children, defaultTheme = "dark" }: { children: R
           liteId={LIQUID_GLASS_FILTER_LITE_ID}
           width={1}
           height={1}
-          bezel={liquidGlass.bezel / 400}
-          profile={liquidGlass.profile}
-          thickness={liquidGlass.thickness / 100}
-          refractionScale={
-            (liquidGlass.refraction / 100) *
-            0.15 *
-            (liquidGlass.thickness / 90)
-          }
-          lightAngle={liquidGlass.lightAngle}
-          shininess={6}
-          specularOpacity={liquidGlass.specularOpacity / 100}
-          borderRadius={0.03}
-          blur={(liquidGlass.blur / 100) * (30 / 400)}
           normalized
+          {...kubePropsFromLiquidGlass(liquidGlass)}
         />
       )}
     </ThemeContext.Provider>
