@@ -156,11 +156,17 @@ export function ThemeProvider({ children, defaultTheme = "dark" }: { children: R
   useEffect(() => {
     const root = document.documentElement;
     root.style.setProperty("--lg-blur", `${glass.blur}`);
-    root.style.setProperty("--lg-transparency", `${glass.transparency}`);
+    // In liquid-glass mode the single Transparency slider controls the
+    // liquid-glass config. Route that value into --lg-transparency so every
+    // glass-surface* utility responds to the same control.
+    root.style.setProperty(
+      "--lg-transparency",
+      mode === "liquid-glass" ? `${liquidGlass.transparency}` : `${glass.transparency}`
+    );
     root.style.setProperty("--lg-reflection", `${glass.reflection}`);
     root.style.setProperty("--lg-fluidity", `${glass.fluidity}`);
     localStorage.setItem("lg-glass", JSON.stringify(glass));
-  }, [glass]);
+  }, [glass, liquidGlass, mode]);
 
   useEffect(() => {
     localStorage.setItem("lg-liquid-glass", JSON.stringify(liquidGlass));

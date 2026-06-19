@@ -11681,11 +11681,17 @@ export function ThemeProvider({ children, defaultTheme = &quot;dark&quot; }: { c
   useEffect(() =&gt; {
     const root = document.documentElement;
     root.style.setProperty(&quot;--lg-blur&quot;, `${glass.blur}`);
-    root.style.setProperty(&quot;--lg-transparency&quot;, `${glass.transparency}`);
+    // In liquid-glass mode the single Transparency slider controls the
+    // liquid-glass config. Route that value into --lg-transparency so every
+    // glass-surface* utility responds to the same control.
+    root.style.setProperty(
+      &quot;--lg-transparency&quot;,
+      mode === &quot;liquid-glass&quot; ? `${liquidGlass.transparency}` : `${glass.transparency}`
+    );
     root.style.setProperty(&quot;--lg-reflection&quot;, `${glass.reflection}`);
     root.style.setProperty(&quot;--lg-fluidity&quot;, `${glass.fluidity}`);
     localStorage.setItem(&quot;lg-glass&quot;, JSON.stringify(glass));
-  }, [glass]);
+  }, [glass, liquidGlass, mode]);
 
   useEffect(() =&gt; {
     localStorage.setItem(&quot;lg-liquid-glass&quot;, JSON.stringify(liquidGlass));

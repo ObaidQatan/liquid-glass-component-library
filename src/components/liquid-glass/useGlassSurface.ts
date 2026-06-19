@@ -68,8 +68,13 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassS
     opacity = 1,
   } = options;
 
-  const { glass, mode } = useTheme();
-  const { transparency, reflection } = glass;
+  const { glass, mode, liquidGlass } = useTheme();
+  const { reflection } = glass;
+  // In liquid-glass mode the Transparency slider lives on liquidGlass, so
+  // inline glass surfaces must use that value or they stop responding to the
+  // main controls.
+  const transparency =
+    mode === "liquid-glass" ? liquidGlass.transparency : glass.transparency;
   const liquidGlassActive =
     mode === "liquid-glass" && supportsKubeBackdropFilter();
   const fullFilter = liquidGlassActive
