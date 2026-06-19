@@ -1,27 +1,23 @@
 import { useRef, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { cn } from "../../utils/cn";
-import { useTheme } from "./ThemeProvider";
 import { useGlassSurface } from "./useGlassSurface";
 
 interface LiquidGlassSurfaceProps {
   children: ReactNode;
   className?: string;
-  mode?: "glass" | "liquid-glass";
   borderRadius?: number;
 }
 
 export function LiquidGlassSurface({
   children,
   className,
-  mode: modeProp,
   borderRadius = 24,
 }: LiquidGlassSurfaceProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const { mode: globalMode, liquidGlass } = useTheme();
-  const mode = modeProp ?? globalMode;
-  const isLiquid = mode === "liquid-glass";
 
+  // surface-lg uses the full kube filter in liquid-glass mode, so the Blur
+  // slider and the shared transparency system apply consistently.
   const surface = useGlassSurface({ variant: "surface-lg" });
 
   return (
@@ -33,17 +29,6 @@ export function LiquidGlassSurface({
       className={cn(surface.className, className)}
       style={{ ...surface.style, borderRadius }}
     >
-      {/* Surface tint — transparency controls how much of the refracted backdrop shows through */}
-      {isLiquid && (
-        <div
-          className="pointer-events-none absolute inset-0 -z-10"
-          style={{
-            borderRadius,
-            backgroundColor: `rgba(255, 255, 255, ${1 - liquidGlass.transparency / 100})`,
-          }}
-        />
-      )}
-
       {/* Top sheen */}
       <div
         className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent rounded-full z-20"

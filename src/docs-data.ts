@@ -1954,7 +1954,7 @@ export const docsComponents: DocsComponentEntry[] = [
     "category": "Layout & Surfaces",
     "description": "Liquid Glass Surface component.",
     "usage": "<LiquidGlassSurface />",
-    "sourceCode": "import { useRef, type ReactNode } from \"react\";\nimport { motion } from \"framer-motion\";\nimport { cn } from \"../../utils/cn\";\nimport { useTheme } from \"./ThemeProvider\";\nimport { useGlassSurface } from \"./useGlassSurface\";\n\ninterface LiquidGlassSurfaceProps {\n  children: ReactNode;\n  className?: string;\n  mode?: \"glass\" | \"liquid-glass\";\n  borderRadius?: number;\n}\n\nexport function LiquidGlassSurface({\n  children,\n  className,\n  mode: modeProp,\n  borderRadius = 24,\n}: LiquidGlassSurfaceProps) {\n  const ref = useRef<HTMLDivElement>(null);\n  const { mode: globalMode, liquidGlass } = useTheme();\n  const mode = modeProp ?? globalMode;\n  const isLiquid = mode === \"liquid-glass\";\n\n  const surface = useGlassSurface({ variant: \"surface-lg\" });\n\n  return (\n    <motion.div\n      ref={ref}\n      initial={{ opacity: 0, scale: 0.96 }}\n      animate={{ opacity: 1, scale: 1 }}\n      transition={{ duration: 0.6, delay: 0.1 }}\n      className={cn(surface.className, className)}\n      style={{ ...surface.style, borderRadius }}\n    >\n      {/* Surface tint — transparency controls how much of the refracted backdrop shows through */}\n      {isLiquid && (\n        <div\n          className=\"pointer-events-none absolute inset-0 -z-10\"\n          style={{\n            borderRadius,\n            backgroundColor: `rgba(255, 255, 255, ${1 - liquidGlass.transparency / 100})`,\n          }}\n        />\n      )}\n\n      {/* Top sheen */}\n      <div\n        className=\"pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent rounded-full z-20\"\n        style={{ borderRadius }}\n      />\n\n      {/* Rim specular highlight overlay */}\n      <div\n        className=\"pointer-events-none absolute inset-0 z-0\"\n        style={{\n          borderRadius,\n          boxShadow:\n            \"inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.15)\",\n        }}\n      />\n\n      <div className=\"relative z-10 h-full\">{children}</div>\n    </motion.div>\n  );\n}\n",
+    "sourceCode": "import { useRef, type ReactNode } from \"react\";\nimport { motion } from \"framer-motion\";\nimport { cn } from \"../../utils/cn\";\nimport { useGlassSurface } from \"./useGlassSurface\";\n\ninterface LiquidGlassSurfaceProps {\n  children: ReactNode;\n  className?: string;\n  borderRadius?: number;\n}\n\nexport function LiquidGlassSurface({\n  children,\n  className,\n  borderRadius = 24,\n}: LiquidGlassSurfaceProps) {\n  const ref = useRef<HTMLDivElement>(null);\n\n  // surface-lg uses the full kube filter in liquid-glass mode, so the Blur\n  // slider and the shared transparency system apply consistently.\n  const surface = useGlassSurface({ variant: \"surface-lg\" });\n\n  return (\n    <motion.div\n      ref={ref}\n      initial={{ opacity: 0, scale: 0.96 }}\n      animate={{ opacity: 1, scale: 1 }}\n      transition={{ duration: 0.6, delay: 0.1 }}\n      className={cn(surface.className, className)}\n      style={{ ...surface.style, borderRadius }}\n    >\n      {/* Top sheen */}\n      <div\n        className=\"pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent rounded-full z-20\"\n        style={{ borderRadius }}\n      />\n\n      {/* Rim specular highlight overlay */}\n      <div\n        className=\"pointer-events-none absolute inset-0 z-0\"\n        style={{\n          borderRadius,\n          boxShadow:\n            \"inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.15)\",\n        }}\n      />\n\n      <div className=\"relative z-10 h-full\">{children}</div>\n    </motion.div>\n  );\n}\n",
     "props": [
       {
         "name": "children",
@@ -1967,12 +1967,6 @@ export const docsComponents: DocsComponentEntry[] = [
         "type": "string",
         "required": false,
         "description": "Additional Tailwind CSS classes."
-      },
-      {
-        "name": "mode",
-        "type": "\"glass\" | \"liquid-glass\"",
-        "required": false,
-        "description": ""
       },
       {
         "name": "borderRadius",
