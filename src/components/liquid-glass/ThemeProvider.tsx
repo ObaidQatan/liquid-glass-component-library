@@ -46,21 +46,21 @@ interface ThemeContextType {
 }
 
 const defaultGlass: GlassSettings = {
-  blur: 50,
-  transparency: 50,
-  saturation: 50,
+  blur: 17,
+  transparency: 10,
+  saturation: 100,
 };
 
 const defaultLiquidGlass: LiquidGlassSettings = {
   profile: "convex-circle",
-  bezel: 55,
+  bezel: 9,
   refraction: 90,
-  thickness: 90,
+  thickness: 120,
   lightAngle: -150,
-  specularOpacity: 50,
-  transparency: 50,
-  blur: 25,
-  saturation: 50,
+  specularOpacity: 10,
+  transparency: 20,
+  blur: 10,
+  saturation: 120,
 };
 
 const ThemeContext = createContext<ThemeContextType>({

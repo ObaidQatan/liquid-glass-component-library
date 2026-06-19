@@ -147,7 +147,7 @@ export function LiquidGlassControls({ className }: LiquidGlassControlsProps) {
             label="Saturation"
             value={liquidGlass.saturation}
             min={0}
-            max={100}
+            max={200}
             onChange={(v) => setLiquidGlass({ saturation: v })}
             valueFormatter={(v) => `${v}%`}
           />

@@ -329,11 +329,11 @@ const indexCssSample = `@import "tailwindcss";
 
 @layer base {
   :root {
-    --lg-blur: 50;
-    --lg-transparency: 50;
+    --lg-blur: 17;
+    --lg-transparency: 10;
     --lg-reflection: 50;
     --lg-fluidity: 50;
-    --lg-saturation: 50;
+    --lg-saturation: 100;
   }
 
   .dark {
@@ -364,6 +364,17 @@ const indexCssSample = `@import "tailwindcss";
   .glass-blur-sm { backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%)); }
   .glass-blur-lg { backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(calc(var(--lg-saturation) * 2%)); }
   .glass-blur-xl { backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(calc(var(--lg-saturation) * 2%)); }
+
+  /* Liquid-glass mode uses a stronger saturation scale so the refractive
+     filter doesn't look washed out next to standard glass. */
+  :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur,
+  :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-sm {
+    backdrop-filter: url(#lg-liquid-glass-filter-lite) saturate(calc(var(--lg-saturation) * 3%));
+  }
+  :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-lg,
+  :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-xl {
+    backdrop-filter: url(#lg-liquid-glass-filter) saturate(calc(var(--lg-saturation) * 3%));
+  }
 
   .glass-surface {
     background: linear-gradient(135deg,

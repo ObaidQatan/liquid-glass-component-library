@@ -245,7 +245,7 @@ export default function Playground() {
                       label="Saturation"
                       value={liquidGlass.saturation}
                       min={0}
-                      max={100}
+                      max={200}
                       onChange={(v) => setLiquidGlass({ saturation: v })}
                       formatter={(v) => `${v}%`}
                     />
@@ -271,6 +271,8 @@ export default function Playground() {
                     <LiquidGlassSlider
                       label="Saturation"
                       value={glass.saturation}
+                      min={0}
+                      max={200}
                       onChange={(v) => setGlass({ saturation: v })}
                       valueFormatter={(v) => `${v}%`}
                     />

@@ -2535,7 +2535,7 @@ export function LiquidGlassControls({ className }: LiquidGlassControlsProps) {
             label=&quot;Saturation&quot;
             value={liquidGlass.saturation}
             min={0}
-            max={100}
+            max={200}
             onChange={(v) =&gt; setLiquidGlass({ saturation: v })}
             valueFormatter={(v) =&gt; `${v}%`}
           /&gt;
@@ -6423,7 +6423,6 @@ import {
   useState,
   useRef,
   useCallback,
-  useEffect,
   useMemo,
 } from &quot;react&quot;;
 import { useTheme } from &quot;./ThemeProvider&quot;;
@@ -7596,7 +7595,7 @@ function ToastItemComponent({
     <h3>Source</h3>
     <pre><code>import { cn } from &quot;../../utils/cn&quot;;
 import { motion, AnimatePresence } from &quot;framer-motion&quot;;
-import { useState, useCallback, useEffect, useMemo, type MouseEvent } from &quot;react&quot;;
+import { useState, useCallback, useMemo, type MouseEvent } from &quot;react&quot;;
 import { useGlassSurface } from &quot;./useGlassSurface&quot;;
 import { useGlassFluidity } from &quot;./useGlassFluidity&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
@@ -8840,6 +8839,7 @@ import {
   type ReactNode,
   type MouseEvent,
 } from &quot;react&quot;;
+import { useTheme } from &quot;./ThemeProvider&quot;;
 import { useGlassSurface } from &quot;./useGlassSurface&quot;;
 import { useGlassFluidity } from &quot;./useGlassFluidity&quot;;
 import { GlassTopHighlight } from &quot;./GlassTopHighlight&quot;;
@@ -11510,21 +11510,21 @@ interface ThemeContextType {
 }
 
 const defaultGlass: GlassSettings = {
-  blur: 50,
-  transparency: 50,
-  saturation: 50,
+  blur: 17,
+  transparency: 10,
+  saturation: 100,
 };
 
 const defaultLiquidGlass: LiquidGlassSettings = {
   profile: &quot;convex-circle&quot;,
-  bezel: 55,
+  bezel: 9,
   refraction: 90,
-  thickness: 90,
+  thickness: 120,
   lightAngle: -150,
-  specularOpacity: 50,
-  transparency: 50,
-  blur: 25,
-  saturation: 50,
+  specularOpacity: 10,
+  transparency: 20,
+  blur: 10,
+  saturation: 120,
 };
 
 const ThemeContext = createContext&lt;ThemeContextType&gt;({

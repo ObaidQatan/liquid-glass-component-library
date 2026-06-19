@@ -42,11 +42,11 @@
   }
 
   :root {
-    --lg-blur: 50;
-    --lg-transparency: 50;
+    --lg-blur: 17;
+    --lg-transparency: 10;
     --lg-reflection: 50;
     --lg-fluidity: 50;
-    --lg-saturation: 50;
+    --lg-saturation: 100;
   }
 
   /* DARK (default) */
@@ -241,14 +241,14 @@
      overflow their bounds. */
   :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur,
   :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-sm {
-    backdrop-filter: url(#lg-liquid-glass-filter-lite) saturate(calc(var(--lg-saturation) * 2%));
-    -webkit-backdrop-filter: url(#lg-liquid-glass-filter-lite) saturate(calc(var(--lg-saturation) * 2%));
+    backdrop-filter: url(#lg-liquid-glass-filter-lite) saturate(calc(var(--lg-saturation) * 3%));
+    -webkit-backdrop-filter: url(#lg-liquid-glass-filter-lite) saturate(calc(var(--lg-saturation) * 3%));
     contain: layout;
   }
   :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-lg,
   :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-xl {
-    backdrop-filter: url(#lg-liquid-glass-filter) saturate(calc(var(--lg-saturation) * 2%));
-    -webkit-backdrop-filter: url(#lg-liquid-glass-filter) saturate(calc(var(--lg-saturation) * 2%));
+    backdrop-filter: url(#lg-liquid-glass-filter) saturate(calc(var(--lg-saturation) * 3%));
+    -webkit-backdrop-filter: url(#lg-liquid-glass-filter) saturate(calc(var(--lg-saturation) * 3%));
     contain: layout;
   }
 
