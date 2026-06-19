@@ -333,6 +333,7 @@ const indexCssSample = `@import "tailwindcss";
     --lg-transparency: 50;
     --lg-reflection: 50;
     --lg-fluidity: 50;
+    --lg-saturation: 50;
   }
 
   .dark {
@@ -359,10 +360,10 @@ const indexCssSample = `@import "tailwindcss";
 }
 
 @layer utilities {
-  .glass-blur { backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(180%); }
-  .glass-blur-sm { backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%); }
-  .glass-blur-lg { backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(200%); }
-  .glass-blur-xl { backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(220%); }
+  .glass-blur { backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(calc(var(--lg-saturation) * 2%)); }
+  .glass-blur-sm { backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%)); }
+  .glass-blur-lg { backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(calc(var(--lg-saturation) * 2%)); }
+  .glass-blur-xl { backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(calc(var(--lg-saturation) * 2%)); }
 
   .glass-surface {
     background: linear-gradient(135deg,
@@ -838,7 +839,7 @@ function IntroSection() {
         {[
           { icon: <Package size={20} />, title: "69 Components", desc: "Desktop + mobile glass components." },
           { icon: <Palette size={20} />, title: "Theme Aware", desc: "Light/dark modes with CSS variables." },
-          { icon: <Layers size={20} />, title: "Glass System", desc: "Blur, transparency, reflection, fluidity." },
+          { icon: <Layers size={20} />, title: "Glass System", desc: "Blur, transparency, and saturation." },
           { icon: <Terminal size={20} />, title: "Copy & Paste", desc: "Grab the source, no package install." },
           { icon: <Code2 size={20} />, title: "TypeScript", desc: "Typed props and interfaces." },
           { icon: <Sparkles size={20} />, title: "Motion", desc: "Framer Motion spring animations." },
@@ -1022,21 +1023,20 @@ function ThemeSection() {
 
       <H3>Glass settings</H3>
       <P>
-        Four sliders drive every glass surface in the library. They are stored as unitless numbers
+        Three sliders drive every glass surface in the library. They are stored as unitless numbers
         0–100 and mapped to CSS values in the utility classes.
       </P>
       <ul className="space-y-2 mb-6 text-sm text-[var(--lg-text-secondary)]">
         <li><strong>Blur</strong> — scales <InlineCode>backdrop-filter</InlineCode> blur radius.</li>
         <li><strong>Transparency</strong> — scales surface alpha via <InlineCode>color-mix</InlineCode>.</li>
-        <li><strong>Reflection</strong> — controls reflection blob intensity.</li>
-        <li><strong>Fluidity</strong> — tunes spring stiffness/damping for motion.</li>
+        <li><strong>Saturation</strong> — scales <InlineCode>backdrop-filter saturate()</InlineCode>.</li>
       </ul>
 
       <H3>CSS variables</H3>
       <P>
         The provider writes <InlineCode>--lg-blur</InlineCode>, <InlineCode>--lg-transparency</InlineCode>,{" "}
-        <InlineCode>--lg-reflection</InlineCode>, and <InlineCode>--lg-fluidity</InlineCode> to the root
-        element. Theme colors are applied by toggling the <InlineCode>.dark</InlineCode> /{" "}
+        and <InlineCode>--lg-saturation</InlineCode> to the root element. Theme colors are applied by
+        toggling the <InlineCode>.dark</InlineCode> /{" "}
         <InlineCode>.light</InlineCode> class on <InlineCode>document.documentElement</InlineCode>.
       </P>
     </div>

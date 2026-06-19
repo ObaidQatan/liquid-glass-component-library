@@ -143,6 +143,14 @@ export function LiquidGlassControls({ className }: LiquidGlassControlsProps) {
             onChange={(v) => setLiquidGlass({ blur: v })}
             valueFormatter={(v) => `${v}%`}
           />
+          <LiquidGlassSlider
+            label="Saturation"
+            value={liquidGlass.saturation}
+            min={0}
+            max={100}
+            onChange={(v) => setLiquidGlass({ saturation: v })}
+            valueFormatter={(v) => `${v}%`}
+          />
         </div>
       ) : (
         <div className="space-y-5">
@@ -159,21 +167,15 @@ export function LiquidGlassControls({ className }: LiquidGlassControlsProps) {
             valueFormatter={(v) => `${v}%`}
           />
           <LiquidGlassSlider
-            label="Reflection"
-            value={glass.reflection}
-            onChange={(v) => setGlass({ reflection: v })}
-            valueFormatter={(v) => `${v}%`}
-          />
-          <LiquidGlassSlider
-            label="Fluidity"
-            value={glass.fluidity}
-            onChange={(v) => setGlass({ fluidity: v })}
+            label="Saturation"
+            value={glass.saturation}
+            onChange={(v) => setGlass({ saturation: v })}
             valueFormatter={(v) => `${v}%`}
           />
         </div>
       )}
 
-      <div className="mt-5 pt-4 border-t border-[var(--lg-border)] grid grid-cols-4 gap-2 text-center">
+      <div className={cn("mt-5 pt-4 border-t border-[var(--lg-border)] grid gap-2 text-center", isLiquid ? "grid-cols-5" : "grid-cols-3")}>
         {isLiquid ? (
           <>
             <div className="space-y-0.5">
@@ -200,6 +202,12 @@ export function LiquidGlassControls({ className }: LiquidGlassControlsProps) {
               </div>
               <div className="text-[10px] text-[var(--lg-text-muted)]">Thick</div>
             </div>
+            <div className="space-y-0.5">
+              <div className="text-xs font-semibold text-[var(--lg-text)]">
+                {liquidGlass.saturation}%
+              </div>
+              <div className="text-[10px] text-[var(--lg-text-muted)]">Sat</div>
+            </div>
           </>
         ) : (
           <>
@@ -213,12 +221,8 @@ export function LiquidGlassControls({ className }: LiquidGlassControlsProps) {
                 value: `${Math.round((glass.transparency / 100) * 80)}%`,
               },
               {
-                label: "Glow",
-                value: `${Math.round((glass.reflection / 100) * 40)}%`,
-              },
-              {
-                label: "Snap",
-                value: `${Math.round((glass.fluidity / 100) * 500)}`,
+                label: "Sat",
+                value: `${glass.saturation}%`,
               },
             ].map((stat) => (
               <div key={stat.label} className="space-y-0.5">

@@ -1,7 +1,8 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useCallback, useEffect, useMemo, type MouseEvent } from "react";
+import { useState, useCallback, useMemo, type MouseEvent } from "react";
 import { useGlassSurface } from "./useGlassSurface";
+import { useGlassFluidity } from "./useGlassFluidity";
 import { GlassTopHighlight } from "./GlassTopHighlight";
 import { GlassSheen } from "./GlassSheen";
 
@@ -27,24 +28,6 @@ const sizeStyles = {
   md: { track: "w-[4rem] h-7", thumb: 22, widthRatio: 1.4, padding: 3.5 },
   lg: { track: "w-[5rem] h-9", thumb: 28, widthRatio: 1.4, padding: 3.5 },
 };
-
-function useGlassFluidity() {
-  const [fluidity, setFluidity] = useState(() => {
-    if (typeof document === "undefined") return 50;
-    return parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--lg-fluidity")) || 50;
-  });
-
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    const root = document.documentElement;
-    const update = () => setFluidity(parseFloat(getComputedStyle(root).getPropertyValue("--lg-fluidity")) || 50);
-    const observer = new MutationObserver(update);
-    observer.observe(root, { attributes: true, attributeFilter: ["style"] });
-    return () => observer.disconnect();
-  }, []);
-
-  return fluidity;
-}
 
 export function LiquidGlassToggle({
   checked = false,

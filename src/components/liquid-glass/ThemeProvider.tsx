@@ -14,8 +14,7 @@ export type GlassMode = "glass" | "liquid-glass";
 export interface GlassSettings {
   blur: number;
   transparency: number;
-  reflection: number;
-  fluidity: number;
+  saturation: number;
 }
 
 export interface LiquidGlassSettings {
@@ -27,6 +26,7 @@ export interface LiquidGlassSettings {
   specularOpacity: number;
   transparency: number;
   blur: number;
+  saturation: number;
 }
 
 interface ThemeContextType {
@@ -48,8 +48,7 @@ interface ThemeContextType {
 const defaultGlass: GlassSettings = {
   blur: 50,
   transparency: 50,
-  reflection: 50,
-  fluidity: 50,
+  saturation: 50,
 };
 
 const defaultLiquidGlass: LiquidGlassSettings = {
@@ -61,6 +60,7 @@ const defaultLiquidGlass: LiquidGlassSettings = {
   specularOpacity: 50,
   transparency: 50,
   blur: 25,
+  saturation: 50,
 };
 
 const ThemeContext = createContext<ThemeContextType>({
@@ -163,8 +163,12 @@ export function ThemeProvider({ children, defaultTheme = "dark" }: { children: R
       "--lg-transparency",
       mode === "liquid-glass" ? `${liquidGlass.transparency}` : `${glass.transparency}`
     );
-    root.style.setProperty("--lg-reflection", `${glass.reflection}`);
-    root.style.setProperty("--lg-fluidity", `${glass.fluidity}`);
+    // Saturation is mode-aware so the active slider always drives the
+    // backdrop-filter saturate() applied by the glass utilities.
+    root.style.setProperty(
+      "--lg-saturation",
+      mode === "liquid-glass" ? `${liquidGlass.saturation}` : `${glass.saturation}`
+    );
     localStorage.setItem("lg-glass", JSON.stringify(glass));
   }, [glass, liquidGlass, mode]);
 

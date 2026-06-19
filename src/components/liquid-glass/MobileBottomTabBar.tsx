@@ -11,6 +11,7 @@ import {
 } from "react";
 import { useTheme } from "./ThemeProvider";
 import { useGlassSurface } from "./useGlassSurface";
+import { useGlassFluidity } from "./useGlassFluidity";
 import { GlassTopHighlight } from "./GlassTopHighlight";
 import { GlassSheen } from "./GlassSheen";
 
@@ -68,7 +69,7 @@ export function MobileBottomTabBar({
   const [indicator, setIndicator] = useState({ left: 0, top: 0, width: 0, height: 0 });
   const tabsContainerRef = useRef<HTMLDivElement>(null);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const { glass } = useTheme();
+  const fluidity = useGlassFluidity();
 
   const createRipple = useCallback((tabId: string, e: MouseEvent<HTMLButtonElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -160,7 +161,7 @@ export function MobileBottomTabBar({
         ripples={ripples[tab.id] || []}
         onRipple={(e) => createRipple(tab.id, e)}
         onClick={() => onChange?.(tab.id)}
-        fluidity={glass.fluidity}
+        fluidity={fluidity}
         buttonRef={(el) => {
           tabRefs.current[tab.id] = el;
         }}
@@ -203,7 +204,7 @@ export function MobileBottomTabBar({
       <div className={cn(containerClasses[variant], className)}>
         <TopHighlight variant={variant} />
         <div ref={tabsContainerRef} className={cn("relative flex items-center justify-around", widthClass, "mx-auto")}>
-          <ActiveIndicator layout={indicator} variant={variant} fluidity={glass.fluidity} />
+          <ActiveIndicator layout={indicator} variant={variant} fluidity={fluidity} />
           {renderTabs(leftTabs)}
 
           <motion.button
@@ -237,7 +238,7 @@ export function MobileBottomTabBar({
           >
             <TopHighlight variant={variant} />
             <div ref={tabsContainerRef} className={cn("relative flex items-center justify-around", widthClass)}>
-              <ActiveIndicator layout={indicator} variant={variant} fluidity={glass.fluidity} />
+              <ActiveIndicator layout={indicator} variant={variant} fluidity={fluidity} />
               {renderTabs(tabs)}
             </div>
           </div>
@@ -251,7 +252,7 @@ export function MobileBottomTabBar({
     <div className={cn(containerClasses[variant], className)}>
       <TopHighlight variant={variant} />
       <div ref={tabsContainerRef} className={cn("relative flex items-center justify-around", widthClass, "mx-auto")}>
-        <ActiveIndicator layout={indicator} variant={variant} fluidity={glass.fluidity} />
+        <ActiveIndicator layout={indicator} variant={variant} fluidity={fluidity} />
         {renderTabs(tabs)}
       </div>
     </div>

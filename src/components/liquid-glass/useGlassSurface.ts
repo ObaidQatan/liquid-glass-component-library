@@ -69,7 +69,6 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassS
   } = options;
 
   const { glass, mode, liquidGlass } = useTheme();
-  const { reflection } = glass;
   // In liquid-glass mode the Transparency slider lives on liquidGlass, so
   // inline glass surfaces must use that value or they stop responding to the
   // main controls.
@@ -177,5 +176,5 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassS
           className: "glass-blur glass-surface glass-border glass-highlight",
         };
     }
-  }, [variant, tint, activeTint, opacity, transparency, reflection, fullFilter, liteFilter]);
+  }, [variant, tint, activeTint, opacity, transparency, fullFilter, liteFilter]);
 }

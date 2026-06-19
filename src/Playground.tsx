@@ -241,6 +241,14 @@ export default function Playground() {
                       onChange={(v) => setLiquidGlass({ blur: v })}
                       formatter={(v) => `${Math.round((v / 100) * 30)}px`}
                     />
+                    <Slider
+                      label="Saturation"
+                      value={liquidGlass.saturation}
+                      min={0}
+                      max={100}
+                      onChange={(v) => setLiquidGlass({ saturation: v })}
+                      formatter={(v) => `${v}%`}
+                    />
                   </div>
                 </>
               ) : (
@@ -261,15 +269,9 @@ export default function Playground() {
                   </div>
                   <div className="space-y-4">
                     <LiquidGlassSlider
-                      label="Reflection"
-                      value={glass.reflection}
-                      onChange={(v) => setGlass({ reflection: v })}
-                      valueFormatter={(v) => `${v}%`}
-                    />
-                    <LiquidGlassSlider
-                      label="Fluidity"
-                      value={glass.fluidity}
-                      onChange={(v) => setGlass({ fluidity: v })}
+                      label="Saturation"
+                      value={glass.saturation}
+                      onChange={(v) => setGlass({ saturation: v })}
                       valueFormatter={(v) => `${v}%`}
                     />
                   </div>

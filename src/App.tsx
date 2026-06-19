@@ -353,7 +353,7 @@ export default function App() {
               description={
                 mode === "liquid-glass"
                   ? "Adjust profile, bezel, refraction, thickness, light angle, specular, transparency, and blur"
-                  : "Adjust blur, transparency, reflection, and fluidity in real-time"
+                  : "Adjust blur, transparency, and saturation in real-time"
               }
             />
             <div className="flex flex-col lg:flex-row items-start gap-8">

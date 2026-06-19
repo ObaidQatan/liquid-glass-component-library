@@ -4,11 +4,11 @@ import {
   useState,
   useRef,
   useCallback,
-  useEffect,
   useMemo,
 } from "react";
 import { useTheme } from "./ThemeProvider";
 import { useGlassSurface } from "./useGlassSurface";
+import { useGlassFluidity } from "./useGlassFluidity";
 import { GlassSheen } from "./GlassSheen";
 
 interface LiquidGlassSliderProps {
@@ -22,34 +22,6 @@ interface LiquidGlassSliderProps {
   disabled?: boolean;
   label?: string;
   valueFormatter?: (value: number) => string;
-}
-
-function useGlassFluidity() {
-  const [fluidity, setFluidity] = useState(() => {
-    if (typeof document === "undefined") return 50;
-    return (
-      parseFloat(
-        getComputedStyle(document.documentElement).getPropertyValue(
-          "--lg-fluidity",
-        ),
-      ) || 50
-    );
-  });
-
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    const root = document.documentElement;
-    const update = () =>
-      setFluidity(
-        parseFloat(getComputedStyle(root).getPropertyValue("--lg-fluidity")) ||
-          50,
-      );
-    const observer = new MutationObserver(update);
-    observer.observe(root, { attributes: true, attributeFilter: ["style"] });
-    return () => observer.disconnect();
-  }, []);
-
-  return fluidity;
 }
 
 export function LiquidGlassSlider({

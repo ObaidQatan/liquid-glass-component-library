@@ -125,7 +125,7 @@ function getDescription(componentName) {
     GlassSheen: "Reusable specular sheen overlay for glass surfaces.",
     GlassTopHighlight: "Reusable top highlight line used across glass components.",
     LiquidGlassPressSplash: "Animated press splash used by buttons and chips.",
-    LiquidGlassControls: "Interactive panel to adjust blur, transparency, reflection, and fluidity.",
+    LiquidGlassControls: "Interactive panel to adjust blur, transparency, and saturation.",
     LiquidGlassCard: "Basic glass card container with variants, padding, and hover lift.",
     LiquidGlassFluidCard: "Card with a cursor-following liquid refraction glow.",
     LiquidGlassButton: "Primary button with liquid ripple and glass surface styles.",

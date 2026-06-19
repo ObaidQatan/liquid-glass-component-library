@@ -46,6 +46,7 @@
     --lg-transparency: 50;
     --lg-reflection: 50;
     --lg-fluidity: 50;
+    --lg-saturation: 50;
   }
 
   /* DARK (default) */
@@ -117,20 +118,20 @@
 @layer utilities {
   /* Blurs — base values, dynamically adjustable via --lg-blur */
   .glass-blur {
-    backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(180%);
-    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(180%);
+    backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(calc(var(--lg-saturation) * 2%));
+    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(calc(var(--lg-saturation) * 2%));
   }
   .glass-blur-sm {
-    backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%);
-    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%);
+    backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%));
+    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%));
   }
   .glass-blur-lg {
-    backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(200%);
-    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(200%);
+    backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(calc(var(--lg-saturation) * 2%));
+    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(calc(var(--lg-saturation) * 2%));
   }
   .glass-blur-xl {
-    backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(220%);
-    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(220%);
+    backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(calc(var(--lg-saturation) * 2%));
+    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(calc(var(--lg-saturation) * 2%));
   }
 
   /* Surfaces — theme-aware, dynamically adjustable via --lg-transparency */
@@ -240,14 +241,14 @@
      overflow their bounds. */
   :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur,
   :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-sm {
-    backdrop-filter: url(#lg-liquid-glass-filter-lite);
-    -webkit-backdrop-filter: url(#lg-liquid-glass-filter-lite);
+    backdrop-filter: url(#lg-liquid-glass-filter-lite) saturate(calc(var(--lg-saturation) * 2%));
+    -webkit-backdrop-filter: url(#lg-liquid-glass-filter-lite) saturate(calc(var(--lg-saturation) * 2%));
     contain: layout;
   }
   :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-lg,
   :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-xl {
-    backdrop-filter: url(#lg-liquid-glass-filter);
-    -webkit-backdrop-filter: url(#lg-liquid-glass-filter);
+    backdrop-filter: url(#lg-liquid-glass-filter) saturate(calc(var(--lg-saturation) * 2%));
+    -webkit-backdrop-filter: url(#lg-liquid-glass-filter) saturate(calc(var(--lg-saturation) * 2%));
     contain: layout;
   }
 
@@ -257,22 +258,22 @@
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%);
-    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%);
+    backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%));
+    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%));
   }
   .glass-backdrop-subtle {
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%);
-    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%);
+    backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%));
+    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%));
   }
   .glass-backdrop-overlay {
     position: absolute;
     inset: 0;
     background: var(--lg-overlay);
-    backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%);
-    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%);
+    backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%));
+    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%));
   }
   [data-glass-mode="liquid-glass"] .glass-backdrop,
   [data-glass-mode="liquid-glass"] .glass-backdrop-subtle,
