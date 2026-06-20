@@ -7,6 +7,7 @@ import { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";
 import { useGlassSurface } from "./useGlassSurface";
 import { GlassTopHighlight } from "./GlassTopHighlight";
 import { GlassSheen } from "./GlassSheen";
+import { useLiquidTapScale, useLiquidTransition } from "./useLiquidMotion";
 
 interface FabAction {
   id: string;
@@ -36,6 +37,8 @@ export function MobileFloatingActionButton({
   color = "from-liquid-blue to-liquid-purple",
   variant = "chrome",
 }: MobileFloatingActionButtonProps) {
+  const tapScale = useLiquidTapScale();
+  const scaleTransition = useLiquidTransition();
   const chromeFill = useGlassSurface({ variant: "fill", opacity: 0.1 });
   const chromeGlow = useGlassSurface({ variant: "fill", opacity: 0.15 });
   const coloredGlow = useGlassSurface({ variant: "fill", opacity: 0.2 });
@@ -95,9 +98,9 @@ export function MobileFloatingActionButton({
       </AnimatePresence>
 
       <motion.button
-        whileTap={{ scale: 0.92 }}
+        whileTap={{ scale: tapScale }}
         transition={{
-          scale: { type: "spring", stiffness: 700, damping: 24 },
+          scale: scaleTransition,
           rotate: { duration: 0.2, ease: "easeOut" },
         }}
         onClick={toggle}
@@ -141,6 +144,7 @@ function ActionButton({
   onClose: () => void;
 }) {
   const actionGlow = useGlassSurface({ variant: "fill", opacity: 0.1 });
+  const actionTapScale = useLiquidTapScale();
   const { state: press, onPointerDown, onPointerUp, onPointerLeave, onPointerCancel } =
     useLiquidPress<HTMLButtonElement>();
 
@@ -149,14 +153,14 @@ function ActionButton({
       initial={{ opacity: 0, scale: 0.5, y: 10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.5, y: 10 }}
-      transition={{ type: "spring", stiffness: 500, damping: 25, delay: index * 0.03 }}
+      transition={useLiquidTransition({ delay: index * 0.03 })}
       className="flex items-center gap-2"
     >
       <span className="px-2 py-1 rounded-lg glass-blur-sm glass-surface glass-border text-xs text-[var(--lg-text-secondary)] whitespace-nowrap">
         {action.label}
       </span>
       <motion.button
-        whileTap={{ scale: 0.88 }}
+        whileTap={{ scale: actionTapScale }}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
         onPointerLeave={onPointerLeave}

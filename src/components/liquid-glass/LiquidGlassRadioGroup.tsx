@@ -1,6 +1,7 @@
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import { useLiquidTapScale, useLiquidTransition } from "./useLiquidMotion";
 
 interface RadioOption {
   value: string;
@@ -32,6 +33,8 @@ export function LiquidGlassRadioGroup({
   direction = "vertical",
   size = "md",
 }: LiquidGlassRadioGroupProps) {
+  const tapScale = useLiquidTapScale();
+  const dotTransition = useLiquidTransition();
   const s = sizeStyles[size];
 
   return (
@@ -53,7 +56,7 @@ export function LiquidGlassRadioGroup({
             )}
           >
             <motion.div
-              whileTap={option.disabled ? {} : { scale: 0.9 }}
+              whileTap={option.disabled ? {} : { scale: tapScale }}
               onClick={() => !option.disabled && onChange?.(option.value)}
               className={cn(
                 "relative flex items-center justify-center flex-shrink-0 mt-0.5 rounded-full",
@@ -70,7 +73,7 @@ export function LiquidGlassRadioGroup({
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  transition={dotTransition}
                   className={cn(
                     "rounded-full bg-liquid-blue",
                     s.inner

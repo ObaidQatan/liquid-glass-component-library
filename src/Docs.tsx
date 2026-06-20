@@ -28,7 +28,7 @@ import {
   LayoutTemplate,
 } from "lucide-react";
 import { cn } from "./utils/cn";
-import { useTheme, LiquidGlassControls } from "./components/liquid-glass";
+import { useTheme, LiquidGlassControls, LiquidGlassToggle } from "./components/liquid-glass";
 import AnimatedBackground from "./AnimatedBackground";
 import { docsComponents, docsCategories, type DocsComponentEntry } from "./docs-data";
 import { useRoute, navigate, type Route } from "./router";
@@ -242,6 +242,17 @@ function ThemeToggle() {
   );
 }
 
+function ModeToggle() {
+  const { mode, toggleMode } = useTheme();
+  return (
+    <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl glass-blur-sm glass-surface border border-white/10">
+      <span className={cn("text-xs font-medium transition-colors", mode === "glass" ? "text-[var(--lg-text)]" : "text-[var(--lg-text-muted)]")}>Glass</span>
+      <LiquidGlassToggle checked={mode === "liquid-glass"} onChange={toggleMode} variant="ios26" size="sm" activeTint="#3b82f6" />
+      <span className={cn("text-xs font-medium transition-colors", mode === "liquid-glass" ? "text-[var(--lg-text)]" : "text-[var(--lg-text-muted)]")}>Liquid</span>
+    </div>
+  );
+}
+
 function Highlight({ text, query }: { text: string; query: string }) {
   if (!query) return text;
   const re = new RegExp(`(${escapeRegExp(query)})`, "gi");
@@ -318,10 +329,11 @@ const indexCssSample = `@import "tailwindcss";
 
 @layer base {
   :root {
-    --lg-blur: 50;
-    --lg-transparency: 50;
+    --lg-blur: 17;
+    --lg-transparency: 10;
     --lg-reflection: 50;
     --lg-fluidity: 50;
+    --lg-saturation: 100;
   }
 
   .dark {
@@ -348,10 +360,21 @@ const indexCssSample = `@import "tailwindcss";
 }
 
 @layer utilities {
-  .glass-blur { backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(180%); }
-  .glass-blur-sm { backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(160%); }
-  .glass-blur-lg { backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(200%); }
-  .glass-blur-xl { backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(220%); }
+  .glass-blur { backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(calc(var(--lg-saturation) * 2%)); }
+  .glass-blur-sm { backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%)); }
+  .glass-blur-lg { backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(calc(var(--lg-saturation) * 2%)); }
+  .glass-blur-xl { backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(calc(var(--lg-saturation) * 2%)); }
+
+  /* Liquid-glass mode uses a stronger saturation scale so the refractive
+     filter doesn't look washed out next to standard glass. */
+  :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur,
+  :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-sm {
+    backdrop-filter: url(#lg-liquid-glass-filter-lite) saturate(calc(var(--lg-saturation) * 3%));
+  }
+  :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-lg,
+  :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-xl {
+    backdrop-filter: url(#lg-liquid-glass-filter) saturate(calc(var(--lg-saturation) * 3%));
+  }
 
   .glass-surface {
     background: linear-gradient(135deg,
@@ -633,6 +656,7 @@ function DocsHeader({
           >
             <SlidersHorizontal size={16} />
           </motion.button>
+          <ModeToggle />
           <ThemeToggle />
         </div>
       </div>
@@ -641,6 +665,7 @@ function DocsHeader({
 }
 
 function GlassControlsPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { mode } = useTheme();
   return (
     <AnimatePresence>
       {open && (
@@ -649,12 +674,12 @@ function GlassControlsPanel({ open, onClose }: { open: boolean; onClose: () => v
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 20 }}
           transition={{ duration: 0.2 }}
-          className="fixed bottom-4 right-4 z-[60] w-80 max-w-[calc(100vw-2rem)] rounded-2xl glass-blur-xl glass-surface-strong glass-border glass-highlight-strong p-5"
+          className="fixed bottom-4 right-4 z-[60] w-80 max-w-[calc(100vw-2rem)] max-h-[80vh] overflow-y-auto rounded-2xl glass-blur-xl glass-surface-strong glass-border glass-highlight-strong p-5"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2 text-sm font-semibold text-[var(--lg-text)]">
               <SlidersHorizontal size={16} className="text-liquid-blue" />
-              Glass Config
+              {mode === "liquid-glass" ? "Liquid Glass Config" : "Glass Config"}
             </div>
             <button
               onClick={onClose}
@@ -825,7 +850,7 @@ function IntroSection() {
         {[
           { icon: <Package size={20} />, title: "69 Components", desc: "Desktop + mobile glass components." },
           { icon: <Palette size={20} />, title: "Theme Aware", desc: "Light/dark modes with CSS variables." },
-          { icon: <Layers size={20} />, title: "Glass System", desc: "Blur, transparency, reflection, fluidity." },
+          { icon: <Layers size={20} />, title: "Glass System", desc: "Blur, transparency, and saturation." },
           { icon: <Terminal size={20} />, title: "Copy & Paste", desc: "Grab the source, no package install." },
           { icon: <Code2 size={20} />, title: "TypeScript", desc: "Typed props and interfaces." },
           { icon: <Sparkles size={20} />, title: "Motion", desc: "Framer Motion spring animations." },
@@ -841,6 +866,39 @@ function IntroSection() {
             <p className="text-sm text-[var(--lg-text-muted)]">{item.desc}</p>
           </div>
         ))}
+      </div>
+
+      <div className="rounded-2xl border border-[var(--lg-border)] glass-blur-sm glass-surface p-5 my-8">
+        <div className="flex items-start gap-3">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-liquid-blue to-liquid-purple flex items-center justify-center shrink-0">
+            <Sparkles size={14} className="text-white" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-[var(--lg-text)] mb-1">Liquid Glass refraction</h3>
+            <p className="text-sm text-[var(--lg-text-muted)] leading-relaxed">
+              The optional "Liquid Glass" mode is an implementation of the refractive glass
+              technique described by{" "}
+              <a
+                href="https://www.kube.io/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-liquid-blue hover:underline"
+              >
+                kube.io
+              </a>
+              . It uses SVG displacement maps via{" "}
+              <InlineCode>backdrop-filter: url(#id)</InlineCode> to bend the real background behind
+              a component. Try it in the{" "}
+              <button
+                onClick={() => navigate("/playground")}
+                className="text-liquid-blue hover:underline"
+              >
+                playground
+              </button>
+              .
+            </p>
+          </div>
+        </div>
       </div>
 
       <H2>How this library works</H2>
@@ -976,21 +1034,20 @@ function ThemeSection() {
 
       <H3>Glass settings</H3>
       <P>
-        Four sliders drive every glass surface in the library. They are stored as unitless numbers
+        Three sliders drive every glass surface in the library. They are stored as unitless numbers
         0–100 and mapped to CSS values in the utility classes.
       </P>
       <ul className="space-y-2 mb-6 text-sm text-[var(--lg-text-secondary)]">
         <li><strong>Blur</strong> — scales <InlineCode>backdrop-filter</InlineCode> blur radius.</li>
         <li><strong>Transparency</strong> — scales surface alpha via <InlineCode>color-mix</InlineCode>.</li>
-        <li><strong>Reflection</strong> — controls reflection blob intensity.</li>
-        <li><strong>Fluidity</strong> — tunes spring stiffness/damping for motion.</li>
+        <li><strong>Saturation</strong> — scales <InlineCode>backdrop-filter saturate()</InlineCode>.</li>
       </ul>
 
       <H3>CSS variables</H3>
       <P>
         The provider writes <InlineCode>--lg-blur</InlineCode>, <InlineCode>--lg-transparency</InlineCode>,{" "}
-        <InlineCode>--lg-reflection</InlineCode>, and <InlineCode>--lg-fluidity</InlineCode> to the root
-        element. Theme colors are applied by toggling the <InlineCode>.dark</InlineCode> /{" "}
+        and <InlineCode>--lg-saturation</InlineCode> to the root element. Theme colors are applied by
+        toggling the <InlineCode>.dark</InlineCode> /{" "}
         <InlineCode>.light</InlineCode> class on <InlineCode>document.documentElement</InlineCode>.
       </P>
     </div>

@@ -1,10 +1,11 @@
 import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
-import { useTheme } from "./ThemeProvider";
 import { useGlassSurface } from "./useGlassSurface";
+import { useGlassFluidity } from "./useGlassFluidity";
 import { GlassTopHighlight } from "./GlassTopHighlight";
 import { GlassSheen } from "./GlassSheen";
+import { useLiquidTapScale } from "./useLiquidMotion";
 
 interface NavItem {
   label: string;
@@ -26,7 +27,8 @@ export function LiquidGlassNavigation({
   logo,
   actions,
 }: LiquidGlassNavigationProps) {
-  const { glass } = useTheme();
+  const tapScale = useLiquidTapScale();
+  const fluidity = useGlassFluidity();
   const thumbSurface = useGlassSurface({ variant: "thumb" });
 
   return (
@@ -47,7 +49,7 @@ export function LiquidGlassNavigation({
           <motion.button
             key={i}
             whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: tapScale }}
             onClick={item.onClick}
             className={cn(
               "relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-colors",
@@ -60,7 +62,7 @@ export function LiquidGlassNavigation({
               <motion.div
                 layoutId="nav-active"
                 className="absolute inset-0 rounded-xl glass-blur-lg pointer-events-none overflow-hidden"
-                transition={{ type: "spring", stiffness: 300 + glass.fluidity * 3, damping: 30 }}
+                transition={{ type: "spring", stiffness: 300 + fluidity * 3, damping: 30 }}
                 style={thumbSurface.style}
               >
                 <div className="absolute inset-0 rounded-xl glass-reflection mix-blend-soft-light pointer-events-none" />

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { X, AlertTriangle, CheckCircle, Info, AlertCircle } from "lucide-react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import { useLiquidTapScale } from "./useLiquidMotion";
 
 interface LiquidGlassAlertProps {
   children: ReactNode;
@@ -48,6 +49,7 @@ export function LiquidGlassAlert({
   onClose,
   icon,
 }: LiquidGlassAlertProps) {
+  const tapScale = useLiquidTapScale();
   const v = variantStyles[variant];
 
   return (
@@ -76,7 +78,7 @@ export function LiquidGlassAlert({
       {onClose && (
         <motion.button
           whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          whileTap={{ scale: tapScale }}
           onClick={onClose}
           className="flex-shrink-0 text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors"
         >

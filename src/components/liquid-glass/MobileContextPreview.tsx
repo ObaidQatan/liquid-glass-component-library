@@ -3,6 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import {
+  useLiquidOverlayVariants,
+  useLiquidTransition,
+  useLiquidTapScale,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 interface ContextAction {
   id: string;
@@ -26,6 +32,10 @@ export function MobileContextPreview({
   className,
 }: MobileContextPreviewProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const overlayVariants = useLiquidOverlayVariants();
+  const transition = useLiquidTransition();
+  const tapScale = useLiquidTapScale();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   const [childRect, setChildRect] = useState<DOMRect | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const childRef = useRef<HTMLDivElement>(null);
@@ -52,25 +62,22 @@ export function MobileContextPreview({
     <AnimatePresence>
       {isOpen && childRect && (
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
+          ref={overlayRef}
           className="fixed inset-0 z-[80] flex items-center justify-center"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="absolute inset-0 bg-black/30"
+          <div
+            className="glass-backdrop-subtle"
             onClick={() => setIsOpen(false)}
           />
 
           {/* Preview */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.8, opacity: 0, y: 20 }}
+            {...overlayVariants}
+            transition={transition}
             className="relative w-full max-w-xs mx-auto"
           >
             <motion.div
@@ -92,7 +99,7 @@ export function MobileContextPreview({
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.1 }}
+              transition={useLiquidTransition({ delay: 0.1 })}
               className={cn(
                 "rounded-2xl overflow-hidden",
                 "glass-blur-xl glass-surface glass-border glass-highlight"
@@ -102,7 +109,7 @@ export function MobileContextPreview({
               {actions.map((action, i) => (
                 <motion.button
                   key={action.id}
-                  whileTap={{ scale: 0.98 }}
+                  whileTap={{ scale: tapScale }}
                   onClick={() => {
                     action.onClick?.();
                     setIsOpen(false);

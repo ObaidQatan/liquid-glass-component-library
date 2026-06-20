@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback, type ReactNode, type MouseEvent } from "react";
 import { useLiquidPress } from "./useLiquidPress";
 import { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";
+import { useLiquidTapScale } from "./useLiquidMotion";
 
 interface RippleData {
   id: number;
@@ -58,6 +59,7 @@ export function LiquidGlassButton({
   type = "button",
   fluid = true,
 }: LiquidGlassButtonProps) {
+  const tapScale = useLiquidTapScale();
   const [ripples, setRipples] = useState<RippleData[]>([]);
   const { state: press, onPointerDown, onPointerUp, onPointerLeave, onPointerCancel } =
     useLiquidPress<HTMLButtonElement>(disabled || loading);
@@ -80,7 +82,7 @@ export function LiquidGlassButton({
   return (
     <motion.button
       whileHover={{ scale: disabled || loading ? 1 : 1.03 }}
-      whileTap={{ scale: disabled || loading ? 1 : 0.97 }}
+      whileTap={{ scale: disabled || loading ? 1 : tapScale }}
       disabled={disabled || loading}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}

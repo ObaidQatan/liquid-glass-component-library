@@ -2,6 +2,12 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
 import { X, ChevronRight } from "lucide-react";
+import {
+  useLiquidSlideVariants,
+  useLiquidTransition,
+  useLiquidTapScale,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 interface MenuSection { title: string; items: MenuItem[]; }
 interface MenuItem { id: string; label: string; icon: ReactNode; badge?: number; destructive?: boolean; onClick?: () => void; }
@@ -24,18 +30,21 @@ export function MobileSlideMenu({
 }: MobileSlideMenuProps) {
   const isLeft = position === "left";
   const isFloating = variant === "floating";
+  const edgeStiff = !isFloating;
+  const slideVariants = useLiquidSlideVariants(position, { stiff: edgeStiff });
+  const transition = useLiquidTransition({ stiff: edgeStiff });
+  const tapScale = useLiquidTapScale();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[55]">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={onClose} className="absolute inset-0 bg-[var(--lg-overlay)] glass-blur-sm" />
+        <div className="fixed inset-0 z-[55]" ref={overlayRef}>
+          <motion.div initial={{ opacity: 0.2 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            onClick={onClose} className="glass-backdrop-overlay" />
           <motion.div
-            initial={{ x: isLeft ? "-100%" : "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: isLeft ? "-100%" : "100%" }}
-            transition={{ type: "spring", stiffness: 350, damping: 35 }}
+            {...slideVariants}
+            transition={transition}
             className={cn(
               "absolute top-0 bottom-0",
               isLeft ? "left-0" : "right-0",
@@ -52,7 +61,7 @@ export function MobileSlideMenu({
             {header || (
               <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--lg-border)]">
                 <h3 className="text-base font-semibold text-[var(--lg-text)]">Menu</h3>
-                <motion.button whileTap={{ scale: 0.9 }} onClick={onClose}
+                <motion.button whileTap={{ scale: tapScale }} onClick={onClose}
                   className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--lg-border)] text-[var(--lg-text-muted)]">
                   <X size={16} />
                 </motion.button>
@@ -68,7 +77,7 @@ export function MobileSlideMenu({
                     </div>
                   )}
                   {section.items.map((item) => (
-                    <motion.button key={item.id} whileTap={{ scale: 0.98 }}
+                    <motion.button key={item.id} whileTap={{ scale: tapScale }}
                       onClick={() => { item.onClick?.(); onClose(); }}
                       className={cn(
                         "flex w-full items-center gap-3 px-5 py-3 text-left transition-colors hover:bg-[var(--lg-border)]",

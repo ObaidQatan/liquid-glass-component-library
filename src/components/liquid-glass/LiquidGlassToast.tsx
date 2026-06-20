@@ -4,6 +4,11 @@ import { X, CheckCircle, AlertTriangle, Info, AlertCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useGlassSurface } from "./useGlassSurface";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import {
+  useLiquidTapScale,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 export interface ToastItem {
   id: string;
@@ -68,6 +73,9 @@ function ToastItemComponent({
   toast: ToastItem;
   onRemove: (id: string) => void;
 }) {
+  const tapScale = useLiquidTapScale();
+  const transition = useLiquidTransition();
+  const overlayRef = useGlassOverlayRootStyle(true);
   const progressFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [progress, setProgress] = useState(100);
   const duration = toast.duration || 4000;
@@ -89,10 +97,11 @@ function ToastItemComponent({
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, x: 50, scale: 0.9 }}
+      initial={{ opacity: 0.2, x: 50, scale: 0.9 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: 50, scale: 0.9 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      transition={transition}
+      ref={overlayRef}
       className={cn(
         "relative flex items-center gap-3 min-w-[280px] max-w-[400px] px-4 py-3 rounded-2xl",
         "glass-blur-xl glass-surface border",
@@ -107,7 +116,7 @@ function ToastItemComponent({
       <p className="flex-1 text-sm text-[var(--lg-text-secondary)] leading-relaxed">{toast.message}</p>
       <motion.button
         whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+        whileTap={{ scale: tapScale }}
         onClick={() => onRemove(toast.id)}
         className="flex-shrink-0 text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors"
       >

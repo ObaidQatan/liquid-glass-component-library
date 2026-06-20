@@ -4,6 +4,7 @@ import { useTheme } from "./ThemeProvider";
 export type GlassSurfaceVariant =
   | "surface"
   | "surface-strong"
+  | "surface-lg"
   | "surface-dark"
   | "fill"
   | "thumb"
@@ -18,6 +19,16 @@ interface UseGlassSurfaceOptions {
   tint?: string;
   activeTint?: string;
   opacity?: number;
+}
+
+export interface UseGlassSurfaceResult {
+  style: {
+    background?: string;
+    backgroundColor?: string;
+    border?: string;
+    boxShadow?: string;
+  };
+  className: string;
 }
 
 function hexToRgb(hex: string) {
@@ -42,7 +53,7 @@ function withAlpha(color: string, alphaBase: number, transparency: number, opaci
   return color;
 }
 
-export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
+export function useGlassSurface(options: UseGlassSurfaceOptions = {}): UseGlassSurfaceResult {
   const {
     variant = "surface",
     tint = "#3b82f6",
@@ -50,8 +61,12 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
     opacity = 1,
   } = options;
 
-  const { glass } = useTheme();
-  const { transparency, reflection } = glass;
+  const { glass, mode, liquidGlass } = useTheme();
+  // In liquid-glass mode the Transparency slider lives on liquidGlass, so
+  // inline glass surfaces must use that value or they stop responding to the
+  // main controls.
+  const transparency =
+    mode === "liquid-glass" ? liquidGlass.transparency : glass.transparency;
 
   return useMemo(() => {
     const w = (base: number) => withAlpha("#ffffff", base, transparency, opacity);
@@ -125,6 +140,12 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
           className: "glass-blur glass-surface-strong glass-border glass-highlight",
         };
 
+      case "surface-lg":
+        return {
+          style: {},
+          className: "glass-blur-lg glass-surface-strong glass-border glass-highlight",
+        };
+
       case "surface-dark":
         return {
           style: {},
@@ -138,5 +159,5 @@ export function useGlassSurface(options: UseGlassSurfaceOptions = {}) {
           className: "glass-blur glass-surface glass-border glass-highlight",
         };
     }
-  }, [variant, tint, activeTint, opacity, transparency, reflection]);
+  }, [variant, tint, activeTint, opacity, transparency]);
 }

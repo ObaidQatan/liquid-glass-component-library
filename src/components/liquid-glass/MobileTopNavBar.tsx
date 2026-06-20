@@ -6,6 +6,7 @@ import { useLiquidPress } from "./useLiquidPress";
 import { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";
 import { GlassTopHighlight } from "./GlassTopHighlight";
 import { GlassSheen } from "./GlassSheen";
+import { useLiquidTapScale, useLiquidTransition } from "./useLiquidMotion";
 
 interface MobileTopNavBarProps {
   title?: string;
@@ -20,12 +21,13 @@ interface MobileTopNavBarProps {
 }
 
 function BackButton({ onBack }: { onBack?: () => void }) {
+  const tapScale = useLiquidTapScale();
   const { state: press, onPointerDown, onPointerUp, onPointerLeave, onPointerCancel } =
     useLiquidPress<HTMLButtonElement>();
 
   return (
     <motion.button
-      whileTap={{ scale: 0.88 }}
+      whileTap={{ scale: tapScale }}
       onClick={onBack}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
@@ -50,6 +52,8 @@ export function MobileTopNavBar({
   variant = "standard",
   translucent = true,
 }: MobileTopNavBarProps) {
+  const searchTransition = useLiquidTransition();
+  const tapScale = useLiquidTapScale();
   const [searchValue, setSearchValue] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
 
@@ -144,7 +148,7 @@ export function MobileTopNavBar({
                   "inset 0 1px 0 var(--lg-highlight-top), inset 0 -1px 0 var(--lg-highlight-bottom), 0 0 24px rgba(255,255,255,0.12)",
               }),
             }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            transition={searchTransition}
             className={cn(
               "relative flex-1 flex items-center gap-2 px-3 py-1.5 rounded-xl overflow-hidden",
               "glass-blur glass-surface-strong glass-border glass-highlight",
@@ -196,7 +200,7 @@ export function MobileTopNavBar({
       <div className="flex items-center gap-1 min-w-12 justify-end">
         {rightActions?.map((action, i) => <span key={i}>{action}</span>)}
         {!rightActions?.length && (
-          <motion.button whileTap={{ scale: 0.9 }} className="p-1 text-[var(--lg-text-muted)]"><MoreVertical size={18} /></motion.button>
+          <motion.button whileTap={{ scale: tapScale }} className="p-1 text-[var(--lg-text-muted)]"><MoreVertical size={18} /></motion.button>
         )}
       </div>
     </div>

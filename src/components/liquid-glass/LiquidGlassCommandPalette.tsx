@@ -3,6 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { Search, Command } from "lucide-react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import {
+  useLiquidOverlayVariants,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 interface CommandItem {
   id: string;
@@ -26,6 +31,9 @@ export function LiquidGlassCommandPalette({
   items,
   placeholder = "Type a command or search...",
 }: LiquidGlassCommandPaletteProps) {
+  const overlayVariants = useLiquidOverlayVariants();
+  const transition = useLiquidTransition();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -89,18 +97,17 @@ export function LiquidGlassCommandPalette({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          ref={overlayRef}
           className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4"
           onClick={onClose}
         >
-          <div className="absolute inset-0 bg-black/50 glass-blur-sm" />
+          <div className="glass-backdrop" />
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.96 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            {...overlayVariants}
+            transition={transition}
             onClick={(e) => e.stopPropagation()}
             className="relative w-full max-w-xl overflow-hidden rounded-2xl glass-blur-xl glass-surface glass-border glass-highlight-strong"
           >

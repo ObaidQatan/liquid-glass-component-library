@@ -1,7 +1,9 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 import type { ReactNode } from "react";
 import { useGlassSurface } from "./useGlassSurface";
+import { useLiquidTransition, useGlassOverlayRootStyle } from "./useLiquidMotion";
 
 interface SplashSlide {
   id: string;
@@ -28,6 +30,8 @@ export function MobileSplashScreen({
   getStartedText = "Get Started",
   skipText = "Skip",
 }: MobileSplashScreenProps) {
+  const transition = useLiquidTransition();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   const buttonFill = useGlassSurface({ variant: "fill", opacity: 0.15 });
   const [currentSlide, setCurrentSlide] = useState(0);
   const isLastSlide = currentSlide === slides.length - 1;
@@ -38,9 +42,10 @@ export function MobileSplashScreen({
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
+      initial={{ opacity: 0.2 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      ref={overlayRef}
       className={cn(
         "fixed inset-0 z-[70] flex flex-col items-center justify-between",
         "bg-[#0a0a0f]",
@@ -70,10 +75,10 @@ export function MobileSplashScreen({
         <AnimatePresence mode="wait">
           <motion.div
             key={slide.id}
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            initial={{ opacity: 0.2, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            transition={transition}
             className="flex flex-col items-center"
           >
             {/* Icon */}
@@ -137,5 +142,3 @@ export function MobileSplashScreen({
     </motion.div>
   );
 }
-
-import { useState } from "react";

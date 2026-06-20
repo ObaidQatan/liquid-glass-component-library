@@ -4,6 +4,7 @@ import { Bell, Check, Trash2, MessageSquare, Heart, UserPlus, AlertCircle } from
 import { useState, useRef, useEffect, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { useGlassSurface } from "./useGlassSurface";
+import { useGlassOverlayRootStyle, useLiquidTapScale, mergeRefs } from "./useLiquidMotion";
 
 interface Notification {
   id: string;
@@ -45,12 +46,14 @@ export function LiquidGlassNotificationDropdown({
   onClearAll,
   onNotificationClick,
 }: LiquidGlassNotificationDropdownProps) {
+  const tapScale = useLiquidTapScale();
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
   const popover = useGlassSurface({ variant: "popover" });
   const topHighlight = useGlassSurface({ variant: "highlight", opacity: 0.25 });
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   const unreadFill = useGlassSurface({ variant: "fill", opacity: 0.06 });
   const hoverFill = useGlassSurface({ variant: "fill", opacity: 0.05 });
 
@@ -88,8 +91,8 @@ export function LiquidGlassNotificationDropdown({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          ref={popoverRef}
-          initial={{ opacity: 0, y: 8, scale: 0.96 }}
+          ref={mergeRefs(popoverRef, overlayRef)}
+          initial={{ opacity: 0.2, y: 8, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 8, scale: 0.96 }}
           transition={{ duration: 0.15 }}
@@ -97,12 +100,10 @@ export function LiquidGlassNotificationDropdown({
             "fixed rounded-2xl overflow-hidden z-[100]",
             popover.className
           )}
-          style={{
-            left: position.left,
+          style={{left: position.left,
             top: position.top,
             width: POPOVER_WIDTH,
-            ...popover.style,
-          }}
+            ...popover.style}}
         >
           {/* Reflection blob */}
           <div className="pointer-events-none absolute -top-10 -right-10 h-24 w-24 rounded-full glass-reflection blur-2xl" />
@@ -115,7 +116,7 @@ export function LiquidGlassNotificationDropdown({
             <div className="flex items-center gap-1">
               <motion.button
                 whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                whileTap={{ scale: tapScale }}
                 onClick={onMarkAllRead}
                 className="p-1.5 rounded-lg text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] hover:bg-[var(--lg-border-subtle)] transition-colors"
                 title="Mark all read"
@@ -124,7 +125,7 @@ export function LiquidGlassNotificationDropdown({
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                whileTap={{ scale: tapScale }}
                 onClick={onClearAll}
                 className="p-1.5 rounded-lg text-[var(--lg-text-muted)] hover:text-liquid-rose hover:bg-[var(--lg-border-subtle)] transition-colors"
                 title="Clear all"
@@ -186,7 +187,7 @@ export function LiquidGlassNotificationDropdown({
     <div ref={triggerRef} className={cn("relative", className)}>
       <motion.button
         whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileTap={{ scale: tapScale }}
         onClick={handleToggle}
         className="relative flex h-10 w-10 items-center justify-center rounded-xl glass-blur-sm glass-surface glass-border text-[var(--lg-text-muted)] hover:text-[var(--lg-text-secondary)] transition-colors"
       >

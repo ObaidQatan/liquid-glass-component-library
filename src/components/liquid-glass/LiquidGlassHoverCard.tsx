@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { useGlassSurface } from "./useGlassSurface";
+import { useGlassOverlayRootStyle } from "./useLiquidMotion";
 
 interface LiquidGlassHoverCardProps {
   children: ReactNode;
@@ -28,6 +29,7 @@ export function LiquidGlassHoverCard({
   const popover = useGlassSurface({ variant: "popover" });
   const topHighlight = useGlassSurface({ variant: "highlight", opacity: 0.20 });
   const arrowFill = useGlassSurface({ variant: "fill", opacity: 0.12 });
+  const overlayRef = useGlassOverlayRootStyle(isVisible);
 
   const measurePosition = () => {
     if (!triggerRef.current) return;
@@ -59,16 +61,14 @@ export function LiquidGlassHoverCard({
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0, y: 8, scale: 0.96 }}
+          initial={{ opacity: 0.2, y: 8, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 8, scale: 0.96 }}
           transition={{ duration: 0.15 }}
           className="fixed z-[100] flex justify-center pointer-events-none"
-          style={{
-            left: position.left,
+          ref={overlayRef} style={{left: position.left,
             top: position.top,
-            width: position.width,
-          }}
+            width: position.width}}
         >
           <div
             className={cn(

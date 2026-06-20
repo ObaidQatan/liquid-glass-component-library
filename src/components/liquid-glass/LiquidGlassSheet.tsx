@@ -1,6 +1,11 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
+import {
+  useLiquidSlideVariants,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 interface LiquidGlassSheetProps {
   isOpen: boolean;
@@ -25,33 +30,33 @@ export function LiquidGlassSheet({
   const isDetached = variant === "detached";
   const isInset = variant === "inset";
   const isCompact = variant === "compact";
+  const slideVariants = useLiquidSlideVariants("bottom", { stiff: true });
+  const transition = useLiquidTransition({ stiff: true });
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className={cn(
+        <div
+          ref={overlayRef}
+          className={cn(
           "fixed inset-0 z-50 flex items-end justify-center",
           isDetached && "p-4",
           isInset && "p-3"
         )}>
           {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0.2 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className={cn(
-              "absolute inset-0",
-              "bg-[var(--lg-overlay)] glass-blur-sm"
-            )}
+            className="glass-backdrop-overlay"
           />
           {/* Sheet */}
           <motion.div
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={{ type: "spring", stiffness: 350, damping: 35 }}
+            {...slideVariants}
+            transition={transition}
             className={cn(
               "relative w-full overflow-hidden",
               "glass-blur-xl glass-surface-strong glass-border glass-highlight-strong",

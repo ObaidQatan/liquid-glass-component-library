@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Check, Minus } from "lucide-react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
 import { useGlassSurface } from "./useGlassSurface";
+import { useLiquidTapScale, useLiquidTransition } from "./useLiquidMotion";
 
 interface LiquidGlassCheckboxProps {
   checked?: boolean;
@@ -29,6 +30,8 @@ export function LiquidGlassCheckbox({
   disabled,
   size = "md",
 }: LiquidGlassCheckboxProps) {
+  const tapScale = useLiquidTapScale();
+  const checkTransition = useLiquidTransition();
   const uncheckedFill = useGlassSurface({ variant: "fill", opacity: 0.05 });
   const s = sizeStyles[size];
   const isActive = checked || indeterminate;
@@ -42,7 +45,7 @@ export function LiquidGlassCheckbox({
       )}
     >
       <motion.div
-        whileTap={disabled ? {} : { scale: 0.9 }}
+        whileTap={disabled ? {} : { scale: tapScale }}
         onClick={() => !disabled && onChange?.(!checked)}
         className={cn(
           "relative flex items-center justify-center flex-shrink-0",
@@ -62,7 +65,7 @@ export function LiquidGlassCheckbox({
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 500, damping: 30 }}
+              transition={checkTransition}
             >
               {indeterminate ? (
                 <Minus size={s.icon} className="text-white" />

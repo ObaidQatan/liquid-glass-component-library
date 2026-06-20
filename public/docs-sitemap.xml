@@ -46,6 +46,7 @@
   <url><loc>https://liquid-glass-ui.example.com/docs?topic=slider</loc></url>
   <url><loc>https://liquid-glass-ui.example.com/docs?topic=stat-card</loc></url>
   <url><loc>https://liquid-glass-ui.example.com/docs?topic=stepper</loc></url>
+  <url><loc>https://liquid-glass-ui.example.com/docs?topic=surface</loc></url>
   <url><loc>https://liquid-glass-ui.example.com/docs?topic=tab-bar</loc></url>
   <url><loc>https://liquid-glass-ui.example.com/docs?topic=table</loc></url>
   <url><loc>https://liquid-glass-ui.example.com/docs?topic=timeline</loc></url>
@@ -70,4 +71,5 @@
   <url><loc>https://liquid-glass-ui.example.com/docs?topic=swipeable-list</loc></url>
   <url><loc>https://liquid-glass-ui.example.com/docs?topic=top-nav-bar</loc></url>
   <url><loc>https://liquid-glass-ui.example.com/docs?topic=theme-provider</loc></url>
+  <url><loc>https://liquid-glass-ui.example.com/docs?topic=use-custom-kube-filter</loc></url>
 </urlset>

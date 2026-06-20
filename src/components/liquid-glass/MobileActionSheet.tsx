@@ -1,6 +1,12 @@
 import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
+import {
+  useLiquidSlideVariants,
+  useLiquidTransition,
+  useLiquidTapScale,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 interface ActionSheetItem {
   id: string;
@@ -32,17 +38,21 @@ export function MobileActionSheet({
   className,
   variant = "default",
 }: MobileActionSheetProps) {
+  const slideVariants = useLiquidSlideVariants("bottom", { stiff: true });
+  const transition = useLiquidTransition({ stiff: true });
+  const tapScale = useLiquidTapScale();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[60] flex items-end justify-center">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        <div className="fixed inset-0 z-[60] flex items-end justify-center" ref={overlayRef}>
+          <motion.div initial={{ opacity: 0.2 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }} onClick={onClose}
-            className="absolute inset-0 bg-[var(--lg-overlay)] glass-blur-sm" />
+            className="glass-backdrop-overlay" />
 
           <motion.div
-            initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
-            transition={{ type: "spring", stiffness: 300, damping: 35 }}
+            {...slideVariants}
+            transition={transition}
             className={cn(
               "relative w-full max-w-lg mx-auto",
               variant === "grouped" ? "px-3 pb-3" : "pb-2",
@@ -64,7 +74,7 @@ export function MobileActionSheet({
                     <ActionButton key={item.id} item={item} onClose={onClose} isLast={i === items.length - 1} />
                   ))}
                 </div>
-                <motion.button whileTap={{ scale: 0.98 }} onClick={onClose}
+                <motion.button whileTap={{ scale: tapScale }} onClick={onClose}
                   className="w-full py-3.5 rounded-2xl text-sm font-semibold text-liquid-blue glass-blur-xl glass-surface-strong glass-border glass-highlight-strong">
                   {cancelText}
                 </motion.button>
@@ -84,7 +94,7 @@ export function MobileActionSheet({
                 )}
                 <div className="grid grid-cols-4 gap-2 px-4 pb-6">
                   {items.map((item) => (
-                    <motion.button key={item.id} whileTap={{ scale: 0.9 }} onClick={() => { item.onClick?.(); onClose(); }}
+                    <motion.button key={item.id} whileTap={{ scale: tapScale }} onClick={() => { item.onClick?.(); onClose(); }}
                       className="flex flex-col items-center gap-1.5 py-3 rounded-xl hover:bg-[var(--lg-border)] transition-colors">
                       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--lg-border)]">
                         <span className={item.destructive ? "text-liquid-rose" : "text-[var(--lg-text-secondary)]"}>{item.icon}</span>
@@ -127,7 +137,7 @@ export function MobileActionSheet({
                   {items.map((item, i) => (
                     <ActionButton key={item.id} item={item} onClose={onClose} isLast={i === items.length - 1} />
                   ))}
-                  <motion.button whileTap={{ scale: 0.98 }} onClick={onClose}
+                  <motion.button whileTap={{ scale: tapScale }} onClick={onClose}
                     className="flex w-full items-center justify-center py-3.5 rounded-xl text-sm font-semibold text-[var(--lg-text-muted)] hover:bg-[var(--lg-border)] transition-colors mt-2">
                     {cancelText}
                   </motion.button>
@@ -142,9 +152,10 @@ export function MobileActionSheet({
 }
 
 function ActionButton({ item, onClose, isLast }: { item: ActionSheetItem; onClose: () => void; isLast: boolean }) {
+  const actionTapScale = useLiquidTapScale();
   return (
     <motion.button
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: actionTapScale }}
       onClick={() => { item.onClick?.(); onClose(); }}
       className={cn(
         "flex w-full items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-colors hover:bg-[var(--lg-border)]",

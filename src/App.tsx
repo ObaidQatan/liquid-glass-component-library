@@ -16,6 +16,7 @@ import { cn } from "./utils/cn";
 import type { ToastItem } from "./components/liquid-glass/LiquidGlassToast";
 import type { MobileBottomTabVariant } from "./components/liquid-glass/MobileBottomTabBar";
 import Docs from "./Docs";
+import Playground from "./Playground";
 import { useRoute, navigate } from "./router";
 import AnimatedBackground from "./AnimatedBackground";
 
@@ -61,6 +62,18 @@ function ThemeToggle() {
       </motion.div>
       <div className="pointer-events-none absolute inset-x-2 top-0 h-px glass-top-highlight" />
     </motion.button>
+  );
+}
+
+/* ───────── Glass / Liquid Glass Mode Toggle ───────── */
+function ModeToggle() {
+  const { mode, toggleMode } = LG.useTheme();
+  return (
+    <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl glass-blur-sm glass-surface border border-white/10">
+      <span className={cn("text-xs font-medium transition-colors", mode === "glass" ? "text-[var(--lg-text)]" : "text-[var(--lg-text-muted)]")}>Glass</span>
+      <LG.LiquidGlassToggle checked={mode === "liquid-glass"} onChange={toggleMode} variant="ios26" size="sm" activeTint="#3b82f6" />
+      <span className={cn("text-xs font-medium transition-colors", mode === "liquid-glass" ? "text-[var(--lg-text)]" : "text-[var(--lg-text-muted)]")}>Liquid</span>
+    </div>
   );
 }
 
@@ -115,6 +128,7 @@ export default function App() {
   const [searchValue, setSearchValue] = useState("");
   const [showCenterTabBar, setShowCenterTabBar] = useState(false);
 
+  const { mode } = LG.useTheme();
 
   const addToast = useCallback((msg: string, v: ToastItem["variant"] = "info") => {
     setToasts((p) => [...p, { id: Math.random().toString(36).slice(2), message: msg, variant: v }]);
@@ -275,6 +289,10 @@ export default function App() {
     return <Docs />;
   }
 
+  if (route.pathname === "/playground") {
+    return <Playground />;
+  }
+
   return (
     <div className="relative min-h-screen transition-colors duration-500">
       <AnimatedBackground />
@@ -319,15 +337,25 @@ export default function App() {
                 <LG.LiquidGlassButton variant="secondary" onClick={() => setSplashOpen(true)} icon={<Sparkles size={14} />}>Splash Screen</LG.LiquidGlassButton>
                 <LG.LiquidGlassButton variant="ghost" onClick={() => addToast("Liquid ripple!", "success")}>Click Me</LG.LiquidGlassButton>
                 <LG.LiquidGlassButton variant="secondary" onClick={() => navigate("/docs")} icon={<BookOpen size={14} />}>Docs</LG.LiquidGlassButton>
+                <ModeToggle />
+                <LG.LiquidGlassButton variant="secondary" onClick={() => navigate("/playground")} icon={<Sparkles size={14} />}>Playground</LG.LiquidGlassButton>
               </div>
             </motion.div>
           </div>
         </header>
 
         <main className="max-w-6xl mx-auto px-6 pb-32 space-y-20">
-          {/* Glass Controls */}
+          {/* Glass / Liquid Glass Controls */}
           <section>
-            <SectionHeader icon={<SlidersHorizontal size={18} />} title="Glass Controls" description="Adjust blur, transparency, reflection, and fluidity in real-time" />
+            <SectionHeader
+              icon={<SlidersHorizontal size={18} />}
+              title={mode === "liquid-glass" ? "Liquid Glass Controls" : "Glass Controls"}
+              description={
+                mode === "liquid-glass"
+                  ? "Adjust profile, bezel, refraction, thickness, light angle, specular, transparency, and blur"
+                  : "Adjust blur, transparency, and saturation in real-time"
+              }
+            />
             <div className="flex flex-col lg:flex-row items-start gap-8">
               <LG.LiquidGlassControls />
               <div className="flex-1 w-full grid md:grid-cols-2 gap-6">

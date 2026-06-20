@@ -67,9 +67,20 @@ export { MobileContextPreview } from "./MobileContextPreview";
 
 // Theme & glass surface system
 export { ThemeProvider, useTheme } from "./ThemeProvider";
+export type { GlassMode, GlassSettings, LiquidGlassSettings } from "./ThemeProvider";
 export { useGlassSurface } from "./useGlassSurface";
-export type { GlassSurfaceVariant } from "./useGlassSurface";
+export type { GlassSurfaceVariant, UseGlassSurfaceResult } from "./useGlassSurface";
+export { useCustomKubeFilter } from "./useCustomKubeFilter";
+export type { UseCustomKubeFilterResult } from "./useCustomKubeFilter";
 export { useLiquidPress } from "./useLiquidPress";
+export {
+  useLiquidTransition,
+  useLiquidOverlayVariants,
+  useLiquidSlideVariants,
+  useLiquidTapScale,
+  useLiquidHoverLift,
+} from "./useLiquidMotion";
 export { GlassTopHighlight } from "./GlassTopHighlight";
 export { GlassSheen } from "./GlassSheen";
 export { LiquidGlassPressSplash } from "./LiquidGlassPressSplash";
+export { LiquidGlassSurface } from "./LiquidGlassSurface";

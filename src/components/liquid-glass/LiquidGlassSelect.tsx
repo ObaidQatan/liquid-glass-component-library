@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, type CSSProperties } from "react";
 import { ChevronDown, Check } from "lucide-react";
 import { createPortal } from "react-dom";
 import { useGlassSurface } from "./useGlassSurface";
+import { useGlassOverlayRootStyle, useLiquidTapScale, mergeRefs } from "./useLiquidMotion";
 
 interface SelectOption {
   value: string;
@@ -30,6 +31,7 @@ export function LiquidGlassSelect({
   label,
   disabled,
 }: LiquidGlassSelectProps) {
+  const tapScale = useLiquidTapScale();
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ left: 0, top: 0, width: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
@@ -39,6 +41,7 @@ export function LiquidGlassSelect({
   const sheen = useGlassSurface({ variant: "sheen", opacity: 0.12 });
   const topHighlight = useGlassSurface({ variant: "highlight", opacity: 0.30 });
   const dropdownHighlight = useGlassSurface({ variant: "highlight", opacity: 0.20 });
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   const selectedFill = useGlassSurface({ variant: "fill", opacity: 0.10 });
   const hoverFill = useGlassSurface({ variant: "fill", opacity: 0.06 });
 
@@ -77,8 +80,8 @@ export function LiquidGlassSelect({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          ref={popoverRef}
-          initial={{ opacity: 0, y: -8, scale: 0.96 }}
+          ref={mergeRefs(popoverRef, overlayRef)}
+          initial={{ opacity: 0.2, y: -8, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -8, scale: 0.96 }}
           transition={{ duration: 0.15 }}
@@ -87,11 +90,9 @@ export function LiquidGlassSelect({
             "glass-blur-xl glass-surface glass-border glass-highlight-strong",
             "rounded-2xl py-1"
           )}
-          style={{
-            left: position.left,
+          style={{left: position.left,
             top: position.top,
-            width: position.width,
-          }}
+            width: position.width}}
         >
           {/* Top highlight */}
           <div className={dropdownHighlight.className} style={dropdownHighlight.style} />
@@ -134,7 +135,7 @@ export function LiquidGlassSelect({
         </label>
       )}
       <motion.button
-        whileTap={{ scale: disabled ? 1 : 0.98 }}
+        whileTap={{ scale: disabled ? 1 : tapScale }}
         onClick={handleToggle}
         className={cn(
           "relative flex w-full items-center justify-between gap-3 overflow-hidden",

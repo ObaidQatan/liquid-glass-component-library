@@ -3,6 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
 import { X } from "lucide-react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import {
+  useLiquidOverlayVariants,
+  useLiquidTransition,
+  useLiquidTapScale,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 interface LiquidGlassModalProps {
   isOpen: boolean;
@@ -28,26 +34,28 @@ export function LiquidGlassModal({
   title,
   size = "md",
 }: LiquidGlassModalProps) {
+  const overlayVariants = useLiquidOverlayVariants();
+  const tapScale = useLiquidTapScale();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
+          ref={overlayRef}
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           onClick={onClose}
         >
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/50 glass-blur-sm" />
+          <div className="glass-backdrop" />
 
           {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 10 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            {...overlayVariants}
+            transition={useLiquidTransition()}
             onClick={(e) => e.stopPropagation()}
             className={cn(
               "relative w-full",
@@ -67,7 +75,7 @@ export function LiquidGlassModal({
                 <h3 className="text-lg font-semibold text-[var(--lg-text)]">{title}</h3>
                 <motion.button
                   whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                  whileTap={{ scale: tapScale }}
                   onClick={onClose}
                   className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--lg-border-subtle)] text-[var(--lg-text-muted)] hover:bg-[var(--lg-border)] hover:text-[var(--lg-text-secondary)] transition-colors"
                 >

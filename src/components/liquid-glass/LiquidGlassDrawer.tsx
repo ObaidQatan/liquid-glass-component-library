@@ -2,6 +2,11 @@ import { cn } from "../../utils/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ReactNode } from "react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import {
+  useLiquidSlideVariants,
+  useLiquidTransition,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 interface LiquidGlassDrawerProps {
   isOpen: boolean;
@@ -23,26 +28,27 @@ export function LiquidGlassDrawer({
   title,
 }: LiquidGlassDrawerProps) {
   const isLeft = position === "left";
+  const slideVariants = useLiquidSlideVariants(position, { stiff: true });
+  const transition = useLiquidTransition({ stiff: true });
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50">
+        <div className="fixed inset-0 z-50" ref={overlayRef}>
           {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0.2 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/40 glass-blur-sm"
+            className="glass-backdrop-subtle"
           />
           {/* Drawer */}
           <motion.div
-            initial={{ x: isLeft ? "-100%" : "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: isLeft ? "-100%" : "100%" }}
-            transition={{ type: "spring", stiffness: 350, damping: 35 }}
+            {...slideVariants}
+            transition={transition}
             className={cn(
               "absolute top-0 bottom-0",
               isLeft ? "left-0" : "right-0",

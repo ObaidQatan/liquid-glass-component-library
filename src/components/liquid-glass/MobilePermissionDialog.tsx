@@ -3,6 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { LiquidGlassToggle } from "./LiquidGlassToggle";
 import { useGlassSurface } from "./useGlassSurface";
+import {
+  useLiquidSlideVariants,
+  useLiquidTransition,
+  useLiquidTapScale,
+  useGlassOverlayRootStyle,
+} from "./useLiquidMotion";
 
 interface Permission {
   id: string;
@@ -31,6 +37,10 @@ export function MobilePermissionDialog({
   onGrantAll,
   className,
 }: MobilePermissionDialogProps) {
+  const slideVariants = useLiquidSlideVariants("bottom", { stiff: true });
+  const transition = useLiquidTransition({ stiff: true });
+  const tapScale = useLiquidTapScale();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   const handleFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [permMap, setPermMap] = useState<Record<string, boolean>>(
     Object.fromEntries(permissions.map((p) => [p.id, p.granted ?? false]))
@@ -43,20 +53,18 @@ export function MobilePermissionDialog({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[60] flex items-end justify-center">
+        <div className="fixed inset-0 z-[60] flex items-end justify-center" ref={overlayRef}>
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0.2 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/50 glass-blur-sm"
+            className="glass-backdrop"
           />
 
           <motion.div
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={{ type: "spring", stiffness: 300, damping: 35 }}
+            {...slideVariants}
+            transition={transition}
             className={cn(
               "relative w-full max-w-lg mx-auto mb-2",
               "glass-blur-xl glass-surface glass-border",
@@ -76,7 +84,7 @@ export function MobilePermissionDialog({
                 {permissions.map((perm) => (
                   <motion.button
                     key={perm.id}
-                    whileTap={{ scale: 0.98 }}
+                    whileTap={{ scale: tapScale }}
                     onClick={() => togglePerm(perm.id)}
                     className={cn(
                       "flex w-full items-center gap-3 p-3 rounded-xl transition-colors",
@@ -114,14 +122,14 @@ export function MobilePermissionDialog({
 
               <div className="flex gap-3">
                 <motion.button
-                  whileTap={{ scale: 0.98 }}
+                  whileTap={{ scale: tapScale }}
                   onClick={onClose}
                   className="flex-1 py-3 rounded-xl text-sm font-semibold text-[var(--lg-text-muted)] hover:bg-[var(--lg-border-subtle)] transition-colors"
                 >
                   Not Now
                 </motion.button>
                 <motion.button
-                  whileTap={{ scale: 0.98 }}
+                  whileTap={{ scale: tapScale }}
                   onClick={onGrantAll}
                   className="flex-1 py-3 rounded-xl text-sm font-semibold text-white glass-blur-sm bg-liquid-blue/20 border border-liquid-blue/30"
                 >

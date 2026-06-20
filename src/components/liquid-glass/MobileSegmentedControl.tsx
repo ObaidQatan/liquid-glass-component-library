@@ -2,6 +2,7 @@ import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
 import type { ReactNode } from "react";
+import { useLiquidTransition } from "./useLiquidMotion";
 
 interface Segment {
   id: string;
@@ -26,6 +27,7 @@ export function MobileSegmentedControl({
   size = "md",
   variant = "default",
 }: MobileSegmentedControlProps) {
+  const transition = useLiquidTransition();
   const { isDark } = useTheme();
   const selectedIndex = segments.findIndex((s) => s.id === selected);
   const isIos26 = variant === "ios26";
@@ -52,7 +54,7 @@ export function MobileSegmentedControl({
           left: `calc(${100 / segments.length * selectedIndex}% + 4px)`,
           width: `calc(${100 / segments.length}% - 8px)`,
         }}
-        transition={{ type: "spring", stiffness: 400, damping: 35 }}
+        transition={transition}
       >
         {isIos26 && <div className="pointer-events-none absolute inset-x-2 top-0.5 h-px bg-[var(--lg-border)] rounded-full" />}
       </motion.div>

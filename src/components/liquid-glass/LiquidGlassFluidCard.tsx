@@ -2,6 +2,11 @@ import { cn } from "../../utils/cn";
 import { motion } from "framer-motion";
 import { useState, type ReactNode, type MouseEvent } from "react";
 import { GlassTopHighlight } from "./GlassTopHighlight";
+import {
+  useLiquidHoverLift,
+  useLiquidTapScale,
+  useLiquidTransition,
+} from "./useLiquidMotion";
 
 interface LiquidGlassFluidCardProps {
   children: ReactNode;
@@ -18,6 +23,9 @@ export function LiquidGlassFluidCard({
   variant = "default",
   onClick,
 }: LiquidGlassFluidCardProps) {
+  const hoverLift = useLiquidHoverLift();
+  const tapScale = useLiquidTapScale();
+  const glowTransition = useLiquidTransition();
   const [glow, setGlow] = useState({ x: 50, y: 50, active: false });
 
   const handleMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -43,8 +51,8 @@ export function LiquidGlassFluidCard({
       onMouseMove={handleMove}
       onMouseLeave={() => setGlow((g) => ({ ...g, active: false }))}
       onClick={onClick}
-      whileHover={{ y: -2 }}
-      whileTap={onClick ? { scale: 0.99 } : undefined}
+      whileHover={{ y: hoverLift }}
+      whileTap={onClick ? { scale: tapScale } : undefined}
       className={cn(
         "relative overflow-hidden rounded-3xl isolate",
         isIos26 ? "glass-blur-xl glass-surface-strong glass-border" : "glass-blur-lg glass-surface glass-border",
@@ -60,7 +68,7 @@ export function LiquidGlassFluidCard({
           opacity: glow.active ? 0.6 : 0,
           scale: glow.active ? 1 : 0.8,
         }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        transition={glowTransition}
         className="pointer-events-none absolute -inset-8 z-0"
         style={{
           background: `radial-gradient(circle at ${glow.x}% ${glow.y}%, rgba(255,255,255,0.12) 0%, transparent 45%)`,
