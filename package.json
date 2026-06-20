@@ -1,12 +1,34 @@
 {
-  "name": "react-vite-tailwind",
+  "name": "liquid-glass-component-library",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "description": "A React component collection exploring glassmorphism and Apple-inspired Liquid Glass surfaces.",
+  "author": "Obaid Qatan (https://github.com/ObaidQatan)",
+  "license": "MIT",
+  "homepage": "https://github.com/ObaidQatan/liquid-glass-component-library#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ObaidQatan/liquid-glass-component-library.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ObaidQatan/liquid-glass-component-library/issues"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "glassmorphism",
+    "liquid-glass",
+    "tailwindcss",
+    "framer-motion",
+    "ui"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "node scripts/generate-docs-data.js && vite build",
+    "preview": "vite preview",
+    "docs:generate": "node scripts/generate-docs-data.js",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "clsx": "2.1.1",

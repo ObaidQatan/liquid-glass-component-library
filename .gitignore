@@ -11,6 +11,9 @@ dist-ssr
 # Vite cache
 .vite
 
+# Netlify local state
+.netlify/
+
 # Environment
 .env
 .env.local
