@@ -11829,14 +11829,30 @@ export function ThemeProvider({ children, defaultTheme = &quot;dark&quot; }: { c
     &gt;
       {children}
       {mode === &quot;liquid-glass&quot; &amp;&amp; kubeSupported &amp;&amp; (
-        &lt;KubeFilter
-          id={LIQUID_GLASS_FILTER_ID}
-          liteId={LIQUID_GLASS_FILTER_LITE_ID}
-          width={1}
-          height={1}
-          normalized
-          {...kubePropsFromLiquidGlass(liquidGlass)}
-        /&gt;
+        &lt;&gt;
+          &lt;style&gt;{`
+            .glass-blur,
+            .glass-blur-sm {
+              backdrop-filter: url(#${LIQUID_GLASS_FILTER_LITE_ID}) saturate(calc(var(--lg-saturation) * 3%)) !important;
+              -webkit-backdrop-filter: url(#${LIQUID_GLASS_FILTER_LITE_ID}) saturate(calc(var(--lg-saturation) * 3%)) !important;
+              contain: layout !important;
+            }
+            .glass-blur-lg,
+            .glass-blur-xl {
+              backdrop-filter: url(#${LIQUID_GLASS_FILTER_ID}) saturate(calc(var(--lg-saturation) * 3%)) !important;
+              -webkit-backdrop-filter: url(#${LIQUID_GLASS_FILTER_ID}) saturate(calc(var(--lg-saturation) * 3%)) !important;
+              contain: layout !important;
+            }
+          `}&lt;/style&gt;
+          &lt;KubeFilter
+            id={LIQUID_GLASS_FILTER_ID}
+            liteId={LIQUID_GLASS_FILTER_LITE_ID}
+            width={1}
+            height={1}
+            normalized
+            {...kubePropsFromLiquidGlass(liquidGlass)}
+          /&gt;
+        &lt;/&gt;
       )}
     &lt;/ThemeContext.Provider&gt;
   );
