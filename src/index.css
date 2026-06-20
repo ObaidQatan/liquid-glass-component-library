@@ -128,24 +128,18 @@
 }
 
 /* ───────── Glass Utilities ───────── */
-@layer utilities {
-  /* Blurs — base values, dynamically adjustable via --lg-blur */
-  .glass-blur {
-    backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(calc(var(--lg-saturation) * 2%));
-    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(calc(var(--lg-saturation) * 2%));
-  }
-  .glass-blur-sm {
-    backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%));
-    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%));
-  }
-  .glass-blur-lg {
-    backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(calc(var(--lg-saturation) * 2%));
-    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(calc(var(--lg-saturation) * 2%));
-  }
-  .glass-blur-xl {
-    backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(calc(var(--lg-saturation) * 2%));
-    -webkit-backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(calc(var(--lg-saturation) * 2%));
-  }
+@utility glass-blur {
+  backdrop-filter: blur(calc(var(--lg-blur) * 0.48px)) saturate(calc(var(--lg-saturation) * 2%));
+}
+@utility glass-blur-sm {
+  backdrop-filter: blur(calc(var(--lg-blur) * 0.24px)) saturate(calc(var(--lg-saturation) * 2%));
+}
+@utility glass-blur-lg {
+  backdrop-filter: blur(calc(var(--lg-blur) * 0.8px)) saturate(calc(var(--lg-saturation) * 2%));
+}
+@utility glass-blur-xl {
+  backdrop-filter: blur(calc(var(--lg-blur) * 1.2px)) saturate(calc(var(--lg-saturation) * 2%));
+}
 
   /* Surfaces — theme-aware, dynamically adjustable via --lg-transparency */
   .glass-surface {
@@ -241,29 +235,31 @@
     animation: shimmer 2s linear infinite;
   }
 
-  /* Liquid-glass mode: swap the CSS blur utilities for the shared kube
-     refraction filters. Two filters are rendered by ThemeProvider:
-     - full filter (#lg-liquid-glass-filter) for large surfaces (lg/xl)
-     - lite filter (#lg-liquid-glass-filter-lite) for small/medium elements
-       (base/sm). The lite variant drops feGaussianBlur and feComponentTransfer
-       so dozens of buttons/inputs pay for only 4 filter primitives instead of 6.
-     `contain: layout` isolates each glass element's layout so child
-     changes (ripples, hover scales) don't invalidate unrelated
-     backdrop-filter nodes. We avoid `contain: paint` because many glass
-     hosts (sliders, raised tab buttons) have children that intentionally
-     overflow their bounds. */
+/* Liquid-glass mode: swap the CSS blur utilities for the shared kube
+   refraction filters. Two filters are rendered by ThemeProvider:
+   - full filter (#lg-liquid-glass-filter) for large surfaces (lg/xl)
+   - lite filter (#lg-liquid-glass-filter-lite) for small/medium elements
+     (base/sm). The lite variant drops feGaussianBlur and feComponentTransfer
+     so dozens of buttons/inputs pay for only 4 filter primitives instead of 6.
+   `contain: layout` isolates each glass element's layout so child
+   changes (ripples, hover scales) don't invalidate unrelated
+   backdrop-filter nodes. We avoid `contain: paint` because many glass
+   hosts (sliders, raised tab buttons) have children that intentionally
+   overflow their bounds. */
+@layer glass-liquid {
   :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur,
   :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-sm {
-    backdrop-filter: url(#lg-liquid-glass-filter-lite) saturate(calc(var(--lg-saturation) * 3%));
-    -webkit-backdrop-filter: url(#lg-liquid-glass-filter-lite) saturate(calc(var(--lg-saturation) * 3%));
+    backdrop-filter: url(#lg-liquid-glass-filter-lite) saturate(calc(var(--lg-saturation) * 3%)) !important;
+    -webkit-backdrop-filter: url(#lg-liquid-glass-filter-lite) saturate(calc(var(--lg-saturation) * 3%)) !important;
     contain: layout;
   }
   :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-lg,
   :root[data-glass-mode="liquid-glass"][data-liquid-glass-supported="true"] .glass-blur-xl {
-    backdrop-filter: url(#lg-liquid-glass-filter) saturate(calc(var(--lg-saturation) * 3%));
-    -webkit-backdrop-filter: url(#lg-liquid-glass-filter) saturate(calc(var(--lg-saturation) * 3%));
+    backdrop-filter: url(#lg-liquid-glass-filter) saturate(calc(var(--lg-saturation) * 3%)) !important;
+    -webkit-backdrop-filter: url(#lg-liquid-glass-filter) saturate(calc(var(--lg-saturation) * 3%)) !important;
     contain: layout;
   }
+}
 
   /* Modal/drawer/sheet backdrops: dim + blur in glass mode, fully transparent
      and unblurred in liquid-glass mode so the refractive surfaces stay crisp. */
@@ -318,7 +314,6 @@
       backdrop-filter 0.35s ease-out,
       -webkit-backdrop-filter 0.35s ease-out;
   }
-}
 
 
 /* ───────── Keyframes ───────── */

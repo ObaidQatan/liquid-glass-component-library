@@ -14,6 +14,13 @@
   "bugs": {
     "url": "https://github.com/ObaidQatan/liquid-glass-component-library/issues"
   },
+  "browserslist": [
+    "last 2 years",
+    "not dead",
+    "Chrome >= 90",
+    "Safari >= 14",
+    "Firefox >= 100"
+  ],
   "keywords": [
     "react",
     "components",
