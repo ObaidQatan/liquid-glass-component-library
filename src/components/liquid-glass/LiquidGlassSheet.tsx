@@ -32,13 +32,13 @@ export function LiquidGlassSheet({
   const isCompact = variant === "compact";
   const slideVariants = useLiquidSlideVariants("bottom", { stiff: true });
   const transition = useLiquidTransition({ stiff: true });
-  const overlayRootStyle = useGlassOverlayRootStyle();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
 
   return (
     <AnimatePresence>
       {isOpen && (
         <div
-          style={overlayRootStyle}
+          ref={overlayRef}
           className={cn(
           "fixed inset-0 z-50 flex items-end justify-center",
           isDetached && "p-4",
@@ -46,7 +46,7 @@ export function LiquidGlassSheet({
         )}>
           {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0.01 }}
+            initial={{ opacity: 0.2 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}

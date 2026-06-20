@@ -36,16 +36,16 @@ export function LiquidGlassModal({
 }: LiquidGlassModalProps) {
   const overlayVariants = useLiquidOverlayVariants();
   const tapScale = useLiquidTapScale();
-  const overlayRootStyle = useGlassOverlayRootStyle();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0.01 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          style={overlayRootStyle}
+          ref={overlayRef}
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           onClick={onClose}
         >

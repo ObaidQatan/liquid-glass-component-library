@@ -31,11 +31,11 @@ export function MobileContextPreview({
   previewContent,
   className,
 }: MobileContextPreviewProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const overlayVariants = useLiquidOverlayVariants();
   const transition = useLiquidTransition();
   const tapScale = useLiquidTapScale();
-  const overlayRootStyle = useGlassOverlayRootStyle();
-  const [isOpen, setIsOpen] = useState(false);
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   const [childRect, setChildRect] = useState<DOMRect | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const childRef = useRef<HTMLDivElement>(null);
@@ -62,17 +62,14 @@ export function MobileContextPreview({
     <AnimatePresence>
       {isOpen && childRect && (
         <motion.div
-          initial={{ opacity: 0.01 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          style={overlayRootStyle}
+          ref={overlayRef}
           className="fixed inset-0 z-[80] flex items-center justify-center"
         >
-          <motion.div
-            initial={{ opacity: 0.01, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
+          <div
             className="glass-backdrop-subtle"
             onClick={() => setIsOpen(false)}
           />

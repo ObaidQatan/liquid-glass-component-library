@@ -320,25 +320,6 @@
   }
 }
 
-/* When a fixed overlay/backdrop first mounts, start its local blur and
-   saturation at 0 and let them transition up to the global values. This gives
-   the glass effect a smooth fade-in instead of snapping on. */
-@starting-style {
-  .fixed .glass-blur,
-  .fixed .glass-blur-sm,
-  .fixed .glass-blur-lg,
-  .fixed .glass-blur-xl,
-  .fixed.glass-blur,
-  .fixed.glass-blur-sm,
-  .fixed.glass-blur-lg,
-  .fixed.glass-blur-xl,
-  .glass-backdrop,
-  .glass-backdrop-subtle,
-  .glass-backdrop-overlay {
-    --lg-blur: 0;
-    --lg-saturation: 0;
-  }
-}
 
 /* ───────── Keyframes ───────── */
 @keyframes float {

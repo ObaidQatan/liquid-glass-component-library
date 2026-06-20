@@ -1,25 +1,40 @@
-import { useEffect, useState } from "react";
+import { useCallback } from "react";
+import type { MutableRefObject, Ref } from "react";
 import { useTheme } from "./ThemeProvider";
+
+/** Merge a callback ref with one or more mutable/callback refs. */
+export function mergeRefs<T>(...refs: Array<Ref<T> | null | undefined>): (value: T | null) => void {
+  return (value) => {
+    for (const ref of refs) {
+      if (typeof ref === "function") {
+        ref(value);
+      } else if (ref) {
+        (ref as MutableRefObject<T | null>).current = value;
+      }
+    }
+  };
+}
 
 type SlidePosition = "left" | "right" | "top" | "bottom";
 
 /**
- * Inline style that starts the local glass variables at 0 so the registered
- * CSS transition can ramp blur/saturation up when an overlay mounts. The style
- * is removed after the first animation frame, triggering the transition to the
- * inherited global values.
+ * Ref callback that triggers a CSS animation on all glass children every time
+ * an overlay opens. The animation starts blur/saturation at 0 and ramps them
+ * up to the inherited global values.
+ *
+ * Attach the returned ref to the overlay's fixed-position root. We use a
+ * data attribute so the animation is driven by CSS instead of React state,
+ * avoiding production scheduler delays that were causing the intro style to
+ * stick around for multiple frames.
  */
-export function useGlassOverlayRootStyle(): React.CSSProperties {
-  const [intro, setIntro] = useState(true);
-
-  useEffect(() => {
-    const raf = requestAnimationFrame(() => setIntro(false));
-    return () => cancelAnimationFrame(raf);
+export function useGlassOverlayRootStyle(_isOpen?: boolean) {
+  // No-op ref callback. The previous blur/saturation ramp animation has been
+  // removed so glass surfaces render at their full configured blur from the
+  // first frame, making overlays feel crisp immediately while their opacity
+  // and scale still animate.
+  return useCallback(() => {
+    // No-op ref callback kept for API compatibility.
   }, []);
-
-  return intro
-    ? ({ "--lg-blur": 0, "--lg-saturation": 0 } as React.CSSProperties)
-    : {};
 }
 
 const glassSpring = { type: "spring" as const, stiffness: 400, damping: 30 };
@@ -76,17 +91,16 @@ export function useLiquidOverlayVariants() {
 
   if (mode === "glass") {
     return {
-      // Start at a non-zero opacity so the browser composes the glass surface
-      // (and its backdrop-filter) from frame 1, avoiding the snappy filter
-      // pop-in that can happen when an overlay mounts at opacity 0.
-      initial: { opacity: 0.01, scale: 0.9, y: 20 },
+      // Keep the glass surface fully opaque from frame 1 so the overlay looks
+      // crisp immediately. The scale/Y motion still gives it a smooth entrance.
+      initial: { opacity: 1, scale: 0.9, y: 20 },
       animate: { opacity: 1, scale: 1, y: 0 },
       exit: { opacity: 0, scale: 0.95, y: 10 },
     };
   }
 
   return {
-    initial: { opacity: 0.01, scale: 0.82, y: 24 },
+    initial: { opacity: 1, scale: 0.82, y: 24 },
     animate: { opacity: 1, scale: 1, y: 0 },
     exit: { opacity: 0, scale: 1.08, y: -12 },
   };

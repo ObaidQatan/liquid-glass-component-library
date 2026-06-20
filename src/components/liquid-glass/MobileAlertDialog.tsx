@@ -38,7 +38,7 @@ export function MobileAlertDialog({
   const overlayVariants = useLiquidOverlayVariants();
   const transition = useLiquidTransition();
   const tapScale = useLiquidTapScale();
-  const overlayRootStyle = useGlassOverlayRootStyle();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   const defaultOptions: AlertOption[] = options || [
     { text: "OK", style: "cancel", onClick: onClose },
   ];
@@ -55,10 +55,10 @@ export function MobileAlertDialog({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-6" style={overlayRootStyle}>
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-6" ref={overlayRef}>
           {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0.01 }}
+            initial={{ opacity: 0.2 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}

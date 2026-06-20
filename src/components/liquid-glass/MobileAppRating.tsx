@@ -29,21 +29,21 @@ export function MobileAppRating({
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const displayRating = hoverRating || rating;
-  const overlayRootStyle = useGlassOverlayRootStyle();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0.01 }}
+          initial={{ opacity: 0.2 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          style={overlayRootStyle}
+          ref={overlayRef}
           className="fixed inset-0 z-[60] flex items-center justify-center p-6"
         >
           <motion.div
-            initial={{ opacity: 0.01 }}
+            initial={{ opacity: 0.2 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
@@ -51,7 +51,7 @@ export function MobileAppRating({
           />
 
           <motion.div
-            initial={{ opacity: 0.01, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0.2, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             className={cn(

@@ -31,7 +31,7 @@ export function MobileSplashScreen({
   skipText = "Skip",
 }: MobileSplashScreenProps) {
   const transition = useLiquidTransition();
-  const overlayRootStyle = useGlassOverlayRootStyle();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   const buttonFill = useGlassSurface({ variant: "fill", opacity: 0.15 });
   const [currentSlide, setCurrentSlide] = useState(0);
   const isLastSlide = currentSlide === slides.length - 1;
@@ -42,10 +42,10 @@ export function MobileSplashScreen({
 
   return (
     <motion.div
-      initial={{ opacity: 0.01 }}
+      initial={{ opacity: 0.2 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      style={overlayRootStyle}
+      ref={overlayRef}
       className={cn(
         "fixed inset-0 z-[70] flex flex-col items-center justify-between",
         "bg-[#0a0a0f]",
@@ -75,7 +75,7 @@ export function MobileSplashScreen({
         <AnimatePresence mode="wait">
           <motion.div
             key={slide.id}
-            initial={{ opacity: 0.01, y: 20, scale: 0.9 }}
+            initial={{ opacity: 0.2, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.9 }}
             transition={transition}

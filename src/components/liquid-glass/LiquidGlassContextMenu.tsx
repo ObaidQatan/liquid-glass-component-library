@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useGlassSurface } from "./useGlassSurface";
 import { GlassTopHighlight } from "./GlassTopHighlight";
-import { useGlassOverlayRootStyle } from "./useLiquidMotion";
+import { useGlassOverlayRootStyle, mergeRefs } from "./useLiquidMotion";
 
 interface MenuItem {
   id: string;
@@ -31,9 +31,8 @@ export function LiquidGlassContextMenu({
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   const popover = useGlassSurface({ variant: "popover" });
-  const overlayRootStyle = useGlassOverlayRootStyle();
 
   const handleContextMenu = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -81,12 +80,12 @@ export function LiquidGlassContextMenu({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          ref={menuRef}
-          initial={{ opacity: 0.01, scale: 0.95 }}
+          ref={mergeRefs(menuRef, overlayRef)}
+          initial={{ opacity: 0.2, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.1 }}
-          style={{ left: position.x, top: position.y, ...popover.style, ...overlayRootStyle }}
+          style={{left: position.x, top: position.y, ...popover.style}}
           className={cn(
             "fixed z-[100] min-w-[180px] rounded-xl overflow-hidden",
             popover.className

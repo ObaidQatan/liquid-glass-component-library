@@ -26,12 +26,12 @@ export function MobileSnackbar({
   duration = 4000,
   className,
 }: MobileSnackbarProps) {
-  const slideVariants = useLiquidSlideVariants("bottom");
-  const transition = useLiquidTransition();
-  const overlayRootStyle = useGlassOverlayRootStyle();
-  const progressFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(100);
+  const slideVariants = useLiquidSlideVariants("bottom");
+  const transition = useLiquidTransition();
+  const overlayRef = useGlassOverlayRootStyle(visible);
+  const progressFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
 
   useEffect(() => {
     setVisible(true);
@@ -66,7 +66,7 @@ export function MobileSnackbar({
         <motion.div
           {...slideVariants}
           transition={transition}
-          style={overlayRootStyle}
+          ref={overlayRef}
           className={cn(
             "fixed bottom-4 left-4 right-4 z-50 max-w-lg mx-auto",
             "rounded-2xl overflow-hidden",

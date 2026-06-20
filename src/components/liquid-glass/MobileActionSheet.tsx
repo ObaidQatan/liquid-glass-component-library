@@ -41,12 +41,12 @@ export function MobileActionSheet({
   const slideVariants = useLiquidSlideVariants("bottom", { stiff: true });
   const transition = useLiquidTransition({ stiff: true });
   const tapScale = useLiquidTapScale();
-  const overlayRootStyle = useGlassOverlayRootStyle();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[60] flex items-end justify-center" style={overlayRootStyle}>
-          <motion.div initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        <div className="fixed inset-0 z-[60] flex items-end justify-center" ref={overlayRef}>
+          <motion.div initial={{ opacity: 0.2 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }} onClick={onClose}
             className="glass-backdrop-overlay" />
 

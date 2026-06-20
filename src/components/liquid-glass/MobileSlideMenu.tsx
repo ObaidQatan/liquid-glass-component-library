@@ -34,13 +34,13 @@ export function MobileSlideMenu({
   const slideVariants = useLiquidSlideVariants(position, { stiff: edgeStiff });
   const transition = useLiquidTransition({ stiff: edgeStiff });
   const tapScale = useLiquidTapScale();
-  const overlayRootStyle = useGlassOverlayRootStyle();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[55]" style={overlayRootStyle}>
-          <motion.div initial={{ opacity: 0.01 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        <div className="fixed inset-0 z-[55]" ref={overlayRef}>
+          <motion.div initial={{ opacity: 0.2 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onClose} className="glass-backdrop-overlay" />
           <motion.div
             {...slideVariants}

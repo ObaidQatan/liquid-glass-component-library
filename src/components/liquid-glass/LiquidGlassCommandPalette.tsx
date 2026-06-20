@@ -33,7 +33,7 @@ export function LiquidGlassCommandPalette({
 }: LiquidGlassCommandPaletteProps) {
   const overlayVariants = useLiquidOverlayVariants();
   const transition = useLiquidTransition();
-  const overlayRootStyle = useGlassOverlayRootStyle();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -97,10 +97,10 @@ export function LiquidGlassCommandPalette({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0.01 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          style={overlayRootStyle}
+          ref={overlayRef}
           className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4"
           onClick={onClose}
         >

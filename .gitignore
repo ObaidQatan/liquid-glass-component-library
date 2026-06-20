@@ -45,4 +45,13 @@ coverage
 # TypeScript
 *.tsbuildinfo
 
+# Local scratch / debug artifacts
+*.mp4
+test-results/
+scripts/test-*.mjs
+
+# Private / internal docs
+AGENTS.md
+kube-implementation-plan.md
+
 kube-theory.mp4

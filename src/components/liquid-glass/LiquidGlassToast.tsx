@@ -75,7 +75,7 @@ function ToastItemComponent({
 }) {
   const tapScale = useLiquidTapScale();
   const transition = useLiquidTransition();
-  const overlayRootStyle = useGlassOverlayRootStyle();
+  const overlayRef = useGlassOverlayRootStyle(true);
   const progressFill = useGlassSurface({ variant: "fill", opacity: 0.2 });
   const [progress, setProgress] = useState(100);
   const duration = toast.duration || 4000;
@@ -97,11 +97,11 @@ function ToastItemComponent({
   return (
     <motion.div
       layout
-      initial={{ opacity: 0.01, x: 50, scale: 0.9 }}
+      initial={{ opacity: 0.2, x: 50, scale: 0.9 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: 50, scale: 0.9 }}
       transition={transition}
-      style={overlayRootStyle}
+      ref={overlayRef}
       className={cn(
         "relative flex items-center gap-3 min-w-[280px] max-w-[400px] px-4 py-3 rounded-2xl",
         "glass-blur-xl glass-surface border",

@@ -4,7 +4,7 @@ import { Bell, Check, Trash2, MessageSquare, Heart, UserPlus, AlertCircle } from
 import { useState, useRef, useEffect, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { useGlassSurface } from "./useGlassSurface";
-import { useGlassOverlayRootStyle, useLiquidTapScale } from "./useLiquidMotion";
+import { useGlassOverlayRootStyle, useLiquidTapScale, mergeRefs } from "./useLiquidMotion";
 
 interface Notification {
   id: string;
@@ -53,7 +53,7 @@ export function LiquidGlassNotificationDropdown({
   const popoverRef = useRef<HTMLDivElement>(null);
   const popover = useGlassSurface({ variant: "popover" });
   const topHighlight = useGlassSurface({ variant: "highlight", opacity: 0.25 });
-  const overlayRootStyle = useGlassOverlayRootStyle();
+  const overlayRef = useGlassOverlayRootStyle(isOpen);
   const unreadFill = useGlassSurface({ variant: "fill", opacity: 0.06 });
   const hoverFill = useGlassSurface({ variant: "fill", opacity: 0.05 });
 
@@ -91,8 +91,8 @@ export function LiquidGlassNotificationDropdown({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          ref={popoverRef}
-          initial={{ opacity: 0.01, y: 8, scale: 0.96 }}
+          ref={mergeRefs(popoverRef, overlayRef)}
+          initial={{ opacity: 0.2, y: 8, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 8, scale: 0.96 }}
           transition={{ duration: 0.15 }}
@@ -100,13 +100,10 @@ export function LiquidGlassNotificationDropdown({
             "fixed rounded-2xl overflow-hidden z-[100]",
             popover.className
           )}
-          style={{
-            ...overlayRootStyle,
-            left: position.left,
+          style={{left: position.left,
             top: position.top,
             width: POPOVER_WIDTH,
-            ...popover.style,
-          }}
+            ...popover.style}}
         >
           {/* Reflection blob */}
           <div className="pointer-events-none absolute -top-10 -right-10 h-24 w-24 rounded-full glass-reflection blur-2xl" />
