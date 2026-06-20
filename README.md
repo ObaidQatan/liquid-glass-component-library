@@ -57,7 +57,7 @@ The full source-of-truth for the docs is `src/docs-data.ts`, generated from the 
 
 ```bash
 # clone the repo
-git clone https://github.com/YOUR_USERNAME/liquid-glass-component-library.git
+git clone https://github.com/ObaidQatan/liquid-glass-component-library.git
 cd liquid-glass-component-library
 
 # install dependencies
@@ -156,9 +156,9 @@ This repository is a personal sandbox. I’m not looking for issues, pull reques
 
 ## 🙏 Credits
 
-- The **Liquid Glass** experiment is inspired by [kube.io — Liquid Glass with CSS and SVG](https://kube.io/blog/liquid-glass-css-svg/). Their research made the browser-side refractive-glass exploration possible.
+The **Liquid Glass** experiment is inspired by [kube.io — Liquid Glass with CSS and SVG](https://kube.io/blog/liquid-glass-css-svg/).
 
-This repo is a personal starting point. Hopefully it can help lead to a better, more stable, and more optimized glass UI library from trusted sources like **shadcn/ui**, **Ionic**, and others in the future.
+This repo is a personal starting point. Hopefully it can help lead to a better, more stable, and more optimized glass UI library from trusted sources like **Shadcn UI**, **Ionic**, and others in the future.
 
 ## 📄 License
 
@@ -166,4 +166,4 @@ MIT — see [LICENSE](./LICENSE).
 
 ---
 
-Built with curiosity by [ObekasApps](https://github.com/YOUR_USERNAME).
+Built with curiosity by [Obaid Qatan](https://github.com/ObaidQatan).
