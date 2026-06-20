@@ -12,7 +12,7 @@ It started as a personal experiment: *how close can you get to iOS 26-style refr
 ## ✨ What it looks like
 
 - **Glass mode** — traditional frosted glass with adjustable blur, transparency and saturation.
-- **Liquid Glass mode** — a refractive SVG-filter effect that mimics the distorted, glossy look of Apple’s Liquid Glass, with profile, bezel, refraction, thickness, light angle, specular, transparency, blur and saturation controls.
+- **Liquid Glass mode** — an experimental refractive SVG-filter effect inspired by [kube.io’s Liquid Glass research](https://kube.io/blog/liquid-glass-css-svg/), pushing how close a browser can get to Apple’s Liquid Glass look. The standard glass mode is the more practical choice; Liquid Glass is here to test the limits.
 - **Dark & light themes** with persistent user preferences.
 - **Spring-driven motion** powered by Framer Motion.
 
@@ -153,6 +153,12 @@ scripts/
 This repository is a personal sandbox. I’m not looking for issues, pull requests or maintainers right now. If that changes I’ll update this section.
 
 ---
+
+## 🙏 Credits
+
+- The **Liquid Glass** experiment is inspired by [kube.io — Liquid Glass with CSS and SVG](https://kube.io/blog/liquid-glass-css-svg/). Their research made the browser-side refractive-glass exploration possible.
+
+This repo is a personal starting point. Hopefully it can help lead to a better, more stable, and more optimized glass UI library from trusted sources like **shadcn/ui**, **Ionic**, and others in the future.
 
 ## 📄 License
 
